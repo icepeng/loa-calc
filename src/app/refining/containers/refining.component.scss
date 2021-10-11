@@ -1,0 +1,27 @@
+.container {
+  margin: 20px;
+}
+
+.layout {
+  display: flex;
+  gap: 12px;
+}
+
+.cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.price-form {
+  font-size: 16px;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.optimize-table {
+  border: 1px solid #bbb;
+  width: 480px;
+}

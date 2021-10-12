@@ -49,6 +49,11 @@ export class RefiningComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    const savedPriceForm = localStorage.getItem('priceForm');
+    if (savedPriceForm) {
+      this.priceForm.setValue(JSON.parse(savedPriceForm));
+    }
+
     this.itemForm.valueChanges.subscribe((value) => {
       if (value.type && value.grade) {
         const itemType = value.type as string;
@@ -106,5 +111,7 @@ export class RefiningComponent implements OnInit {
 
     this.optimalPrice = price;
     this.optimalPath = path;
+
+    localStorage.setItem('priceForm', JSON.stringify(this.priceForm.value));
   }
 }

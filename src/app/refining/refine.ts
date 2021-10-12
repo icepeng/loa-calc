@@ -18,8 +18,7 @@ function getPrice(
 function buildBreath(
   priceMap: Record<string, number>,
   breathMap: Record<string, [number, number]>,
-  baseProb: number,
-  additionalProb: number
+  baseProb: number
 ) {
   const breathes = Object.keys(breathMap).sort(
     (a, b) => breathMap[b][1] / priceMap[b] - breathMap[a][1] / priceMap[a]
@@ -53,7 +52,7 @@ function buildBreath(
       });
       return arr;
     },
-    [{ price: 0, prob: additionalProb, breathes: [] as string[] }]
+    [{ price: 0, prob: 0, breathes: [] as string[] }]
   );
 }
 
@@ -66,7 +65,7 @@ export function optimize(
 ) {
   const basePrice = getPrice(priceMap, table.amount);
   const baseProb = table.baseProb;
-  const breath = buildBreath(priceMap, table.breath, baseProb, additionalProb);
+  const breath = buildBreath(priceMap, table.breath, baseProb);
 
   function rec(
     currentProb: number,
@@ -76,6 +75,12 @@ export function optimize(
     price: number;
     path: Path;
   } {
+    if (currentProb + additionalProb >= 1) {
+      return {
+        price: basePrice,
+        path: [{ prob: 1, jangin, breathes: [] }],
+      };
+    }
     if (jangin >= 1) {
       return {
         price: basePrice,
@@ -88,7 +93,7 @@ export function optimize(
 
     for (let i = 0; i <= breathCount; i += 1) {
       const { price: breathPrice, prob: breathProb, breathes } = breath[i];
-      const prob = Math.min(currentProb + breathProb, 1);
+      const prob = Math.min(currentProb + additionalProb + breathProb, 1);
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
         jangin + prob * 0.465,

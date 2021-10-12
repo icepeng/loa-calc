@@ -239,10 +239,10 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="prob">
+          <ng-container matColumnDef="baseProb">
             <th mat-header-cell *matHeaderCellDef>노숨 확률</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.prob | percent: ".2-2" }}
+              {{ element.baseProb | percent: ".2-2" }}
             </td>
           </ng-container>
 
@@ -258,18 +258,70 @@
             <td mat-cell *matCellDef="let element">{{ element.breathes }}</td>
           </ng-container>
 
+          <ng-container matColumnDef="totalProb">
+            <th mat-header-cell *matHeaderCellDef>트라이 확률</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.totalProb | percent: ".2-2" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>트라이 비용</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.price | number: ".2-2" }}골드
+            </td>
+          </ng-container>
+
           <tr
             mat-header-row
-            *matHeaderRowDef="['index', 'prob', 'jangin', 'breathes']"
+            *matHeaderRowDef="[
+              'index',
+              'baseProb',
+              'jangin',
+              'breathes',
+              'totalProb',
+              'price'
+            ]"
           ></tr>
           <tr
             mat-row
             *matRowDef="
               let row;
-              columns: ['index', 'prob', 'jangin', 'breathes']
+              columns: [
+                'index',
+                'baseProb',
+                'jangin',
+                'breathes',
+                'totalProb',
+                'price'
+              ]
             "
           ></tr>
         </table>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title> 주의사항 </mat-card-title>
+      <mat-card-content>
+        <h3>가격 정보는 자동으로 갱신되지 않습니다.</h3>
+        <p>
+          며칠 전 시세 정보를 기준으로 임시로 넣어둔 값이며, 변동된 시세에 따른
+          가격은 직접 계산해서 기입하시는 것이 정확합니다. 모든 재료의 가격은
+          1개당 골드로 입력되니, 수호석 결정과 같이 10개 단위로 거래되는
+          재료들의 수치 입력에 주의해주세요.
+        </p>
+        <h3>귀속 재료는 고려되지 않습니다.</h3>
+        <p>
+          추가 재료에 제시되지 않은 귀속 재료를 투입하며 재련하는 경우, 매
+          트라이마다 "실패로 추가된 확률", "장인의 기운" 수치를 새로 입력해서
+          계산하는 것을 권장합니다. 귀속 재료가 넘치도록 남는 경우에는 해당
+          재료를 0골드로 입력해도 무방합니다.
+        </p>
+        <h3>22단계 이상의 재련에서 렉이 걸릴 수 있습니다.</h3>
+        <p>
+          재련 확률이 낮은 경우에는 트라이 횟수가 많아지는 만큼 경우의 수가 크게
+          늘어나 렉을 유발할 수 있습니다.
+        </p>
       </mat-card-content>
     </mat-card>
   </div>

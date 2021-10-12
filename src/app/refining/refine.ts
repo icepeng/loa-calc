@@ -1,8 +1,10 @@
 import { RefineTable } from './data';
 
 export type Path = {
-  prob: number;
+  baseProb: number;
+  totalProb: number;
   jangin: number;
+  price: number;
   breathes: string[];
 }[];
 
@@ -78,13 +80,23 @@ export function optimize(
     if (currentProb + additionalProb >= 1) {
       return {
         price: basePrice,
-        path: [{ prob: 1, jangin, breathes: [] }],
+        path: [
+          { baseProb: 1, totalProb: 1, jangin, price: basePrice, breathes: [] },
+        ],
       };
     }
     if (jangin >= 1) {
       return {
         price: basePrice,
-        path: [{ prob: 1, jangin: 1, breathes: [] }],
+        path: [
+          {
+            baseProb: 1,
+            totalProb: 1,
+            jangin: 1,
+            price: basePrice,
+            breathes: [],
+          },
+        ],
       };
     }
 
@@ -101,7 +113,13 @@ export function optimize(
       );
       prices.push(basePrice + breathPrice + (1 - prob) * failPrice);
       pathes.push([
-        { prob: currentProb + additionalProb, jangin, breathes },
+        {
+          baseProb: currentProb + additionalProb,
+          totalProb: prob,
+          jangin,
+          price: basePrice + breathPrice,
+          breathes,
+        },
         ...path,
       ]);
     }

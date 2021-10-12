@@ -96,7 +96,7 @@ export function optimize(
       const prob = Math.min(currentProb + additionalProb + breathProb, 1);
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-        jangin + prob * 0.465,
+        jangin + prob * 0.4651,
         i
       );
       prices.push(basePrice + breathPrice + (1 - prob) * failPrice);

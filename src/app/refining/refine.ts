@@ -132,3 +132,75 @@ export function optimize(
 
   return rec(baseProb + probFromFailure, startJangin, breath.length - 1);
 }
+
+export function fixed(
+  table: RefineTable,
+  priceMap: Record<string, number>,
+  additionalProb: number,
+  probFromFailure: number,
+  startJangin: number,
+  breathCount: number
+) {
+  const basePrice = getPrice(priceMap, table.amount);
+  const baseProb = table.baseProb;
+  const breath = buildBreath(priceMap, table.breath, baseProb);
+
+  function rec(
+    currentProb: number,
+    jangin: number
+  ): {
+    price: number;
+    path: Path;
+  } {
+    if (currentProb + additionalProb >= 1) {
+      return {
+        price: basePrice,
+        path: [
+          { baseProb: 1, totalProb: 1, jangin, price: basePrice, breathes: [] },
+        ],
+      };
+    }
+    if (jangin >= 1) {
+      return {
+        price: basePrice,
+        path: [
+          {
+            baseProb: 1,
+            totalProb: 1,
+            jangin: 1,
+            price: basePrice,
+            breathes: [],
+          },
+        ],
+      };
+    }
+
+    const {
+      price: breathPrice,
+      prob: breathProb,
+      breathes,
+    } = breath[breathCount];
+
+    const prob = Math.min(currentProb + additionalProb + breathProb, 1);
+    const { price: failPrice, path: failPath } = rec(
+      Math.min(currentProb + baseProb * 0.1, baseProb * 2),
+      jangin + prob * 0.4651
+    );
+
+    return {
+      price: basePrice + breathPrice + (1 - prob) * failPrice,
+      path: [
+        {
+          baseProb: currentProb + additionalProb,
+          totalProb: prob,
+          jangin,
+          price: basePrice + breathPrice,
+          breathes,
+        },
+        ...failPath,
+      ],
+    };
+  }
+
+  return rec(baseProb + probFromFailure, startJangin);
+}

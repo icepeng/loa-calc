@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { refineData } from '../data';
-import { optimize, Path } from '../refine';
+import { fixed, optimize, Path } from '../refine';
 
 @Component({
   selector: 'app-refining',
@@ -43,8 +43,12 @@ export class RefiningComponent implements OnInit {
     applyResearch: new FormControl(false),
   });
   targetList: number[] = [];
+
   optimalPrice = 0;
   optimalPath: Path = [];
+
+  noBreathPrice = 0;
+  noBreathPath: Path = [];
 
   constructor() {}
 
@@ -101,7 +105,7 @@ export class RefiningComponent implements OnInit {
     const itemGrade = itemInfo.grade as string;
     const refineTarget = itemInfo.target as number;
     const table = refineData[itemType][itemGrade][refineTarget];
-    const { price, path } = optimize(
+    const optimal = optimize(
       table,
       this.priceForm.value,
       itemInfo.additionalProb / 100,
@@ -109,8 +113,20 @@ export class RefiningComponent implements OnInit {
       itemInfo.jangin / 100
     );
 
-    this.optimalPrice = price;
-    this.optimalPath = path;
+    this.optimalPrice = optimal.price;
+    this.optimalPath = optimal.path;
+
+    const noBreath = fixed(
+      table,
+      this.priceForm.value,
+      itemInfo.additionalProb / 100,
+      itemInfo.probFromFailure / 100,
+      itemInfo.jangin / 100,
+      0
+    );
+
+    this.noBreathPrice = noBreath.price;
+    this.noBreathPath = noBreath.path;
 
     localStorage.setItem('priceForm', JSON.stringify(this.priceForm.value));
   }

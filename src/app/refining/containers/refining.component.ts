@@ -30,6 +30,7 @@ export class RefiningComponent implements OnInit {
     야금술기본: new FormControl(90),
     야금술응용: new FormControl(118),
     야금술심화: new FormControl(3100),
+    골드: new FormControl(1),
   });
   itemForm = new FormGroup({
     type: new FormControl(),
@@ -50,12 +51,15 @@ export class RefiningComponent implements OnInit {
   noBreathPrice = 0;
   noBreathPath: Path = [];
 
+  materials: { name: string; amount: number; price: number }[] = [];
+  materialPrice = 0;
+
   constructor() {}
 
   ngOnInit(): void {
     const savedPriceForm = localStorage.getItem('priceForm');
     if (savedPriceForm) {
-      this.priceForm.setValue(JSON.parse(savedPriceForm));
+      this.priceForm.patchValue(JSON.parse(savedPriceForm));
     }
 
     this.itemForm.valueChanges.subscribe((value) => {
@@ -76,6 +80,13 @@ export class RefiningComponent implements OnInit {
         if (!table) {
           return;
         }
+
+        this.materials = Object.entries(table.amount).map(([name, amount]) => ({
+          name,
+          amount,
+          price: this.priceForm.value[name] * amount,
+        }));
+        this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
 
         let additionalProb = 0;
         if (itemGrade !== 't3_1390' && refineTarget <= 15) {

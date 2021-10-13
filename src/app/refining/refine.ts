@@ -13,7 +13,7 @@ function getPrice(
   amountMap: Record<string, number>
 ) {
   return Object.entries(amountMap)
-    .map(([key, amount]) => (key === '골드' ? amount : priceMap[key] * amount))
+    .map(([key, amount]) => priceMap[key] * amount)
     .reduce((sum, x) => sum + x, 0);
 }
 

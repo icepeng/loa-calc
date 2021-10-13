@@ -222,7 +222,25 @@
             >영지 연구 적용</mat-checkbox
           >
         </form>
-        <button (click)="calculate()" mat-raised-button color="primary">
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="materials">
+      <mat-card-title>재료 정보</mat-card-title>
+      <mat-card-content>
+        <div class="material-info" *ngFor="let material of materials">
+          <img [attr.src]="'assets/' + material.name + '.png'" />
+          <span>
+            x {{ material.amount | number: ".0-0" }} =
+            {{ material.price | number: ".2-2" }}골드</span
+          >
+        </div>
+        <div>합계 : {{ materialPrice | number: ".2-2" }}골드</div>
+        <button
+          *ngIf="materials.length > 0"
+          (click)="calculate()"
+          mat-raised-button
+          color="primary"
+        >
           계산
         </button>
       </mat-card-content>

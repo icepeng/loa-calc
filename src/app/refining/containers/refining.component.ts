@@ -51,6 +51,9 @@ export class RefiningComponent implements OnInit {
   noBreathPrice = 0;
   noBreathPath: Path = [];
 
+  fullBreathPrice = 0;
+  fullBreathPath: Path = [];
+
   materials: { name: string; amount: number; price: number }[] = [];
   materialPrice = 0;
 
@@ -86,7 +89,10 @@ export class RefiningComponent implements OnInit {
           amount,
           price: this.priceForm.value[name] * amount,
         }));
-        this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
+        this.materialPrice = this.materials.reduce(
+          (sum, x) => sum + x.price,
+          0
+        );
 
         let additionalProb = 0;
         if (itemGrade !== 't3_1390' && refineTarget <= 15) {
@@ -138,6 +144,18 @@ export class RefiningComponent implements OnInit {
 
     this.noBreathPrice = noBreath.price;
     this.noBreathPath = noBreath.path;
+
+    const fullBreath = fixed(
+      table,
+      this.priceForm.value,
+      itemInfo.additionalProb / 100,
+      itemInfo.probFromFailure / 100,
+      itemInfo.jangin / 100,
+      Object.keys(table.breath).length
+    );
+
+    this.fullBreathPrice = fullBreath.price;
+    this.fullBreathPath = fullBreath.path;
 
     localStorage.setItem('priceForm', JSON.stringify(this.priceForm.value));
   }

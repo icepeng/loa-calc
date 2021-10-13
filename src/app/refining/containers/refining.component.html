@@ -364,6 +364,78 @@
           </table>
         </div>
       </mat-tab>
+      <mat-tab label="풀숨 재련">
+        <div class="p-16">
+          <div>평균 비용 : {{ fullBreathPrice | number: ".2-2" }}골드</div>
+          <table class="optimize-table" mat-table [dataSource]="fullBreathPath">
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>트라이</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}트
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="baseProb">
+              <th mat-header-cell *matHeaderCellDef>노숨 확률</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.baseProb | percent: ".2-2" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="jangin">
+              <th mat-header-cell *matHeaderCellDef>장인의 기운</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.jangin | percent: ".2-2" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="breathes">
+              <th mat-header-cell *matHeaderCellDef>추가재료</th>
+              <td mat-cell *matCellDef="let element">{{ element.breathes }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalProb">
+              <th mat-header-cell *matHeaderCellDef>트라이 확률</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.totalProb | percent: ".2-2" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>트라이 비용</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.price | number: ".2-2" }}골드
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="[
+                'index',
+                'baseProb',
+                'jangin',
+                'breathes',
+                'totalProb',
+                'price'
+              ]"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="
+                let row;
+                columns: [
+                  'index',
+                  'baseProb',
+                  'jangin',
+                  'breathes',
+                  'totalProb',
+                  'price'
+                ]
+              "
+            ></tr>
+          </table>
+        </div>
+      </mat-tab>
     </mat-tab-group>
     <mat-card>
       <mat-card-title> 주의사항 </mat-card-title>

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { refineData } from '../data';
+import {
+  getRefineTable,
+  getTargetList,
+  refineData,
+  RefineTable,
+} from '../data';
 import { fixed, optimize, Path } from '../refine';
 
 @Component({
@@ -65,55 +70,66 @@ export class RefiningComponent implements OnInit {
       this.priceForm.patchValue(JSON.parse(savedPriceForm));
     }
 
-    this.itemForm.valueChanges.subscribe((value) => {
-      if (value.type && value.grade) {
-        const itemType = value.type as string;
-        const itemGrade = value.grade as string;
-        this.targetList = Object.keys(refineData[itemType][itemGrade]).map(
-          (x) => +x
-        );
+    this.itemForm.valueChanges.subscribe((itemForm) => {
+      this.targetList = getTargetList(itemForm.type, itemForm.grade);
+      const table = getRefineTable(
+        itemForm.type,
+        itemForm.grade,
+        itemForm.target
+      );
+
+      if (!table) {
+        return;
       }
 
-      if (value.type && value.grade && value.target) {
-        const itemType = value.type as string;
-        const itemGrade = value.grade as string;
-        const refineTarget = value.target as number;
-        const table = refineData[itemType][itemGrade][refineTarget];
+      this.setMaterials(table, this.priceForm.value);
 
-        if (!table) {
-          return;
+      let additionalProb = 0;
+      if (itemForm.grade !== 't3_1390' && itemForm.target <= 15) {
+        additionalProb = 20;
+        if (itemForm.applyResearch) {
+          additionalProb += 10;
         }
-
-        this.materials = Object.entries(table.amount).map(([name, amount]) => ({
-          name,
-          amount,
-          price: this.priceForm.value[name] * amount,
-        }));
-        this.materialPrice = this.materials.reduce(
-          (sum, x) => sum + x.price,
-          0
-        );
-
-        let additionalProb = 0;
-        if (itemGrade !== 't3_1390' && refineTarget <= 15) {
-          additionalProb = 20;
-          if (value.applyResearch) {
-            additionalProb += 10;
-          }
-        }
-        this.itemForm.patchValue(
-          {
-            baseProb: table.baseProb * 100,
-            additionalProb,
-            totalProb:
-              table.baseProb * 100 + additionalProb + value.probFromFailure,
-          },
-          {
-            emitEvent: false,
-          }
-        );
       }
+
+      this.itemForm.patchValue(
+        {
+          baseProb: table.baseProb * 100,
+          additionalProb,
+          totalProb:
+            table.baseProb * 100 + additionalProb + itemForm.probFromFailure,
+        },
+        {
+          emitEvent: false,
+        }
+      );
     });
+
+    this.priceForm.valueChanges.subscribe((priceForm) => {
+      const itemForm = this.itemForm.value;
+      const table = getRefineTable(
+        itemForm.type,
+        itemForm.grade,
+        itemForm.target
+      );
+
+      if (!table) {
+        return;
+      }
+
+      this.setMaterials(table, priceForm);
+    });
+  }
+
+  setMaterials(refineTable: RefineTable, priceForm: Record<string, number>) {
+    this.materials = Object.entries(refineTable.amount).map(
+      ([name, amount]) => ({
+        name,
+        amount,
+        price: priceForm[name] * amount,
+      })
+    );
+    this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
   }
 
   calculate() {

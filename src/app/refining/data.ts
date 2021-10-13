@@ -1331,3 +1331,24 @@ export const refineData: Record<
     },
   },
 };
+
+export function getTargetList(
+  itemType: string | undefined,
+  itemGrade: string | undefined
+) {
+  if (!itemType || !itemGrade) {
+    return [];
+  }
+  return Object.keys(refineData[itemType][itemGrade]).map((x) => +x);
+}
+
+export function getRefineTable(
+  itemType: string | undefined,
+  itemGrade: string | undefined,
+  refineTarget: number | undefined
+) {
+  if (!itemType || !itemGrade || !refineTarget) {
+    return undefined;
+  }
+  return refineData[itemType][itemGrade][refineTarget];
+}

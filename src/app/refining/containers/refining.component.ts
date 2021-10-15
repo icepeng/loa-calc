@@ -6,7 +6,14 @@ import {
   refineData,
   RefineTable,
 } from '../data';
-import { fixed, optimize, Path } from '../refine';
+import {
+  bookNames,
+  breathNames,
+  fixed,
+  materialNames,
+  optimize,
+  Path,
+} from '../refine';
 
 @Component({
   selector: 'app-refining',
@@ -15,27 +22,49 @@ import { fixed, optimize, Path } from '../refine';
 })
 export class RefiningComponent implements OnInit {
   priceForm = new FormGroup({
-    파편: new FormControl(0.324),
+    파편: new FormControl(0.371),
     하급오레하: new FormControl(12),
     중급오레하: new FormControl(13),
     상급오레하: new FormControl(25),
-    명돌: new FormControl(35),
-    위명돌: new FormControl(42),
-    경명돌: new FormControl(189),
-    수결: new FormControl(0.08),
+    명돌: new FormControl(33),
+    위명돌: new FormControl(43),
+    경명돌: new FormControl(184),
+    수결: new FormControl(0.12),
     파결: new FormControl(1.9),
-    수호강석: new FormControl(0.4),
+    수호강석: new FormControl(0.48),
     파괴강석: new FormControl(9.5),
-    은총: new FormControl(65),
-    축복: new FormControl(156),
-    가호: new FormControl(252),
-    재봉술기본: new FormControl(34),
+    은총: new FormControl(89),
+    축복: new FormControl(215),
+    가호: new FormControl(266),
+    재봉술기본: new FormControl(33),
     재봉술응용: new FormControl(50),
-    재봉술심화: new FormControl(1040),
+    재봉술심화: new FormControl(1189),
     야금술기본: new FormControl(90),
-    야금술응용: new FormControl(118),
-    야금술심화: new FormControl(3100),
+    야금술응용: new FormControl(102),
+    야금술심화: new FormControl(3270),
     골드: new FormControl(1),
+  });
+  bindedForm = new FormGroup({
+    파편: new FormControl(0),
+    하급오레하: new FormControl(0),
+    중급오레하: new FormControl(0),
+    상급오레하: new FormControl(0),
+    명돌: new FormControl(0),
+    위명돌: new FormControl(0),
+    경명돌: new FormControl(0),
+    수결: new FormControl(0),
+    파결: new FormControl(0),
+    수호강석: new FormControl(0),
+    파괴강석: new FormControl(0),
+    은총: new FormControl(0),
+    축복: new FormControl(0),
+    가호: new FormControl(0),
+    재봉술기본: new FormControl(0),
+    재봉술응용: new FormControl(0),
+    재봉술심화: new FormControl(0),
+    야금술기본: new FormControl(0),
+    야금술응용: new FormControl(0),
+    야금술심화: new FormControl(0),
   });
   itemForm = new FormGroup({
     type: new FormControl(),
@@ -48,6 +77,10 @@ export class RefiningComponent implements OnInit {
     jangin: new FormControl(0),
     applyResearch: new FormControl(false),
   });
+  reduceBindedMaterials = false;
+  reduceBindedBooks = false;
+  reduceBindedBreathes = false;
+
   targetList: number[] = [];
 
   optimalPrice = 0;
@@ -61,6 +94,8 @@ export class RefiningComponent implements OnInit {
 
   materials: { name: string; amount: number; price: number }[] = [];
   materialPrice = 0;
+  breathes: { name: string; prob: number; amount: number; price: number }[] =
+    [];
 
   constructor() {}
 
@@ -130,17 +165,48 @@ export class RefiningComponent implements OnInit {
       })
     );
     this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
+    this.breathes = Object.entries(refineTable.breath).map(
+      ([name, [amount, prob]]) => ({
+        name,
+        amount,
+        prob,
+        price: priceForm[name],
+      })
+    );
   }
 
   calculate() {
     const itemInfo = this.itemForm.getRawValue();
-    const itemType = itemInfo.type as string;
-    const itemGrade = itemInfo.grade as string;
-    const refineTarget = itemInfo.target as number;
-    const table = refineData[itemType][itemGrade][refineTarget];
+    const table = getRefineTable(
+      itemInfo.type,
+      itemInfo.grade,
+      itemInfo.target
+    );
+    if (!table) {
+      return;
+    }
+
+    const bindedMap = Object.fromEntries([
+      ...(this.reduceBindedMaterials
+        ? this.materials.map((material) => [
+            material.name,
+            this.bindedForm.value[material.name],
+          ])
+        : []),
+      ...(this.reduceBindedBooks
+        ? this.breathes
+            .filter((breath) => !breathNames.includes(breath.name))
+            .map((breath) => [breath.name, this.bindedForm.value[breath.name]])
+        : []),
+      ...(this.reduceBindedBreathes
+        ? breathNames.map((name) => [name, this.bindedForm.value[name]])
+        : []),
+    ]);
+
     const optimal = optimize(
       table,
       this.priceForm.value,
+      bindedMap,
       itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100
@@ -152,6 +218,7 @@ export class RefiningComponent implements OnInit {
     const noBreath = fixed(
       table,
       this.priceForm.value,
+      bindedMap,
       itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,
@@ -164,6 +231,7 @@ export class RefiningComponent implements OnInit {
     const fullBreath = fixed(
       table,
       this.priceForm.value,
+      bindedMap,
       itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,

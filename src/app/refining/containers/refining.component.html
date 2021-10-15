@@ -1,155 +1,302 @@
 <div class="container">
   <h1 class="mat-h1">재련 최적화</h1>
   <div class="layout">
+    <mat-tab-group dynamicHeight class="mat-elevation-z1">
+      <mat-tab label="가격 정보">
+        <div class="p-16">
+          <form [formGroup]="priceForm" class="price-form">
+            <div class="cell">
+              <img src="assets/파편.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 명예의 파편 </mat-label>
+                <input type="number" matInput formControlName="파편" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/하급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 하급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="하급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/중급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 중급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="중급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/상급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 상급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="상급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/위명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 위대한 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="위명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/경명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 경이로운 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="경명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/수결.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 수호석 결정 </mat-label>
+                <input type="number" matInput formControlName="수결" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/파결.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 파괴석 결정 </mat-label>
+                <input type="number" matInput formControlName="파결" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/수호강석.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 수호강석 </mat-label>
+                <input type="number" matInput formControlName="수호강석" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/파괴강석.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 파괴강석 </mat-label>
+                <input type="number" matInput formControlName="파괴강석" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/은총.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 은총 </mat-label>
+                <input type="number" matInput formControlName="은총" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/축복.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 축복 </mat-label>
+                <input type="number" matInput formControlName="축복" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/가호.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 가호 </mat-label>
+                <input type="number" matInput formControlName="가호" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술기본.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 기본 </mat-label>
+                <input type="number" matInput formControlName="재봉술기본" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술응용.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 응용 </mat-label>
+                <input type="number" matInput formControlName="재봉술응용" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술심화.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 심화 </mat-label>
+                <input type="number" matInput formControlName="재봉술심화" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술기본.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 기본 </mat-label>
+                <input type="number" matInput formControlName="야금술기본" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술응용.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 응용 </mat-label>
+                <input type="number" matInput formControlName="야금술응용" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술심화.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 심화 </mat-label>
+                <input type="number" matInput formControlName="야금술심화" />
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="귀속 재료 정보">
+        <div class="p-16">
+          <form [formGroup]="bindedForm" class="price-form">
+            <div class="cell">
+              <img src="assets/파편.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 명예의 파편 </mat-label>
+                <input type="number" matInput formControlName="파편" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/하급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 하급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="하급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/중급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 중급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="중급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/상급오레하.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 상급 오레하 융화제 </mat-label>
+                <input type="number" matInput formControlName="상급오레하" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/위명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 위대한 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="위명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/경명돌.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 경이로운 명예의 돌파석 </mat-label>
+                <input type="number" matInput formControlName="경명돌" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/수결.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 수호석 결정 </mat-label>
+                <input type="number" matInput formControlName="수결" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/파결.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 파괴석 결정 </mat-label>
+                <input type="number" matInput formControlName="파결" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/수호강석.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 수호강석 </mat-label>
+                <input type="number" matInput formControlName="수호강석" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/파괴강석.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 파괴강석 </mat-label>
+                <input type="number" matInput formControlName="파괴강석" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/은총.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 은총 </mat-label>
+                <input type="number" matInput formControlName="은총" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/축복.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 축복 </mat-label>
+                <input type="number" matInput formControlName="축복" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/가호.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 태양의 가호 </mat-label>
+                <input type="number" matInput formControlName="가호" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술기본.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 기본 </mat-label>
+                <input type="number" matInput formControlName="재봉술기본" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술응용.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 응용 </mat-label>
+                <input type="number" matInput formControlName="재봉술응용" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/재봉술심화.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 재봉술 : 수선 심화 </mat-label>
+                <input type="number" matInput formControlName="재봉술심화" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술기본.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 기본 </mat-label>
+                <input type="number" matInput formControlName="야금술기본" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술응용.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 응용 </mat-label>
+                <input type="number" matInput formControlName="야금술응용" />
+              </mat-form-field>
+            </div>
+            <div class="cell">
+              <img src="assets/야금술심화.png" />
+              <mat-form-field floatLabel="always">
+                <mat-label> 야금술 : 단조 심화 </mat-label>
+                <input type="number" matInput formControlName="야금술심화" />
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
     <mat-card>
-      <mat-card-title> 가격 정보 </mat-card-title>
-      <mat-card-content>
-        <form [formGroup]="priceForm" class="price-form">
-          <div class="cell">
-            <img src="assets/파편.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 명예의 파편 </mat-label>
-              <input type="number" matInput formControlName="파편" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/하급오레하.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 하급 오레하 융화제 </mat-label>
-              <input type="number" matInput formControlName="하급오레하" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/중급오레하.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 중급 오레하 융화제 </mat-label>
-              <input type="number" matInput formControlName="중급오레하" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/상급오레하.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 상급 오레하 융화제 </mat-label>
-              <input type="number" matInput formControlName="상급오레하" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/명돌.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 명예의 돌파석 </mat-label>
-              <input type="number" matInput formControlName="명돌" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/위명돌.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 위대한 명예의 돌파석 </mat-label>
-              <input type="number" matInput formControlName="위명돌" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/경명돌.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 경이로운 명예의 돌파석 </mat-label>
-              <input type="number" matInput formControlName="경명돌" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/수결.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 수호석 결정 </mat-label>
-              <input type="number" matInput formControlName="수결" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/파결.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 파괴석 결정 </mat-label>
-              <input type="number" matInput formControlName="파결" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/수호강석.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 수호강석 </mat-label>
-              <input type="number" matInput formControlName="수호강석" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/파괴강석.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 파괴강석 </mat-label>
-              <input type="number" matInput formControlName="파괴강석" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/은총.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 태양의 은총 </mat-label>
-              <input type="number" matInput formControlName="은총" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/축복.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 태양의 축복 </mat-label>
-              <input type="number" matInput formControlName="축복" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/가호.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 태양의 가호 </mat-label>
-              <input type="number" matInput formControlName="가호" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/재봉술기본.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 재봉술 : 수선 기본 </mat-label>
-              <input type="number" matInput formControlName="재봉술기본" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/재봉술응용.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 재봉술 : 수선 응용 </mat-label>
-              <input type="number" matInput formControlName="재봉술응용" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/재봉술심화.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 재봉술 : 수선 심화 </mat-label>
-              <input type="number" matInput formControlName="재봉술심화" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/야금술기본.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 야금술 : 단조 기본 </mat-label>
-              <input type="number" matInput formControlName="야금술기본" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/야금술응용.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 야금술 : 단조 응용 </mat-label>
-              <input type="number" matInput formControlName="야금술응용" />
-            </mat-form-field>
-          </div>
-          <div class="cell">
-            <img src="assets/야금술심화.png" />
-            <mat-form-field floatLabel="always">
-              <mat-label> 야금술 : 단조 심화 </mat-label>
-              <input type="number" matInput formControlName="야금술심화" />
-            </mat-form-field>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-title> 장비 정보 </mat-card-title>
+      <mat-card-subtitle> 장비 정보 </mat-card-subtitle>
       <mat-card-content>
         <form [formGroup]="itemForm">
           <div>
@@ -225,215 +372,72 @@
       </mat-card-content>
     </mat-card>
     <mat-card class="materials">
-      <mat-card-title>재료 정보</mat-card-title>
-      <mat-card-content>
-        <div class="material-info" *ngFor="let material of materials">
-          <img [attr.src]="'assets/' + material.name + '.png'" />
-          <span>
-            x {{ material.amount | number: ".0-0" }} =
-            {{ material.price | number: ".2-2" }}골드</span
+      <mat-card-subtitle>재료 정보</mat-card-subtitle>
+      <ng-container *ngIf="materials.length > 0">
+        <mat-card-title>필수 재료</mat-card-title>
+        <mat-card-content>
+          <div class="material-info" *ngFor="let material of materials">
+            <img [attr.src]="'assets/' + material.name + '.png'" />
+            <span>
+              x {{ material.amount | number: ".0-0" }} =
+              {{ material.price | number: ".2-2" }}골드</span
+            >
+          </div>
+          <div>합계 : {{ materialPrice | number: ".2-2" }}골드</div>
+          <mat-checkbox [(ngModel)]="reduceBindedMaterials"
+            >귀속 필수 재료를 0골드로 계산</mat-checkbox
           >
-        </div>
-        <div>합계 : {{ materialPrice | number: ".2-2" }}골드</div>
-        <button
-          *ngIf="materials.length > 0"
-          (click)="calculate()"
-          mat-raised-button
-          color="primary"
-        >
-          계산
-        </button>
-      </mat-card-content>
+        </mat-card-content>
+        <mat-card-title>추가 재료</mat-card-title>
+        <mat-card-content>
+          <div class="material-info" *ngFor="let breath of breathes">
+            <img [attr.src]="'assets/' + breath.name + '.png'" />
+            <span>
+              + {{ breath.prob | percent: ".2-2" }} x 0 ~
+              {{ breath.amount | number: ".0-0" }}<br />개당
+              {{ breath.price | number: ".2-2" }}골드</span
+            >
+          </div>
+          <mat-checkbox [(ngModel)]="reduceBindedBooks"
+            >귀속 책을 0골드로 계산</mat-checkbox
+          >
+          <mat-checkbox [(ngModel)]="reduceBindedBreathes"
+            >귀속 숨결을 0골드로 계산</mat-checkbox
+          >
+          <button
+            *ngIf="materials.length > 0"
+            (click)="calculate()"
+            mat-raised-button
+            color="primary"
+          >
+            계산
+          </button>
+        </mat-card-content>
+      </ng-container>
     </mat-card>
     <mat-tab-group dynamicHeight class="mat-elevation-z1">
       <mat-tab label="최적 재련">
         <div class="p-16">
-          <div>평균 비용 : {{ optimalPrice | number: ".2-2" }}골드</div>
-          <table class="optimize-table" mat-table [dataSource]="optimalPath">
-            <ng-container matColumnDef="index">
-              <th mat-header-cell *matHeaderCellDef>트라이</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                {{ i + 1 }}트
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="baseProb">
-              <th mat-header-cell *matHeaderCellDef>노숨 확률</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.baseProb | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="jangin">
-              <th mat-header-cell *matHeaderCellDef>장인의 기운</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.jangin | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="breathes">
-              <th mat-header-cell *matHeaderCellDef>추가재료</th>
-              <td mat-cell *matCellDef="let element">{{ element.breathes }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="totalProb">
-              <th mat-header-cell *matHeaderCellDef>트라이 확률</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.totalProb | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef>트라이 비용</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.price | number: ".2-2" }}골드
-              </td>
-            </ng-container>
-
-            <tr
-              mat-header-row
-              *matHeaderRowDef="[
-                'index',
-                'baseProb',
-                'jangin',
-                'breathes',
-                'totalProb',
-                'price'
-              ]"
-            ></tr>
-            <tr
-              mat-row
-              *matRowDef="
-                let row;
-                columns: [
-                  'index',
-                  'baseProb',
-                  'jangin',
-                  'breathes',
-                  'totalProb',
-                  'price'
-                ]
-              "
-            ></tr>
-          </table>
+          <app-refine-table
+            [price]="optimalPrice"
+            [path]="optimalPath"
+          ></app-refine-table>
         </div>
       </mat-tab>
       <mat-tab label="노숨 재련">
         <div class="p-16">
-          <div>평균 비용 : {{ noBreathPrice | number: ".2-2" }}골드</div>
-          <table class="optimize-table" mat-table [dataSource]="noBreathPath">
-            <ng-container matColumnDef="index">
-              <th mat-header-cell *matHeaderCellDef>트라이</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                {{ i + 1 }}트
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="baseProb">
-              <th mat-header-cell *matHeaderCellDef>노숨 확률</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.baseProb | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="jangin">
-              <th mat-header-cell *matHeaderCellDef>장인의 기운</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.jangin | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef>트라이 비용</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.price | number: ".2-2" }}골드
-              </td>
-            </ng-container>
-
-            <tr
-              mat-header-row
-              *matHeaderRowDef="['index', 'baseProb', 'jangin', 'price']"
-            ></tr>
-            <tr
-              mat-row
-              *matRowDef="
-                let row;
-                columns: ['index', 'baseProb', 'jangin', 'price']
-              "
-            ></tr>
-          </table>
+          <app-refine-table
+            [price]="noBreathPrice"
+            [path]="noBreathPath"
+          ></app-refine-table>
         </div>
       </mat-tab>
       <mat-tab label="풀숨 재련">
         <div class="p-16">
-          <div>평균 비용 : {{ fullBreathPrice | number: ".2-2" }}골드</div>
-          <table class="optimize-table" mat-table [dataSource]="fullBreathPath">
-            <ng-container matColumnDef="index">
-              <th mat-header-cell *matHeaderCellDef>트라이</th>
-              <td mat-cell *matCellDef="let element; let i = index">
-                {{ i + 1 }}트
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="baseProb">
-              <th mat-header-cell *matHeaderCellDef>노숨 확률</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.baseProb | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="jangin">
-              <th mat-header-cell *matHeaderCellDef>장인의 기운</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.jangin | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="breathes">
-              <th mat-header-cell *matHeaderCellDef>추가재료</th>
-              <td mat-cell *matCellDef="let element">{{ element.breathes }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="totalProb">
-              <th mat-header-cell *matHeaderCellDef>트라이 확률</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.totalProb | percent: ".2-2" }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef>트라이 비용</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.price | number: ".2-2" }}골드
-              </td>
-            </ng-container>
-
-            <tr
-              mat-header-row
-              *matHeaderRowDef="[
-                'index',
-                'baseProb',
-                'jangin',
-                'breathes',
-                'totalProb',
-                'price'
-              ]"
-            ></tr>
-            <tr
-              mat-row
-              *matRowDef="
-                let row;
-                columns: [
-                  'index',
-                  'baseProb',
-                  'jangin',
-                  'breathes',
-                  'totalProb',
-                  'price'
-                ]
-              "
-            ></tr>
-          </table>
+          <app-refine-table
+            [price]="fullBreathPrice"
+            [path]="fullBreathPath"
+          ></app-refine-table>
         </div>
       </mat-tab>
     </mat-tab-group>
@@ -447,17 +451,18 @@
           1개당 골드로 입력되니, 수호석 결정과 같이 10개 단위로 거래되는
           재료들의 수치 입력에 주의해주세요.
         </p>
-        <h3>귀속 재료는 고려되지 않습니다.</h3>
+        <h3>숨결은 0개 혹은 최대치로만 투입합니다.</h3>
         <p>
-          추가 재료에 제시되지 않은 귀속 재료를 투입하며 재련하는 경우, 매
-          트라이마다 "실패로 추가된 확률", "장인의 기운" 수치를 새로 입력해서
-          계산하는 것을 권장합니다. 귀속 재료가 넘치도록 남는 경우에는 해당
-          재료를 0골드로 입력해도 무방합니다.
+          숨결을 일부만 투입하는 경우까지 고려하면 연산량이 지나치게 많아집니다.
+          걸립니다. 따라서 각 재료별로 0개 혹은 최대치 투입 2가지 경우의 수만
+          고려하고 있습니다. 이로 인해 귀속 숨결을 0골드로 계산할 시 약간의
+          오차가 발생할 수 있습니다.
         </p>
         <h3>22단계 이상의 재련에서 렉이 걸릴 수 있습니다.</h3>
         <p>
           재련 확률이 낮은 경우에는 트라이 횟수가 많아지는 만큼 경우의 수가 크게
-          늘어나 렉을 유발할 수 있습니다.
+          늘어나 렉을 유발할 수 있습니다. "귀속 재료를 0골드로 계산" 옵션을
+          활성화할 시 귀속 재료의 양에 따라 최대 10배까지 느려질 수 있습니다.
         </p>
         <h3>평균 비용을 줄이는 재료 투입을 제시할 뿐입니다.</h3>
         <p>

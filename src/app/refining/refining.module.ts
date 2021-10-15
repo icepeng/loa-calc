@@ -10,9 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RefiningComponent } from './containers/refining.component';
+import { RefineTableComponent } from './components/refine-table.component';
 
 @NgModule({
-  declarations: [RefiningComponent],
+  declarations: [RefiningComponent, RefineTableComponent],
   exports: [RefiningComponent],
   imports: [
     CommonModule,

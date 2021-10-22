@@ -290,6 +290,7 @@ export function getSearchScript(
             \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
             searchResult,
           ]);
+          await new Promise(resolve => setTimeout(resolve, 3500));
         }
       }
       return Object.fromEntries(result);

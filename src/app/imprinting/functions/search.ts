@@ -225,6 +225,7 @@ export function getSearchScript(
         })
         .then((document) => {
           if (document.querySelector("#idLogin")) {
+            console.log('로그인이 필요합니다. 스크립트를 종료합니다.');
             throw new Error('ERR_NO_LOGIN');
           }
           if (document.querySelector("#auctionListTbody > tr.empty")) {
@@ -293,8 +294,8 @@ export function getSearchScript(
       }
       return Object.fromEntries(result);
     }
-    
     getSearchResult(${JSON.stringify(toSearch)}, ${JSON.stringify(
-    accMap
-  )}).then(res => console.log(res));`;
+      accMap
+    )}).then(res => console.log(res));  
+  `;
 }

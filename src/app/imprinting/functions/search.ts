@@ -224,6 +224,9 @@ export function getSearchScript(
           return parser.parseFromString(html, "text/html");
         })
         .then((document) => {
+          if (document.querySelector("#idLogin")) {
+            throw new Error('ERR_NO_LOGIN');
+          }
           if (document.querySelector("#auctionListTbody > tr.empty")) {
               if (document.querySelector("#auctionListTbody > tr.empty").innerText.trim() === "경매장 연속 검색으로 인해 검색 이용이 최대 5분간 제한되었습니다.") {
                 return 'ERR_LIMIT_REACHED';

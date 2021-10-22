@@ -1,4 +1,6 @@
 <mat-toolbar color="primary">
-  <span>Lostark Calculator</span>
+  <span class="title">Lostark Calculator</span>
+  <a routerLink="refining" routerLinkActive="nav-selected" mat-button>재련 최적화</a>
+  <a routerLink="imprinting" routerLinkActive="nav-selected" mat-button>각인 최적화</a>
 </mat-toolbar>
-<app-refining></app-refining>
+<router-outlet></router-outlet>

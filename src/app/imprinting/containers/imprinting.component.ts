@@ -139,7 +139,7 @@ export class ImprintingComponent implements OnInit {
     return this.target.map((x) => x[0]).filter((x) => !!x);
   }
 
-  generate() {
+  async generate() {
     localStorage.setItem(
       'imprintingForm',
       JSON.stringify({
@@ -182,7 +182,7 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const searchScript = getSearchScript(this.toSearch, this.accMap);
+    const searchScript = await getSearchScript(this.toSearch, this.accMap);
     const copySuccess = this.clipboard.copy(searchScript);
     if (copySuccess) {
       this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');

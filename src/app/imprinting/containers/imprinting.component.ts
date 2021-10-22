@@ -223,6 +223,7 @@ export class ImprintingComponent implements OnInit {
       }
     } catch (err) {
       this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
+      this.isLoading = false;
       throw err;
     }
   }

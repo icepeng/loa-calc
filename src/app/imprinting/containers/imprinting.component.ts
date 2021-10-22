@@ -104,6 +104,7 @@ export class ImprintingComponent implements OnInit {
     신속: 0,
   };
 
+  worker: Worker | null = null;
   isLoading = false;
 
   dataSource = new MatTableDataSource<ComposeResult>([]);
@@ -121,6 +122,12 @@ export class ImprintingComponent implements OnInit {
       this.stonePenalty = form.stonePenalty;
       this.book = form.book;
       this.accMap = form.accMap;
+    }
+
+    if (typeof Worker !== 'undefined') {
+      this.worker = new Worker(
+        new URL('../imprinting.worker', import.meta.url)
+      );
     }
   }
 
@@ -185,15 +192,12 @@ export class ImprintingComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.isLoading = true;
 
-    if (typeof Worker !== 'undefined') {
-      const worker = new Worker(
-        new URL('../imprinting.worker', import.meta.url)
-      );
-      worker.onmessage = ({ data }) => {
+    if (this.worker) {
+      this.worker.onmessage = ({ data }) => {
         this.dataSource.data = data;
         this.isLoading = false;
       };
-      worker.postMessage({
+      this.worker.postMessage({
         combinations: this.combinations,
         initialEffect: Object.fromEntries([this.stonePenalty]),
         searchResult: JSON.parse(this.searchResult),
@@ -208,6 +212,5 @@ export class ImprintingComponent implements OnInit {
       );
       this.isLoading = false;
     }
-
   }
 }

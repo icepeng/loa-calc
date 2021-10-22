@@ -28,6 +28,8 @@ export interface Item {
   effects: Effects;
   quality: number;
   price: number;
+  buyPrice: number;
+  auctionPrice: number;
 }
 
 export interface ComposeResult {

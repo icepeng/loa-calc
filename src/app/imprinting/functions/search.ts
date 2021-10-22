@@ -140,21 +140,27 @@ export function getSearchScript(
         row.querySelector(\`td:nth-child(3) > div > span.txt\`).innerText.trim(),
         10
       );
-      const price = parseFloat(
+      const buyPrice = parseFloat(
         row
           .querySelector(\`td:nth-child(6) > div > em\`)
           .innerText.trim()
           .replace(/,/g, "")
+      )
+      const auctionPrice = parseFloat(
+        row
+          .querySelector(\`td:nth-child(5) > div > em\`)
+          .innerText.trim()
+          .replace(/,/g, "")
       );
-      if (!price) {
-        return;
-      }
+      const price = buyPrice || auctionPrice;
     
       return {
         name,
         effects,
         quality,
         price,
+        buyPrice,
+        auctionPrice,
       };
     }
     

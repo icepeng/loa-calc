@@ -1,3 +1,6 @@
 <div>{{ item.name }}</div>
-<div>{{ item.price | number: ".0-0" }}골드</div>
+<div>품질: {{ item.quality }}</div>
+<div *ngIf="item.buyPrice">즉시 구매가: {{ item.buyPrice | number: ".0-0" }}골드</div>
+<div *ngIf="!item.buyPrice">즉시 구매가: -</div>
+<div>최소 입찰가: {{ item.auctionPrice | number: ".0-0" }}골드</div>
 <div *ngFor="let eff of effects">[{{ eff[0] }}] +{{ eff[1] }}</div>

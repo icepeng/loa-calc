@@ -193,28 +193,37 @@ export class ImprintingComponent implements OnInit {
   }
 
   applySearchResult() {
-    this.dataSource.paginator = this.paginator;
-    this.isLoading = true;
+    if (this.isLoading) {
+      return;
+    }
 
-    if (this.worker) {
-      this.worker.onmessage = ({ data }) => {
-        this.dataSource.data = data;
+    try {
+      this.dataSource.paginator = this.paginator;
+      this.isLoading = true;
+
+      if (this.worker) {
+        this.worker.onmessage = ({ data }) => {
+          this.dataSource.data = data;
+          this.isLoading = false;
+        };
+        this.worker.postMessage({
+          combinations: this.combinations,
+          initialEffect: Object.fromEntries([this.stonePenalty]),
+          searchResult: JSON.parse(this.searchResult),
+          filter: this.filter,
+        });
+      } else {
+        this.dataSource.data = compose(
+          this.combinations,
+          Object.fromEntries([this.stonePenalty]),
+          JSON.parse(this.searchResult),
+          this.filter
+        );
         this.isLoading = false;
-      };
-      this.worker.postMessage({
-        combinations: this.combinations,
-        initialEffect: Object.fromEntries([this.stonePenalty]),
-        searchResult: JSON.parse(this.searchResult),
-        filter: this.filter,
-      });
-    } else {
-      this.dataSource.data = compose(
-        this.combinations,
-        Object.fromEntries([this.stonePenalty]),
-        JSON.parse(this.searchResult),
-        this.filter
-      );
-      this.isLoading = false;
+      }
+    } catch (err) {
+      this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
+      throw err;
     }
   }
 }

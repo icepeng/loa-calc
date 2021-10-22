@@ -160,15 +160,19 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const initial = filterRecord(
-      subtractRecord(
-        subtractRecord(
-          Object.fromEntries(this.target),
-          Object.fromEntries(this.stone)
-        ),
-        Object.fromEntries(this.book)
-      )
-    );
+    let initial = Object.fromEntries(this.target);
+    this.stone.forEach(([name, amount]) => {
+      if (initial[name]) {
+        initial[name] -= amount;
+      }
+    });
+    this.book.forEach(([name, amount]) => {
+      if (initial[name]) {
+        initial[name] -= amount;
+      }
+    });
+    initial = filterRecord(initial);
+
     this.candidates = getCandidates(initial);
     this.combinations = getCombinations(initial, this.candidates);
     this.toSearch = dedupe(this.combinations.flat());

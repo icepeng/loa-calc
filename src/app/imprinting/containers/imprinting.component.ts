@@ -151,6 +151,10 @@ export class ImprintingComponent implements OnInit {
       })
     );
 
+    if (this.target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
+      this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
+      return;
+    }
     if (
       Object.values(this.accMap).find(
         (x) => !x.dealOption1.type && !x.dealOption2?.type
@@ -173,8 +177,10 @@ export class ImprintingComponent implements OnInit {
     });
     initial = filterRecord(initial);
 
-    this.candidates = getCandidates(initial);
-    this.combinations = getCombinations(initial, this.candidates);
+    const candidates = getCandidates(initial);
+    this.combinations = candidates
+      .map((candidate) => getCombinations(initial, candidate))
+      .flat();
     this.toSearch = dedupe(this.combinations.flat());
 
     if (this.toSearch.length === 0) {

@@ -1,79 +1,73 @@
-import { dedupe, subtractRecord } from './util';
+import { combinations, combinationsWithReplacement } from './util';
 
 type Imprint = Record<string, number>;
 
-const splitTable: Record<number, number[]> = {
-  1: [3],
-  2: [3],
-  3: [3],
-  4: [4],
-  5: [5],
-  6: [3, 3],
-  7: [3, 4],
-  8: [3, 5],
-  9: [3, 3, 3],
-  10: [5, 5],
-  11: [5, 3, 3],
-  12: [5, 4, 3],
-  13: [5, 5, 3],
-  14: [5, 5, 4],
-  15: [5, 5, 5],
-};
+export function getCandidates(target: Imprint) {
+  const items = Array.from(combinations([...Object.keys(target), '잡옵'], 2));
+  const combines = Array.from(combinationsWithReplacement(items, 5));
 
-export function getCandidates(imprint: Imprint): Imprint[] {
-  const list = [];
-  Object.keys(imprint).forEach((key) => {
-    for (let amount of splitTable[imprint[key]]) {
-      list.push({ key, amount });
+  return combines.filter((combine) => {
+    const objMin = { ...target };
+    const objMax = { ...target };
+    combine.forEach(([x, y]) => {
+      objMin[x] -= 5;
+      objMin[y] -= 5;
+      objMax[x] -= 3;
+      objMax[y] -= 3;
+    });
+    if (Object.values(objMin).find((x) => x > 0)) {
+      return false;
     }
+    if (Object.values(objMax).find((x) => x <= -3)) {
+      return false;
+    }
+    return true;
   });
-  while (list.length < 10) {
-    list.push({ key: '잡옵', amount: 3 });
-  }
-
-  const candidates: Imprint[] = [];
-  for (let i = 0; i < list.length; i += 1) {
-    for (let j = i + 1; j < list.length; j += 1) {
-      if (list[i].key === list[j].key) {
-        continue;
-      }
-      if (list[i].amount > 3 && list[j].amount > 3) {
-        continue;
-      }
-      candidates.push({
-        [list[i].key]: list[i].amount,
-        [list[j].key]: list[j].amount,
-      });
-    }
-  }
-
-  return candidates;
 }
 
-export function getCombinations(imprint: Imprint, candidates: Imprint[]) {
-  const result: Imprint[][] = [];
-  function rec(obj: Imprint, comb: number[], s: number, d: number) {
-    if (d === 5) {
-      if (
-        Object.values(obj).reduce((sum, x) => sum + Math.max(x, 0), 0) === 0
-      ) {
-        result.push(
-          comb
-            .map((x) => candidates[x])
-            .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))
-        );
+export function getCombinations(target: Imprint, combine: string[][]) {
+  const result: [string, number][][][] = [];
+  const visited = new Set();
+  function rec(left: Imprint, additions: [string, number][][]) {
+    const hash = JSON.stringify(additions);
+    if (visited.has(hash)) {
+      return;
+    }
+    visited.add(hash);
+
+    if (!Object.values(left).find((x) => x > 0)) {
+      result.push(additions);
+      return;
+    }
+
+    for (let i = 0; i < additions.length; i += 1) {
+      const [a, b] = additions[i];
+      if (b[1] === 3 && a[1] < 5 && left[a[0]] > 0) {
+        const next = [...additions];
+        next[i] = [[a[0], a[1] + 1], b];
+        rec({ ...left, [a[0]]: left[a[0]] - 1 }, next);
+      }
+      if (a[1] === 3 && b[1] < 5 && left[b[0]] > 0) {
+        const next = [...additions];
+        next[i] = [a, [b[0], b[1] + 1]];
+        rec({ ...left, [b[0]]: left[b[0]] - 1 }, next);
       }
     }
-    for (let i = s; i < candidates.length; i += 1) {
-      const next = subtractRecord(obj, candidates[i]);
-      if (!Object.values(next).find((x) => x <= -3)) {
-        rec(next, [...comb, i], i + 1, d + 1);
-      }
-    }
-    return result;
   }
 
-  rec(imprint, [], 0, 0);
-
-  return dedupe(result);
+  rec(
+    combine.reduce(
+      (obj, [a, b]) => {
+        obj[a] -= 3;
+        obj[b] -= 3;
+        return obj;
+      },
+      { ...target }
+    ),
+    combine.map(([a, b]) => [
+      [a, 3],
+      [b, 3],
+    ])
+  );
+  return result.map((res) => res.map((x) => Object.fromEntries(x)));
 }

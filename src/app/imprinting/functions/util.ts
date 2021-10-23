@@ -53,3 +53,41 @@ export function permutator<T>(inputArr: T[]) {
 
   return result;
 }
+
+export function* combinations<T>(
+  elements: T[],
+  length: number
+): Generator<T[]> {
+  for (let i = 0; i < elements.length; i++) {
+    if (length === 1) {
+      yield [elements[i]];
+    } else {
+      const remaining = combinations(
+        elements.slice(i + 1, elements.length),
+        length - 1
+      );
+      for (const next of remaining) {
+        yield [elements[i], ...next];
+      }
+    }
+  }
+}
+
+export function* combinationsWithReplacement<T>(
+  elements: T[],
+  length: number
+): Generator<T[]> {
+  for (let i = 0; i < elements.length; i++) {
+    if (length === 1) {
+      yield [elements[i]];
+    } else {
+      const remaining = combinationsWithReplacement(
+        elements.slice(i, elements.length),
+        length - 1
+      );
+      for (const next of remaining) {
+        yield [elements[i], ...next];
+      }
+    }
+  }
+}

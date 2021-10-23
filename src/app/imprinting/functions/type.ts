@@ -37,3 +37,8 @@ export interface ComposeResult {
   effects: Effects;
   items: Record<string, Item>;
 }
+
+export interface ComposeFilter {
+  effects: Effects;
+  hasBuyPrice: boolean;
+}

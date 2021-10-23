@@ -1,5 +1,5 @@
 import { penaltyOptions } from './const';
-import { ComposeResult, Effects, Imprint, Item } from './type';
+import { ComposeFilter, ComposeResult, Effects, Imprint, Item } from './type';
 import { addRecord, permutator } from './util';
 
 function chooseItems(
@@ -7,7 +7,7 @@ function chooseItems(
   accList: string[],
   initialEffect: Effects,
   maxPrice: number,
-  filter: Effects
+  filter: ComposeFilter
 ) {
   function hasPenalty(effects: Effects) {
     return penaltyOptions.find(
@@ -17,8 +17,14 @@ function chooseItems(
     );
   }
 
-  function isFiltered(effects: Effects) {
-    return Object.keys(filter).find((name) => effects[name] < filter[name]);
+  function isItemFiltered(item: Item) {
+    return filter.hasBuyPrice ? !item.buyPrice : false;
+  }
+
+  function isEffectsFiltered(effects: Effects) {
+    return Object.keys(filter).find(
+      (name) => effects[name] < filter.effects[name]
+    );
   }
 
   function rec(
@@ -32,7 +38,7 @@ function chooseItems(
       return [];
     }
     if (d === 5) {
-      if (isFiltered(effects)) {
+      if (isEffectsFiltered(effects)) {
         return [];
       }
       return [
@@ -49,6 +55,9 @@ function chooseItems(
     const accName = accList[d];
     for (const item of currentItems) {
       if (usedItemNames[item.name]) {
+        continue;
+      }
+      if (isItemFiltered(item)) {
         continue;
       }
       result.push(
@@ -82,7 +91,7 @@ export function compose(
   combinations: Imprint[][],
   initialEffect: Effects,
   searchResult: Record<string, Item[]>,
-  filter: Effects
+  filter: ComposeFilter
 ) {
   const accPermutation = permutator([
     '목걸이',

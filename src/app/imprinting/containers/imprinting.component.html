@@ -1,6 +1,7 @@
 <div class="container">
   <h1 class="mat-h1">
-    각인 최적화 <a
+    각인 최적화
+    <a
       class="mat-caption"
       href="https://docs.google.com/presentation/d/1Xsa6RkciaCwuShltKjNXQDu_LpdlkZLqsNl2KMFXJV4/edit?usp=sharing"
       target="_blank"
@@ -177,7 +178,13 @@
       <mat-card-content>
         <div class="mat-caption w-240">
           * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
-          판단해서 사용해주세요.
+          판단해서 사용해주세요.<br />
+          *
+          <a
+            href="https://docs.google.com/presentation/d/1Xsa6RkciaCwuShltKjNXQDu_LpdlkZLqsNl2KMFXJV4/edit?usp=sharing"
+            target="_blank"
+            >설명서</a
+          >를 읽은 다음 사용해주세요.
         </div>
       </mat-card-content>
     </mat-card>
@@ -191,16 +198,33 @@
         <div>
           <mat-form-field class="w-72">
             <mat-label> 치명 </mat-label>
-            <input [(ngModel)]="filter['치명']" matInput type="number" />
+            <input
+              [(ngModel)]="filter.effects['치명']"
+              matInput
+              type="number"
+            />
           </mat-form-field>
           <mat-form-field class="w-72">
             <mat-label> 특화 </mat-label>
-            <input [(ngModel)]="filter['특화']" matInput type="number" />
+            <input
+              [(ngModel)]="filter.effects['특화']"
+              matInput
+              type="number"
+            />
           </mat-form-field>
           <mat-form-field class="w-72">
             <mat-label> 신속 </mat-label>
-            <input [(ngModel)]="filter['신속']" matInput type="number" />
+            <input
+              [(ngModel)]="filter.effects['신속']"
+              matInput
+              type="number"
+            />
           </mat-form-field>
+        </div>
+        <div>
+          <mat-checkbox [(ngModel)]="filter.hasBuyPrice"
+            >즉시구매 가능한 조합만 표시</mat-checkbox
+          >
         </div>
         <button
           [disabled]="toSearch.length === 0"

@@ -92,16 +92,18 @@ export class ImprintingComponent implements OnInit {
     },
   };
 
-  candidates: Imprint[] = [];
   combinations: Imprint[][] = [];
   toSearch: Imprint[] = [];
 
   searchResult = '';
 
   filter = {
-    치명: 0,
-    특화: 0,
-    신속: 0,
+    effects: {
+      치명: 0,
+      특화: 0,
+      신속: 0,
+    },
+    hasBuyPrice: false,
   };
 
   worker: Worker | null = null;

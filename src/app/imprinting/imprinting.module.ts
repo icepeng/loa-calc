@@ -17,9 +17,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ItemViewComponent } from './components/item-view.component';
 import { ImprintingComponent } from './containers/imprinting.component';
 import { ImprintingRoutingModule } from './imprinting-routing.module';
+import { ImprintingFormComponent } from './containers/imprinting-form.component';
+import { AccFormComponent } from './containers/acc-form.component';
+import { ComposeTableComponent } from './components/compose-table.component';
+import { ImprintAutocompleteComponent } from './components/imprint-autocomplete.component';
 
 @NgModule({
-  declarations: [ImprintingComponent, ItemViewComponent],
+  declarations: [
+    ImprintingComponent,
+    ItemViewComponent,
+    ImprintingFormComponent,
+    AccFormComponent,
+    ComposeTableComponent,
+    ImprintAutocompleteComponent,
+  ],
   imports: [
     CommonModule,
     ImprintingRoutingModule,

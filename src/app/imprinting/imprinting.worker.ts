@@ -7,6 +7,7 @@ addEventListener('message', ({ data }) => {
     data.combinations,
     data.initialEffect,
     data.searchResult,
+    data.fixedItems,
     data.filter
   );
   postMessage(response);

@@ -1,0 +1,12 @@
+<input
+  type="text"
+  matInput
+  [ngModel]="value"
+  (ngModelChange)="valueChange.emit($event)"
+  [matAutocomplete]="auto"
+/>
+<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+  <mat-option *ngFor="let option of filterImprint(value)" [value]="option">
+    {{ option }}
+  </mat-option>
+</mat-autocomplete>

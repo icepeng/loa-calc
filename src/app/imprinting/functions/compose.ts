@@ -6,6 +6,7 @@ function chooseItems(
   entries: Item[][],
   accList: string[],
   initialEffect: Effects,
+  fixedItems: Record<string, Item>,
   maxPrice: number,
   filter: ComposeFilter
 ) {
@@ -37,7 +38,7 @@ function chooseItems(
     if (hasPenalty(effects) || price > maxPrice) {
       return [];
     }
-    if (d === 5) {
+    if (d === accList.length) {
       if (isEffectsFiltered(effects)) {
         return [];
       }
@@ -78,7 +79,16 @@ function chooseItems(
     }
     return result;
   }
-  return rec(initialEffect, 0, {}, {}, 0);
+  return rec(
+    Object.values(fixedItems).reduce(
+      (sum, x) => addRecord(sum, x.effects),
+      initialEffect
+    ),
+    0,
+    Object.fromEntries(Object.values(fixedItems).map((x) => [x.name, true])),
+    fixedItems,
+    0
+  );
 }
 
 function hashResult(result: ComposeResult) {
@@ -91,20 +101,19 @@ export function compose(
   combinations: Imprint[][],
   initialEffect: Effects,
   searchResult: Record<string, Item[]>,
+  fixedItems: Record<string, Item>,
   filter: ComposeFilter
 ) {
-  const accPermutation = permutator([
-    '목걸이',
-    '귀걸이1',
-    '귀걸이2',
-    '반지1',
-    '반지2',
-  ]);
+  const accPermutation = permutator(
+    ['목걸이', '귀걸이1', '귀걸이2', '반지1', '반지2'].filter(
+      (x) => !fixedItems[x]
+    )
+  );
   let result: ComposeResult[] = [];
   for (const combination of combinations) {
     for (const accList of accPermutation) {
       const entries: Item[][] = [];
-      for (let i = 0; i < 5; i += 1) {
+      for (let i = 0; i < accList.length; i += 1) {
         const acc = accList[i];
         const imprint = Object.entries(combination[i]);
         const items =
@@ -115,12 +124,13 @@ export function compose(
           entries.push(items);
         }
       }
-      if (entries.length === 5) {
+      if (entries.length === accList.length) {
         result.push(
           ...chooseItems(
             entries,
             accList,
             initialEffect,
+            fixedItems,
             result.length ? result[result.length - 1].price : Infinity,
             filter
           )

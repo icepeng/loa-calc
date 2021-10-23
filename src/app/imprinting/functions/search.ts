@@ -1,8 +1,9 @@
-import { SearchOption } from './type';
+import { AccMap } from './type';
 
 export function getSearchScript(
   toSearch: Record<string, number>[],
-  accMap: Record<string, SearchOption>
+  accToSearch: string[],
+  accMap: Record<string, AccMap>
 ) {
   return `const category = {
       목걸이: 200010,
@@ -155,6 +156,7 @@ export function getSearchScript(
       const price = buyPrice || auctionPrice;
     
       return {
+        isFixed: false,
         name,
         effects,
         quality,
@@ -246,12 +248,12 @@ export function getSearchScript(
         });
     }
     
-    async function getSearchResult(toSearch, accMap) {
+    async function getSearchResult(toSearch, accToSearch, accMap) {
       const result = [];
-      const total = toSearch.length * 5;
+      const total = toSearch.length * accToSearch.length;
       let count = 0;
       for (const imprint of toSearch) {
-        for (const accType of ["목걸이", "귀걸이1", "귀걸이2", "반지1", "반지2"]) {
+        for (const accType of accToSearch) {
           count += 1;
           console.log(\`검색 진행중 - \${count} / \${total}\`)
           const [[type1, min1], [type2, min2]] = Object.entries(imprint);
@@ -265,12 +267,12 @@ export function getSearchScript(
                 grade: grade.유물,
                 quality: acc.quality,
                 dealOption1: acc.dealOption1 && {
-                    type: dealOption[acc.dealOption1.type],
-                    min: acc.dealOption1.min,
+                    type: dealOption[acc.dealOption1[0]],
+                    min: acc.dealOption1[1],
                 },
                 dealOption2: acc.dealOption2 && {
-                    type: dealOption[acc.dealOption2.type],
-                    min: acc.dealOption2.min,
+                    type: dealOption[acc.dealOption2[0]],
+                    min: acc.dealOption2[1],
                 },
                 imprintOption1: {
                     type: imprintOption[type1],
@@ -296,13 +298,13 @@ export function getSearchScript(
             \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
             searchResult,
           ]);
-          await new Promise(resolve => setTimeout(resolve, 3500));
+          await new Promise(resolve => setTimeout(resolve, 3200));
         }
       }
       return Object.fromEntries(result);
     }
     getSearchResult(${JSON.stringify(toSearch)}, ${JSON.stringify(
-      accMap
-    )}).then(res => console.log(res));  
+    accToSearch
+  )}, ${JSON.stringify(accMap)}).then(res => console.log(res));  
   `;
 }

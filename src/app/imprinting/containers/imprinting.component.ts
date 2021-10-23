@@ -1,18 +1,14 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
 import { compose } from '../functions/compose';
-import {
-  dealOptions,
-  imprintOptions,
-  penaltyOptions,
-} from '../functions/const';
+import { imprintOptions } from '../functions/const';
 import { getCandidates, getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
-import { ComposeResult, Imprint, Item, SearchOption } from '../functions/type';
-import { dedupe, filterRecord, subtractRecord } from '../functions/util';
+import { ComposeResult, Imprint, Item } from '../functions/type';
+import { addEntries, dedupe, filterRecord } from '../functions/util';
+import { AccFormComponent } from './acc-form.component';
+import { ImprintingFormComponent } from './imprinting-form.component';
 
 @Component({
   selector: 'app-imprinting',
@@ -20,81 +16,10 @@ import { dedupe, filterRecord, subtractRecord } from '../functions/util';
   styleUrls: ['./imprinting.component.scss'],
 })
 export class ImprintingComponent implements OnInit {
-  imprintOptions = imprintOptions;
-  penaltyOptions = penaltyOptions;
-  dealOptions = dealOptions;
-
-  target: [string, number][] = [
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-  ];
-
-  stone: [string, number][] = [
-    ['', 0],
-    ['', 0],
-  ];
-
-  stonePenalty: [string, number] = ['', 0];
-
-  book: [string, number][] = [
-    ['', 0],
-    ['', 0],
-  ];
-
-  accMap: Record<string, SearchOption> = {
-    목걸이: {
-      category: '목걸이',
-      quality: 0,
-      dealOption1: {
-        type: '',
-        min: 0,
-      },
-      dealOption2: {
-        type: '',
-        min: 0,
-      },
-    },
-    귀걸이1: {
-      category: '귀걸이',
-      quality: 0,
-      dealOption1: {
-        type: '',
-        min: 0,
-      },
-    },
-    귀걸이2: {
-      category: '귀걸이',
-      quality: 0,
-      dealOption1: {
-        type: '',
-        min: 0,
-      },
-    },
-    반지1: {
-      category: '반지',
-      quality: 0,
-      dealOption1: {
-        type: '',
-        min: 0,
-      },
-    },
-    반지2: {
-      category: '반지',
-      quality: 0,
-      dealOption1: {
-        type: '',
-        min: 0,
-      },
-    },
-  };
+  @ViewChild(ImprintingFormComponent) imprintingForm!: ImprintingFormComponent;
+  @ViewChild(AccFormComponent) accForm!: AccFormComponent;
 
   combinations: Imprint[][] = [];
-  toSearch: Imprint[] = [];
-
   searchResult = '';
 
   filter = {
@@ -108,24 +33,11 @@ export class ImprintingComponent implements OnInit {
 
   worker: Worker | null = null;
   isLoading = false;
-
-  dataSource = new MatTableDataSource<ComposeResult>([]);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  composeResults: ComposeResult[] = [];
 
   constructor(private snackbar: MatSnackBar, private clipboard: Clipboard) {}
 
   ngOnInit(): void {
-    const savedForm = localStorage.getItem('imprintingForm');
-    if (savedForm) {
-      const form = JSON.parse(savedForm);
-      this.target = form.target;
-      this.stone = form.stone;
-      this.stonePenalty = form.stonePenalty;
-      this.book = form.book;
-      this.accMap = form.accMap;
-    }
-
     if (typeof Worker !== 'undefined') {
       this.worker = new Worker(
         new URL('../imprinting.worker', import.meta.url)
@@ -133,64 +45,60 @@ export class ImprintingComponent implements OnInit {
     }
   }
 
-  filterImprint(name: string) {
-    return imprintOptions.filter((x) => x.includes(name));
-  }
-
-  getTargetImprints() {
-    return this.target.map((x) => x[0]).filter((x) => !!x);
-  }
-
   generate() {
-    localStorage.setItem(
-      'imprintingForm',
-      JSON.stringify({
-        target: this.target,
-        stone: this.stone,
-        stonePenalty: this.stonePenalty,
-        book: this.book,
-        accMap: this.accMap,
-      })
-    );
+    const form = {
+      target: this.imprintingForm.target,
+      stone: this.imprintingForm.stone,
+      stonePenalty: this.imprintingForm.stonePenalty,
+      book: this.imprintingForm.book,
+      accMap: this.accForm.accMap,
+    };
+    localStorage.setItem('imprintingForm_v2', JSON.stringify(form));
 
-    if (this.target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
+    if (form.target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
       this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
       return;
     }
     if (
-      Object.values(this.accMap).find(
-        (x) => !x.dealOption1.type && !x.dealOption2?.type
+      Object.values(form.accMap).find(
+        (x) => !x.dealOption1[0] && !x.dealOption2?.[0]
       )
     ) {
       this.snackbar.open('입력되지 않은 전투 특성이 있습니다.', '닫기');
       return;
     }
 
-    let initial = Object.fromEntries(this.target);
-    this.stone.forEach(([name, amount]) => {
-      if (initial[name]) {
-        initial[name] -= amount;
-      }
-    });
-    this.book.forEach(([name, amount]) => {
-      if (initial[name]) {
-        initial[name] -= amount;
-      }
-    });
-    initial = filterRecord(initial);
+    const initial = filterRecord(
+      [
+        ...form.stone,
+        ...form.book,
+        ...Object.values(form.accMap)
+          .filter((acc) => acc.name)
+          .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
+      ].reduce((obj, [name, amount]) => {
+        obj[name] -= amount;
+        return obj;
+      }, Object.fromEntries(form.target))
+    );
 
-    const candidates = getCandidates(initial);
-    this.combinations = candidates
+    const accToSearch = Object.entries(form.accMap)
+      .filter(([name, acc]) => !acc.name)
+      .map((x) => x[0]);
+
+    this.combinations = getCandidates(initial, accToSearch.length)
       .map((candidate) => getCombinations(initial, candidate))
       .flat();
-    this.toSearch = dedupe(this.combinations.flat());
 
-    if (this.toSearch.length === 0) {
+    if (this.combinations.length === 0) {
       this.snackbar.open('불가능한 목표 각인입니다.', '닫기');
       return;
     }
 
-    const searchScript = getSearchScript(this.toSearch, this.accMap);
+    const searchScript = getSearchScript(
+      dedupe(this.combinations.flat()),
+      accToSearch,
+      form.accMap
+    );
     const copySuccess = this.clipboard.copy(searchScript);
     if (copySuccess) {
       this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');
@@ -200,32 +108,68 @@ export class ImprintingComponent implements OnInit {
     }
   }
 
+  getFixedItems(): Record<string, Item> {
+    return Object.fromEntries(
+      Object.entries(this.accForm.accMap)
+        .filter(([name, acc]) => acc.name)
+        .map(([name, acc]) => [
+          name,
+          {
+            isFixed: true,
+            name: acc.name,
+            quality: acc.quality,
+            price: 0,
+            auctionPrice: 0,
+            buyPrice: 0,
+            effects: addEntries(
+              [
+                acc.dealOption1,
+                acc.dealOption2,
+                acc.imprintOption1,
+                acc.imprintOption2,
+                acc.imprintPenalty,
+              ].filter((x): x is [string, number] => !!x)
+            ),
+          },
+        ])
+    );
+  }
+
   applySearchResult() {
     if (this.isLoading) {
       return;
     }
 
     try {
-      this.dataSource.paginator = this.paginator;
       this.isLoading = true;
+      const composeData = {
+        combinations: this.combinations,
+        initialEffect: Object.fromEntries([this.imprintingForm.stonePenalty]),
+        searchResult: JSON.parse(this.searchResult) as Record<string, Item[]>,
+        fixedItems: this.getFixedItems(),
+        filter: this.filter,
+      };
 
       if (this.worker) {
         this.worker.onmessage = ({ data }) => {
-          this.dataSource.data = data;
+          this.composeResults = data;
           this.isLoading = false;
         };
-        this.worker.postMessage({
-          combinations: this.combinations,
-          initialEffect: Object.fromEntries([this.stonePenalty]),
-          searchResult: JSON.parse(this.searchResult),
-          filter: this.filter,
-        });
+        this.worker.onerror = (err) => {
+          this.snackbar.open(
+            '오류가 발생했습니다. 설명서를 확인해주세요.',
+            '닫기'
+          );
+          this.isLoading = false;
+        };
+        this.worker.postMessage(composeData);
       } else {
-        this.dataSource.data = compose(
-          this.combinations,
-          Object.fromEntries([this.stonePenalty]),
-          JSON.parse(this.searchResult),
-          this.filter
+        this.composeResults = compose(
+          composeData.combinations,
+          composeData.initialEffect,
+          composeData.searchResult,
+          composeData.fixedItems,
+          composeData.filter
         );
         this.isLoading = false;
       }

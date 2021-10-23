@@ -2,9 +2,9 @@ import { combinations, combinationsWithReplacement } from './util';
 
 type Imprint = Record<string, number>;
 
-export function getCandidates(target: Imprint) {
+export function getCandidates(target: Imprint, length: number) {
   const items = Array.from(combinations([...Object.keys(target), '잡옵'], 2));
-  const combines = Array.from(combinationsWithReplacement(items, 5));
+  const combines = Array.from(combinationsWithReplacement(items, length));
 
   return combines.filter((combine) => {
     const objMin = { ...target };

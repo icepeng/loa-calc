@@ -1,0 +1,87 @@
+<mat-card>
+  <mat-card-subtitle>목표 각인</mat-card-subtitle>
+  <mat-card-content>
+    <div *ngFor="let i of [0, 1, 2, 3, 4, 5]">
+      <mat-form-field>
+        <mat-label> 각인{{ i + 1 }} </mat-label>
+        <input
+          type="text"
+          matInput
+          [(ngModel)]="target[i][0]"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filterImprint(target[i][0])"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="w-72">
+        <mat-label> 수치 </mat-label>
+        <mat-select [(ngModel)]="target[i][1]">
+          <mat-option [value]="0">미사용</mat-option>
+          <mat-option [value]="5">1레벨</mat-option>
+          <mat-option [value]="10">2레벨</mat-option>
+          <mat-option [value]="15">3레벨</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-subtitle>장착 각인</mat-card-subtitle>
+  <mat-card-content>
+    <div *ngFor="let i of [0, 1]">
+      <mat-form-field>
+        <mat-label> 각인{{ i + 1 }} </mat-label>
+        <mat-select [(ngModel)]="book[i][0]">
+          <mat-option
+            *ngFor="let option of getTargetImprints()"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-72">
+        <mat-label> 수치 </mat-label>
+        <input [(ngModel)]="book[i][1]" matInput type="number" />
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-subtitle>어빌리티 스톤 각인</mat-card-subtitle>
+  <mat-card-content>
+    <div *ngFor="let i of [0, 1]">
+      <mat-form-field>
+        <mat-label> 각인{{ i + 1 }} </mat-label>
+        <mat-select [(ngModel)]="stone[i][0]">
+          <mat-option
+            *ngFor="let option of getTargetImprints()"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-72">
+        <mat-label> 수치 </mat-label>
+        <input [(ngModel)]="stone[i][1]" matInput type="number" />
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label> 페널티 각인 </mat-label>
+      <mat-select [(ngModel)]="stonePenalty[0]">
+        <mat-option *ngFor="let option of penaltyOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-72">
+      <mat-label> 수치 </mat-label>
+      <input [(ngModel)]="stonePenalty[1]" matInput type="number" />
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

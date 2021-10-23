@@ -28,6 +28,18 @@ export function filterRecord(record: Record<string, number>) {
   );
 }
 
+export function addEntries(entries: [string, number][]) {
+  const result: Record<string, number> = {};
+  entries.forEach(([key, value]) => {
+    if (!result[key]) {
+      result[key] = 0;
+    }
+    result[key] += value;
+  });
+
+  return result;
+}
+
 export function dedupe<T>(arr: T[]): T[] {
   return Array.from(new Set(arr.map((item) => JSON.stringify(item)))).map(
     (item) => JSON.parse(item)

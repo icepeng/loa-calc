@@ -2,28 +2,19 @@ export type Imprint = Record<string, number>;
 
 export type Effects = Record<string, number>;
 
-export interface SearchOption {
+export interface AccMap {
   category: string;
   quality: number;
-  dealOption1: {
-    type: string;
-    min: number;
-  };
-  dealOption2?: {
-    type: string;
-    min: number;
-  };
-  imprintOption1?: {
-    type: string;
-    min: number;
-  };
-  imprintOption2?: {
-    type: string;
-    min: number;
-  };
+  dealOption1: [string, number];
+  dealOption2?: [string, number];
+  name: string;
+  imprintOption1: [string, number];
+  imprintOption2: [string, number];
+  imprintPenalty: [string, number];
 }
 
 export interface Item {
+  isFixed: boolean;
   name: string;
   effects: Effects;
   quality: number;

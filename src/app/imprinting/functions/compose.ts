@@ -23,7 +23,7 @@ function chooseItems(
   }
 
   function isEffectsFiltered(effects: Effects) {
-    return Object.keys(filter).find(
+    return Object.keys(filter.effects).find(
       (name) => effects[name] < filter.effects[name]
     );
   }

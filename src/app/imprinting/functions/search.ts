@@ -171,6 +171,7 @@ export function getSearchScript(
     
       body.append("request[firstCategory]", 200000);
       body.append("request[secondCategory]", form.category);
+      body.append("request[itemTier]", 3);
       body.append("request[itemGrade]", form.grade);
       body.append("request[itemLevelMin]", 0);
       body.append("request[itemLevelMax]", 1700);

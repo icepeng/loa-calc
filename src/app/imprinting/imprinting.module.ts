@@ -20,7 +20,6 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
 import { ImprintingFormComponent } from './containers/imprinting-form.component';
 import { AccFormComponent } from './containers/acc-form.component';
 import { ComposeTableComponent } from './components/compose-table.component';
-import { ImprintAutocompleteComponent } from './components/imprint-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { ImprintAutocompleteComponent } from './components/imprint-autocomplete.
     ImprintingFormComponent,
     AccFormComponent,
     ComposeTableComponent,
-    ImprintAutocompleteComponent,
   ],
   imports: [
     CommonModule,

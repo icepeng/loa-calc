@@ -31,6 +31,7 @@ export class ImprintingComponent implements OnInit {
     },
     hasBuyPrice: false,
     tradeLeft: 0,
+    exclude: new Set<string>(),
   };
 
   worker: Worker | null = null;
@@ -50,6 +51,15 @@ export class ImprintingComponent implements OnInit {
   reset() {
     this.imprintingForm.reset();
     this.accForm.reset();
+  }
+
+  exclude(item: Item) {
+    this.filter.exclude.add(item.id!);
+    this.applySearchResult();
+  }
+
+  resetExcludeFilter() {
+    this.filter.exclude = new Set();
   }
 
   generate() {
@@ -112,6 +122,7 @@ export class ImprintingComponent implements OnInit {
     if (copySuccess) {
       this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');
       this.searchResult = '';
+      this.filter.exclude = new Set();
     } else {
       this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
     }
@@ -126,6 +137,7 @@ export class ImprintingComponent implements OnInit {
           {
             isFixed: true,
             name: acc.name,
+            id: null,
             grade: null,
             tradeLeft: null,
             quality: acc.quality,
@@ -165,10 +177,7 @@ export class ImprintingComponent implements OnInit {
         this.worker.onmessage = ({ data }) => {
           this.composeResults = data;
           if (this.composeResults.length === 0) {
-            this.snackbar.open(
-              '조건에 맞는 매물이 없습니다.',
-              '닫기'
-            );
+            this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
           }
           this.isLoading = false;
         };
@@ -189,10 +198,7 @@ export class ImprintingComponent implements OnInit {
           composeData.filter
         );
         if (this.composeResults.length === 0) {
-          this.snackbar.open(
-            '조건에 맞는 매물이 없습니다.',
-            '닫기'
-          );
+          this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
         }
         this.isLoading = false;
       }

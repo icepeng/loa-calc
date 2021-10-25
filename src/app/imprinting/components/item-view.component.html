@@ -1,3 +1,14 @@
+<button
+  *ngIf="!item.isFixed"
+  class="menu"
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+>
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="exclude.emit(item)">제외하고 계산</button>
+</mat-menu>
 <div [ngClass]="'grade-' + item.grade">{{ item.name }}</div>
 <div>품질: {{ item.quality }}</div>
 <div *ngIf="item.isFixed">[보유한 아이템]</div>

@@ -91,6 +91,12 @@
             >즉시구매 가능한 조합만 표시</mat-checkbox
           >
         </div>
+        <div>
+          <span>제외된 아이템 {{ filter.exclude.size }}개</span>
+          <button (click)="resetExcludeFilter()" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
         <button
           [disabled]="combinations.length === 0"
           (click)="applySearchResult()"
@@ -107,6 +113,7 @@
         <app-compose-table
           [data]="composeResults"
           [isLoading]="isLoading"
+          (exclude)="exclude($event)"
         ></app-compose-table>
       </mat-card-content>
     </mat-card>

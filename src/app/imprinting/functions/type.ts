@@ -16,6 +16,7 @@ export interface AccMap {
 export interface Item {
   isFixed: boolean;
   name: string;
+  id: string | null;
   grade: number | null;
   tradeLeft: number | null;
   effects: Effects;
@@ -35,4 +36,5 @@ export interface ComposeFilter {
   effects: Effects;
   hasBuyPrice: boolean;
   tradeLeft: number;
+  exclude: Set<string>;
 }

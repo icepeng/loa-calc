@@ -1,15 +1,17 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeResult } from '../functions/type';
+import { ComposeResult, Item } from '../functions/type';
 
 @Component({
   selector: 'app-compose-table',
@@ -19,6 +21,7 @@ import { ComposeResult } from '../functions/type';
 export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() isLoading!: boolean;
+  @Output() exclude = new EventEmitter<Item>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<ComposeResult>([]);

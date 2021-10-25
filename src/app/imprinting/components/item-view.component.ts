@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   dealOptions,
   imprintOptions,
@@ -13,6 +20,7 @@ import { Item } from '../functions/type';
 })
 export class ItemViewComponent implements OnChanges {
   @Input() item!: Item;
+  @Output() exclude = new EventEmitter<Item>();
   dealOptions: [string, number][] = [];
   imprintOptions: [string, number][] = [];
   penalty?: [string, number];

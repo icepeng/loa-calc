@@ -1,8 +1,17 @@
 <div class="container">
-  <h1 class="mat-h1">
-    각인 최적화
+  <div class="header">
+    <h1 class="mat-h1">
+      각인 최적화
+      <a
+        class="mat-caption"
+        href="https://docs.google.com/presentation/d/e/2PACX-1vQbsDbKRVd-0qRVdLs-tzSUsYMlIFxks6YRO2XzGGdXHm0GACTUwuQxbcXhiAdoHckz7epo4sjQVo9j/pub?start=false&loop=false&delayms=60000"
+        target="_blank"
+        >설명서</a
+      >
+    </h1>
+    <div class="grow"></div>
     <button (click)="reset()" mat-stroked-button>초기화</button>
-  </h1>
+  </div>
   <div class="layout">
     <app-imprinting-form></app-imprinting-form>
     <app-acc-form></app-acc-form>
@@ -66,11 +75,7 @@
         <div>
           <mat-form-field>
             <mat-label> 구매 후 거래가능 횟수 </mat-label>
-            <input
-              [(ngModel)]="filter.tradeLeft"
-              matInput
-              type="number"
-            />
+            <input [(ngModel)]="filter.tradeLeft" matInput type="number" />
             <span matSuffix>회 이상</span>
           </mat-form-field>
         </div>

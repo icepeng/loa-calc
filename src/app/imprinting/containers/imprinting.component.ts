@@ -164,6 +164,12 @@ export class ImprintingComponent implements OnInit {
       if (this.worker) {
         this.worker.onmessage = ({ data }) => {
           this.composeResults = data;
+          if (this.composeResults.length === 0) {
+            this.snackbar.open(
+              '조건에 맞는 매물이 없습니다.',
+              '닫기'
+            );
+          }
           this.isLoading = false;
         };
         this.worker.onerror = (err) => {
@@ -182,6 +188,12 @@ export class ImprintingComponent implements OnInit {
           composeData.fixedItems,
           composeData.filter
         );
+        if (this.composeResults.length === 0) {
+          this.snackbar.open(
+            '조건에 맞는 매물이 없습니다.',
+            '닫기'
+          );
+        }
         this.isLoading = false;
       }
     } catch (err) {

@@ -1,4 +1,4 @@
-<div>{{ item.name }}</div>
+<div [ngClass]="'grade-' + item.grade">{{ item.name }}</div>
 <div>품질: {{ item.quality }}</div>
 <div *ngIf="item.isFixed">[보유한 아이템]</div>
 <ng-container *ngIf="!item.isFixed">

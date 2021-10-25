@@ -20,6 +20,13 @@
     <mat-card>
       <mat-card-subtitle>경매장 검색</mat-card-subtitle>
       <mat-card-content>
+        <div>
+          <mat-checkbox [(ngModel)]="searchAncient"
+            >고대 등급을 포함해서 검색</mat-checkbox
+          >
+        </div>
+      </mat-card-content>
+      <mat-card-content>
         <button (click)="generate()" mat-raised-button color="primary">
           검색 코드 복사
         </button>

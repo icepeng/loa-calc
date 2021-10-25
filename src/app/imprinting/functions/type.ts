@@ -16,6 +16,7 @@ export interface AccMap {
 export interface Item {
   isFixed: boolean;
   name: string;
+  grade: number | null;
   tradeLeft: number | null;
   effects: Effects;
   quality: number;

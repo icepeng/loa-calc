@@ -3,18 +3,13 @@ import { AccMap } from './type';
 export function getSearchScript(
   toSearch: Record<string, number>[],
   accToSearch: string[],
-  accMap: Record<string, AccMap>
+  accMap: Record<string, AccMap>,
+  searchAncient: boolean
 ) {
   return `const category = {
       목걸이: 200010,
       귀걸이: 200020,
       반지: 200030,
-    };
-    
-    const grade = {
-      전설: 4,
-      유물: 5,
-      고대: 6,
     };
     
     const dealOption = {
@@ -122,6 +117,7 @@ export function getSearchScript(
         return;
       }
     
+      const grade = parseInt(document.querySelector('#auctionListTbody > tr:nth-child(1) > td:nth-child(1) > div.grade').getAttribute('data-grade'), 10)
       const name = row
         .querySelector(\`td:nth-child(1) > div.grade > span.name\`)
         .innerText.trim();
@@ -162,6 +158,7 @@ export function getSearchScript(
       return {
         isFixed: false,
         name,
+        grade,
         tradeLeft,
         effects,
         quality,
@@ -177,7 +174,7 @@ export function getSearchScript(
       body.append("request[firstCategory]", 200000);
       body.append("request[secondCategory]", form.category);
       body.append("request[itemTier]", 3);
-      body.append("request[itemGrade]", form.grade);
+      body.append("request[itemGrade]", form.grade ?? "");
       body.append("request[itemLevelMin]", 0);
       body.append("request[itemLevelMax]", 1700);
       body.append("request[gradeQuality]", form.quality);
@@ -254,7 +251,7 @@ export function getSearchScript(
         });
     }
     
-    async function getSearchResult(toSearch, accToSearch, accMap) {
+    async function getSearchResult(toSearch, accToSearch, accMap, grade) {
       const result = [];
       const total = toSearch.length * accToSearch.length;
       let count = 0;
@@ -270,7 +267,7 @@ export function getSearchScript(
           while (true) {
             searchResult = await search({
                 category: category[acc.category],
-                grade: grade.유물,
+                grade: grade,
                 quality: acc.quality,
                 dealOption1: acc.dealOption1 && {
                     type: dealOption[acc.dealOption1[0]],
@@ -311,6 +308,8 @@ export function getSearchScript(
     }
     getSearchResult(${JSON.stringify(toSearch)}, ${JSON.stringify(
     accToSearch
-  )}, ${JSON.stringify(accMap)}).then(res => console.log(res));  
+  )}, ${JSON.stringify(accMap)}, ${
+    searchAncient ? null : 5
+  }).then(res => console.log(res));  
   `;
 }

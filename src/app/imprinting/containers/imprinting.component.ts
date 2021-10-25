@@ -20,6 +20,7 @@ export class ImprintingComponent implements OnInit {
   @ViewChild(AccFormComponent) accForm!: AccFormComponent;
 
   combinations: Imprint[][] = [];
+  searchAncient = false;
   searchResult = '';
 
   filter = {
@@ -91,8 +92,9 @@ export class ImprintingComponent implements OnInit {
       .filter(([name, acc]) => !acc.name)
       .map((x) => x[0]);
 
-    this.combinations = getCandidates(initial, accToSearch.length)
-      .map((candidate) => getCombinations(initial, candidate))
+    const imprintLimit = this.searchAncient ? 6 : 5;
+    this.combinations = getCandidates(initial, accToSearch.length, imprintLimit)
+      .map((candidate) => getCombinations(initial, candidate, imprintLimit))
       .flat();
 
     if (this.combinations.length === 0) {
@@ -103,7 +105,8 @@ export class ImprintingComponent implements OnInit {
     const searchScript = getSearchScript(
       dedupe(this.combinations.flat()),
       accToSearch,
-      form.accMap
+      form.accMap,
+      this.searchAncient
     );
     const copySuccess = this.clipboard.copy(searchScript);
     if (copySuccess) {
@@ -123,6 +126,7 @@ export class ImprintingComponent implements OnInit {
           {
             isFixed: true,
             name: acc.name,
+            grade: null,
             tradeLeft: null,
             quality: acc.quality,
             price: 0,

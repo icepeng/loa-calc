@@ -2,10 +2,19 @@
 <div>품질: {{ item.quality }}</div>
 <div *ngIf="item.isFixed">[보유한 아이템]</div>
 <ng-container *ngIf="!item.isFixed">
+  <div>구매 시 거래 {{ item.tradeLeft }}회 가능</div>
   <div *ngIf="item.buyPrice">
     즉시 구매가: {{ item.buyPrice | number: ".0-0" }}골드
   </div>
   <div *ngIf="!item.buyPrice">즉시 구매가: -</div>
   <div>최소 입찰가: {{ item.auctionPrice | number: ".0-0" }}골드</div>
 </ng-container>
-<div *ngFor="let eff of effects">[{{ eff[0] }}] +{{ eff[1] }}</div>
+<div>
+  <span *ngFor="let eff of dealOptions">[{{ eff[0] }}] +{{ eff[1] }} </span>
+</div>
+<div>
+  <span *ngFor="let eff of imprintOptions">[{{ eff[0] }}] +{{ eff[1] }} </span>
+</div>
+<div *ngIf="penalty">
+  <span>[{{ penalty[0] }}] +{{ penalty[1] }} </span>
+</div>

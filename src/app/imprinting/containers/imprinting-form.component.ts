@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  dealOptions,
+  imprintingFormToken,
   imprintOptions,
   penaltyOptions,
 } from '../functions/const';
@@ -15,6 +15,7 @@ export class ImprintingFormComponent implements OnInit {
   penaltyOptions = penaltyOptions;
 
   target: [string, number][] = [
+    ['', 0],
     ['', 0],
     ['', 0],
     ['', 0],
@@ -38,7 +39,7 @@ export class ImprintingFormComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const savedForm = localStorage.getItem('imprintingForm_v2');
+    const savedForm = localStorage.getItem(imprintingFormToken);
     if (savedForm) {
       const form = JSON.parse(savedForm);
       this.target = form.target;
@@ -54,5 +55,26 @@ export class ImprintingFormComponent implements OnInit {
 
   getTargetImprints() {
     return this.target.map((x) => x[0]).filter((x) => !!x);
+  }
+
+  reset() {
+    this.target = [
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+    ];
+    this.stone = [
+      ['', 0],
+      ['', 0],
+    ];
+    this.stonePenalty = ['', 0];
+    this.book = [
+      ['', 0],
+      ['', 0],
+    ];
   }
 }

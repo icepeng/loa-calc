@@ -77,7 +77,9 @@
           />
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option
-              *ngFor="let option of filterImprint(accMap[accType].imprintOption1[0])"
+              *ngFor="
+                let option of filterImprint(accMap[accType].imprintOption1[0])
+              "
               [value]="option"
             >
               {{ option }}
@@ -104,7 +106,9 @@
           />
           <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
             <mat-option
-              *ngFor="let option of filterImprint(accMap[accType].imprintOption2[0])"
+              *ngFor="
+                let option of filterImprint(accMap[accType].imprintOption2[0])
+              "
               [value]="option"
             >
               {{ option }}

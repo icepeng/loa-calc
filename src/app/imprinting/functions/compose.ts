@@ -19,7 +19,10 @@ function chooseItems(
   }
 
   function isItemFiltered(item: Item) {
-    return filter.hasBuyPrice ? !item.buyPrice : false;
+    return (
+      (filter.hasBuyPrice ? !item.buyPrice : false) ||
+      item.tradeLeft! < filter.tradeLeft
+    );
   }
 
   function isEffectsFiltered(effects: Effects) {

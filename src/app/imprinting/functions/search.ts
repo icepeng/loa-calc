@@ -125,6 +125,10 @@ export function getSearchScript(
       const name = row
         .querySelector(\`td:nth-child(1) > div.grade > span.name\`)
         .innerText.trim();
+      const tradeLeftStr = row
+        .querySelector(\`td:nth-child(1) > div.grade > span.count\`)
+        .innerText.trim();
+      const tradeLeft = tradeLeftStr === "[구매 후 거래 불가]" ? 0 : parseInt(tradeLeftStr.split("거래 ")[1].split("회")[0], 10)
       const effects = Object.fromEntries(
         row
           .querySelector(\`td:nth-child(1) > div.effect\`)
@@ -158,6 +162,7 @@ export function getSearchScript(
       return {
         isFixed: false,
         name,
+        tradeLeft,
         effects,
         quality,
         price,

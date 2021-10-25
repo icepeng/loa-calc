@@ -2,7 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { compose } from '../functions/compose';
-import { imprintOptions } from '../functions/const';
+import { imprintingFormToken, imprintOptions } from '../functions/const';
 import { getCandidates, getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import { ComposeResult, Imprint, Item } from '../functions/type';
@@ -29,6 +29,7 @@ export class ImprintingComponent implements OnInit {
       신속: 0,
     },
     hasBuyPrice: false,
+    tradeLeft: 0,
   };
 
   worker: Worker | null = null;
@@ -45,6 +46,11 @@ export class ImprintingComponent implements OnInit {
     }
   }
 
+  reset() {
+    this.imprintingForm.reset();
+    this.accForm.reset();
+  }
+
   generate() {
     const form = {
       target: this.imprintingForm.target,
@@ -53,7 +59,7 @@ export class ImprintingComponent implements OnInit {
       book: this.imprintingForm.book,
       accMap: this.accForm.accMap,
     };
-    localStorage.setItem('imprintingForm_v2', JSON.stringify(form));
+    localStorage.setItem(imprintingFormToken, JSON.stringify(form));
 
     if (form.target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
       this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
@@ -117,6 +123,7 @@ export class ImprintingComponent implements OnInit {
           {
             isFixed: true,
             name: acc.name,
+            tradeLeft: null,
             quality: acc.quality,
             price: 0,
             auctionPrice: 0,

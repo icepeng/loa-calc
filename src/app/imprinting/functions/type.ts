@@ -16,6 +16,7 @@ export interface AccMap {
 export interface Item {
   isFixed: boolean;
   name: string;
+  tradeLeft: number | null;
   effects: Effects;
   quality: number;
   price: number;
@@ -32,4 +33,5 @@ export interface ComposeResult {
 export interface ComposeFilter {
   effects: Effects;
   hasBuyPrice: boolean;
+  tradeLeft: number;
 }

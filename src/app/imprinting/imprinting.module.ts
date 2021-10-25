@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
@@ -50,6 +51,7 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
     MatProgressSpinnerModule,
     MatIconModule,
     MatMenuModule,
+    MatRadioModule,
     ClipboardModule,
   ],
 })

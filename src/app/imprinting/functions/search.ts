@@ -1,15 +1,22 @@
-import { AccMap } from './type';
+import { AccMap, SearchGrade } from './type';
 
 export function getSearchScript(
   toSearch: Record<string, number>[],
   accToSearch: string[],
   accMap: Record<string, AccMap>,
-  searchAncient: boolean
+  searchGrade: SearchGrade
 ) {
   return `const category = {
       목걸이: 200010,
       귀걸이: 200020,
       반지: 200030,
+    };
+
+    const grade = {
+      전설: 4,
+      유물: 5,
+      고대: 6,
+      전체: null,
     };
     
     const dealOption = {
@@ -253,7 +260,7 @@ export function getSearchScript(
         });
     }
     
-    async function getSearchResult(toSearch, accToSearch, accMap, grade) {
+    async function getSearchResult(toSearch, accToSearch, accMap, searchGrade) {
       const result = [];
       const total = toSearch.length * accToSearch.length;
       let count = 0;
@@ -269,7 +276,7 @@ export function getSearchScript(
           while (true) {
             searchResult = await search({
                 category: category[acc.category],
-                grade: grade,
+                grade: grade[searchGrade],
                 quality: acc.quality,
                 dealOption1: acc.dealOption1 && {
                     type: dealOption[acc.dealOption1[0]],
@@ -310,8 +317,8 @@ export function getSearchScript(
     }
     getSearchResult(${JSON.stringify(toSearch)}, ${JSON.stringify(
     accToSearch
-  )}, ${JSON.stringify(accMap)}, ${
-    searchAncient ? null : 5
-  }).then(res => console.log(res));  
+  )}, ${JSON.stringify(
+    accMap
+  )}, "${searchGrade}").then(res => console.log(res));  
   `;
 }

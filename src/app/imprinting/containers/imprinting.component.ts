@@ -5,7 +5,7 @@ import { compose } from '../functions/compose';
 import { imprintingFormToken, imprintOptions } from '../functions/const';
 import { getCandidates, getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
-import { ComposeResult, Imprint, Item } from '../functions/type';
+import { ComposeResult, Imprint, Item, SearchGrade } from '../functions/type';
 import { addEntries, dedupe, filterRecord } from '../functions/util';
 import { AccFormComponent } from './acc-form.component';
 import { ImprintingFormComponent } from './imprinting-form.component';
@@ -20,7 +20,7 @@ export class ImprintingComponent implements OnInit {
   @ViewChild(AccFormComponent) accForm!: AccFormComponent;
 
   combinations: Imprint[][] = [];
-  searchAncient = false;
+  searchGrade: SearchGrade = '유물';
   searchResult = '';
 
   filter = {
@@ -102,7 +102,7 @@ export class ImprintingComponent implements OnInit {
       .filter(([name, acc]) => !acc.name)
       .map((x) => x[0]);
 
-    const imprintLimit = this.searchAncient ? 6 : 5;
+    const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
     this.combinations = getCandidates(initial, accToSearch.length, imprintLimit)
       .map((candidate) => getCombinations(initial, candidate, imprintLimit))
       .flat();
@@ -116,7 +116,7 @@ export class ImprintingComponent implements OnInit {
       dedupe(this.combinations.flat()),
       accToSearch,
       form.accMap,
-      this.searchAncient
+      this.searchGrade
     );
     const copySuccess = this.clipboard.copy(searchScript);
     if (copySuccess) {

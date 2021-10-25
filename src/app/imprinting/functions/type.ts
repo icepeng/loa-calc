@@ -2,6 +2,8 @@ export type Imprint = Record<string, number>;
 
 export type Effects = Record<string, number>;
 
+export type SearchGrade = '유물' | '고대' | '전체';
+
 export interface AccMap {
   category: string;
   quality: number;

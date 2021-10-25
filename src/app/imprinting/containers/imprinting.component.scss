@@ -22,3 +22,7 @@
   display: flex;
   align-items: baseline;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 12px;
+}

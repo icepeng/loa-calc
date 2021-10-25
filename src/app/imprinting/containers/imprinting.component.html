@@ -20,11 +20,11 @@
     <mat-card>
       <mat-card-subtitle>경매장 검색</mat-card-subtitle>
       <mat-card-content>
-        <div>
-          <mat-checkbox [(ngModel)]="searchAncient"
-            >고대 등급을 포함해서 검색</mat-checkbox
-          >
-        </div>
+        <mat-radio-group [(ngModel)]="searchGrade">
+          <mat-radio-button value="유물">유물</mat-radio-button>
+          <mat-radio-button value="고대">고대</mat-radio-button>
+          <mat-radio-button value="전체">전체</mat-radio-button>
+        </mat-radio-group>
       </mat-card-content>
       <mat-card-content>
         <button (click)="generate()" mat-raised-button color="primary">

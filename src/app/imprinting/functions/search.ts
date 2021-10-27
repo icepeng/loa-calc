@@ -124,8 +124,8 @@ export function getSearchScript(
         return;
       }
     
-      const grade = parseInt(document.querySelector('#auctionListTbody > tr:nth-child(1) > td:nth-child(1) > div.grade').getAttribute('data-grade'), 10);
-      const id = document.querySelector('#auctionListTbody > tr:nth-child(1) > td:nth-child(7) > button').getAttribute('data-productid');
+      const grade = parseInt(row.querySelector('td:nth-child(1) > div.grade').getAttribute('data-grade'), 10);
+      const id = row.querySelector('td:nth-child(7) > button').getAttribute('data-productid');
       const name = row
         .querySelector(\`td:nth-child(1) > div.grade > span.name\`)
         .innerText.trim();

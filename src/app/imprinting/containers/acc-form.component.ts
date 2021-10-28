@@ -83,6 +83,6 @@ export class AccFormComponent implements OnInit {
   }
 
   reset() {
-    this.accMap = initialAccMap;
+    this.accMap = JSON.parse(JSON.stringify(initialAccMap));
   }
 }

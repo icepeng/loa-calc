@@ -109,10 +109,7 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "baseHref": "/loa-calc/"
-          }
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

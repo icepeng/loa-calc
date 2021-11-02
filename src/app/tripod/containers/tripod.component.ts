@@ -65,11 +65,6 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const temp = localStorage.getItem('tripodForm');
-    if (temp) {
-      this.formGroup.setValue(JSON.parse(temp));
-    }
-
     this.subscription$ = this.formGroup
       .get('categoryList')!
       .valueChanges.pipe(startWith(this.formGroup.value.categoryList))
@@ -77,7 +72,7 @@ export class TripodComponent implements OnInit, OnDestroy {
         const len = Object.values(categories).filter((x) => x).length * 3;
         const tripodList = this.formGroup.get('tripodList') as FormArray;
         while (len > tripodList.length) {
-          tripodList.controls.push(
+          tripodList.push(
             new FormGroup({
               skill: new FormControl(null),
               tripod: new FormControl(null),
@@ -87,13 +82,18 @@ export class TripodComponent implements OnInit, OnDestroy {
           );
         }
         while (len < tripodList.length) {
-          tripodList.controls.pop();
+          tripodList.removeAt(tripodList.length - 1);
         }
 
         this.selectedCategories = Object.entries(categories)
           .filter(([k, v]) => v)
           .map(([k, v]) => +k);
       });
+
+    const savedForm = localStorage.getItem('tripodForm');
+    if (savedForm) {
+      this.formGroup.setValue(JSON.parse(savedForm));
+    }
   }
 
   ngOnDestroy() {

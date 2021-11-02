@@ -1,4 +1,4 @@
-import { AccMap, SearchGrade } from './type';
+import { AccMap, Item, SearchGrade } from './type';
 
 export function getSearchScript(
   toSearch: Record<string, number>[],
@@ -320,5 +320,91 @@ export function getSearchScript(
   )}, ${JSON.stringify(
     accMap
   )}, "${searchGrade}").then(res => console.log(res));  
+  `;
+}
+
+export function getBuyScript(item: Item) {
+  return `(() => {
+  var auctionProductId = ${item.id};
+  var _Contents = "";
+  var loader;
+  
+  $.when(
+    $.ajax({
+      url: '/Auction/GetAuctionProductBuyInfo',
+      method: 'GET',
+      data: {
+        auctionProductId: auctionProductId,
+        worldNo: _representCharacterWorldNo,
+        pcName: _representCharacterPcName,
+      },
+      dataType: 'html',
+      beforeSend: function (xhr) {
+        loader = new lui.utils.Loader();
+      },
+      success: function (data) {
+        if (!jsonResultCommonCheck(data)) {
+          return false;
+        }
+  
+        var json = {
+          value: {},
+        };
+        if (IsJsonString(data, json)) {
+          data = json.value;
+          if (data.code != 0) {
+            commonModalHandler(data.message);
+            if (data.code == 10) {
+              getSearchAjax();
+            }
+  
+            return false;
+          }
+        }
+  
+        _Contents = data;
+      },
+      error: function (xhr, status, error) {
+        ajaxErrorHandler(xhr, status, error);
+        return;
+      },
+      complete: function () {
+        loader.remove(); // 로더 제거
+      },
+    }),
+  ).done(function () {
+    if (_Contents == '') {
+      return false;
+    }
+  
+    var button = $(this);
+    button.attr('aria-expanded', 'true');
+  
+    _bidModal = new lui.utils.Modal({
+      id: 'modal-deal-buy',
+      class: 'buy',
+      isShowModal: true,
+      isShowClose: true,
+      title: '입찰/구매하기',
+      content: _Contents,
+      cbInit: function (e) {},
+      cbHideCompleted: function () {
+        _bidModal.remove();
+        getSearchAjax();
+      },
+    });
+  });
+})();
+/*
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
+*/
   `;
 }

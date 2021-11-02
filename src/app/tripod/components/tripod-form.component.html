@@ -2,6 +2,7 @@
   <mat-form-field>
     <mat-label>스킬명</mat-label>
     <mat-select formControlName="skill">
+      <mat-option [value]="null">없음</mat-option>
       <mat-option *ngFor="let option of skillOptions" [value]="option.value">
         {{ option.text }}
       </mat-option>

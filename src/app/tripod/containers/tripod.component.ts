@@ -104,7 +104,7 @@ export class TripodComponent implements OnInit, OnDestroy {
     return Array.from(
       combinations(
         this.formGroup.value.tripodList
-          .filter((form: any) => form.required)
+          .filter((form: any) => form.required && form.skill && form.tripod)
           .map((form: any) => {
             const { required, ...rest } = form;
             return rest;

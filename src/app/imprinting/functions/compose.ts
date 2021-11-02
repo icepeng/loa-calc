@@ -40,7 +40,7 @@ function chooseItems(
     items: Record<string, Item>,
     d: number
   ): ComposeResult[] {
-    if (hasPenalty(effects) || price > maxPrice) {
+    if ((filter.noPenalty && hasPenalty(effects)) || price > maxPrice) {
       return [];
     }
     if (d === accList.length) {

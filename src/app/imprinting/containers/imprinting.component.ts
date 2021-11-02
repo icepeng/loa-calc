@@ -5,7 +5,13 @@ import { compose } from '../functions/compose';
 import { imprintingFormToken, imprintOptions } from '../functions/const';
 import { getCandidates, getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
-import { ComposeResult, Imprint, Item, SearchGrade } from '../functions/type';
+import {
+  ComposeFilter,
+  ComposeResult,
+  Imprint,
+  Item,
+  SearchGrade,
+} from '../functions/type';
 import { addEntries, dedupe, filterRecord } from '../functions/util';
 import { AccFormComponent } from './acc-form.component';
 import { ImprintingFormComponent } from './imprinting-form.component';
@@ -23,13 +29,14 @@ export class ImprintingComponent implements OnInit {
   searchGrade: SearchGrade = '유물';
   searchResult = '';
 
-  filter = {
+  filter: ComposeFilter = {
     effects: {
       치명: 0,
       특화: 0,
       신속: 0,
     },
     hasBuyPrice: false,
+    noPenalty: true,
     tradeLeft: 0,
     exclude: new Set<string>(),
   };

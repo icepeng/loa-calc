@@ -92,6 +92,11 @@
           >
         </div>
         <div>
+          <mat-checkbox [(ngModel)]="filter.noPenalty"
+            >감소각인이 없는 조합만 표시</mat-checkbox
+          >
+        </div>
+        <div>
           <span>제외된 아이템 {{ filter.exclude.size }}개</span>
           <button (click)="resetExcludeFilter()" mat-icon-button>
             <mat-icon>delete</mat-icon>

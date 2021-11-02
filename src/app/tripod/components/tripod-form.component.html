@@ -1,0 +1,29 @@
+<div class="tripod-form-item" [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>스킬명</mat-label>
+    <mat-select formControlName="skill">
+      <mat-option *ngFor="let option of skillOptions" [value]="option.value">
+        {{ option.text }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>트라이포드</mat-label>
+    <mat-select formControlName="tripod">
+      <mat-option
+        *ngFor="let option of tripodOptions$ | async"
+        [value]="option.value"
+      >
+        {{ option.text }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="w-72">
+    <mat-label>레벨</mat-label>
+    <mat-select formControlName="level">
+      <mat-option [value]="3">3레벨</mat-option>
+      <mat-option [value]="4">4레벨</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle formControlName="required"></mat-slide-toggle>
+</div>

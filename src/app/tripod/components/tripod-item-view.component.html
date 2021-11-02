@@ -1,0 +1,13 @@
+<div *ngFor="let tripod of item.tripod">
+  {{ getTripodString(tripod) }}
+</div>
+<div *ngIf="item.trade2">
+  거래횟수 2회 : {{ item.trade2 | number: ".0-0" }}골드
+</div>
+<div *ngIf="item.trade1">
+  거래횟수 1회 : {{ item.trade1 | number: ".0-0" }}골드
+</div>
+<div *ngIf="item.trade0">
+  거래횟수 0회 : {{ item.trade0 | number: ".0-0" }}골드
+</div>
+<div>실가격 : {{ item.price | number: ".0-0" }}골드</div>

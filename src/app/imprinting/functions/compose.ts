@@ -1,6 +1,7 @@
+import { permutations } from '../../../util';
 import { penaltyOptions } from './const';
 import { ComposeFilter, ComposeResult, Effects, Imprint, Item } from './type';
-import { addRecord, permutator } from './util';
+import { addRecord } from './util';
 
 function chooseItems(
   entries: Item[][],
@@ -108,9 +109,11 @@ export function compose(
   fixedItems: Record<string, Item>,
   filter: ComposeFilter
 ) {
-  const accPermutation = permutator(
-    ['목걸이', '귀걸이1', '귀걸이2', '반지1', '반지2'].filter(
-      (x) => !fixedItems[x]
+  const accPermutation = Array.from(
+    permutations(
+      ['목걸이', '귀걸이1', '귀걸이2', '반지1', '반지2'].filter(
+        (x) => !fixedItems[x]
+      )
     )
   );
   let result: ComposeResult[] = [];

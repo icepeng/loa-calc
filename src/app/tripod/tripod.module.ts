@@ -14,26 +14,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
-import { ComposeTableComponent } from './components/compose-table.component';
-import { ItemViewComponent } from './components/item-view.component';
-import { AccFormComponent } from './containers/acc-form.component';
-import { ImprintingFormComponent } from './containers/imprinting-form.component';
-import { ImprintingComponent } from './containers/imprinting.component';
-import { ImprintingRoutingModule } from './imprinting-routing.module';
+import { TripodFormComponent } from './components/tripod-form.component';
+import { TripodComponent } from './containers/tripod.component';
+import { TripodRoutingModule } from './tripod-routing.module';
+import { TripodTableComponent } from './components/tripod-table.component';
+import { TripodItemViewComponent } from './components/tripod-item-view.component';
 
 @NgModule({
-  declarations: [
-    ImprintingComponent,
-    ItemViewComponent,
-    ImprintingFormComponent,
-    AccFormComponent,
-    ComposeTableComponent,
-  ],
+  declarations: [TripodComponent, TripodFormComponent, TripodTableComponent, TripodItemViewComponent],
   imports: [
     CommonModule,
-    ImprintingRoutingModule,
+    TripodRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -50,7 +44,8 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
     MatIconModule,
     MatMenuModule,
     MatRadioModule,
+    MatSlideToggleModule,
     ClipboardModule,
   ],
 })
-export class ImprintingModule {}
+export class TripodModule {}

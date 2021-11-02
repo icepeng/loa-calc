@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ImprintingModule } from './imprinting/imprinting.module';
 import { RefiningModule } from './refining/refining.module';
+import { TripodModule } from './tripod/tripod.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { RefiningModule } from './refining/refining.module';
     BrowserAnimationsModule,
     RefiningModule,
     ImprintingModule,
+    TripodModule,
     MatToolbarModule,
     MatButtonModule,
     AppRoutingModule,

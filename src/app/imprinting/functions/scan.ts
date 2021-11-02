@@ -1,5 +1,5 @@
 import { Imprint } from './type';
-import { combinations, combinationsWithReplacement } from './util';
+import { combinations, combinationsWithReplacement } from '../../../util';
 
 export function getCandidates(
   target: Imprint,

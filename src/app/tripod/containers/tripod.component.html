@@ -1,0 +1,88 @@
+<div class="container">
+  <h1 class="mat-h1">
+    트포 도시락
+    <a class="mat-caption" target="_blank">설명서</a>
+  </h1>
+  <div class="layout">
+    <mat-card [formGroup]="formGroup" class="card">
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>직업</mat-label>
+          <mat-select formControlName="classCode">
+            <mat-option *ngFor="let option of classList" [value]="option.value">
+              {{ option.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-content formGroupName="categoryList">
+        <mat-checkbox
+          *ngFor="let category of categoryList"
+          [formControlName]="category.value"
+          >{{ category.text }}</mat-checkbox
+        >
+      </mat-card-content>
+      <mat-card-content *ngIf="formGroup.value.classCode">
+        <div class="tripod-form">
+          <app-tripod-form
+            *ngFor="let tripodForm of tripodFormControls"
+            [formGroup]="tripodForm"
+            [classCode]="formGroup.value.classCode"
+          ></app-tripod-form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-subtitle>경매장 검색</mat-card-subtitle>
+      <mat-card-content>
+        <button (click)="generate()" mat-raised-button color="primary">
+          검색 코드 복사
+        </button>
+      </mat-card-content>
+      <mat-card-content>
+        <div class="mat-caption w-240">
+          * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
+          판단해서 사용해주세요.<br />
+          *
+          <a target="_blank">설명서</a>를 읽은 다음 사용해주세요.
+        </div>
+      </mat-card-content>
+      <mat-card-content>
+        <textarea
+          [(ngModel)]="searchResult"
+          placeholder="결과 붙여넣기"
+          matInput
+          class="script"
+        ></textarea>
+      </mat-card-content>
+      <mat-card-subtitle>옵션</mat-card-subtitle>
+      <mat-card-content [formGroup]="lossRateForm">
+        <div>
+          <mat-form-field>
+            <mat-label>거래 2회 -> 1회 감가율</mat-label>
+            <input matInput [formControlName]="2" />
+            <span matSuffix>%</span>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>거래 1회 -> 0회 감가율</mat-label>
+            <input matInput [formControlName]="1" />
+            <span matSuffix>%</span>
+          </mat-form-field>
+        </div>
+        <button (click)="applySearchResult()" mat-raised-button color="primary">
+          적용
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="layout">
+    <mat-card class="grow">
+      <app-tripod-table
+        [data]="composeResult"
+        [selectedCategories]="selectedCategories"
+      ></app-tripod-table>
+    </mat-card>
+  </div>
+</div>

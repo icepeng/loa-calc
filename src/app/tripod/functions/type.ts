@@ -24,6 +24,10 @@ export interface SearchResult {
   products: Product[];
 }
 
+export interface ComposeFilter {
+  tradeLeft: number;
+}
+
 export interface Summary {
   tripod: TripodForm[];
   price: number;

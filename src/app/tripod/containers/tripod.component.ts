@@ -45,17 +45,17 @@ export class TripodComponent implements OnInit, OnDestroy {
     ),
   });
 
-  lossRateForm = new FormGroup({
-    2: new FormControl(10),
-    1: new FormControl(50),
-    0: new FormControl(100),
+  filterForm = new FormGroup({
+    tradeLeft: new FormControl(2),
   });
 
   selectedCategories: number[] = [];
   searchResult = '';
   composeResult: ComposeResult[] = [];
+  isLoading = false;
 
   subscription$!: Subscription;
+  worker: Worker | null = null;
 
   constructor(private snackbar: MatSnackBar, private clipboard: Clipboard) {}
 
@@ -65,6 +65,10 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (typeof Worker !== 'undefined') {
+      this.worker = new Worker(new URL('../tripod.worker', import.meta.url));
+    }
+
     this.subscription$ = this.formGroup
       .get('categoryList')!
       .valueChanges.pipe(startWith(this.formGroup.value.categoryList))
@@ -120,17 +124,50 @@ export class TripodComponent implements OnInit, OnDestroy {
       this.formGroup.value.classCode,
       this.getCombinations()
     );
-    this.clipboard.copy(searchScript);
+    const copySuccess = this.clipboard.copy(searchScript);
+    if (copySuccess) {
+      this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');
+      this.searchResult = '';
+    } else {
+      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+    }
   }
 
   applySearchResult() {
     try {
       const searchResult = JSON.parse(this.searchResult) as SearchResult[];
-      this.composeResult = compose(
-        searchResult,
-        this.selectedCategories,
-        this.lossRateForm.value
-      );
+
+      if (this.worker) {
+        this.worker.onmessage = ({ data }) => {
+          this.composeResult = data;
+          if (this.composeResult.length === 0) {
+            this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
+          }
+          this.isLoading = false;
+        };
+        this.worker.onerror = (err) => {
+          this.snackbar.open(
+            '오류가 발생했습니다. 설명서를 확인해주세요.',
+            '닫기'
+          );
+          this.isLoading = false;
+        };
+        this.worker.postMessage({
+          searchResult,
+          selectedCategories: this.selectedCategories,
+          filter: this.filterForm.value,
+        });
+      } else {
+        this.composeResult = compose(
+          searchResult,
+          this.selectedCategories,
+          this.filterForm.value
+        );
+        if (this.composeResult.length === 0) {
+          this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
+        }
+        this.isLoading = false;
+      }
     } catch (err) {
       this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
       throw err;

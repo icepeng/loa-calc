@@ -56,19 +56,12 @@
         ></textarea>
       </mat-card-content>
       <mat-card-subtitle>옵션</mat-card-subtitle>
-      <mat-card-content [formGroup]="lossRateForm">
+      <mat-card-content [formGroup]="filterForm">
         <div>
           <mat-form-field>
-            <mat-label>거래 2회 -> 1회 감가율</mat-label>
-            <input matInput [formControlName]="2" />
-            <span matSuffix>%</span>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label>거래 1회 -> 0회 감가율</mat-label>
-            <input matInput [formControlName]="1" />
-            <span matSuffix>%</span>
+            <mat-label> 구매 후 거래가능 횟수 </mat-label>
+            <input formControlName="tradeLeft" matInput type="number" />
+            <span matSuffix>회 이상</span>
           </mat-form-field>
         </div>
         <button (click)="applySearchResult()" mat-raised-button color="primary">
@@ -82,6 +75,7 @@
       <app-tripod-table
         [data]="composeResult"
         [selectedCategories]="selectedCategories"
+        [isLoading]="isLoading"
       ></app-tripod-table>
     </mat-card>
   </div>

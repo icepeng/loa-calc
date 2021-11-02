@@ -1,21 +1,23 @@
-<div *ngFor="let tripod of item.tripod">
-  {{ getTripodString(tripod) }}
-</div>
 <div>
-  거래횟수 2회 :
-  <ng-container *ngIf="item.trade2"
-    >{{ item.trade2 | number: ".0-0" }}골드</ng-container
-  ><ng-container *ngIf="!item.trade2">매물없음</ng-container>
-</div>
-<div>
-  거래횟수 1회 :
-  <ng-container *ngIf="item.trade1"
-    >{{ item.trade1 | number: ".0-0" }}골드</ng-container
-  ><ng-container *ngIf="!item.trade1">매물없음</ng-container>
-</div>
-<div>
-  거래횟수 0회 :
-  <ng-container *ngIf="item.trade0"
-    >{{ item.trade0 | number: ".0-0" }}골드</ng-container
-  ><ng-container *ngIf="!item.trade0">매물없음</ng-container>
+  <div *ngFor="let tripod of item.tripod">
+    {{ getTripodString(tripod) }}
+  </div>
+  <div *ngIf="filter.tradeLeft <= 2">
+    거래횟수 2회 :
+    <ng-container *ngIf="item.trade2"
+      >{{ item.trade2 | number: ".0-0" }}골드</ng-container
+    ><ng-container *ngIf="!item.trade2">매물없음</ng-container>
+  </div>
+  <div *ngIf="filter.tradeLeft <= 1">
+    거래횟수 1회 :
+    <ng-container *ngIf="item.trade1"
+      >{{ item.trade1 | number: ".0-0" }}골드</ng-container
+    ><ng-container *ngIf="!item.trade1">매물없음</ng-container>
+  </div>
+  <div *ngIf="filter.tradeLeft <= 0">
+    거래횟수 0회 :
+    <ng-container *ngIf="item.trade0"
+      >{{ item.trade0 | number: ".0-0" }}골드</ng-container
+    ><ng-container *ngIf="!item.trade0">매물없음</ng-container>
+  </div>
 </div>

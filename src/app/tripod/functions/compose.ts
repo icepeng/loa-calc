@@ -65,7 +65,7 @@ function summarySearchResult(
       }
     });
   });
-  console.log(obj)
+
   return obj;
 }
 

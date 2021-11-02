@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { marketData } from '../data';
-import { Summary, TripodForm } from '../functions/type';
+import { ComposeFilter, Summary, TripodForm } from '../functions/type';
 
 @Component({
   selector: 'app-tripod-item-view',
@@ -9,6 +9,7 @@ import { Summary, TripodForm } from '../functions/type';
 })
 export class TripodItemViewComponent implements OnInit {
   @Input() item!: Summary;
+  @Input() filter!: ComposeFilter;
 
   constructor() {}
 

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeResult } from '../functions/type';
+import { ComposeFilter, ComposeResult } from '../functions/type';
 
 @Component({
   selector: 'app-tripod-table',
@@ -19,6 +19,7 @@ import { ComposeResult } from '../functions/type';
 export class TripodTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() selectedCategories!: number[];
+  @Input() filter!: ComposeFilter;
   @Input() isLoading!: boolean;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

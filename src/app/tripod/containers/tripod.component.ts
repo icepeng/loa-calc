@@ -7,7 +7,12 @@ import { combinations } from '../../../util';
 import { marketData } from '../data';
 import { compose } from '../functions/compose';
 import { getSearchScript } from '../functions/search';
-import { ComposeResult, SearchResult, TripodForm } from '../functions/type';
+import {
+  ComposeFilter,
+  ComposeResult,
+  SearchResult,
+  TripodForm,
+} from '../functions/type';
 
 @Component({
   selector: 'app-tripod',
@@ -52,6 +57,7 @@ export class TripodComponent implements OnInit, OnDestroy {
   selectedCategories: number[] = [];
   searchResult = '';
   composeResult: ComposeResult[] = [];
+  lastFilter: ComposeFilter = this.filterForm.value;
   isLoading = false;
 
   subscription$!: Subscription;
@@ -134,7 +140,12 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   applySearchResult() {
+    if (this.isLoading) {
+      return;
+    }
+
     try {
+      this.isLoading = true;
       const searchResult = JSON.parse(this.searchResult) as SearchResult[];
 
       if (this.worker) {
@@ -143,6 +154,7 @@ export class TripodComponent implements OnInit, OnDestroy {
           if (this.composeResult.length === 0) {
             this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
           }
+          this.lastFilter = this.filterForm.value;
           this.isLoading = false;
         };
         this.worker.onerror = (err) => {
@@ -166,6 +178,7 @@ export class TripodComponent implements OnInit, OnDestroy {
         if (this.composeResult.length === 0) {
           this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
         }
+        this.lastFilter = this.filterForm.value;
         this.isLoading = false;
       }
     } catch (err) {

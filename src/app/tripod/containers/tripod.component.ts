@@ -110,15 +110,19 @@ export class TripodComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
+  getFilledTripodForm(): (TripodForm & { required: boolean })[] {
+    return this.formGroup.value.tripodList.filter(
+      (form: any) => form.required && form.skill && form.tripod
+    );
+  }
+
   getCombinations() {
     return Array.from(
       combinations(
-        this.formGroup.value.tripodList
-          .filter((form: any) => form.required && form.skill && form.tripod)
-          .map((form: any) => {
-            const { required, ...rest } = form;
-            return rest;
-          }) as TripodForm[],
+        this.getFilledTripodForm().map((form: any) => {
+          const { required, ...rest } = form;
+          return rest;
+        }) as TripodForm[],
         2
       )
     ).filter(([a, b]) => a.level > 3 || b.level > 3);
@@ -126,6 +130,16 @@ export class TripodComponent implements OnInit, OnDestroy {
 
   generate() {
     localStorage.setItem('tripodForm', JSON.stringify(this.formGroup.value));
+
+    const requiredTripodMin = this.selectedCategories.length * 2;
+    if (this.getFilledTripodForm().length < requiredTripodMin) {
+      this.snackbar.open(
+        `최소 ${requiredTripodMin}개의 트라이포드를 선택해야 합니다.`,
+        '닫기'
+      );
+      return;
+    }
+
     const searchScript = getSearchScript(
       this.formGroup.value.classCode,
       this.getCombinations()

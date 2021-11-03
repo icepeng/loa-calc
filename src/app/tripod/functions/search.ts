@@ -42,7 +42,7 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
           .innerText.trim()
           .replace(/,/g, "")
       );
-      const price = buyPrice;
+      const price = buyPrice || auctionPrice;
     
       return {
         name,

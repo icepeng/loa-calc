@@ -43,7 +43,7 @@ export class TripodComponent implements OnInit, OnDestroy {
           new FormGroup({
             skill: new FormControl(null),
             tripod: new FormControl(null),
-            level: new FormControl(null),
+            level: new FormControl(3),
             required: new FormControl(true),
           })
       )
@@ -86,7 +86,7 @@ export class TripodComponent implements OnInit, OnDestroy {
             new FormGroup({
               skill: new FormControl(null),
               tripod: new FormControl(null),
-              level: new FormControl(null),
+              level: new FormControl(3),
               required: new FormControl(true),
             })
           );
@@ -117,15 +117,19 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   getCombinations() {
+    const filledTripodForm = this.getFilledTripodForm();
+    const allow33 =
+      filledTripodForm.filter((x) => x.level === 4).length <
+      this.categoryList.length;
     return Array.from(
       combinations(
-        this.getFilledTripodForm().map((form: any) => {
+        filledTripodForm.map((form: any) => {
           const { required, ...rest } = form;
           return rest;
         }) as TripodForm[],
         2
       )
-    ).filter(([a, b]) => a.level > 3 || b.level > 3);
+    ).filter(([a, b]) => allow33 || a.level > 3 || b.level > 3);
   }
 
   generate() {

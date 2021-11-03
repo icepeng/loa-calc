@@ -46,7 +46,7 @@ export class TripodFormComponent implements OnInit, OnChanges {
         this.formGroup.reset({
           skill: null,
           tripod: null,
-          level: null,
+          level: 3,
           required: true,
         });
       }

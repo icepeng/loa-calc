@@ -13,8 +13,6 @@ export interface Product {
     tripod: string;
     level: number;
   }[];
-  auctionPrice: number;
-  buyPrice: number;
   price: number;
   tradeLeft: number;
 }

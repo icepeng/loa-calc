@@ -30,19 +30,16 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
             tripod: str.split("]")[1].split("Lv")[0].trim(),
             level: parseInt(str.split("+")[1], 10),
           }))
-      const buyPrice = parseFloat(
+      const price = parseFloat(
         row
           .querySelector(\`td:nth-child(6) > div > em\`)
           .innerText.trim()
           .replace(/,/g, "")
       )
-      const auctionPrice = parseFloat(
-        row
-          .querySelector(\`td:nth-child(5) > div > em\`)
-          .innerText.trim()
-          .replace(/,/g, "")
-      );
-      const price = buyPrice || auctionPrice;
+
+      if (!price) {
+        return;
+      }
     
       return {
         name,
@@ -51,8 +48,6 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
         effects,
         tradeLeft,
         price,
-        buyPrice,
-        auctionPrice,
       };
     }
     

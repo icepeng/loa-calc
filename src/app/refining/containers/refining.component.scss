@@ -1,10 +1,13 @@
 .container {
   margin: 20px;
+  overflow-x: scroll;
 }
 
 .layout {
   display: flex;
   gap: 12px;
+  max-height: calc(100vh - 144px);
+  margin-bottom: 12px;
 }
 
 .cell {
@@ -33,4 +36,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 12px;
+}
+
+.notice {
+  min-width: 320px;
 }

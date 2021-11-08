@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="mat-h1">재련 최적화</h1>
   <div class="layout">
-    <mat-tab-group dynamicHeight class="mat-elevation-z1">
+    <mat-tab-group class="mat-elevation-z1">
       <mat-tab label="가격 정보">
         <div class="p-16">
           <form [formGroup]="priceForm" class="price-form">
@@ -398,24 +398,30 @@
               {{ breath.price | number: ".2-2" }}골드</span
             >
           </div>
-          <mat-checkbox [(ngModel)]="reduceBindedBooks"
-            >귀속 책을 0골드로 계산</mat-checkbox
-          >
-          <mat-checkbox [(ngModel)]="reduceBindedBreathes"
-            >귀속 숨결을 0골드로 계산</mat-checkbox
-          >
-          <button
-            *ngIf="materials.length > 0"
-            (click)="calculate()"
-            mat-raised-button
-            color="primary"
-          >
-            계산
-          </button>
+          <div>
+            <mat-checkbox [(ngModel)]="reduceBindedBooks"
+              >귀속 책을 0골드로 계산</mat-checkbox
+            >
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="reduceBindedBreathes"
+              >귀속 숨결을 0골드로 계산</mat-checkbox
+            >
+          </div>
+          <div>
+            <button
+              *ngIf="materials.length > 0"
+              (click)="calculate()"
+              mat-raised-button
+              color="primary"
+            >
+              계산
+            </button>
+          </div>
         </mat-card-content>
       </ng-container>
     </mat-card>
-    <mat-tab-group dynamicHeight class="mat-elevation-z1">
+    <mat-tab-group class="mat-elevation-z1">
       <mat-tab label="최적 재련">
         <div class="p-16">
           <app-refine-table
@@ -441,7 +447,7 @@
         </div>
       </mat-tab>
     </mat-tab-group>
-    <mat-card>
+    <mat-card class="notice">
       <mat-card-title> 주의사항 </mat-card-title>
       <mat-card-content>
         <h3>가격 정보는 자동으로 갱신되지 않습니다.</h3>

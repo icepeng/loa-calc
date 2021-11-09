@@ -1,9 +1,11 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { startWith, Subscription } from 'rxjs';
+import { startWith, Subscription, take } from 'rxjs';
 import { combinations } from '../../../util';
+import { TripodSearchDialogComponent } from '../components/tripod-search-dialog.component';
 import { marketData } from '../data';
 import { compose } from '../functions/compose';
 import { getSearchScript } from '../functions/search';
@@ -55,15 +57,19 @@ export class TripodComponent implements OnInit, OnDestroy {
   });
 
   selectedCategories: number[] = [];
-  searchResult = '';
+  searchResult: SearchResult[] = [];
   composeResult: ComposeResult[] = [];
   lastFilter: ComposeFilter = this.filterForm.value;
   isLoading = false;
 
   subscription$!: Subscription;
-  worker: Worker | null = null;
+  worker!: Worker;
 
-  constructor(private snackbar: MatSnackBar, private clipboard: Clipboard) {}
+  constructor(
+    private snackbar: MatSnackBar,
+    private clipboard: Clipboard,
+    private dialog: MatDialog
+  ) {}
 
   get tripodFormControls() {
     return (this.formGroup.get('tripodList') as FormArray)
@@ -73,6 +79,11 @@ export class TripodComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (typeof Worker !== 'undefined') {
       this.worker = new Worker(new URL('../tripod.worker', import.meta.url));
+    } else {
+      this.snackbar.open(
+        'Web Worker가 지원되지 않는 브라우저입니다. 최신 브라우저를 사용해주세요.',
+        '닫기'
+      );
     }
 
     this.subscription$ = this.formGroup
@@ -149,9 +160,20 @@ export class TripodComponent implements OnInit, OnDestroy {
       this.getCombinations()
     );
     const copySuccess = this.clipboard.copy(searchScript);
+
     if (copySuccess) {
-      this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');
-      this.searchResult = '';
+      this.dialog
+        .open(TripodSearchDialogComponent, {
+          disableClose: true,
+        })
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((data) => {
+          if (data) {
+            this.searchResult = data;
+            this.applySearchResult();
+          }
+        });
     } else {
       this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
     }
@@ -162,46 +184,24 @@ export class TripodComponent implements OnInit, OnDestroy {
       return;
     }
 
-    try {
-      this.isLoading = true;
-      const searchResult = JSON.parse(this.searchResult) as SearchResult[];
-
-      if (this.worker) {
-        this.worker.onmessage = ({ data }) => {
-          this.composeResult = data;
-          if (this.composeResult.length === 0) {
-            this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
-          }
-          this.lastFilter = this.filterForm.value;
-          this.isLoading = false;
-        };
-        this.worker.onerror = (err) => {
-          this.snackbar.open(
-            '오류가 발생했습니다. 설명서를 확인해주세요.',
-            '닫기'
-          );
-          this.isLoading = false;
-        };
-        this.worker.postMessage({
-          searchResult,
-          selectedCategories: this.selectedCategories,
-          filter: this.filterForm.value,
-        });
-      } else {
-        this.composeResult = compose(
-          searchResult,
-          this.selectedCategories,
-          this.filterForm.value
-        );
-        if (this.composeResult.length === 0) {
-          this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
-        }
-        this.lastFilter = this.filterForm.value;
-        this.isLoading = false;
+    this.isLoading = true;
+    const searchResult = this.searchResult;
+    this.worker.onmessage = ({ data }) => {
+      this.composeResult = data;
+      if (this.composeResult.length === 0) {
+        this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
       }
-    } catch (err) {
+      this.lastFilter = this.filterForm.value;
+      this.isLoading = false;
+    };
+    this.worker.onerror = (err) => {
       this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
-      throw err;
-    }
+      this.isLoading = false;
+    };
+    this.worker.postMessage({
+      searchResult,
+      selectedCategories: this.selectedCategories,
+      filter: this.filterForm.value,
+    });
   }
 }

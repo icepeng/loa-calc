@@ -19,6 +19,8 @@ import { TripodItemViewComponent } from './components/tripod-item-view.component
 import { TripodTableComponent } from './components/tripod-table.component';
 import { TripodComponent } from './containers/tripod.component';
 import { TripodRoutingModule } from './tripod-routing.module';
+import { TripodSearchDialogComponent } from './components/tripod-search-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { TripodRoutingModule } from './tripod-routing.module';
     TripodFormComponent,
     TripodTableComponent,
     TripodItemViewComponent,
+    TripodSearchDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ import { TripodRoutingModule } from './tripod-routing.module';
     MatProgressSpinnerModule,
     MatMenuModule,
     MatSlideToggleModule,
+    MatDialogModule,
     ClipboardModule,
   ],
 })

@@ -5,6 +5,7 @@ import {
   SearchResult,
   Summary,
 } from './type';
+import { hashTripod } from './util';
 
 function getPrice(products: Product[]) {
   const trade2 = products.find((x) => x.tradeLeft === 2)?.price;
@@ -83,32 +84,45 @@ export function compose(
   filter: ComposeFilter
 ): ComposeResult[] {
   const summaryRecord = summarySearchResult(searchResult, filter);
+  const requiredTripodSet = new Set(
+    filter.requiredTripods.map((tripod) => hashTripod(tripod))
+  );
   let results: { summary: Record<number, Summary>; price: number }[] = [];
   function rec(
     summary: Record<number, Summary>,
     totalPrice: number,
+    requiredLeft: number,
     d: number
   ) {
     if (totalPrice > (results[results.length - 1]?.price ?? Infinity)) {
       return;
     }
+    if (requiredLeft > (categoryList.length - d) * 2) {
+      return;
+    }
     if (d === categoryList.length) {
-      results.push({ summary, price: totalPrice });
-      results.sort((a, b) => a.price - b.price);
-      results = results.slice(0, 100);
+      if (requiredLeft <= 0) {
+        results.push({ summary, price: totalPrice });
+        results.sort((a, b) => a.price - b.price);
+        results = results.slice(0, 100);
+      }
       return;
     }
     const list = summaryRecord[categoryList[d]];
     for (let el of list) {
       if (!tripodOverlap(summary, el)) {
+        const requiredCount = el.tripod.filter((x) =>
+          requiredTripodSet.has(hashTripod(x))
+        ).length;
         rec(
           { ...summary, [categoryList[d]]: el },
           totalPrice + el.price,
+          requiredLeft - requiredCount,
           d + 1
         );
       }
     }
   }
-  rec([], 0, 0);
+  rec([], 0, requiredTripodSet.size, 0);
   return results;
 }

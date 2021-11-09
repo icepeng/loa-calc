@@ -5,7 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -16,11 +18,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { TripodFormComponent } from './components/tripod-form.component';
 import { TripodItemViewComponent } from './components/tripod-item-view.component';
+import { TripodSearchDialogComponent } from './components/tripod-search-dialog.component';
 import { TripodTableComponent } from './components/tripod-table.component';
 import { TripodComponent } from './containers/tripod.component';
 import { TripodRoutingModule } from './tripod-routing.module';
-import { TripodSearchDialogComponent } from './components/tripod-search-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatIconModule,
     ClipboardModule,
   ],
 })

@@ -3,11 +3,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { startWith, Subscription, take } from 'rxjs';
+import { startWith, Subject, take, takeUntil } from 'rxjs';
 import { combinations } from '../../../util';
 import { TripodSearchDialogComponent } from '../components/tripod-search-dialog.component';
 import { marketData } from '../data';
-import { compose } from '../functions/compose';
 import { getSearchScript } from '../functions/search';
 import {
   ComposeFilter,
@@ -15,6 +14,7 @@ import {
   SearchResult,
   TripodForm,
 } from '../functions/type';
+import { getTripodString } from '../functions/util';
 
 @Component({
   selector: 'app-tripod',
@@ -22,7 +22,6 @@ import {
   styleUrls: ['./tripod.component.scss'],
 })
 export class TripodComponent implements OnInit, OnDestroy {
-  skillList = marketData.marketAuction.marketMenuAuctionSkillList;
   classList = marketData.marketClass;
   categoryList = marketData.marketCategory.filter(
     (category) => category.parent === 10000
@@ -54,7 +53,11 @@ export class TripodComponent implements OnInit, OnDestroy {
 
   filterForm = new FormGroup({
     tradeLeft: new FormControl(2),
+    requiredTripods: new FormControl([]),
   });
+
+  filledTripodForm: (TripodForm & { required: boolean })[] = [];
+  tripodFilters: { text: string; value: TripodForm }[] = [];
 
   selectedCategories: number[] = [];
   searchResult: SearchResult[] = [];
@@ -62,7 +65,7 @@ export class TripodComponent implements OnInit, OnDestroy {
   lastFilter: ComposeFilter = this.filterForm.value;
   isLoading = false;
 
-  subscription$!: Subscription;
+  subscribe$ = new Subject<void>();
   worker!: Worker;
 
   constructor(
@@ -86,9 +89,12 @@ export class TripodComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.subscription$ = this.formGroup
+    this.formGroup
       .get('categoryList')!
-      .valueChanges.pipe(startWith(this.formGroup.value.categoryList))
+      .valueChanges.pipe(
+        takeUntil(this.subscribe$),
+        startWith(this.formGroup.value.categoryList)
+      )
       .subscribe((categories) => {
         const len = Object.values(categories).filter((x) => x).length * 3;
         const tripodList = this.formGroup.get('tripodList') as FormArray;
@@ -111,6 +117,27 @@ export class TripodComponent implements OnInit, OnDestroy {
           .map(([k, v]) => +k);
       });
 
+    this.formGroup
+      .get('tripodList')!
+      .valueChanges.pipe(
+        takeUntil(this.subscribe$),
+        startWith(this.formGroup.value.categoryList)
+      )
+      .subscribe((tripodList) => {
+        this.filledTripodForm = tripodList.filter(
+          (form: any) => form.required && form.skill && form.tripod
+        );
+        this.tripodFilters = this.filledTripodForm
+          .map((value) => {
+            const text = getTripodString(value);
+            return {
+              text,
+              value,
+            };
+          })
+          .sort((a, b) => a.text.localeCompare(b.text));
+      });
+
     const savedForm = localStorage.getItem('tripodForm');
     if (savedForm) {
       this.formGroup.setValue(JSON.parse(savedForm));
@@ -118,23 +145,21 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription$.unsubscribe();
+    this.subscribe$.next();
+    this.subscribe$.complete();
   }
 
-  getFilledTripodForm(): (TripodForm & { required: boolean })[] {
-    return this.formGroup.value.tripodList.filter(
-      (form: any) => form.required && form.skill && form.tripod
-    );
+  resetTripodFilter() {
+    this.filterForm.get('requiredTripods')!.reset([]);
   }
 
   getCombinations() {
-    const filledTripodForm = this.getFilledTripodForm();
     const allow33 =
-      filledTripodForm.filter((x) => x.level === 4).length <
+      this.filledTripodForm.filter((x) => x.level === 4).length <
       this.categoryList.length;
     return Array.from(
       combinations(
-        filledTripodForm.map((form: any) => {
+        this.filledTripodForm.map((form) => {
           const { required, ...rest } = form;
           return rest;
         }) as TripodForm[],
@@ -147,7 +172,7 @@ export class TripodComponent implements OnInit, OnDestroy {
     localStorage.setItem('tripodForm', JSON.stringify(this.formGroup.value));
 
     const requiredTripodMin = this.selectedCategories.length * 2;
-    if (this.getFilledTripodForm().length < requiredTripodMin) {
+    if (this.filledTripodForm.length < requiredTripodMin) {
       this.snackbar.open(
         `최소 ${requiredTripodMin}개의 트라이포드를 선택해야 합니다.`,
         '닫기'

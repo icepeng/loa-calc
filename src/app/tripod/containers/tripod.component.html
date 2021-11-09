@@ -53,6 +53,21 @@
             <span matSuffix>회 이상</span>
           </mat-form-field>
         </div>
+        <div>
+          <mat-form-field>
+            <mat-label>필수 트라이포드</mat-label>
+            <mat-select formControlName="requiredTripods" multiple>
+              <mat-option
+                *ngFor="let tripod of tripodFilters"
+                [value]="tripod.value"
+                >{{ tripod.text }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <button (click)="resetTripodFilter()" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
         <button (click)="applySearchResult()" mat-raised-button color="primary">
           적용
         </button>

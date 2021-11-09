@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { marketData } from '../data';
 import { ComposeFilter, Summary, TripodForm } from '../functions/type';
+import { getTripodString } from '../functions/util';
 
 @Component({
   selector: 'app-tripod-item-view',
@@ -16,12 +16,6 @@ export class TripodItemViewComponent implements OnInit {
   ngOnInit(): void {}
 
   getTripodString(item: TripodForm) {
-    const skill = marketData.marketAuction.marketMenuAuctionSkillList.find(
-      (el) => el.value === item.skill
-    )!;
-    const tripod = skill.marketMenuSkillTripodList.find(
-      (el) => el.value === item.tripod
-    )!;
-    return `[${skill.text}] ${tripod.text}+${item.level}`;
+    return getTripodString(item);
   }
 }

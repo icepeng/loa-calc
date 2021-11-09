@@ -24,6 +24,7 @@ export interface SearchResult {
 
 export interface ComposeFilter {
   tradeLeft: number;
+  requiredTripods: TripodForm[];
 }
 
 export interface Summary {

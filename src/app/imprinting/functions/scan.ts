@@ -1,80 +1,105 @@
 import { Imprint } from './type';
-import { combinations, combinationsWithReplacement } from '../../../util';
+import { product } from '../../../util';
 
-export function getCandidates(
-  target: Imprint,
-  length: number,
-  imprintLimit: number
-) {
-  const items = Array.from(combinations([...Object.keys(target), '잡옵'], 2));
-  const combines = Array.from(combinationsWithReplacement(items, length));
-
-  return combines.filter((combine) => {
-    const objMin = { ...target };
-    const objMax = { ...target };
-    combine.forEach(([x, y]) => {
-      objMin[x] -= imprintLimit;
-      objMin[y] -= imprintLimit;
-      objMax[x] -= 3;
-      objMax[y] -= 3;
-    });
-    if (Object.values(objMin).find((x) => x > 0)) {
-      return false;
+function splitNumber(num: number, limit: number): number[][] {
+  const result: number[][] = [];
+  function rec(arr: number[], sum: number) {
+    if (sum === num) {
+      result.push(arr);
+      return;
     }
-    if (Object.values(objMax).find((x) => x <= -3)) {
-      return false;
+    if (sum > num) {
+      if (arr[arr.length - 1] === 3) {
+        result.push(arr);
+      }
+      return;
     }
-    return true;
-  });
+    for (let i = arr[arr.length - 1] || 3; i <= limit; i += 1) {
+      rec([...arr, i], sum + i);
+    }
+  }
+  rec([], 0);
+  return result;
 }
 
-export function getCombinations(
-  target: Imprint,
-  combine: string[][],
-  imprintLimit: number
-) {
-  const result: [string, number][][][] = [];
+function combine(splits: number[][], length: number, groupNames: string[]) {
+  const arr = splits.flatMap((split, index) =>
+    split.map((num) => ({ num, group: groupNames[index] }))
+  );
+  const result: Imprint[][] = [];
   const visited = new Set();
-  function rec(left: Imprint, additions: [string, number][][]) {
-    const hash = JSON.stringify(additions);
+
+  function rec(
+    list: Imprint[],
+    used: Record<string, boolean>,
+    si: number,
+    sj: number
+  ) {
+    const hash = JSON.stringify(list);
     if (visited.has(hash)) {
       return;
     }
     visited.add(hash);
 
-    if (!Object.values(left).find((x) => x > 0)) {
-      result.push(additions);
+    if (list.length === length) {
+      result.push(list);
       return;
     }
 
-    for (let i = 0; i < additions.length; i += 1) {
-      const [a, b] = additions[i];
-      if (b[1] === 3 && a[1] < imprintLimit && left[a[0]] > 0) {
-        const next = [...additions];
-        next[i] = [[a[0], a[1] + 1], b];
-        rec({ ...left, [a[0]]: left[a[0]] - 1 }, next);
+    for (let i = si; i < arr.length; i += 1) {
+      if (used[i]) {
+        continue;
       }
-      if (a[1] === 3 && b[1] < imprintLimit && left[b[0]] > 0) {
-        const next = [...additions];
-        next[i] = [a, [b[0], b[1] + 1]];
-        rec({ ...left, [b[0]]: left[b[0]] - 1 }, next);
+
+      const start =
+        arr[si - 1]?.group === arr[i].group && arr[si - 1]?.num === arr[i].num
+          ? sj
+          : i + 1;
+      for (let j = start; j < arr.length; j += 1) {
+        if (arr[i].num > 3 && arr[j].num > 3) {
+          continue;
+        }
+        if (used[j]) {
+          continue;
+        }
+        if (arr[i].group !== arr[j].group) {
+          rec(
+            [
+              ...list,
+              {
+                [arr[i].group]: arr[i].num,
+                [arr[j].group]: arr[j].num,
+              },
+            ],
+            { ...used, [i]: true, [j]: true },
+            i + 1,
+            j + 1
+          );
+        }
       }
     }
   }
+  rec([], {}, 0, 0);
+  return result;
+}
 
-  rec(
-    combine.reduce(
-      (obj, [a, b]) => {
-        obj[a] -= 3;
-        obj[b] -= 3;
-        return obj;
-      },
-      { ...target }
+export function getCombinations(
+  target: Imprint,
+  length: number,
+  imprintLimit: number
+) {
+  return [
+    ...product(
+      ...Object.values(target).map((x) => splitNumber(x, imprintLimit))
     ),
-    combine.map(([a, b]) => [
-      [a, 3],
-      [b, 3],
-    ])
-  );
-  return result.map((res) => res.map((x) => Object.fromEntries(x)));
+  ]
+    .filter((splits) => splits.flat().length <= length * 2)
+    .filter((splits) => splits.flat().filter((num) => num > 3).length <= length)
+    .map((splits) => {
+      const padding = length * 2 - splits.flat().length;
+      return [...splits, Array.from({ length: padding }, () => 3)];
+    })
+    .flatMap((splits) =>
+      combine(splits, length, [...Object.keys(target), '잡옵'])
+    );
 }

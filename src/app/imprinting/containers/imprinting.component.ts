@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { compose } from '../functions/compose';
 import { imprintingFormToken, imprintOptions } from '../functions/const';
-import { getCandidates, getCombinations } from '../functions/scan';
+import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import {
   ComposeFilter,
@@ -110,9 +110,11 @@ export class ImprintingComponent implements OnInit {
       .map((x) => x[0]);
 
     const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
-    this.combinations = getCandidates(initial, accToSearch.length, imprintLimit)
-      .map((candidate) => getCombinations(initial, candidate, imprintLimit))
-      .flat();
+    this.combinations = getCombinations(
+      initial,
+      accToSearch.length,
+      imprintLimit
+    );
 
     if (this.combinations.length === 0) {
       this.snackbar.open('불가능한 목표 각인입니다.', '닫기');

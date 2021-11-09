@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>경매장 검색</h1>
+<div mat-dialog-content>
+  <div class="w-240">
+    검색 코드가 복사되었습니다.
+    <a
+      class="link"
+      href="https://docs.google.com/presentation/d/e/2PACX-1vQbsDbKRVd-0qRVdLs-tzSUsYMlIFxks6YRO2XzGGdXHm0GACTUwuQxbcXhiAdoHckz7epo4sjQVo9j/pub?start=false&loop=false&delayms=60000"
+      target="_blank"
+      >설명서</a
+    >를 참고해 로스트아크 경매장에 검색을 진행해주세요.
+  </div>
+  <textarea
+    placeholder="결과 붙여넣기"
+    [(ngModel)]="searchResult"
+    matInput
+  ></textarea>
+  <div class="w-240 mat-caption">
+    * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
+    판단해서 사용해주세요.
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onSubmit()">적용</button>
+  <button mat-stroked-button (click)="onCancel()">취소</button>
+</div>

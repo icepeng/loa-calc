@@ -1,6 +1,9 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs';
+import { ImprintingSearchDialogComponent } from '../components/imprinting-search-dialog.component';
 import { compose } from '../functions/compose';
 import { imprintingFormToken, imprintOptions } from '../functions/const';
 import { getCombinations } from '../functions/scan';
@@ -27,7 +30,7 @@ export class ImprintingComponent implements OnInit {
 
   combinations: Imprint[][] = [];
   searchGrade: SearchGrade = '유물';
-  searchResult = '';
+  searchResult: Record<string, Item[]> = {};
 
   filter: ComposeFilter = {
     effects: {
@@ -41,16 +44,26 @@ export class ImprintingComponent implements OnInit {
     exclude: new Set<string>(),
   };
 
-  worker: Worker | null = null;
+  worker!: Worker;
   isLoading = false;
+  progress = 0;
   composeResults: ComposeResult[] = [];
 
-  constructor(private snackbar: MatSnackBar, private clipboard: Clipboard) {}
+  constructor(
+    private snackbar: MatSnackBar,
+    private clipboard: Clipboard,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     if (typeof Worker !== 'undefined') {
       this.worker = new Worker(
         new URL('../imprinting.worker', import.meta.url)
+      );
+    } else {
+      this.snackbar.open(
+        'Web Worker가 지원되지 않는 브라우저입니다. 최신 브라우저를 사용해주세요.',
+        '닫기'
       );
     }
   }
@@ -127,10 +140,21 @@ export class ImprintingComponent implements OnInit {
       form.accMap,
       this.searchGrade
     );
+
     const copySuccess = this.clipboard.copy(searchScript);
     if (copySuccess) {
-      this.snackbar.open('검색 코드가 복사되었습니다.', '닫기');
-      this.searchResult = '';
+      this.dialog
+        .open(ImprintingSearchDialogComponent, {
+          disableClose: true,
+        })
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((data) => {
+          if (data) {
+            this.searchResult = data;
+            this.applySearchResult();
+          }
+        });
       this.filter.exclude = new Set();
     } else {
       this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
@@ -172,49 +196,28 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    try {
-      this.isLoading = true;
-      const composeData = {
-        combinations: this.combinations,
-        initialEffect: Object.fromEntries([this.imprintingForm.stonePenalty]),
-        searchResult: JSON.parse(this.searchResult) as Record<string, Item[]>,
-        fixedItems: this.getFixedItems(),
-        filter: this.filter,
-      };
-
-      if (this.worker) {
-        this.worker.onmessage = ({ data }) => {
-          this.composeResults = data;
-          if (this.composeResults.length === 0) {
-            this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
-          }
-          this.isLoading = false;
-        };
-        this.worker.onerror = (err) => {
-          this.snackbar.open(
-            '오류가 발생했습니다. 설명서를 확인해주세요.',
-            '닫기'
-          );
-          this.isLoading = false;
-        };
-        this.worker.postMessage(composeData);
-      } else {
-        this.composeResults = compose(
-          composeData.combinations,
-          composeData.initialEffect,
-          composeData.searchResult,
-          composeData.fixedItems,
-          composeData.filter
-        );
+    this.isLoading = true;
+    this.worker.onmessage = ({ data }) => {
+      if (data.done) {
+        this.composeResults = data.result;
         if (this.composeResults.length === 0) {
           this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
         }
         this.isLoading = false;
+      } else {
+        this.progress = data.finished / data.total;
       }
-    } catch (err) {
+    };
+    this.worker.onerror = (err) => {
       this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
       this.isLoading = false;
-      throw err;
-    }
+    };
+    this.worker.postMessage({
+      combinations: this.combinations,
+      initialEffect: Object.fromEntries([this.imprintingForm.stonePenalty]),
+      searchResult: this.searchResult,
+      fixedItems: this.getFixedItems(),
+      filter: this.filter,
+    });
   }
 }

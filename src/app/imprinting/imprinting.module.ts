@@ -22,6 +22,8 @@ import { AccFormComponent } from './containers/acc-form.component';
 import { ImprintingFormComponent } from './containers/imprinting-form.component';
 import { ImprintingComponent } from './containers/imprinting.component';
 import { ImprintingRoutingModule } from './imprinting-routing.module';
+import { ImprintingSearchDialogComponent } from './components/imprinting-search-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
     ImprintingFormComponent,
     AccFormComponent,
     ComposeTableComponent,
+    ImprintingSearchDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
     MatIconModule,
     MatMenuModule,
     MatRadioModule,
+    MatDialogModule,
     ClipboardModule,
   ],
 })

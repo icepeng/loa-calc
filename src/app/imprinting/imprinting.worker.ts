@@ -3,12 +3,11 @@
 import { compose } from './functions/compose';
 
 addEventListener('message', ({ data }) => {
-  const response = compose(
+  compose(
     data.combinations,
     data.initialEffect,
     data.searchResult,
     data.fixedItems,
     data.filter
   );
-  postMessage(response);
 });

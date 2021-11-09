@@ -31,27 +31,6 @@
           검색 코드 복사
         </button>
       </mat-card-content>
-      <mat-card-content>
-        <div class="mat-caption w-240">
-          * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
-          판단해서 사용해주세요.<br />
-          *
-          <a
-            class="link"
-            href="https://docs.google.com/presentation/d/e/2PACX-1vQbsDbKRVd-0qRVdLs-tzSUsYMlIFxks6YRO2XzGGdXHm0GACTUwuQxbcXhiAdoHckz7epo4sjQVo9j/pub?start=false&loop=false&delayms=60000"
-            target="_blank"
-            >설명서</a
-          >를 읽은 다음 사용해주세요.
-        </div>
-      </mat-card-content>
-      <mat-card-content>
-        <textarea
-          placeholder="결과 붙여넣기"
-          [(ngModel)]="searchResult"
-          matInput
-          class="script"
-        ></textarea>
-      </mat-card-content>
       <mat-card-subtitle>필터</mat-card-subtitle>
       <mat-card-content>
         <div>
@@ -114,6 +93,7 @@
         <app-compose-table
           [data]="composeResults"
           [isLoading]="isLoading"
+          [progress]="progress"
           (exclude)="exclude($event)"
         ></app-compose-table>
       </mat-card-content>

@@ -116,6 +116,8 @@ export function compose(
       )
     )
   );
+  const total = accPermutation.length * combinations.length;
+  let finished = 0;
   let result: ComposeResult[] = [];
   for (const combination of combinations) {
     for (const accList of accPermutation) {
@@ -150,8 +152,18 @@ export function compose(
         result.sort((a, b) => a.price - b.price);
         result = result.slice(0, 300);
       }
+
+      finished += 1;
+      postMessage({
+        done: false,
+        total,
+        finished,
+      });
     }
   }
 
-  return result;
+  postMessage({
+    done: true,
+    result,
+  });
 }

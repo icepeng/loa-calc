@@ -20,6 +20,7 @@ import { ComposeResult, Item } from '../functions/type';
 })
 export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
+  @Input() progress!: number;
   @Input() isLoading!: boolean;
   @Output() exclude = new EventEmitter<Item>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

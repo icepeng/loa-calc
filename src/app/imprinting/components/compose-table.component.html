@@ -1,6 +1,7 @@
 <div class="table-container">
   <div *ngIf="isLoading" class="loading-shade">
     <mat-spinner></mat-spinner>
+    <div>{{ progress | percent: ".0-0" }}</div>
   </div>
   <div class="table-inner-container">
     <table class="optimize-table" mat-table [dataSource]="dataSource">

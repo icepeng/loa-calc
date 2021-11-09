@@ -37,6 +37,7 @@ export class TripodTableComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
+      this.dataSource.paginator?.firstPage();
     }
     if (changes.selectedCategories) {
       this.columns = [

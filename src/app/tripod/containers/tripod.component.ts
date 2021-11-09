@@ -121,7 +121,7 @@ export class TripodComponent implements OnInit, OnDestroy {
       .get('tripodList')!
       .valueChanges.pipe(
         takeUntil(this.subscribe$),
-        startWith(this.formGroup.value.categoryList)
+        startWith(this.formGroup.value.tripodList)
       )
       .subscribe((tripodList) => {
         this.filledTripodForm = tripodList.filter(
@@ -147,6 +147,25 @@ export class TripodComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscribe$.next();
     this.subscribe$.complete();
+  }
+
+  resetForm() {
+    this.formGroup.patchValue({
+      categoryList: {
+        180000: true,
+        190010: true,
+        190020: true,
+        190030: true,
+        190040: true,
+        190050: true,
+      },
+      tripodList: Array.from({ length: 18 }, () => ({
+        skill: null,
+        tripod: null,
+        level: 3,
+        required: true,
+      })),
+    });
   }
 
   resetTripodFilter() {

@@ -11,14 +11,21 @@
   <div class="layout">
     <mat-card [formGroup]="formGroup" class="card">
       <mat-card-content>
-        <mat-form-field>
-          <mat-label>직업</mat-label>
-          <mat-select formControlName="classCode">
-            <mat-option *ngFor="let option of classList" [value]="option.value">
-              {{ option.text }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="flex">
+          <mat-form-field>
+            <mat-label>직업</mat-label>
+            <mat-select formControlName="classCode">
+              <mat-option
+                *ngFor="let option of classList"
+                [value]="option.value"
+              >
+                {{ option.text }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="filler"></div>
+          <button (click)="resetForm()" mat-stroked-button>초기화</button>
+        </div>
       </mat-card-content>
       <mat-card-content formGroupName="categoryList">
         <mat-checkbox

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,6 +28,8 @@ import { TripodModule } from './tripod/tripod.module';
     MatButtonModule,
     MatDialogModule,
     MatSidenavModule,
+    MatMenuModule,
+    MatIconModule,
     AppRoutingModule,
     Angulartics2Module.forRoot(),
   ],

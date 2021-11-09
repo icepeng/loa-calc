@@ -67,13 +67,20 @@
           </mat-form-field>
         </div>
         <div>
-          <mat-checkbox [(ngModel)]="filter.hasBuyPrice"
-            >즉시구매 가능한 조합만 표시</mat-checkbox
-          >
+          <mat-form-field>
+            <mat-label>허용할 페널티 각인</mat-label>
+            <mat-select [(ngModel)]="filter.allowedPenalties" multiple>
+              <mat-option
+                *ngFor="let penalty of penaltyOptions"
+                [value]="penalty"
+                >{{ penalty }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
         </div>
         <div>
-          <mat-checkbox [(ngModel)]="filter.noPenalty"
-            >감소각인이 없는 조합만 표시</mat-checkbox
+          <mat-checkbox [(ngModel)]="filter.hasBuyPrice"
+            >즉시구매 가능한 조합만 표시</mat-checkbox
           >
         </div>
         <div>

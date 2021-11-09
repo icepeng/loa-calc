@@ -37,7 +37,7 @@ export interface ComposeResult {
 export interface ComposeFilter {
   effects: Effects;
   hasBuyPrice: boolean;
-  noPenalty: boolean;
+  allowedPenalties: string[];
   tradeLeft: number;
   exclude: Set<string>;
 }

@@ -4,8 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs';
 import { ImprintingSearchDialogComponent } from '../components/imprinting-search-dialog.component';
-import { compose } from '../functions/compose';
-import { imprintingFormToken, imprintOptions } from '../functions/const';
+import {
+  imprintingFormToken,
+  imprintOptions,
+  penaltyOptions,
+} from '../functions/const';
 import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import {
@@ -28,6 +31,8 @@ export class ImprintingComponent implements OnInit {
   @ViewChild(ImprintingFormComponent) imprintingForm!: ImprintingFormComponent;
   @ViewChild(AccFormComponent) accForm!: AccFormComponent;
 
+  penaltyOptions = penaltyOptions;
+
   combinations: Imprint[][] = [];
   searchGrade: SearchGrade = '유물';
   searchResult: Record<string, Item[]> = {};
@@ -39,7 +44,7 @@ export class ImprintingComponent implements OnInit {
       신속: 0,
     },
     hasBuyPrice: false,
-    noPenalty: true,
+    allowedPenalties: [],
     tradeLeft: 0,
     exclude: new Set<string>(),
   };

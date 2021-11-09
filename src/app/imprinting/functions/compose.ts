@@ -11,8 +11,11 @@ function chooseItems(
   maxPrice: number,
   filter: ComposeFilter
 ) {
+  const penalties = penaltyOptions.filter(
+    (penalty) => !filter.allowedPenalties.includes(penalty)
+  );
   function hasPenalty(effects: Effects) {
-    return penaltyOptions.find(
+    return penalties.find(
       (penalty) =>
         effects[penalty] >=
         Math.floor((initialEffect[penalty] ?? 0) / 5 + 1) * 5
@@ -40,7 +43,7 @@ function chooseItems(
     items: Record<string, Item>,
     d: number
   ): ComposeResult[] {
-    if ((filter.noPenalty && hasPenalty(effects)) || price > maxPrice) {
+    if (hasPenalty(effects) || price > maxPrice) {
       return [];
     }
     if (d === accList.length) {

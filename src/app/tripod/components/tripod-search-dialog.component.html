@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>경매장 검색</h1>
 <div mat-dialog-content>
-  <div class="w-240">
+  <div>
     검색 코드가 복사되었습니다.
     <a
       class="link"
@@ -14,7 +14,10 @@
     [(ngModel)]="searchResult"
     matInput
   ></textarea>
-  <div class="w-240 mat-caption">
+  <div class="mat-caption">
+    * 검색을 진행하는 동안 이 창을 닫지 말아주세요.
+  </div>
+  <div class="mat-caption">
     * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
     판단해서 사용해주세요.
   </div>

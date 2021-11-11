@@ -11,6 +11,7 @@ import { Angulartics2Module } from 'angulartics2';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { DonateModule } from './donate/donate.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
 import { RefiningModule } from './refining/refining.module';
 import { TripodModule } from './tripod/tripod.module';
@@ -24,6 +25,7 @@ import { TripodModule } from './tripod/tripod.module';
     RefiningModule,
     ImprintingModule,
     TripodModule,
+    DonateModule,
     MatToolbarModule,
     MatButtonModule,
     MatDialogModule,

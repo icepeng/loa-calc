@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 128px);
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.mat-card {
+  width: 540px;
+}

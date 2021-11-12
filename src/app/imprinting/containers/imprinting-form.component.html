@@ -34,7 +34,7 @@
 <mat-card *ngFor="let stoneBook of stoneBooks; index as i">
   <mat-card-subtitle>
     <div class="flex-baseline">
-      장착 각인
+      장착 각인 #{{ i + 1 }}
       <div class="filler"></div>
       <button
         *ngIf="stoneBooks.length > 1"
@@ -64,7 +64,7 @@
       </mat-form-field>
     </div>
   </mat-card-content>
-  <mat-card-subtitle>어빌리티 스톤 각인</mat-card-subtitle>
+  <mat-card-subtitle>어빌리티 스톤 각인 #{{ i + 1 }}</mat-card-subtitle>
   <mat-card-content>
     <div *ngFor="let i of [0, 1]">
       <mat-form-field>

@@ -1,5 +1,5 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs';
@@ -7,20 +7,21 @@ import { ImprintingSearchDialogComponent } from '../components/imprinting-search
 import {
   imprintingFormToken,
   imprintOptions,
+  initialAccMap,
   penaltyOptions,
 } from '../functions/const';
 import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import {
+  AccMap,
   Candidate,
   ComposeFilter,
   ComposeResult,
   Item,
   SearchGrade,
+  StoneBook,
 } from '../functions/type';
 import { addEntries, dedupe, filterRecord } from '../functions/util';
-import { AccFormComponent } from './acc-form.component';
-import { ImprintingFormComponent } from './imprinting-form.component';
 
 @Component({
   selector: 'app-imprinting',
@@ -28,8 +29,32 @@ import { ImprintingFormComponent } from './imprinting-form.component';
   styleUrls: ['./imprinting.component.scss'],
 })
 export class ImprintingComponent implements OnInit {
-  @ViewChild(ImprintingFormComponent) imprintingForm!: ImprintingFormComponent;
-  @ViewChild(AccFormComponent) accForm!: AccFormComponent;
+  target: [string, number][] = [
+    ['', 0],
+    ['', 0],
+    ['', 0],
+    ['', 0],
+    ['', 0],
+    ['', 0],
+    ['', 0],
+  ];
+
+  stoneBooks: StoneBook[] = [
+    {
+      index: 0,
+      stone: [
+        ['', 0],
+        ['', 0],
+      ],
+      stonePenalty: ['', 0],
+      book: [
+        ['', 0],
+        ['', 0],
+      ],
+    },
+  ];
+
+  accMap: Record<string, AccMap> = initialAccMap;
 
   penaltyOptions = penaltyOptions;
 
@@ -71,11 +96,40 @@ export class ImprintingComponent implements OnInit {
         '닫기'
       );
     }
+    const savedForm = localStorage.getItem(imprintingFormToken);
+    if (savedForm) {
+      const form = JSON.parse(savedForm);
+      this.target = form.target;
+      this.stoneBooks = form.stoneBooks;
+      this.accMap = form.accMap;
+    }
   }
 
   reset() {
-    this.imprintingForm.reset();
-    this.accForm.reset();
+    this.target = [
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+      ['', 0],
+    ];
+    this.stoneBooks = [
+      {
+        index: 0,
+        stone: [
+          ['', 0],
+          ['', 0],
+        ],
+        stonePenalty: ['', 0],
+        book: [
+          ['', 0],
+          ['', 0],
+        ],
+      },
+    ];
+    this.accMap = JSON.parse(JSON.stringify(initialAccMap));
   }
 
   exclude(item: Item) {
@@ -89,9 +143,9 @@ export class ImprintingComponent implements OnInit {
 
   generate() {
     const form = {
-      target: this.imprintingForm.target,
-      stoneBooks: this.imprintingForm.stoneBooks,
-      accMap: this.accForm.accMap,
+      target: this.target,
+      stoneBooks: this.stoneBooks,
+      accMap: this.accMap,
     };
     localStorage.setItem(imprintingFormToken, JSON.stringify(form));
 
@@ -140,10 +194,14 @@ export class ImprintingComponent implements OnInit {
       };
     });
 
-    if (
-      this.candidates.find((candidate) => candidate.combinations.length === 0)
-    ) {
-      this.snackbar.open('불가능한 목표 각인입니다.', '닫기');
+    const impossibleIndex = this.candidates.findIndex(
+      (candidate) => candidate.combinations.length === 0
+    );
+    if (impossibleIndex !== -1) {
+      this.snackbar.open(
+        `불가능한 목표 각인입니다: #${impossibleIndex + 1}`,
+        '닫기'
+      );
       return;
     }
 
@@ -178,7 +236,7 @@ export class ImprintingComponent implements OnInit {
 
   getFixedItems(): Record<string, Item> {
     return Object.fromEntries(
-      Object.entries(this.accForm.accMap)
+      Object.entries(this.accMap)
         .filter(([name, acc]) => acc.name)
         .map(([name, acc]) => [
           name,
@@ -212,10 +270,8 @@ export class ImprintingComponent implements OnInit {
     }
 
     this.isLoading = true;
-    console.time();
     this.worker.onmessage = ({ data }) => {
       if (data.done) {
-        console.timeEnd();
         this.composeResults = data.result;
         if (this.composeResults.length === 0) {
           this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
@@ -231,7 +287,7 @@ export class ImprintingComponent implements OnInit {
     };
     this.worker.postMessage({
       candidates: this.candidates,
-      accMap: this.accForm.accMap,
+      accMap: this.accMap,
       searchResult: this.searchResult,
       fixedItems: this.getFixedItems(),
       filter: this.filter,

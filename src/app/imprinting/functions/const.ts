@@ -95,4 +95,4 @@ export const penaltyOptions = [
 
 export const dealOptions = ['치명', '특화', '제압', '신속', '인내', '숙련'];
 
-export const imprintingFormToken = 'imprintingForm_v3';
+export const imprintingFormToken = 'imprintingForm_v4';

@@ -1,6 +1,7 @@
 import { permutations } from '../../../util';
-import { penaltyOptions } from './const';
+import { dealOptions, penaltyOptions } from './const';
 import {
+  AccMap,
   Candidate,
   ComposeFilter,
   ComposeResult,
@@ -10,6 +11,16 @@ import {
   StoneBook,
 } from './type';
 import { addRecord } from './util';
+
+function getMinPriceCache(entries: Item[][], len: number) {
+  return Array.from({ length: len }, (_, k) => {
+    let sum = 0;
+    for (let i = k; i < len - 1; i += 1) {
+      sum += entries[i + 1][0].price;
+    }
+    return sum;
+  });
+}
 
 function chooseItems(
   entries: Item[][],
@@ -23,19 +34,13 @@ function chooseItems(
     (penalty) => !filter.allowedPenalties.includes(penalty)
   );
   const initialEffect = Object.fromEntries([stoneBook.stonePenalty]);
+  const minPriceCache = getMinPriceCache(entries, accList.length);
+
   function hasPenalty(effects: Effects) {
     return penalties.find(
       (penalty) =>
         effects[penalty] >=
         Math.floor((initialEffect[penalty] ?? 0) / 5 + 1) * 5
-    );
-  }
-
-  function isItemFiltered(item: Item) {
-    return (
-      (filter.hasBuyPrice ? !item.buyPrice : false) ||
-      item.tradeLeft! < filter.tradeLeft ||
-      filter.exclude.has(item.id!)
     );
   }
 
@@ -45,17 +50,16 @@ function chooseItems(
     );
   }
 
+  const len = accList.length;
+
   function rec(
     effects: Effects,
     price: number,
-    usedItemNames: Record<string, boolean>,
+    usedItemNames: Set<string>,
     items: Record<string, Item>,
     d: number
   ): ComposeResult[] {
-    if (hasPenalty(effects) || price > maxPrice) {
-      return [];
-    }
-    if (d === accList.length) {
+    if (d === len) {
       if (isEffectsFiltered(effects)) {
         return [];
       }
@@ -63,38 +67,37 @@ function chooseItems(
         {
           effects,
           price,
-          items,
+          items: { ...items },
           stoneBook,
         },
       ];
     }
 
-    const result = [];
+    const result: ComposeResult[] = [];
     const currentItems = entries[d];
     const accName = accList[d];
+    const afterPriceMin = minPriceCache[d];
+
     for (const item of currentItems) {
-      if (usedItemNames[item.name]) {
+      if (usedItemNames.has(item.name)) {
         continue;
       }
-      if (isItemFiltered(item)) {
+      if (price + item.price + afterPriceMin > maxPrice) {
         continue;
       }
+      const nextEffects = addRecord(effects, item.effects);
+      if (hasPenalty(nextEffects)) {
+        continue;
+      }
+      usedItemNames.add(item.name);
+      items[accName] = item;
       result.push(
-        ...rec(
-          addRecord(effects, item.effects),
-          price + item.price,
-          {
-            ...usedItemNames,
-            [item.name]: true,
-          },
-          {
-            ...items,
-            [accName]: item,
-          },
-          d + 1
-        )
+        ...rec(nextEffects, price + item.price, usedItemNames, items, d + 1)
       );
+      usedItemNames.delete(item.name);
+      delete items[accName];
     }
+
     return result;
   }
   return rec(
@@ -103,7 +106,7 @@ function chooseItems(
       initialEffect
     ),
     0,
-    Object.fromEntries(Object.values(fixedItems).map((x) => [x.name, true])),
+    new Set(Object.values(fixedItems).map((x) => x.name)),
     fixedItems,
     0
   );
@@ -115,22 +118,92 @@ function hashResult(result: ComposeResult) {
   );
 }
 
+function prefilter(items: Item[], filter: ComposeFilter) {
+  function isItemFiltered(item: Item) {
+    return (
+      (filter.hasBuyPrice ? !item.buyPrice : false) ||
+      item.tradeLeft! < filter.tradeLeft ||
+      filter.exclude.has(item.id!)
+    );
+  }
+
+  function isGreaterEqual(a: Item, b: Item) {
+    const [aPenaltyName, aPenaltyValue] = a.effects.find(([name]) =>
+      penaltyOptions.includes(name)
+    )!;
+    const [bPenaltyName, bPenaltyValue] = b.effects.find(([name]) =>
+      penaltyOptions.includes(name)
+    )!;
+    return (
+      a.name === b.name &&
+      a.grade === b.grade &&
+      a.price <= b.price &&
+      a.tradeLeft! >= b.tradeLeft! &&
+      aPenaltyName === bPenaltyName &&
+      aPenaltyValue <= bPenaltyValue &&
+      dealOptions
+        .map((option) => [
+          a.effects.find(([name]) => name === option),
+          b.effects.find(([name]) => name === option),
+        ])
+        .filter(([a, b]) => a && b)
+        .every(([a, b]) => a![1] >= b![1])
+    );
+  }
+
+  return items.filter((item, index) => {
+    if (isItemFiltered(item)) {
+      return false;
+    }
+
+    if (
+      items.find(
+        (item2, index2) => index !== index2 && isGreaterEqual(item2, item)
+      )
+    ) {
+      return false;
+    }
+    return true;
+  });
+}
+
 export function compose(
   candidates: Candidate[],
+  accMap: Record<string, AccMap>,
   searchResult: Record<string, Item[]>,
   fixedItems: Record<string, Item>,
   filter: ComposeFilter
 ) {
-  const accPermutation = Array.from(
+  let accPermutation = Array.from(
     permutations(
       ['목걸이', '귀걸이1', '귀걸이2', '반지1', '반지2'].filter(
         (x) => !fixedItems[x]
       )
     )
   );
+  if (JSON.stringify(accMap['귀걸이1']) === JSON.stringify(accMap['귀걸이2'])) {
+    accPermutation = accPermutation.filter((permutation) => {
+      const index1 = permutation.findIndex((el) => el === '귀걸이1');
+      const index2 = permutation.findIndex((el) => el === '귀걸이2');
+      return index1 < index2;
+    });
+  }
+  if (JSON.stringify(accMap['반지1']) === JSON.stringify(accMap['반지2'])) {
+    accPermutation = accPermutation.filter((permutation) => {
+      const index1 = permutation.findIndex((el) => el === '반지1');
+      const index2 = permutation.findIndex((el) => el === '반지2');
+      return index1 < index2;
+    });
+  }
   const total =
     accPermutation.length *
     candidates.flatMap((candidate) => candidate.combinations).length;
+  const prefiltered = Object.fromEntries(
+    Object.entries(searchResult).map(([key, value]) => [
+      key,
+      prefilter(value, filter),
+    ])
+  );
   let finished = 0;
   const resultMap = new Map<StoneBook, ComposeResult[]>();
   for (const { combinations, stoneBook } of candidates) {
@@ -141,10 +214,9 @@ export function compose(
         for (let i = 0; i < accList.length; i += 1) {
           const acc = accList[i];
           const imprint = Object.entries(combination[i]);
-          const items =
-            searchResult[
-              `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
-            ];
+          const items = prefiltered[
+            `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
+          ].sort((a, b) => a.price - b.price);
           if (items.length > 0) {
             entries.push(items);
           }

@@ -133,8 +133,7 @@ export function getSearchScript(
         .querySelector(\`td:nth-child(1) > div.grade > span.count\`)
         .innerText.trim();
       const tradeLeft = tradeLeftStr === "[구매 후 거래 불가]" ? 0 : parseInt(tradeLeftStr.split("거래 ")[1].split("회")[0], 10)
-      const effects = Object.fromEntries(
-        row
+      const effects = row
           .querySelector(\`td:nth-child(1) > div.effect\`)
           .innerText.trim()
           .split("\\n")
@@ -143,8 +142,7 @@ export function getSearchScript(
           .map((str) => [
             str.split("[")[1].split("]")[0],
             parseInt(str.split("+")[1], 10),
-          ])
-      );
+          ]);
       const quality = parseInt(
         row.querySelector(\`td:nth-child(3) > div > span.txt\`).innerText.trim(),
         10

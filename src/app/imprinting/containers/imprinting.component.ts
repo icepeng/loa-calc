@@ -212,8 +212,10 @@ export class ImprintingComponent implements OnInit {
     }
 
     this.isLoading = true;
+    console.time();
     this.worker.onmessage = ({ data }) => {
       if (data.done) {
+        console.timeEnd();
         this.composeResults = data.result;
         if (this.composeResults.length === 0) {
           this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
@@ -229,6 +231,7 @@ export class ImprintingComponent implements OnInit {
     };
     this.worker.postMessage({
       candidates: this.candidates,
+      accMap: this.accForm.accMap,
       searchResult: this.searchResult,
       fixedItems: this.getFixedItems(),
       filter: this.filter,

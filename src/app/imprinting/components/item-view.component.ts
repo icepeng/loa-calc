@@ -31,7 +31,7 @@ export class ItemViewComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.item.currentValue) {
-      const effects = Object.entries<number>(changes.item.currentValue.effects);
+      const effects = changes.item.currentValue.effects as Item['effects'];
       this.dealOptions = effects.filter((eff) => dealOptions.includes(eff[0]));
       this.imprintOptions = effects.filter((eff) =>
         imprintOptions.includes(eff[0])

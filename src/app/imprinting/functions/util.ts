@@ -1,9 +1,6 @@
-export function addRecord(
-  a: Record<string, number>,
-  b: Record<string, number>
-) {
+export function addRecord(a: Record<string, number>, b: [string, number][]) {
   const result = { ...a };
-  Object.entries(b).forEach(([key, value]) => {
+  b.forEach(([key, value]) => {
     if (!result[key]) {
       result[key] = 0;
     }
@@ -28,7 +25,7 @@ export function addEntries(entries: [string, number][]) {
     result[key] += value;
   });
 
-  return result;
+  return Object.entries(result);
 }
 
 export function dedupe<T>(arr: T[]): T[] {

@@ -108,7 +108,7 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const accToSearch = Object.entries(form.accMap)
+    const accTypes = Object.entries(form.accMap)
       .filter(([name, acc]) => !acc.name)
       .map((x) => x[0]);
 
@@ -130,7 +130,7 @@ export class ImprintingComponent implements OnInit {
 
       const combinations = getCombinations(
         initial,
-        accToSearch.length,
+        accTypes.length,
         imprintLimit
       );
 
@@ -151,7 +151,7 @@ export class ImprintingComponent implements OnInit {
       dedupe(
         this.candidates.flatMap((candidate) => candidate.combinations).flat()
       ),
-      accToSearch,
+      accTypes,
       form.accMap,
       this.searchGrade
     );

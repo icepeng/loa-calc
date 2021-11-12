@@ -1,11 +1,22 @@
 import { AccMap, Item, SearchGrade } from './type';
+import { getOverlappingAcc } from './util';
 
 export function getSearchScript(
-  toSearch: Record<string, number>[],
-  accToSearch: string[],
+  imprints: Record<string, number>[],
+  accTypes: string[],
   accMap: Record<string, AccMap>,
   searchGrade: SearchGrade
 ) {
+  const overlappingAcc = getOverlappingAcc(accMap);
+  const accTypesToSearch = accTypes.filter((acc) => {
+    if (acc === '귀걸이2' && overlappingAcc.귀걸이) {
+      return false;
+    }
+    if (acc === '반지2' && overlappingAcc.반지) {
+      return false;
+    }
+    return true;
+  });
   return `const category = {
       목걸이: 200010,
       귀걸이: 200020,
@@ -258,12 +269,12 @@ export function getSearchScript(
         });
     }
     
-    async function getSearchResult(toSearch, accToSearch, accMap, searchGrade) {
+    async function getSearchResult(imprints, accTypes, accMap, overlapping, searchGrade) {
       const result = [];
-      const total = toSearch.length * accToSearch.length;
+      const total = imprints.length * accTypes.length;
       let count = 0;
-      for (const imprint of toSearch) {
-        for (const accType of accToSearch) {
+      for (const imprint of imprints) {
+        for (const accType of accTypes) {
           count += 1;
           const estimated = new Date();
           estimated.setSeconds(estimated.getSeconds() + (total - count) * 3.2);
@@ -310,15 +321,27 @@ export function getSearchScript(
             \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
             searchResult,
           ]);
+          if (accType === "귀걸이1" && overlapping.귀걸이) {
+            result.push([
+              \`\${type1}_\${min1}_\${type2}_\${min2}_귀걸이2\`,
+              searchResult,
+            ]);
+          }
+          if (accType === "반지1" && overlapping.반지) {
+            result.push([
+              \`\${type1}_\${min1}_\${type2}_\${min2}_반지2\`,
+              searchResult,
+            ]);
+          }
           await new Promise(resolve => setTimeout(resolve, 3200));
         }
       }
       return Object.fromEntries(result);
     }
-    getSearchResult(${JSON.stringify(toSearch)}, ${JSON.stringify(
-    accToSearch
-  )}, ${JSON.stringify(
-    accMap
+    getSearchResult(${JSON.stringify(imprints)}, ${JSON.stringify(
+    accTypesToSearch
+  )}, ${JSON.stringify(accMap)}, ${JSON.stringify(
+    overlappingAcc
   )}, "${searchGrade}").then(res => console.log(res));  
   `;
 }

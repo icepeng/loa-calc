@@ -32,7 +32,7 @@ export interface Item {
   id: string | null;
   grade: number | null;
   tradeLeft: number | null;
-  effects: Effects;
+  effects: [string, number][];
   quality: number;
   price: number;
   buyPrice: number;

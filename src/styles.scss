@@ -29,7 +29,7 @@ $dark-app-theme: mat-dark-theme(
     background: mat-color($_background, card);
   }
   a.link {
-    color: mat-color($primary)
+    color: mat-color($primary);
   }
 }
 
@@ -76,4 +76,13 @@ body {
 
 .grade-6 {
   color: #c9a472;
+}
+
+.filler {
+  flex-grow: 1;
+}
+
+.flex-baseline {
+  display: flex;
+  align-items: baseline;
 }

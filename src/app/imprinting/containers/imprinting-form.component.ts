@@ -4,6 +4,7 @@ import {
   imprintOptions,
   penaltyOptions,
 } from '../functions/const';
+import { StoneBook } from '../functions/type';
 
 @Component({
   selector: 'app-imprinting-form',
@@ -24,16 +25,18 @@ export class ImprintingFormComponent implements OnInit {
     ['', 0],
   ];
 
-  stone: [string, number][] = [
-    ['', 0],
-    ['', 0],
-  ];
-
-  stonePenalty: [string, number] = ['', 0];
-
-  book: [string, number][] = [
-    ['', 0],
-    ['', 0],
+  stoneBooks: StoneBook[] = [
+    {
+      stone: [
+        ['', 0],
+        ['', 0],
+      ],
+      stonePenalty: ['', 0],
+      book: [
+        ['', 0],
+        ['', 0],
+      ],
+    },
   ];
 
   constructor() {}
@@ -43,9 +46,7 @@ export class ImprintingFormComponent implements OnInit {
     if (savedForm) {
       const form = JSON.parse(savedForm);
       this.target = form.target;
-      this.stone = form.stone;
-      this.stonePenalty = form.stonePenalty;
-      this.book = form.book;
+      this.stoneBooks = form.stoneBooks;
     }
   }
 
@@ -55,6 +56,24 @@ export class ImprintingFormComponent implements OnInit {
 
   getTargetImprints() {
     return this.target.map((x) => x[0]).filter((x) => !!x);
+  }
+
+  addStoneBook() {
+    this.stoneBooks.push({
+      stone: [
+        ['', 0],
+        ['', 0],
+      ],
+      stonePenalty: ['', 0],
+      book: [
+        ['', 0],
+        ['', 0],
+      ],
+    });
+  }
+
+  removeStoneBook(index: number) {
+    this.stoneBooks.splice(index, 1);
   }
 
   reset() {
@@ -67,14 +86,18 @@ export class ImprintingFormComponent implements OnInit {
       ['', 0],
       ['', 0],
     ];
-    this.stone = [
-      ['', 0],
-      ['', 0],
-    ];
-    this.stonePenalty = ['', 0];
-    this.book = [
-      ['', 0],
-      ['', 0],
+    this.stoneBooks = [
+      {
+        stone: [
+          ['', 0],
+          ['', 0],
+        ],
+        stonePenalty: ['', 0],
+        book: [
+          ['', 0],
+          ['', 0],
+        ],
+      },
     ];
   }
 }

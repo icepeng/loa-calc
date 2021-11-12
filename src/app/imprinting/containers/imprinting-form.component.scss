@@ -1,5 +1,9 @@
 :host {
   display: flex;
-  flex: 0 1 588px;
   gap: 12px;
+  flex-wrap: wrap;
+}
+
+.button-add {
+  width: 280px;
 }

@@ -15,6 +15,26 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="stoneBook">
+        <th mat-header-cell *matHeaderCellDef>장착/어빌스톤</th>
+        <td mat-cell *matCellDef="let element">
+          <div>[장착 각인]</div>
+          <div *ngFor="let book of element.stoneBook.book">
+            [{{ book[0] }}] +{{ book[1] }}
+          </div>
+          <br />
+          <div>[어빌리티 스톤 각인]</div>
+          <div *ngFor="let stone of element.stoneBook.stone">
+            [{{ stone[0] }}] +{{ stone[1] }}
+          </div>
+          <div>
+            [{{ element.stoneBook.stonePenalty[0] }}] +{{
+              element.stoneBook.stonePenalty[1]
+            }}
+          </div>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="necklace">
         <th mat-header-cell *matHeaderCellDef>목걸이</th>
         <td mat-cell *matCellDef="let element">
@@ -69,6 +89,7 @@
         mat-header-row
         *matHeaderRowDef="[
           'price',
+          'stoneBook',
           'necklace',
           'ear1',
           'ear2',
@@ -80,7 +101,15 @@
         mat-row
         *matRowDef="
           let row;
-          columns: ['price', 'necklace', 'ear1', 'ear2', 'ring1', 'ring2']
+          columns: [
+            'price',
+            'stoneBook',
+            'necklace',
+            'ear1',
+            'ear2',
+            'ring1',
+            'ring2'
+          ]
         "
       ></tr>
     </table>

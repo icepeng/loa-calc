@@ -4,6 +4,12 @@ export type Effects = Record<string, number>;
 
 export type SearchGrade = '유물' | '고대' | '전체';
 
+export interface StoneBook {
+  stone: [string, number][];
+  stonePenalty: [string, number];
+  book: [string, number][];
+}
+
 export interface AccMap {
   category: string;
   quality: number;
@@ -13,6 +19,11 @@ export interface AccMap {
   imprintOption1: [string, number];
   imprintOption2: [string, number];
   imprintPenalty: [string, number];
+}
+
+export interface Candidate {
+  stoneBook: StoneBook;
+  combinations: Imprint[][];
 }
 
 export interface Item {
@@ -32,6 +43,7 @@ export interface ComposeResult {
   price: number;
   effects: Effects;
   items: Record<string, Item>;
+  stoneBook: StoneBook;
 }
 
 export interface ComposeFilter {

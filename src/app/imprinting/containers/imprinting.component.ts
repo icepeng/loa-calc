@@ -12,9 +12,9 @@ import {
 import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import {
+  Candidate,
   ComposeFilter,
   ComposeResult,
-  Imprint,
   Item,
   SearchGrade,
 } from '../functions/type';
@@ -33,7 +33,7 @@ export class ImprintingComponent implements OnInit {
 
   penaltyOptions = penaltyOptions;
 
-  combinations: Imprint[][] = [];
+  candidates: Candidate[] = [];
   searchGrade: SearchGrade = '유물';
   searchResult: Record<string, Item[]> = {};
 
@@ -90,9 +90,7 @@ export class ImprintingComponent implements OnInit {
   generate() {
     const form = {
       target: this.imprintingForm.target,
-      stone: this.imprintingForm.stone,
-      stonePenalty: this.imprintingForm.stonePenalty,
-      book: this.imprintingForm.book,
+      stoneBooks: this.imprintingForm.stoneBooks,
       accMap: this.accForm.accMap,
     };
     localStorage.setItem(imprintingFormToken, JSON.stringify(form));
@@ -110,37 +108,49 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const initial = filterRecord(
-      [
-        ...form.stone,
-        ...form.book,
-        ...Object.values(form.accMap)
-          .filter((acc) => acc.name)
-          .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
-      ].reduce((obj, [name, amount]) => {
-        obj[name] -= amount;
-        return obj;
-      }, Object.fromEntries(form.target))
-    );
-
     const accToSearch = Object.entries(form.accMap)
       .filter(([name, acc]) => !acc.name)
       .map((x) => x[0]);
 
     const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
-    this.combinations = getCombinations(
-      initial,
-      accToSearch.length,
-      imprintLimit
-    );
 
-    if (this.combinations.length === 0) {
+    this.candidates = form.stoneBooks.map((stoneBook) => {
+      const initial = filterRecord(
+        [
+          ...stoneBook.stone,
+          ...stoneBook.book,
+          ...Object.values(form.accMap)
+            .filter((acc) => acc.name)
+            .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
+        ].reduce((obj, [name, amount]) => {
+          obj[name] -= amount;
+          return obj;
+        }, Object.fromEntries(form.target))
+      );
+
+      const combinations = getCombinations(
+        initial,
+        accToSearch.length,
+        imprintLimit
+      );
+
+      return {
+        stoneBook,
+        combinations,
+      };
+    });
+
+    if (
+      this.candidates.find((candidate) => candidate.combinations.length === 0)
+    ) {
       this.snackbar.open('불가능한 목표 각인입니다.', '닫기');
       return;
     }
 
     const searchScript = getSearchScript(
-      dedupe(this.combinations.flat()),
+      dedupe(
+        this.candidates.flatMap((candidate) => candidate.combinations).flat()
+      ),
       accToSearch,
       form.accMap,
       this.searchGrade
@@ -218,8 +228,7 @@ export class ImprintingComponent implements OnInit {
       this.isLoading = false;
     };
     this.worker.postMessage({
-      combinations: this.combinations,
-      initialEffect: Object.fromEntries([this.imprintingForm.stonePenalty]),
+      candidates: this.candidates,
       searchResult: this.searchResult,
       fixedItems: this.getFixedItems(),
       filter: this.filter,

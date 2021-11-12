@@ -1,12 +1,20 @@
 import { permutations } from '../../../util';
 import { penaltyOptions } from './const';
-import { ComposeFilter, ComposeResult, Effects, Imprint, Item } from './type';
+import {
+  Candidate,
+  ComposeFilter,
+  ComposeResult,
+  Effects,
+  Imprint,
+  Item,
+  StoneBook,
+} from './type';
 import { addRecord } from './util';
 
 function chooseItems(
   entries: Item[][],
   accList: string[],
-  initialEffect: Effects,
+  stoneBook: StoneBook,
   fixedItems: Record<string, Item>,
   maxPrice: number,
   filter: ComposeFilter
@@ -14,6 +22,7 @@ function chooseItems(
   const penalties = penaltyOptions.filter(
     (penalty) => !filter.allowedPenalties.includes(penalty)
   );
+  const initialEffect = Object.fromEntries([stoneBook.stonePenalty]);
   function hasPenalty(effects: Effects) {
     return penalties.find(
       (penalty) =>
@@ -55,6 +64,7 @@ function chooseItems(
           effects,
           price,
           items,
+          stoneBook,
         },
       ];
     }
@@ -106,8 +116,7 @@ function hashResult(result: ComposeResult) {
 }
 
 export function compose(
-  combinations: Imprint[][],
-  initialEffect: Effects,
+  candidates: Candidate[],
   searchResult: Record<string, Item[]>,
   fixedItems: Record<string, Item>,
   filter: ComposeFilter
@@ -119,54 +128,60 @@ export function compose(
       )
     )
   );
-  const total = accPermutation.length * combinations.length;
+  const total =
+    accPermutation.length *
+    candidates.flatMap((candidate) => candidate.combinations).length;
   let finished = 0;
-  let result: ComposeResult[] = [];
-  for (const combination of combinations) {
-    for (const accList of accPermutation) {
-      const entries: Item[][] = [];
-      for (let i = 0; i < accList.length; i += 1) {
-        const acc = accList[i];
-        const imprint = Object.entries(combination[i]);
-        const items =
-          searchResult[
-            `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
-          ];
-        if (items.length > 0) {
-          entries.push(items);
+  const resultMap = new Map<StoneBook, ComposeResult[]>();
+  for (const { combinations, stoneBook } of candidates) {
+    let result: ComposeResult[] = [];
+    for (const combination of combinations) {
+      for (const accList of accPermutation) {
+        const entries: Item[][] = [];
+        for (let i = 0; i < accList.length; i += 1) {
+          const acc = accList[i];
+          const imprint = Object.entries(combination[i]);
+          const items =
+            searchResult[
+              `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
+            ];
+          if (items.length > 0) {
+            entries.push(items);
+          }
         }
-      }
-      if (entries.length === accList.length) {
-        result.push(
-          ...chooseItems(
-            entries,
-            accList,
-            initialEffect,
-            fixedItems,
-            result.length ? result[result.length - 1].price : Infinity,
-            filter
-          )
-        );
-        const temp: Record<string, ComposeResult> = {};
-        result.forEach((res) => {
-          temp[hashResult(res)] = res;
-        });
-        result = Object.values(temp);
-        result.sort((a, b) => a.price - b.price);
-        result = result.slice(0, 300);
-      }
+        if (entries.length === accList.length) {
+          result.push(
+            ...chooseItems(
+              entries,
+              accList,
+              stoneBook,
+              fixedItems,
+              result.length ? result[result.length - 1].price : Infinity,
+              filter
+            )
+          );
+          const temp: Record<string, ComposeResult> = {};
+          result.forEach((res) => {
+            temp[hashResult(res)] = res;
+          });
+          result = Object.values(temp);
+          result.sort((a, b) => a.price - b.price);
+          result = result.slice(0, 300);
+        }
 
-      finished += 1;
-      postMessage({
-        done: false,
-        total,
-        finished,
-      });
+        finished += 1;
+        postMessage({
+          done: false,
+          total,
+          finished,
+        });
+      }
     }
+    resultMap.set(stoneBook, result);
   }
 
   postMessage({
     done: true,
-    result,
+    result: [...resultMap.values()].flat().sort((a, b) => a.price - b.price),
   });
 }

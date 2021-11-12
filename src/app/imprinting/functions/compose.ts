@@ -10,7 +10,7 @@ import {
   Item,
   StoneBook,
 } from './type';
-import { addRecord } from './util';
+import { addRecord, getOverlappingAcc } from './util';
 
 function getMinPriceCache(entries: Item[][], len: number) {
   return Array.from({ length: len }, (_, k) => {
@@ -181,14 +181,15 @@ export function compose(
       )
     )
   );
-  if (JSON.stringify(accMap['귀걸이1']) === JSON.stringify(accMap['귀걸이2'])) {
+  const overlappingAcc = getOverlappingAcc(accMap);
+  if (overlappingAcc.귀걸이) {
     accPermutation = accPermutation.filter((permutation) => {
       const index1 = permutation.findIndex((el) => el === '귀걸이1');
       const index2 = permutation.findIndex((el) => el === '귀걸이2');
       return index1 < index2;
     });
   }
-  if (JSON.stringify(accMap['반지1']) === JSON.stringify(accMap['반지2'])) {
+  if (overlappingAcc.반지) {
     accPermutation = accPermutation.filter((permutation) => {
       const index1 = permutation.findIndex((el) => el === '반지1');
       const index2 = permutation.findIndex((el) => el === '반지2');

@@ -13,10 +13,13 @@
     <button (click)="reset()" mat-stroked-button>초기화</button>
   </div>
   <div class="layout">
-    <app-imprinting-form></app-imprinting-form>
+    <app-imprinting-form
+      [target]="target"
+      [stoneBooks]="stoneBooks"
+    ></app-imprinting-form>
   </div>
   <div class="layout">
-    <app-acc-form></app-acc-form>
+    <app-acc-form [accMap]="accMap"></app-acc-form>
   </div>
   <div class="layout">
     <mat-card>
@@ -103,6 +106,7 @@
           [data]="composeResults"
           [isLoading]="isLoading"
           [progress]="progress"
+          [stoneBooks]="stoneBooks"
           (exclude)="exclude($event)"
         ></app-compose-table>
       </mat-card-content>

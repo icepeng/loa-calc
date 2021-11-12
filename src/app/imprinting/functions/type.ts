@@ -5,6 +5,7 @@ export type Effects = Record<string, number>;
 export type SearchGrade = '유물' | '고대' | '전체';
 
 export interface StoneBook {
+  index: number;
   stone: [string, number][];
   stonePenalty: [string, number];
   book: [string, number][];

@@ -1,3 +1,12 @@
+<mat-radio-group
+  [value]="stoneBookIndex"
+  (change)="changeStoneBook($event.value)"
+>
+  <mat-radio-button [value]="null">전체</mat-radio-button>
+  <mat-radio-button [value]="i" *ngFor="let stoneBook of stoneBooks; index as i"
+    >#{{ i + 1 }}</mat-radio-button
+  >
+</mat-radio-group>
 <div class="table-container">
   <div *ngIf="isLoading" class="loading-shade">
     <mat-spinner></mat-spinner>

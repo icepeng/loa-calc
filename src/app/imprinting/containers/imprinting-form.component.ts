@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   imprintingFormToken,
   imprintOptions,
@@ -12,43 +12,15 @@ import { StoneBook } from '../functions/type';
   styleUrls: ['./imprinting-form.component.scss'],
 })
 export class ImprintingFormComponent implements OnInit {
+  @Input() target: [string, number][] = [];
+  @Input() stoneBooks: StoneBook[] = [];
+
   imprintOptions = imprintOptions;
   penaltyOptions = penaltyOptions;
 
-  target: [string, number][] = [
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-    ['', 0],
-  ];
-
-  stoneBooks: StoneBook[] = [
-    {
-      stone: [
-        ['', 0],
-        ['', 0],
-      ],
-      stonePenalty: ['', 0],
-      book: [
-        ['', 0],
-        ['', 0],
-      ],
-    },
-  ];
-
   constructor() {}
 
-  ngOnInit(): void {
-    const savedForm = localStorage.getItem(imprintingFormToken);
-    if (savedForm) {
-      const form = JSON.parse(savedForm);
-      this.target = form.target;
-      this.stoneBooks = form.stoneBooks;
-    }
-  }
+  ngOnInit(): void {}
 
   filterImprint(name: string) {
     return imprintOptions.filter((x) => x.includes(name));
@@ -60,6 +32,7 @@ export class ImprintingFormComponent implements OnInit {
 
   addStoneBook() {
     this.stoneBooks.push({
+      index: this.stoneBooks.length,
       stone: [
         ['', 0],
         ['', 0],
@@ -74,30 +47,9 @@ export class ImprintingFormComponent implements OnInit {
 
   removeStoneBook(index: number) {
     this.stoneBooks.splice(index, 1);
-  }
-
-  reset() {
-    this.target = [
-      ['', 0],
-      ['', 0],
-      ['', 0],
-      ['', 0],
-      ['', 0],
-      ['', 0],
-      ['', 0],
-    ];
-    this.stoneBooks = [
-      {
-        stone: [
-          ['', 0],
-          ['', 0],
-        ],
-        stonePenalty: ['', 0],
-        book: [
-          ['', 0],
-          ['', 0],
-        ],
-      },
-    ];
+    this.stoneBooks = this.stoneBooks.map((stoneBook, index) => ({
+      ...stoneBook,
+      index,
+    }));
   }
 }

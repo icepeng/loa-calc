@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeResult, Item } from '../functions/type';
+import { ComposeResult, Item, StoneBook } from '../functions/type';
 
 @Component({
   selector: 'app-compose-table',
@@ -22,10 +22,12 @@ export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() progress!: number;
   @Input() isLoading!: boolean;
+  @Input() stoneBooks!: StoneBook[];
   @Output() exclude = new EventEmitter<Item>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<ComposeResult>([]);
+  stoneBookIndex: number | null = null;
 
   constructor() {}
 
@@ -39,6 +41,18 @@ export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
     if (changes.data) {
       this.dataSource.data = changes.data.currentValue;
       this.dataSource.paginator?.firstPage();
+      this.changeStoneBook(null);
     }
+  }
+
+  changeStoneBook(index: number | null) {
+    this.stoneBookIndex = index;
+    if (index === null) {
+      this.dataSource.data = this.data;
+      return;
+    }
+    this.dataSource.data = this.data.filter(
+      (el) => el.stoneBook.index === index
+    );
   }
 }

@@ -1,3 +1,5 @@
+import { AccMap } from "./type";
+
 export const imprintOptions = [
   '각성',
   '갈증',
@@ -94,5 +96,54 @@ export const penaltyOptions = [
 ];
 
 export const dealOptions = ['치명', '특화', '제압', '신속', '인내', '숙련'];
+
+export const initialAccMap: Record<string, AccMap> = {
+  목걸이: {
+    category: '목걸이',
+    quality: 0,
+    dealOption1: ['', 0],
+    dealOption2: ['', 0],
+    name: '',
+    imprintOption1: ['', 0],
+    imprintOption2: ['', 0],
+    imprintPenalty: ['', 0],
+  },
+  귀걸이1: {
+    category: '귀걸이',
+    quality: 0,
+    dealOption1: ['', 0],
+    name: '',
+    imprintOption1: ['', 0],
+    imprintOption2: ['', 0],
+    imprintPenalty: ['', 0],
+  },
+  귀걸이2: {
+    category: '귀걸이',
+    quality: 0,
+    dealOption1: ['', 0],
+    name: '',
+    imprintOption1: ['', 0],
+    imprintOption2: ['', 0],
+    imprintPenalty: ['', 0],
+  },
+  반지1: {
+    category: '반지',
+    quality: 0,
+    dealOption1: ['', 0],
+    name: '',
+    imprintOption1: ['', 0],
+    imprintOption2: ['', 0],
+    imprintPenalty: ['', 0],
+  },
+  반지2: {
+    category: '반지',
+    quality: 0,
+    dealOption1: ['', 0],
+    name: '',
+    imprintOption1: ['', 0],
+    imprintOption2: ['', 0],
+    imprintPenalty: ['', 0],
+  },
+};
 
 export const imprintingFormToken = 'imprintingForm_v4';

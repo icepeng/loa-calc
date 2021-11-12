@@ -121,6 +121,7 @@ function hashResult(result: ComposeResult) {
 function prefilter(items: Item[], filter: ComposeFilter) {
   function isItemFiltered(item: Item) {
     return (
+      item.grade! < 5 ||
       (filter.hasBuyPrice ? !item.buyPrice : false) ||
       item.tradeLeft! < filter.tradeLeft ||
       filter.exclude.has(item.id!)

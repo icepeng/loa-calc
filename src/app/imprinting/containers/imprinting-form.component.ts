@@ -47,9 +47,8 @@ export class ImprintingFormComponent implements OnInit {
 
   removeStoneBook(index: number) {
     this.stoneBooks.splice(index, 1);
-    this.stoneBooks = this.stoneBooks.map((stoneBook, index) => ({
-      ...stoneBook,
-      index,
-    }));
+    this.stoneBooks.forEach((stoneBook, index) => {
+      stoneBook.index = index;
+    });
   }
 }

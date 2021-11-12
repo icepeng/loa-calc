@@ -152,20 +152,14 @@ function prefilter(items: Item[], filter: ComposeFilter) {
     );
   }
 
-  return items.filter((item, index) => {
-    if (isItemFiltered(item)) {
-      return false;
-    }
-
-    if (
-      items.find(
-        (item2, index2) => index !== index2 && isGreaterEqual(item2, item)
-      )
-    ) {
-      return false;
-    }
-    return true;
-  });
+  return items
+    .filter((item) => !isItemFiltered(item))
+    .filter(
+      (item, index) =>
+        !items.find(
+          (item2, index2) => index !== index2 && isGreaterEqual(item2, item)
+        )
+    );
 }
 
 export function compose(

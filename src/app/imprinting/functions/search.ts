@@ -342,7 +342,12 @@ export function getSearchScript(
     accTypesToSearch
   )}, ${JSON.stringify(accMap)}, ${JSON.stringify(
     overlappingAcc
-  )}, "${searchGrade}").then(res => console.log(res));  
+  )}, "${searchGrade}").then(res => {
+    console.log(res);
+    const el = document.createElement('div');
+    el.innerHTML = '<textarea style="width: 100%; height: 600px;">' + JSON.stringify(res, null, 2) + '</textarea>';
+    document.body.prepend(el);
+  });  
   `;
 }
 

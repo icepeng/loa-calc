@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  min-width: 512px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: center;
+}
+
+.goal-cell {
+  width: 32px;
+  height: 32px;
+  border: 1px solid;
+}
+
+.pad {
+  width: 32px;
+  height: 32px;
+}

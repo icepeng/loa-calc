@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $foreground: map.get($color-config, "foreground");
+  $primary-palette: map.get($color-config, "primary");
+  $warn-palette: map.get($color-config, "warn");
+  .goal-cell {
+    border-color: mat.get-color-from-palette($foreground);
+
+    .star {
+      color: mat.get-color-from-palette($foreground);
+    }
+
+    &.filled {
+      background-color: mat.get-color-from-palette($primary-palette);
+
+      .star {
+        color: mat.get-color-from-palette($primary-palette, default-contrast);
+      }
+    }
+
+    &.penalty {
+      background-color: mat.get-color-from-palette($warn-palette);
+
+      .star {
+        color: mat.get-color-from-palette($warn-palette, default-contrast);
+      }
+    }
+
+    &.nopenalty {
+      background-color: mat.get-color-from-palette($warn-palette, 100);
+
+      .star {
+        color: mat.get-color-from-palette($warn-palette, '100-contrast');
+      }
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+}

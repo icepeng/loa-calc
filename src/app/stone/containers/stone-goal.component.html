@@ -1,0 +1,115 @@
+<mat-card>
+  <mat-card-title>
+    <div class="flex-baseline">
+      <span>목표 #{{ index + 1 }}</span>
+      <div class="filler"></div>
+      <button (click)="remove.emit(index)" mat-icon-button><mat-icon>delete</mat-icon></button>
+    </div>
+  </mat-card-title>
+  <mat-card-subtitle>프리셋</mat-card-subtitle>
+  <mat-card-content>
+    <div>
+      <button mat-stroked-button (click)="preset(0)">14돌</button>
+      7/7, 9/5, 10/4 (8/6 제외)
+    </div>
+    <div>
+      <button mat-stroked-button (click)="preset(1)">16돌</button>
+      9/7, 10/6 (8/8 제외)
+    </div>
+  </mat-card-content>
+  <mat-card-subtitle>목표 설정</mat-card-subtitle>
+  <mat-card-content>
+    <div>
+      <mat-form-field class="w-120">
+        <mat-label>증가합</mat-label>
+        <mat-select [(ngModel)]="task.goal.abilityTotal">
+          <mat-option [value]="i + na" *ngFor="let i of arr"
+            >{{ i + na }} 이상</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-120">
+        <mat-label>감소능력1</mat-label>
+        <mat-select [(ngModel)]="task.goal.penalty">
+          <mat-option [value]="i" *ngFor="let i of arr"
+            >{{ i }} 이하</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-120">
+        <mat-label>증가능력1</mat-label>
+        <mat-select [(ngModel)]="task.goal.ability1">
+          <mat-option [value]="i" *ngFor="let i of arr"
+            >{{ i }} 이상</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-120">
+        <mat-label>증가능력2</mat-label>
+        <mat-select [(ngModel)]="task.goal.ability2">
+          <mat-option [value]="i" *ngFor="let i of arr"
+            >{{ i }} 이상</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" (click)="changeGoal()">
+      적용
+    </button>
+  </mat-card-content>
+  <mat-card-subtitle>테이블</mat-card-subtitle>
+  <mat-card-content>
+    <table>
+      <tr>
+        <td></td>
+        <td *ngFor="let cell of task.goalCells[0]; index as i">{{ i }}</td>
+      </tr>
+      <tr *ngFor="let row of task.goalCells; index as i">
+        <td>{{ i }}</td>
+        <td
+          class="goal-cell"
+          [class.filled]="cell"
+          color="primary"
+          *ngFor="let cell of row; index as j"
+          (click)="toggleCell(i, j)"
+        >
+          <span
+            class="star"
+            *ngIf="i === indexes.ability1[1] && j === indexes.ability2[1]"
+            >★</span
+          >
+          <span
+            class="star"
+            *ngIf="
+              showFuture &&
+              !(i === indexes.ability1[1] && j === indexes.ability2[1]) &&
+              i >= indexes.ability1[1] &&
+              j >= indexes.ability2[1] &&
+              i <= indexes.ability1[0] + indexes.ability1[1] &&
+              j <= indexes.ability2[0] + indexes.ability2[1]
+            "
+            >☆</span
+          >
+        </td>
+        <td class="pad"></td>
+        <td
+          class="goal-cell"
+          [class.nopenalty]="i <= task.penaltyLimit"
+          [class.penalty]="i > task.penaltyLimit"
+          (click)="changePenalty(i)"
+        >
+          <span class="star" *ngIf="i === indexes.penalty[1]">★</span>
+          <span
+            class="star"
+            *ngIf="
+              showFuture &&
+              i > indexes.penalty[1] &&
+              i <= indexes.penalty[0] + indexes.penalty[1]
+            "
+            >☆</span
+          >
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,26 @@
+<ng-container *ngIf="symbol === true">
+  <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M14 0 L 28 14 L 14 28 L 0 14 Z"
+      [attr.fill]="type === 'ability' ? 'blue' : 'red'"
+    />
+  </svg>
+</ng-container>
+<ng-container *ngIf="symbol === false">
+  <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M14 0 L 28 14 L 14 28 L 0 14 Z"
+      [attr.stroke]="type === 'ability' ? 'blue' : 'red'"
+      fill="lightgray"
+    />
+  </svg>
+</ng-container>
+<ng-container *ngIf="symbol === null">
+  <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M14 0 L 28 14 L 14 28 L 0 14 Z"
+      [attr.stroke]="type === 'ability' ? 'blue' : 'red'"
+      fill="none"
+    />
+  </svg>
+</ng-container>

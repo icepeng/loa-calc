@@ -1,0 +1,30 @@
+.goals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.button-add {
+  width: 512px;
+}
+
+.layout {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.percent-cell {
+  width: 120px;
+  text-align: center;
+}
+
+.about {
+  width: 100%;
+  max-width: 800px;
+}
+
+.container {
+  margin: 20px;
+}

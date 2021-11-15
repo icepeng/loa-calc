@@ -14,6 +14,7 @@ import { CoreModule } from './core/core.module';
 import { DonateModule } from './donate/donate.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
 import { RefiningModule } from './refining/refining.module';
+import { StoneModule } from './stone/stone.module';
 import { TripodModule } from './tripod/tripod.module';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { TripodModule } from './tripod/tripod.module';
     RefiningModule,
     ImprintingModule,
     TripodModule,
+    StoneModule,
     DonateModule,
     MatToolbarModule,
     MatButtonModule,

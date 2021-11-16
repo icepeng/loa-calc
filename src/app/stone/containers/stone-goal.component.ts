@@ -3,18 +3,17 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Ability, getGoalCellsFromGoal, getTaskPreset, Goal, Task } from '../stone';
+import { Ability, getGoalCellsFromGoal, getTaskPreset, Task } from '../stone';
 
 @Component({
   selector: 'app-stone-goal',
   templateUrl: './stone-goal.component.html',
   styleUrls: ['./stone-goal.component.scss'],
 })
-export class StoneGoalComponent implements OnInit, OnChanges {
+export class StoneGoalComponent implements OnChanges {
   @Input() na!: number;
   @Input() task!: Task;
   @Input() showFuture!: boolean;
@@ -26,8 +25,6 @@ export class StoneGoalComponent implements OnInit, OnChanges {
   arr: number[] = [];
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.na) {

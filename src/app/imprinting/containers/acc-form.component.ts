@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   dealOptions,
-  imprintingFormToken,
   imprintOptions,
   penaltyOptions,
 } from '../functions/const';
@@ -12,7 +11,7 @@ import { AccMap } from '../functions/type';
   templateUrl: './acc-form.component.html',
   styleUrls: ['./acc-form.component.scss'],
 })
-export class AccFormComponent implements OnInit {
+export class AccFormComponent {
   @Input() accMap!: Record<string, AccMap>;
 
   dealOptions = dealOptions;
@@ -20,9 +19,6 @@ export class AccFormComponent implements OnInit {
   penaltyOptions = penaltyOptions;
 
   constructor() {}
-
-  ngOnInit(): void {
-  }
 
   filterImprint(name: string) {
     return imprintOptions.filter((x) => x.includes(name));

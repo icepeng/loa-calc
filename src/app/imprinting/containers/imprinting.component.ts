@@ -2,6 +2,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { take } from 'rxjs';
 import { ImprintingSearchDialogComponent } from '../components/imprinting-search-dialog.component';
 import {
@@ -82,8 +83,11 @@ export class ImprintingComponent implements OnInit {
   constructor(
     private snackbar: MatSnackBar,
     private clipboard: Clipboard,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle('LoaCalc : 각인 최적화 - 로스트아크 최적화 계산기')
+  }
 
   ngOnInit(): void {
     if (typeof Worker !== 'undefined') {

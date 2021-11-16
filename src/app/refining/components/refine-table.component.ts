@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Path } from '../refine';
 
 @Component({
@@ -6,13 +6,11 @@ import { Path } from '../refine';
   templateUrl: './refine-table.component.html',
   styleUrls: ['./refine-table.component.scss'],
 })
-export class RefineTableComponent implements OnInit {
+export class RefineTableComponent {
   @Input() price!: number;
   @Input() path!: Path;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   getBreathesName(breathes: Record<string, number>) {
     return Object.entries(breathes)

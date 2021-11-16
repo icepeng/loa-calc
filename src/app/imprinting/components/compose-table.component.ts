@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -18,7 +17,7 @@ import { ComposeResult, Item, StoneBook } from '../functions/type';
   templateUrl: './compose-table.component.html',
   styleUrls: ['./compose-table.component.scss'],
 })
-export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
+export class ComposeTableComponent implements AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() progress!: number;
   @Input() isLoading!: boolean;
@@ -30,8 +29,6 @@ export class ComposeTableComponent implements OnInit, AfterViewInit, OnChanges {
   stoneBookIndex: number | null = null;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

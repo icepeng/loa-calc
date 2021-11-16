@@ -1,9 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  imprintingFormToken,
-  imprintOptions,
-  penaltyOptions,
-} from '../functions/const';
+import { Component, Input } from '@angular/core';
+import { imprintOptions, penaltyOptions } from '../functions/const';
 import { StoneBook } from '../functions/type';
 
 @Component({
@@ -11,7 +7,7 @@ import { StoneBook } from '../functions/type';
   templateUrl: './imprinting-form.component.html',
   styleUrls: ['./imprinting-form.component.scss'],
 })
-export class ImprintingFormComponent implements OnInit {
+export class ImprintingFormComponent {
   @Input() target: [string, number][] = [];
   @Input() stoneBooks: StoneBook[] = [];
 
@@ -19,8 +15,6 @@ export class ImprintingFormComponent implements OnInit {
   penaltyOptions = penaltyOptions;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   filterImprint(name: string) {
     return imprintOptions.filter((x) => x.includes(name));

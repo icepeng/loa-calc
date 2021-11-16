@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   Ability,
   buildSymbols,
@@ -54,7 +55,9 @@ export class StoneComponent implements OnInit {
   mode: 'select' | 'simulate' = 'select';
   showFuture = false;
 
-  constructor() {}
+  constructor(private titleService: Title) {
+    this.titleService.setTitle('LoaCalc : 어빌리티 스톤 세공 - 로스트아크 최적화 계산기')
+  }
 
   ngOnInit(): void {
     this.na = 10;

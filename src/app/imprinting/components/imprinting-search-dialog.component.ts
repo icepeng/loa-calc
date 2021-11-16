@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,15 +7,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './imprinting-search-dialog.component.html',
   styleUrls: ['./imprinting-search-dialog.component.scss'],
 })
-export class ImprintingSearchDialogComponent implements OnInit {
+export class ImprintingSearchDialogComponent {
   searchResult = '';
 
   constructor(
     private dialogRef: MatDialogRef<ImprintingSearchDialogComponent>,
     private snackbar: MatSnackBar
   ) {}
-
-  ngOnInit(): void {}
 
   onSubmit() {
     try {

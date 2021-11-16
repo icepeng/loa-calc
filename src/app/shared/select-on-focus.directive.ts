@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[selectOnFocus]',
+  selector: '[appSelectOnFocus]',
 })
 export class SelectOnFocusDirective {
   @HostListener('focus') onFocus() {

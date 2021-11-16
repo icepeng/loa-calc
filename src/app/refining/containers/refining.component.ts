@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import {
   getRefineTable,
   getTargetList,
@@ -97,7 +98,9 @@ export class RefiningComponent implements OnInit {
   breathes: { name: string; prob: number; amount: number; price: number }[] =
     [];
 
-  constructor() {}
+  constructor(private titleService: Title) {
+    this.titleService.setTitle('LoaCalc : 재련 최적화 - 로스트아크 최적화 계산기')
+  }
 
   ngOnInit(): void {
     const savedPriceForm = localStorage.getItem('priceForm');

@@ -9,7 +9,7 @@
           matInput
           [(ngModel)]="target[i][0]"
           [matAutocomplete]="auto"
-          selectOnFocus
+          appSelectOnFocus
         />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option
@@ -65,7 +65,7 @@
           [(ngModel)]="stoneBook.book[i][1]"
           matInput
           type="number"
-          selectOnFocus
+          appSelectOnFocus
         />
       </mat-form-field>
     </div>
@@ -90,7 +90,7 @@
           [(ngModel)]="stoneBook.stone[i][1]"
           matInput
           type="number"
-          selectOnFocus
+          appSelectOnFocus
         />
       </mat-form-field>
     </div>
@@ -108,7 +108,7 @@
         [(ngModel)]="stoneBook.stonePenalty[1]"
         matInput
         type="number"
-        selectOnFocus
+        appSelectOnFocus
       />
     </mat-form-field>
   </mat-card-content>

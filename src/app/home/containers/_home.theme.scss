@@ -1,0 +1,52 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $background: map.get($theme, background);
+  $foreground: map.get($theme, foreground);
+
+  .header-background {
+    background: mat.get-color-from-palette($primary);
+  }
+
+  .header-headline {
+    color: mat.get-color-from-palette($primary, default-contrast);
+  }
+
+  .row-header {
+    h2 {
+      color: mat.get-color-from-palette($foreground, secondary-text);
+    }
+  }
+
+  .card-divider {
+    background: mat.get-color-from-palette($accent);
+  }
+
+  .feature-item:hover {
+    .mat-card {
+      background: mat.get-color-from-palette($background, hover);
+    }
+  }
+
+  .feature-item:focus {
+    .mat-card {
+      background: mat.get-color-from-palette($background, focused-button);
+    }
+    outline: none;
+  }
+
+  .feature-item.card-summary {
+    color: mat.get-color-from-palette($foreground, secondary-text);
+  }
+}
+
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+}

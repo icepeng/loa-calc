@@ -28,7 +28,9 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "robots.txt",
+              "sitemap.xml"
             ],
             "styles": [
               "src/styles.scss"
@@ -112,9 +114,21 @@
           "options": {
             "cname": "loa.icepeng.com"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "loa-calc"
+  "defaultProject": "loa-calc",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

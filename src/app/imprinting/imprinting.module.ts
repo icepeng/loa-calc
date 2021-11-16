@@ -17,6 +17,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { AdsenseModule } from 'ng2-adsense';
 import { SharedModule } from '../shared/shared.module';
 import { ComposeTableComponent } from './components/compose-table.component';
 import { ImprintingSearchDialogComponent } from './components/imprinting-search-dialog.component';
@@ -57,6 +58,7 @@ import { ImprintingRoutingModule } from './imprinting-routing.module';
     MatDialogModule,
     ClipboardModule,
     SharedModule,
+    AdsenseModule,
   ],
 })
 export class ImprintingModule {}

@@ -1,9 +1,11 @@
-.sidenav-container {
-  height: 100%;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.sidenav {
-  width: 200px;
+.mat-sidenav-container {
+  margin-top: 64px;
 }
 
 .nav-selected {
@@ -12,4 +14,12 @@
 
 .title {
   padding: 0 12px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }

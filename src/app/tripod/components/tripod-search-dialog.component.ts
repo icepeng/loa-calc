@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -7,15 +7,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './tripod-search-dialog.component.html',
   styleUrls: ['./tripod-search-dialog.component.scss'],
 })
-export class TripodSearchDialogComponent implements OnInit {
+export class TripodSearchDialogComponent {
   searchResult = '';
 
   constructor(
     private dialogRef: MatDialogRef<TripodSearchDialogComponent>,
     private snackbar: MatSnackBar
   ) {}
-
-  ngOnInit(): void {}
 
   onSubmit() {
     try {

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AdsenseModule } from 'ng2-adsense';
 import { RefineTableComponent } from './components/refine-table.component';
 import { RefiningComponent } from './containers/refining.component';
 import { RefiningRoutingModule } from './refining-routing.module';
@@ -29,6 +30,7 @@ import { RefiningRoutingModule } from './refining-routing.module';
     MatCheckboxModule,
     MatTableModule,
     MatTabsModule,
+    AdsenseModule,
   ],
 })
 export class RefiningModule {}

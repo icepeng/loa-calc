@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { startWith, Subject, take, takeUntil } from 'rxjs';
 import { combinations } from '../../../util';
 import { TripodSearchDialogComponent } from '../components/tripod-search-dialog.component';
@@ -71,8 +72,13 @@ export class TripodComponent implements OnInit, OnDestroy {
   constructor(
     private snackbar: MatSnackBar,
     private clipboard: Clipboard,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle(
+      'LoaCalc : 트포 도시락 - 로스트아크 최적화 계산기'
+    );
+  }
 
   get tripodFormControls() {
     return (this.formGroup.get('tripodList') as FormArray)

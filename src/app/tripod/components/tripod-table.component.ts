@@ -3,7 +3,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -16,7 +15,7 @@ import { ComposeFilter, ComposeResult } from '../functions/type';
   templateUrl: './tripod-table.component.html',
   styleUrls: ['./tripod-table.component.scss'],
 })
-export class TripodTableComponent implements OnInit, AfterViewInit, OnChanges {
+export class TripodTableComponent implements AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() selectedCategories!: number[];
   @Input() filter!: ComposeFilter;
@@ -27,8 +26,6 @@ export class TripodTableComponent implements OnInit, AfterViewInit, OnChanges {
   columns: string[] = ['price'];
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

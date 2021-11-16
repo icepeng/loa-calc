@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { AdsenseModule } from 'ng2-adsense';
 import { TripodFormComponent } from './components/tripod-form.component';
 import { TripodItemViewComponent } from './components/tripod-item-view.component';
 import { TripodSearchDialogComponent } from './components/tripod-search-dialog.component';
@@ -51,6 +52,7 @@ import { TripodRoutingModule } from './tripod-routing.module';
     MatDialogModule,
     MatIconModule,
     ClipboardModule,
+    AdsenseModule,
   ],
 })
 export class TripodModule {}

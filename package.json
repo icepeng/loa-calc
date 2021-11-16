@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -21,17 +22,26 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "angulartics2": "^11.0.0",
+    "ng2-adsense": "^10.1.0",
     "rxjs": "^7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.0.1",
+    "@angular-eslint/builder": "13.0.0-alpha.0",
+    "@angular-eslint/eslint-plugin": "13.0.0-alpha.0",
+    "@angular-eslint/eslint-plugin-template": "13.0.0-alpha.0",
+    "@angular-eslint/schematics": "13.0.0-alpha.0",
+    "@angular-eslint/template-parser": "13.0.0-alpha.0",
     "@angular/cli": "~13.0.1",
     "@angular/compiler-cli": "~13.0.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "5.3.0",
+    "@typescript-eslint/parser": "5.3.0",
     "angular-cli-ghpages": "^1.0.0-rc.2",
+    "eslint": "^8.1.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

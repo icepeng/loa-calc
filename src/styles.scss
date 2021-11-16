@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@use './app/stone/containers/stone-goal.theme' as stone-goal;
+@use "./app/home/containers/home.theme" as home;
+@use "./app/stone/containers/stone-goal.theme" as stone-goal;
 @import "~@angular/material/theming";
 @include mat-core();
 
@@ -37,20 +38,40 @@ $dark-app-theme: mat-dark-theme(
 @include angular-material-theme($light-app-theme);
 @include base-theme($light-app-theme);
 @include stone-goal.theme($light-app-theme);
+@include home.theme($light-app-theme);
 
 .dark-theme {
   @include angular-material-color($dark-app-theme);
   @include base-theme($dark-app-theme);
   @include stone-goal.theme($dark-app-theme);
+  @include home.theme($dark-app-theme);
 }
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.banner-slot {
+  width: 320px;
+  height: 100px;
+  margin: auto;
+}
+@media (min-width: 500px) {
+  .banner-slot {
+    width: 468px;
+    height: 60px;
+  }
+}
+@media (min-width: 800px) {
+  .banner-slot {
+    width: 728px;
+    height: 90px;
+  }
 }
 
 .w-48 {

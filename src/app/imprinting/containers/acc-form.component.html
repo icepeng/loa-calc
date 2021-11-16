@@ -24,7 +24,7 @@
             [(ngModel)]="accMap[accType].quality"
             matInput
             type="number"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>
@@ -43,7 +43,7 @@
             [(ngModel)]="accMap[accType].dealOption1[1]"
             matInput
             type="number"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>
@@ -63,7 +63,7 @@
               [(ngModel)]="accMap[accType].dealOption2![1]"
               matInput
               type="number"
-              selectOnFocus
+              appSelectOnFocus
             /> </mat-form-field
         ></ng-container>
       </td>
@@ -74,7 +74,7 @@
             [(ngModel)]="accMap[accType].name"
             matInput
             type="text"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>
@@ -86,7 +86,7 @@
             matInput
             [(ngModel)]="accMap[accType].imprintOption1[0]"
             [matAutocomplete]="auto"
-            selectOnFocus
+            appSelectOnFocus
           />
           <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
             <mat-option
@@ -105,7 +105,7 @@
             [(ngModel)]="accMap[accType].imprintOption1[1]"
             matInput
             type="number"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>
@@ -117,7 +117,7 @@
             matInput
             [(ngModel)]="accMap[accType].imprintOption2[0]"
             [matAutocomplete]="auto2"
-            selectOnFocus
+            appSelectOnFocus
           />
           <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
             <mat-option
@@ -136,7 +136,7 @@
             [(ngModel)]="accMap[accType].imprintOption2[1]"
             matInput
             type="number"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>
@@ -156,7 +156,7 @@
             [(ngModel)]="accMap[accType].imprintPenalty[1]"
             matInput
             type="number"
-            selectOnFocus
+            appSelectOnFocus
           />
         </mat-form-field>
       </td>

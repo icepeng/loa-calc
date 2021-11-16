@@ -69,7 +69,7 @@ export class ImprintingComponent implements OnInit {
       특화: 0,
       신속: 0,
     },
-    hasBuyPrice: false,
+    hasBuyPrice: true,
     allowedPenalties: [],
     tradeLeft: 0,
     exclude: new Set<string>(),

@@ -66,11 +66,11 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
       body.append("request[skillOptionList][0][firstOption]", form.skillOptionList[0].skill);
       body.append("request[skillOptionList][0][secondOption]", form.skillOptionList[0].tripod);
       body.append("request[skillOptionList][0][minValue]", form.skillOptionList[0].level);
-      body.append("request[skillOptionList][0][maxValue]", form.skillOptionList[0].level);
+      body.append("request[skillOptionList][0][maxValue]", "");
       body.append("request[skillOptionList][1][firstOption]", form.skillOptionList[1].skill);
       body.append("request[skillOptionList][1][secondOption]", form.skillOptionList[1].tripod);
       body.append("request[skillOptionList][1][minValue]", form.skillOptionList[1].level);
-      body.append("request[skillOptionList][1][maxValue]", form.skillOptionList[1].level);
+      body.append("request[skillOptionList][1][maxValue]", "");
       body.append("request[skillOptionList][2][firstOption]", "");
       body.append("request[skillOptionList][2][secondOption]", "");
       body.append("request[skillOptionList][2][minValue]", "");
@@ -130,7 +130,9 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
       let count = 0;
       for (const tripod of tripods) {
           count += 1;
-          console.log(\`검색 진행중 - \${count} / \${total}\`)
+          const estimated = new Date();
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
+          console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           
           let products;
           let failCount = 0;
@@ -160,8 +162,33 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
       }
       return result;
     }
+
+    let result;
+    function copyResult() {
+      const el = document.createElement('textarea');
+      document.body.appendChild(el);
+      el.value = JSON.stringify(result, null, 2);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      alert('검색 결과가 복사되었습니다.');
+    }
+
+    const btn = document.getElementById('copyBtn');
+    if (btn) {
+      btn.remove();
+    }
     getSearchResult(${classCode}, ${JSON.stringify(
     tripods
-  )}).then(res => console.log(res));  
+  )}).then(res => {
+    result = res;
+    console.log(res);
+    const el = document.createElement('button');
+    el.id = 'copyBtn';
+    el.style = 'width: 100%; height: 64px; text-align: center';
+    el.innerText = '검색 결과 복사';
+    el.onclick = copyResult;
+    document.body.prepend(el);
+  });  
   `;
 }

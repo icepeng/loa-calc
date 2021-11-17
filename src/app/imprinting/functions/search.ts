@@ -338,14 +338,34 @@ export function getSearchScript(
       }
       return Object.fromEntries(result);
     }
+
+    let result;
+    function copyResult() {
+      const el = document.createElement('textarea');
+      document.body.appendChild(el);
+      el.value = JSON.stringify(result, null, 2);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      alert('검색 결과가 복사되었습니다.');
+    }
+
+    const btn = document.getElementById('copyBtn');
+    if (btn) {
+      btn.remove();
+    }
     getSearchResult(${JSON.stringify(imprints)}, ${JSON.stringify(
     accTypesToSearch
   )}, ${JSON.stringify(accMap)}, ${JSON.stringify(
     overlappingAcc
   )}, "${searchGrade}").then(res => {
+    result = res;
     console.log(res);
-    const el = document.createElement('div');
-    el.innerHTML = '<textarea style="width: 100%; height: 600px;">' + JSON.stringify(res, null, 2) + '</textarea>';
+    const el = document.createElement('button');
+    el.id = 'copyBtn';
+    el.style = 'width: 100%; height: 64px; text-align: center';
+    el.innerText = '검색 결과 복사';
+    el.onclick = copyResult;
     document.body.prepend(el);
   });  
   `;

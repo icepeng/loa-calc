@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeFilter, ComposeResult } from '../functions/type';
+import { ComposeFilter, ComposeResult, TripodValue } from '../functions/type';
+import { getTripodString } from '../functions/util';
 
 @Component({
   selector: 'app-tripod-table',
@@ -17,8 +18,9 @@ import { ComposeFilter, ComposeResult } from '../functions/type';
 })
 export class TripodTableComponent implements AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
-  @Input() selectedCategories!: number[];
+  @Input() categories!: number[];
   @Input() filter!: ComposeFilter;
+  @Input() showRestSingles!: boolean;
   @Input() isLoading!: boolean;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -36,13 +38,18 @@ export class TripodTableComponent implements AfterViewInit, OnChanges {
       this.dataSource.data = changes.data.currentValue;
       this.dataSource.paginator?.firstPage();
     }
-    if (changes.selectedCategories) {
+    if (changes.categories || changes.showRestSingles) {
       this.columns = [
         'price',
-        ...changes.selectedCategories.currentValue.map((x: number) =>
-          x.toString()
-        ),
+        ...this.categories.map((x: number) => x.toString()),
       ];
+      if (this.showRestSingles) {
+        this.columns.push('restSingles');
+      }
     }
+  }
+
+  getTripodString(item: TripodValue) {
+    return getTripodString(item);
   }
 }

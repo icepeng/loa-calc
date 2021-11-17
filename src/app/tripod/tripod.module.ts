@@ -51,6 +51,7 @@ import { TripodRoutingModule } from './tripod-routing.module';
     MatSlideToggleModule,
     MatDialogModule,
     MatIconModule,
+    MatSlideToggleModule,
     ClipboardModule,
     AdsenseModule,
   ],

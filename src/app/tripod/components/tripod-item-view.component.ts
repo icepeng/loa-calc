@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ComposeFilter, Summary, TripodForm } from '../functions/type';
+import { ComposeFilter, Summary, TripodValue } from '../functions/type';
 import { getTripodString } from '../functions/util';
 
 @Component({
@@ -13,7 +13,7 @@ export class TripodItemViewComponent {
 
   constructor() {}
 
-  getTripodString(item: TripodForm) {
+  getTripodString(item: TripodValue) {
     return getTripodString(item);
   }
 }

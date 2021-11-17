@@ -1,10 +1,7 @@
 <div class="container">
   <h1 class="mat-h1">
     트포 도시락
-    <a
-      class="mat-caption link"
-      href="https://icepeng.com/12"
-      target="_blank"
+    <a class="mat-caption link" href="https://icepeng.com/12" target="_blank"
       >설명서</a
     >
   </h1>
@@ -83,10 +80,14 @@
   </div>
   <div class="layout">
     <mat-card class="grow">
+      <mat-slide-toggle [(ngModel)]="showRestSingles"
+        >전승 재료 가격 표시</mat-slide-toggle
+      >
       <app-tripod-table
         [data]="composeResult"
-        [selectedCategories]="selectedCategories"
+        [categories]="searchResultCategories"
         [filter]="lastFilter"
+        [showRestSingles]="showRestSingles"
         [isLoading]="isLoading"
       ></app-tripod-table>
     </mat-card>

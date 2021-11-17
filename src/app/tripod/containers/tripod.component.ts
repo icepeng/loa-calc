@@ -13,7 +13,7 @@ import {
   ComposeFilter,
   ComposeResult,
   SearchResult,
-  TripodForm,
+  TripodValue,
 } from '../functions/type';
 import { getTripodString } from '../functions/util';
 
@@ -57,13 +57,16 @@ export class TripodComponent implements OnInit, OnDestroy {
     requiredTripods: new FormControl([]),
   });
 
-  filledTripodForm: (TripodForm & { required: boolean })[] = [];
-  tripodFilters: { text: string; value: TripodForm }[] = [];
+  filledTripodForm: TripodValue[] = [];
+  tripodFilters: { text: string; value: TripodValue }[] = [];
 
   selectedCategories: number[] = [];
+
   searchResult: SearchResult[] = [];
   composeResult: ComposeResult[] = [];
+  searchResultCategories: number[] = [];
   lastFilter: ComposeFilter = this.filterForm.value;
+  showRestSingles = false;
   isLoading = false;
 
   subscribe$ = new Subject<void>();
@@ -130,9 +133,12 @@ export class TripodComponent implements OnInit, OnDestroy {
         startWith(this.formGroup.value.tripodList)
       )
       .subscribe((tripodList) => {
-        this.filledTripodForm = tripodList.filter(
-          (form: any) => form.required && form.skill && form.tripod
-        );
+        this.filledTripodForm = tripodList
+          .filter((form: any) => form.required && form.skill && form.tripod)
+          .map((form: any) => {
+            const { required, ...rest } = form;
+            return rest;
+          }) as TripodValue[];
         this.tripodFilters = this.filledTripodForm
           .map((value) => {
             const text = getTripodString(value);
@@ -182,15 +188,9 @@ export class TripodComponent implements OnInit, OnDestroy {
     const allow33 =
       this.filledTripodForm.filter((x) => x.level === 4).length <
       this.categoryList.length;
-    return Array.from(
-      combinations(
-        this.filledTripodForm.map((form) => {
-          const { required, ...rest } = form;
-          return rest;
-        }) as TripodForm[],
-        2
-      )
-    ).filter(([a, b]) => allow33 || a.level > 3 || b.level > 3);
+    return Array.from(combinations(this.filledTripodForm, 2)).filter(
+      ([a, b]) => allow33 || a.level > 3 || b.level > 3
+    ) as [TripodValue, TripodValue][];
   }
 
   generate() {
@@ -207,7 +207,8 @@ export class TripodComponent implements OnInit, OnDestroy {
 
     const searchScript = getSearchScript(
       this.formGroup.value.classCode,
-      this.getCombinations()
+      this.getCombinations(),
+      this.filledTripodForm,
     );
     const copySuccess = this.clipboard.copy(searchScript);
 
@@ -221,6 +222,7 @@ export class TripodComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           if (data) {
             this.searchResult = data;
+            this.searchResultCategories = this.selectedCategories;
             this.applySearchResult();
           }
         });

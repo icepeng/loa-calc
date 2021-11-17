@@ -3,6 +3,7 @@ import {
   ComposeResult,
   Product,
   SearchResult,
+  SearchResultDouble,
   Summary,
 } from './type';
 import { hashTripod } from './util';
@@ -23,7 +24,7 @@ function getPrice(products: Product[]) {
 }
 
 function summarySearchResult(
-  searchResult: SearchResult[],
+  searchResult: SearchResultDouble[],
   filter: ComposeFilter
 ): Record<number, Summary[]> {
   const obj: Record<number, Summary[]> = {
@@ -79,11 +80,11 @@ function tripodOverlap(list: Record<string, Summary>, item: Summary) {
 }
 
 export function compose(
-  searchResult: SearchResult[],
+  searchResult: SearchResult,
   categoryList: number[],
   filter: ComposeFilter
 ): ComposeResult[] {
-  const summaryRecord = summarySearchResult(searchResult, filter);
+  const summaryRecord = summarySearchResult(searchResult.double, filter);
   const requiredTripodSet = new Set(
     filter.requiredTripods.map((tripod) => hashTripod(tripod))
   );
@@ -124,5 +125,14 @@ export function compose(
     }
   }
   rec([], 0, requiredTripodSet.size, 0);
-  return results;
+  return results.map((result) => {
+    const tripods = Object.values(result.summary).flatMap((x) => x.tripod);
+    const restSingles = searchResult.single.filter(
+      (x) =>
+        !tripods.find(
+          (y) => x.tripod.skill === y.skill && x.tripod.tripod === y.tripod
+        )
+    );
+    return { ...result, restSingles };
+  });
 }

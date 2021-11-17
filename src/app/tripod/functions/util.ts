@@ -1,5 +1,5 @@
 import { marketData } from '../data';
-import { TripodForm } from './type';
+import { TripodValue } from './type';
 
 const skillMap = new Map(
   marketData.marketAuction.marketMenuAuctionSkillList.map((data) => [
@@ -17,12 +17,12 @@ const tripodMap = new Map(
   )
 );
 
-export function getTripodString(item: TripodForm) {
+export function getTripodString(item: TripodValue) {
   const skill = skillMap.get(item.skill)!;
   const tripod = tripodMap.get(`${item.skill}-${item.tripod}`)!;
   return `[${skill.text}] ${tripod.text}+${item.level}`;
 }
 
-export function hashTripod(tripod: TripodForm) {
+export function hashTripod(tripod: TripodValue) {
   return `${tripod.skill}-${tripod.tripod}-${tripod.level}`;
 }

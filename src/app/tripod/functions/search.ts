@@ -1,6 +1,10 @@
-import { TripodForm } from './type';
+import { TripodValue } from './type';
 
-export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
+export function getSearchScript(
+  classCode: number,
+  doubleTripods: [TripodValue, TripodValue][],
+  singleTripods: TripodValue[]
+) {
   return `
     function parse(document, index) {
       const row = document.querySelector(
@@ -67,9 +71,9 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
       body.append("request[skillOptionList][0][secondOption]", form.skillOptionList[0].tripod);
       body.append("request[skillOptionList][0][minValue]", form.skillOptionList[0].level);
       body.append("request[skillOptionList][0][maxValue]", "");
-      body.append("request[skillOptionList][1][firstOption]", form.skillOptionList[1].skill);
-      body.append("request[skillOptionList][1][secondOption]", form.skillOptionList[1].tripod);
-      body.append("request[skillOptionList][1][minValue]", form.skillOptionList[1].level);
+      body.append("request[skillOptionList][1][firstOption]", form.skillOptionList[1]?.skill ?? "");
+      body.append("request[skillOptionList][1][secondOption]", form.skillOptionList[1]?.tripod ?? "");
+      body.append("request[skillOptionList][1][minValue]", form.skillOptionList[1]?.level ?? "");
       body.append("request[skillOptionList][1][maxValue]", "");
       body.append("request[skillOptionList][2][firstOption]", "");
       body.append("request[skillOptionList][2][secondOption]", "");
@@ -123,44 +127,67 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
             .filter((x) => !!x)
         });
     }
+
+    async function trySearch(form) {
+      let failCount = 0;
+      while (true) {
+          const products = await search(form);
+          if (products === 'ERR_LIMIT_REACHED') {
+              failCount += 1;
+              if (failCount > 5) {
+                  throw new Error('경매장 검색에 5회 연속 실패했습니다. 스크립트를 종료합니다.')
+              }
+              console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
+              await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
+          } else {
+              return products;
+          }
+      }
+    }
     
-    async function getSearchResult(classCode, tripods) {
-      const result = [];
-      const total = tripods.length;
+    async function getSearchResult(classCode, doubleTripods, singleTripods) {
+      const double = [];
+      const single = [];
+      const total = doubleTripods.length + singleTripods.length;
       let count = 0;
-      for (const tripod of tripods) {
+      for (const tripod of doubleTripods) {
           count += 1;
           const estimated = new Date();
           estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           
-          let products;
-          let failCount = 0;
-          while (true) {
-              products = await search({
-                  classNo: classCode,
-                  skillOptionList: tripod
-              });
-              if (products === 'ERR_LIMIT_REACHED') {
-                  failCount += 1;
-                  if (failCount > 5) {
-                      throw new Error('경매장 검색에 5회 연속 실패했습니다. 스크립트를 종료합니다.')
-                  }
-                  console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
-                  await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
-              } else {
-                  break;
-              }
-          }
+          const products = await trySearch({
+            classNo: classCode,
+            skillOptionList: tripod
+          });
           if (products.length > 0) {
-            result.push({
+            double.push({
                 tripod,
                 products,
             });
           }
           await new Promise(resolve => setTimeout(resolve, 3000));
       }
-      return result;
+      for (const tripod of singleTripods) {
+          count += 1;
+          const estimated = new Date();
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
+          console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
+          
+          const products = await trySearch({
+            classNo: classCode,
+            skillOptionList: [tripod]
+          });
+          single.push({
+            tripod,
+            price: products[0]?.price ?? 0,
+          })
+          await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+      return {
+        double,
+        single
+      };
     }
 
     let result;
@@ -179,8 +206,8 @@ export function getSearchScript(classCode: number, tripods: TripodForm[][]) {
       btn.remove();
     }
     getSearchResult(${classCode}, ${JSON.stringify(
-    tripods
-  )}).then(res => {
+    doubleTripods
+  )}, ${JSON.stringify(singleTripods)}).then(res => {
     result = res;
     console.log(res);
     const el = document.createElement('button');

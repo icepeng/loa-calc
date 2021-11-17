@@ -52,5 +52,6 @@ export interface ComposeFilter {
   hasBuyPrice: boolean;
   allowedPenalties: string[];
   tradeLeft: number;
+  ancientCountMin: number;
   exclude: Set<string>;
 }

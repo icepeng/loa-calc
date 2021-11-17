@@ -72,6 +72,7 @@ export class ImprintingComponent implements OnInit {
     hasBuyPrice: true,
     allowedPenalties: [],
     tradeLeft: 0,
+    ancientCountMin: 0,
     exclude: new Set<string>(),
   };
 

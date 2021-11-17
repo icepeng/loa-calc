@@ -63,6 +63,13 @@ function chooseItems(
       if (isEffectsFiltered(effects)) {
         return [];
       }
+      if (
+        filter.ancientCountMin > 0 &&
+        Object.values(items).filter((item) => item.grade === 6).length <
+          filter.ancientCountMin
+      ) {
+        return [];
+      }
       return [
         {
           effects,

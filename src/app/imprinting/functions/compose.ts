@@ -135,37 +135,7 @@ function prefilter(items: Item[], filter: ComposeFilter) {
     );
   }
 
-  function isGreaterEqual(a: Item, b: Item) {
-    const [aPenaltyName, aPenaltyValue] = a.effects.find(([name]) =>
-      penaltyOptions.includes(name)
-    )!;
-    const [bPenaltyName, bPenaltyValue] = b.effects.find(([name]) =>
-      penaltyOptions.includes(name)
-    )!;
-    return (
-      a.name === b.name &&
-      a.grade === b.grade &&
-      a.price <= b.price &&
-      a.tradeLeft! >= b.tradeLeft! &&
-      aPenaltyName === bPenaltyName &&
-      aPenaltyValue <= bPenaltyValue &&
-      dealOptions
-        .map((option) => [
-          a.effects.find(([name]) => name === option),
-          b.effects.find(([name]) => name === option),
-        ])
-        .filter(([a, b]) => a && b)
-        .every(([a, b]) => a![1] >= b![1])
-    );
-  }
-
-  const filtered = items.filter((item) => !isItemFiltered(item));
-  return filtered.filter(
-    (item, index) =>
-      !filtered.find(
-        (item2, index2) => index !== index2 && isGreaterEqual(item2, item)
-      )
-  );
+  return items.filter((item) => !isItemFiltered(item));
 }
 
 export function compose(

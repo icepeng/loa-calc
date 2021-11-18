@@ -190,7 +190,9 @@ export class ImprintingComponent implements OnInit {
     }
     if (
       Object.values(form.accMap).find(
-        (x) => !x.dealOption1[0] && !x.dealOption2?.[0]
+        (x) =>
+          !x.dealOption1[0] ||
+          (x.category === '목걸이' ? !x.dealOption2![0] : false)
       )
     ) {
       this.snackbar.open('입력되지 않은 전투 특성이 있습니다.', '닫기');

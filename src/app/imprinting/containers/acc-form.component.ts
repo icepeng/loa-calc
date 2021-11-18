@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
   dealOptions,
   imprintOptions,
+  itemNames,
   penaltyOptions,
 } from '../functions/const';
 import { AccMap } from '../functions/type';
@@ -22,5 +23,9 @@ export class AccFormComponent {
 
   filterImprint(name: string) {
     return imprintOptions.filter((x) => x.includes(name));
+  }
+
+  filterItemName(name: string, category: string) {
+    return itemNames.filter((x) => x.includes(name) && x.endsWith(category));
   }
 }

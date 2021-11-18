@@ -135,7 +135,7 @@ function prefilter(items: Item[], filter: ComposeFilter) {
     );
   }
 
-  return items.filter((item) => !isItemFiltered(item));
+  return items.filter((item) => item.isFixed || !isItemFiltered(item));
 }
 
 export function compose(

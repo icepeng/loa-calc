@@ -68,14 +68,28 @@
         ></ng-container>
       </td>
       <td class="mat-cell">
-        <mat-form-field floatLabel="never">
+        <mat-form-field class="w-240" floatLabel="never">
           <mat-label>보유한 아이템 사용시 입력</mat-label>
           <input
             [(ngModel)]="accMap[accType].name"
-            matInput
             type="text"
+            matInput
             appSelectOnFocus
+            [matAutocomplete]="auto3"
           />
+          <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+            <mat-option
+              *ngFor="
+                let option of filterItemName(
+                  accMap[accType].name,
+                  accMap[accType].category
+                )
+              "
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
       </td>
       <td class="mat-cell">

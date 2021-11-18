@@ -2,10 +2,7 @@
   <div class="flex-baseline">
     <h1 class="mat-h1">
       각인 최적화
-      <a
-        class="mat-caption link"
-        href="https://icepeng.com/11"
-        target="_blank"
+      <a class="mat-caption link" href="https://icepeng.com/11" target="_blank"
         >설명서</a
       >
     </h1>
@@ -74,7 +71,11 @@
         <div>
           <mat-form-field>
             <mat-label> 고대 등급 갯수 </mat-label>
-            <input [(ngModel)]="filter.ancientCountMin" matInput type="number" />
+            <input
+              [(ngModel)]="filter.ancientCountMin"
+              matInput
+              type="number"
+            />
             <span matSuffix>개 이상</span>
           </mat-form-field>
         </div>
@@ -94,6 +95,15 @@
           <mat-checkbox [(ngModel)]="filter.hasBuyPrice"
             >즉시구매 가능한 조합만 표시</mat-checkbox
           >
+        </div>
+        <div>
+          <span>추가된 아이템 {{ additionalItems.length }}개</span>
+          <button (click)="addItemDialog()" mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+          <button (click)="resetAdditionalItems()" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         <div>
           <span>제외된 아이템 {{ filter.exclude.size }}개</span>

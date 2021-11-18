@@ -1,0 +1,185 @@
+<h1 mat-dialog-title>아이템 추가</h1>
+<div mat-dialog-content>
+  <div>
+    <mat-form-field class="w-240">
+      <mat-label>부위</mat-label>
+      <mat-select [(ngModel)]="accMap.category">
+        <mat-option value="목걸이"> 목걸이 </mat-option>
+        <mat-option value="귀걸이"> 귀걸이 </mat-option>
+        <mat-option value="반지"> 반지 </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-240">
+      <mat-label>아이템명</mat-label>
+      <input
+        [(ngModel)]="accMap.name"
+        type="text"
+        matInput
+        appSelectOnFocus
+        [matAutocomplete]="auto3"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filterItemName(accMap.name)"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-240">
+      <mat-label>품질</mat-label>
+      <input
+        [(ngModel)]="accMap.quality"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-192">
+      <mat-label>전투특성1</mat-label>
+      <mat-select [(ngModel)]="accMap.dealOption1[0]">
+        <mat-option *ngFor="let option of dealOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-48">
+      <mat-label>수치</mat-label>
+      <input
+        [(ngModel)]="accMap.dealOption1[1]"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="accMap.category === '목걸이'">
+    <mat-form-field class="w-192">
+      <mat-label>전투특성2</mat-label>
+      <mat-select [(ngModel)]="accMap.dealOption2![0]">
+        <mat-option *ngFor="let option of dealOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-48">
+      <mat-label>수치</mat-label>
+      <input
+        [(ngModel)]="accMap.dealOption2![1]"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-192">
+      <mat-label>각인1</mat-label>
+      <input
+        [(ngModel)]="accMap.imprintOption1[0]"
+        type="text"
+        matInput
+        appSelectOnFocus
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filterImprint(accMap.imprintOption1[0])"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-48">
+      <mat-label>수치</mat-label>
+      <input
+        [(ngModel)]="accMap.imprintOption1[1]"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-192">
+      <mat-label>각인2</mat-label>
+      <input
+        [(ngModel)]="accMap.imprintOption2[0]"
+        type="text"
+        matInput
+        appSelectOnFocus
+        [matAutocomplete]="auto2"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filterImprint(accMap.imprintOption2[0])"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-48">
+      <mat-label>수치</mat-label>
+      <input
+        [(ngModel)]="accMap.imprintOption2[1]"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="w-192">
+      <mat-label>감소각인</mat-label>
+      <mat-select [(ngModel)]="accMap.imprintPenalty[0]">
+        <mat-option *ngFor="let option of penaltyOptions" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-48">
+      <mat-label>수치</mat-label>
+      <input
+        [(ngModel)]="accMap.imprintPenalty[1]"
+        matInput
+        appSelectOnFocus
+        type="number"
+      />
+    </mat-form-field>
+  </div>
+</div>
+
+<div>
+  <mat-form-field class="w-240">
+    <mat-label>가격</mat-label>
+    <input
+      [(ngModel)]="price"
+      matInput
+      appSelectOnFocus
+      type="number"
+      appSelectOnFocus
+    />
+    <span matSuffix>골드</span>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onSubmit()">저장</button>
+  <button mat-stroked-button (click)="onCancel()">취소</button>
+</div>

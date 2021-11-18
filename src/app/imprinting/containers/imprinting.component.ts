@@ -22,7 +22,13 @@ import {
   SearchGrade,
   StoneBook,
 } from '../functions/type';
-import { addEntries, dedupe, filterRecord } from '../functions/util';
+import {
+  addItemsToSearchResult,
+  dedupe,
+  filterRecord,
+  getFixedItem,
+} from '../functions/util';
+import { AccFormDialogComponent } from './acc-form-dialog.component';
 
 @Component({
   selector: 'app-imprinting',
@@ -75,6 +81,10 @@ export class ImprintingComponent implements OnInit {
     ancientCountMin: 0,
     exclude: new Set<string>(),
   };
+  additionalItems: {
+    acc: AccMap;
+    price: number;
+  }[] = [];
 
   worker!: Worker;
   isLoading = false;
@@ -87,7 +97,9 @@ export class ImprintingComponent implements OnInit {
     private dialog: MatDialog,
     private titleService: Title
   ) {
-    this.titleService.setTitle('LoaCalc : 각인 최적화 - 로스트아크 최적화 계산기')
+    this.titleService.setTitle(
+      'LoaCalc : 각인 최적화 - 로스트아크 최적화 계산기'
+    );
   }
 
   ngOnInit(): void {
@@ -135,6 +147,24 @@ export class ImprintingComponent implements OnInit {
       },
     ];
     this.accMap = JSON.parse(JSON.stringify(initialAccMap));
+  }
+
+  addItemDialog() {
+    this.dialog
+      .open(AccFormDialogComponent, {
+        disableClose: true,
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((data: { acc: AccMap; price: number }) => {
+        if (data) {
+          this.additionalItems.push(data);
+        }
+      });
+  }
+
+  resetAdditionalItems() {
+    this.additionalItems = [];
   }
 
   exclude(item: Item) {
@@ -243,29 +273,7 @@ export class ImprintingComponent implements OnInit {
     return Object.fromEntries(
       Object.entries(this.accMap)
         .filter(([name, acc]) => acc.name)
-        .map(([name, acc]) => [
-          name,
-          {
-            isFixed: true,
-            name: acc.name,
-            id: null,
-            grade: null,
-            tradeLeft: null,
-            quality: acc.quality,
-            price: 0,
-            auctionPrice: 0,
-            buyPrice: 0,
-            effects: addEntries(
-              [
-                acc.dealOption1,
-                acc.dealOption2,
-                acc.imprintOption1,
-                acc.imprintOption2,
-                acc.imprintPenalty,
-              ].filter((x): x is [string, number] => !!x)
-            ),
-          },
-        ])
+        .map(([name, acc]) => [name, getFixedItem(acc)])
     );
   }
 
@@ -290,10 +298,15 @@ export class ImprintingComponent implements OnInit {
       this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
       this.isLoading = false;
     };
+
     this.worker.postMessage({
       candidates: this.candidates,
       accMap: this.accMap,
-      searchResult: this.searchResult,
+      searchResult: addItemsToSearchResult(
+        this.searchResult,
+        this.accMap,
+        this.additionalItems
+      ),
       fixedItems: this.getFixedItems(),
       filter: this.filter,
     });

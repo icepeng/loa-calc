@@ -6,22 +6,27 @@
     </url>
     <url>
         <loc>https://loa.icepeng.com/refining</loc>
-        <lastmod>2021-11-16T00:00:00+00:00</lastmod>
+        <lastmod>2021-11-19T00:00:00+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
         <loc>https://loa.icepeng.com/imprinting</loc>
-        <lastmod>2021-11-16T00:00:00+00:00</lastmod>
+        <lastmod>2021-11-19T00:00:00+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
         <loc>https://loa.icepeng.com/tripod</loc>
-        <lastmod>2021-11-16T00:00:00+00:00</lastmod>
+        <lastmod>2021-11-19T00:00:00+00:00</lastmod>
         <priority>0.80</priority>
     </url>
     <url>
         <loc>https://loa.icepeng.com/stone</loc>
         <lastmod>2021-11-16T00:00:00+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://loa.icepeng.com/donate</loc>
+        <lastmod>2021-11-19T00:00:00+00:00</lastmod>
         <priority>0.80</priority>
     </url>
 </urlset>

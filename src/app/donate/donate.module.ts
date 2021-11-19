@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { AdsenseModule } from 'ng2-adsense';
 import { DonateComponent } from './containers/donate.component';
 import { DonateRoutingModule } from './donate-routing.module';
 
@@ -13,6 +14,7 @@ import { DonateRoutingModule } from './donate-routing.module';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    AdsenseModule,
     DonateRoutingModule,
   ],
 })

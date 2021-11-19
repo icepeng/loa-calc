@@ -41,7 +41,6 @@ import { TripodModule } from './tripod/tripod.module';
     Angulartics2Module.forRoot(),
     AdsenseModule.forRoot({
       adClient: 'ca-pub-6238355772969385',
-      adSlot: 5161029086,
     }),
   ],
   providers: [],

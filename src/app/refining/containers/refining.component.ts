@@ -1,14 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
+import { RefiningSearchDialogComponent } from '../components/refining-search-dialog.component';
 import { getRefineTable, RefineTable } from '../data';
 import { breathNames, fixed, optimize, Path } from '../refine';
+import { getSearchScript } from '../search';
 
 @Component({
   selector: 'app-refining',
@@ -91,7 +91,12 @@ export class RefiningComponent implements OnInit, OnDestroy {
   breathes: { name: string; prob: number; amount: number; price: number }[] =
     [];
 
-  constructor(private titleService: Title) {
+  constructor(
+    private titleService: Title,
+    private dialog: MatDialog,
+    private clipboard: Clipboard,
+    private snackbar: MatSnackBar
+  ) {
     this.titleService.setTitle(
       'LoaCalc : 재련 최적화 - 로스트아크 최적화 계산기'
     );
@@ -155,6 +160,23 @@ export class RefiningComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+  }
+
+  openSearchDialog() {
+    const copySuccess = this.clipboard.copy(getSearchScript());
+    if (copySuccess) {
+      this.dialog
+        .open(RefiningSearchDialogComponent, { disableClose: true })
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((data) => {
+          if (data) {
+            this.priceForm.patchValue(data);
+          }
+        });
+    } else {
+      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+    }
   }
 
   setMaterials(refineTable: RefineTable, priceForm: Record<string, number>) {

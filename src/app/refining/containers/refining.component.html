@@ -1,5 +1,11 @@
 <div class="container">
-  <h1 class="mat-h1">재련 최적화</h1>
+  <div class="flex-baseline">
+    <h1 class="mat-h1">재련 최적화</h1>
+    <div class="filler"></div>
+    <button (click)="openSearchDialog()" mat-stroked-button>
+      거래소 가격 검색
+    </button>
+  </div>
   <div class="layout">
     <mat-tab-group class="mat-elevation-z1 tab-group-card">
       <mat-tab label="가격 정보">
@@ -91,7 +97,10 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-tab-group animationDuration="0ms" class="mat-elevation-z1 tab-group-card refine-table">
+    <mat-tab-group
+      animationDuration="0ms"
+      class="mat-elevation-z1 tab-group-card refine-table"
+    >
       <mat-tab label="최적 재련">
         <div class="p-16">
           <app-refine-table

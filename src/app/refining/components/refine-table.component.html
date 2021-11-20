@@ -62,13 +62,6 @@
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="globalProb">
-    <th mat-header-cell *matHeaderCellDef>확률</th>
-    <td mat-cell *matCellDef="let element">
-      {{ element.globalProb | percent: ".2-2" }}
-    </td>
-  </ng-container>
-
   <tr
     mat-header-row
     *matHeaderRowDef="[
@@ -77,23 +70,14 @@
       'jangin',
       'breathes',
       'totalProb',
-      'price',
-      'globalProb'
+      'price'
     ]"
   ></tr>
   <tr
     mat-row
     *matRowDef="
       let row;
-      columns: [
-        'index',
-        'baseProb',
-        'jangin',
-        'breathes',
-        'totalProb',
-        'price',
-        'globalProb'
-      ]
+      columns: ['index', 'baseProb', 'jangin', 'breathes', 'totalProb', 'price']
     "
   ></tr>
 </table>

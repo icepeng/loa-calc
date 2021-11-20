@@ -1,0 +1,67 @@
+<form [formGroup]="itemForm">
+  <div>
+    <mat-form-field>
+      <mat-label>장비 종류</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="weapon">무기</mat-option>
+        <mat-option value="armor">방어구</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>장비 등급</mat-label>
+      <mat-select formControlName="grade">
+        <mat-option value="t3_1302">T3 1302 (희귀 ~ 영웅)</mat-option>
+        <mat-option value="t3_1340">T3 1340 (전설 ~ 유물)</mat-option>
+        <mat-option value="t3_1390">T3 1390 (상위 유물 ~ 고대)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 목표 단계 </mat-label>
+      <mat-select formControlName="target">
+        <mat-option *ngFor="let target of targetList$ | async" [value]="target"
+          >{{ target }}단계</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 기본 확률 </mat-label>
+      <input formControlName="baseProb" matInput type="number" />
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 성장 지원 & 영지 연구 </mat-label>
+      <input formControlName="additionalProb" matInput type="number" />
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 실패로 추가된 확률 </mat-label>
+      <input matInput formControlName="probFromFailure" type="number" />
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 합계 확률 </mat-label>
+      <input formControlName="totalProb" matInput type="number" />
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label> 장인의 기운 </mat-label>
+      <input matInput formControlName="jangin" type="number" />
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+  <mat-checkbox formControlName="applyResearch">영지 연구 적용</mat-checkbox>
+</form>

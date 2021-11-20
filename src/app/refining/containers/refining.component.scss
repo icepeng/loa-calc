@@ -4,25 +4,12 @@
 
 .layout {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-}
-
-.cell {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.price-form {
-  font-size: 16px;
 }
 
 .grow {
   flex-grow: 1;
-}
-
-.p-16 {
-  padding: 16px;
 }
 
 .materials {
@@ -33,4 +20,17 @@
   display: flex;
   align-items: center;
   margin-bottom: 12px;
+}
+
+.notice {
+  width: 300px;
+}
+
+.refine-table {
+  flex-grow: 1;
+  flex-basis: 800px;
+}
+
+.tab-group-card {
+  max-height: calc(100vh - 156px);
 }

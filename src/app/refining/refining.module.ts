@@ -11,11 +11,20 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AdsenseModule } from 'ng2-adsense';
 import { RefineTableComponent } from './components/refine-table.component';
+import { RefiningItemComponent } from './containers/refining-item.component';
+import { RefiningPriceComponent } from './containers/refining-price.component';
 import { RefiningComponent } from './containers/refining.component';
 import { RefiningRoutingModule } from './refining-routing.module';
+import { RefiningBindedComponent } from './containers/refining-binded.component';
 
 @NgModule({
-  declarations: [RefiningComponent, RefineTableComponent],
+  declarations: [
+    RefiningComponent,
+    RefineTableComponent,
+    RefiningItemComponent,
+    RefiningPriceComponent,
+    RefiningBindedComponent,
+  ],
   exports: [RefiningComponent],
   imports: [
     CommonModule,

@@ -1,4 +1,22 @@
 .optimize-table {
   border: 1px solid #bbb;
-  width: 640px;
+  min-width: 640px;
+  width: 100%;
+}
+
+.material-info {
+  flex: 108px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  margin-right: 12px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mat-h2 {
+  margin-bottom: 0;
 }

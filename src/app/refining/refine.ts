@@ -1,12 +1,15 @@
 import { RefineTable } from './data';
 
-export type Path = {
+export type Step = {
   baseProb: number;
   totalProb: number;
+  globalProb: number;
   jangin: number;
   price: number;
   breathes: Record<string, number>;
-}[];
+}
+
+export type Path = Step[];
 
 export const materialNames = [
   '파편',
@@ -132,6 +135,7 @@ export function optimize(
   function rec(
     currentProb: number,
     jangin: number,
+    globalProb: number,
     breathCount: number,
     bindedLeft: Record<string, number>
   ): {
@@ -150,7 +154,14 @@ export function optimize(
       return {
         price: basePrice,
         path: [
-          { baseProb: 1, totalProb: 1, jangin, price: basePrice, breathes: {} },
+          {
+            baseProb: 1,
+            totalProb: 1,
+            globalProb,
+            jangin,
+            price: basePrice,
+            breathes: {},
+          },
         ],
       };
     }
@@ -161,6 +172,7 @@ export function optimize(
           {
             baseProb: 1,
             totalProb: 1,
+            globalProb,
             jangin: 1,
             price: basePrice,
             breathes: {},
@@ -178,6 +190,7 @@ export function optimize(
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
         jangin + prob * 0.4651,
+        globalProb * (1 - prob),
         i,
         subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
       );
@@ -186,6 +199,7 @@ export function optimize(
         {
           baseProb: currentProb + additionalProb,
           totalProb: prob,
+          globalProb: globalProb * prob,
           jangin,
           price: basePrice + breathPrice,
           breathes,
@@ -203,6 +217,7 @@ export function optimize(
   return rec(
     baseProb + probFromFailure,
     startJangin,
+    1,
     Object.keys(table.breath).length,
     bindedMap
   );
@@ -224,6 +239,7 @@ export function fixed(
   function rec(
     currentProb: number,
     jangin: number,
+    globalProb: number,
     bindedLeft: Record<string, number>
   ): {
     price: number;
@@ -241,7 +257,14 @@ export function fixed(
       return {
         price: basePrice,
         path: [
-          { baseProb: 1, totalProb: 1, jangin, price: basePrice, breathes: {} },
+          {
+            baseProb: 1,
+            totalProb: 1,
+            globalProb,
+            jangin,
+            price: basePrice,
+            breathes: {},
+          },
         ],
       };
     }
@@ -252,6 +275,7 @@ export function fixed(
           {
             baseProb: 1,
             totalProb: 1,
+            globalProb,
             jangin: 1,
             price: basePrice,
             breathes: {},
@@ -270,6 +294,7 @@ export function fixed(
     const { price: failPrice, path: failPath } = rec(
       Math.min(currentProb + baseProb * 0.1, baseProb * 2),
       jangin + prob * 0.4651,
+      globalProb * (1 - prob),
       subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
     );
 
@@ -279,6 +304,7 @@ export function fixed(
         {
           baseProb: currentProb + additionalProb,
           totalProb: prob,
+          globalProb: globalProb * prob,
           jangin,
           price: basePrice + breathPrice,
           breathes,
@@ -288,5 +314,5 @@ export function fixed(
     };
   }
 
-  return rec(baseProb + probFromFailure, startJangin, bindedMap);
+  return rec(baseProb + probFromFailure, startJangin, 1, bindedMap);
 }

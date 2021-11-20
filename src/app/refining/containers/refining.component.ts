@@ -1,27 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import {
-  getRefineTable,
-  getTargetList,
-  refineData,
-  RefineTable,
-} from '../data';
-import {
-  bookNames,
-  breathNames,
-  fixed,
-  materialNames,
-  optimize,
-  Path,
-} from '../refine';
+import { Subscription } from 'rxjs';
+import { getRefineTable, RefineTable } from '../data';
+import { breathNames, fixed, optimize, Path } from '../refine';
 
 @Component({
   selector: 'app-refining',
   templateUrl: './refining.component.html',
   styleUrls: ['./refining.component.scss'],
 })
-export class RefiningComponent implements OnInit {
+export class RefiningComponent implements OnInit, OnDestroy {
+  subscription$!: Subscription;
   priceForm = new FormGroup({
     파편: new FormControl(0.371),
     하급오레하: new FormControl(12),
@@ -82,8 +77,6 @@ export class RefiningComponent implements OnInit {
   reduceBindedBooks = false;
   reduceBindedBreathes = false;
 
-  targetList: number[] = [];
-
   optimalPrice = 0;
   optimalPath: Path = [];
 
@@ -99,7 +92,9 @@ export class RefiningComponent implements OnInit {
     [];
 
   constructor(private titleService: Title) {
-    this.titleService.setTitle('LoaCalc : 재련 최적화 - 로스트아크 최적화 계산기')
+    this.titleService.setTitle(
+      'LoaCalc : 재련 최적화 - 로스트아크 최적화 계산기'
+    );
   }
 
   ngOnInit(): void {
@@ -108,8 +103,7 @@ export class RefiningComponent implements OnInit {
       this.priceForm.patchValue(JSON.parse(savedPriceForm));
     }
 
-    this.itemForm.valueChanges.subscribe((itemForm) => {
-      this.targetList = getTargetList(itemForm.type, itemForm.grade);
+    this.subscription$ = this.itemForm.valueChanges.subscribe((itemForm) => {
       const table = getRefineTable(
         itemForm.type,
         itemForm.grade,
@@ -157,6 +151,10 @@ export class RefiningComponent implements OnInit {
 
       this.setMaterials(table, priceForm);
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 
   setMaterials(refineTable: RefineTable, priceForm: Record<string, number>) {

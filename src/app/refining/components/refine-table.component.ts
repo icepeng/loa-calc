@@ -49,6 +49,7 @@ export class RefineTableComponent implements OnChanges {
 
   private getAvarageMaterial(path: Path) {
     const obj: Record<string, number> = {};
+    const breathes: Record<string, number> = {};
     path.forEach((step, index) => {
       this.materials.forEach((material) => {
         obj[material.name] =
@@ -56,7 +57,10 @@ export class RefineTableComponent implements OnChanges {
           material.amount * step.globalProb * (index + 1);
       });
       Object.entries(step.breathes).forEach(([name, amount]) => {
-        obj[name] = (obj[name] ?? 0) + amount * step.globalProb * (index + 1);
+        breathes[name] = (breathes[name] ?? 0) + amount;
+      });
+      Object.entries(breathes).forEach(([name, amount]) => {
+        obj[name] = (obj[name] ?? 0) + amount * step.globalProb;
       });
     });
     return Object.entries(obj);

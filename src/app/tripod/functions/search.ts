@@ -1,10 +1,6 @@
 import { TripodValue } from './type';
 
-export function getSearchScript(
-  classCode: number,
-  doubleTripods: [TripodValue, TripodValue][],
-  singleTripods: TripodValue[]
-) {
+export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
   return `
     function parse(document, index) {
       const row = document.querySelector(
@@ -34,16 +30,18 @@ export function getSearchScript(
             tripod: str.split("]")[1].split("Lv")[0].trim(),
             level: parseInt(str.split("+")[1], 10),
           }))
-      const price = parseFloat(
+      const buyPrice = parseFloat(
         row
           .querySelector(\`td:nth-child(6) > div > em\`)
           .innerText.trim()
           .replace(/,/g, "")
       )
-
-      if (!price) {
-        return;
-      }
+      const auctionPrice = parseFloat(
+        row
+          .querySelector(\`td:nth-child(5) > div > em\`)
+          .innerText.trim()
+          .replace(/,/g, "")
+      );
     
       return {
         name,
@@ -51,7 +49,8 @@ export function getSearchScript(
         grade,
         effects,
         tradeLeft,
-        price,
+        buyPrice,
+        auctionPrice,
       };
     }
     
@@ -145,12 +144,11 @@ export function getSearchScript(
       }
     }
     
-    async function getSearchResult(classCode, doubleTripods, singleTripods) {
-      const double = [];
-      const single = [];
-      const total = doubleTripods.length + singleTripods.length;
+    async function getSearchResult(classCode, tripods) {
+      const result = [];
+      const total = tripods.length;
       let count = 0;
-      for (const tripod of doubleTripods) {
+      for (const tripod of tripods) {
           count += 1;
           const estimated = new Date();
           estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
@@ -160,34 +158,13 @@ export function getSearchScript(
             classNo: classCode,
             skillOptionList: tripod
           });
-          if (products.length > 0) {
-            double.push({
-                tripod,
-                products,
-            });
-          }
-          await new Promise(resolve => setTimeout(resolve, 3000));
-      }
-      for (const tripod of singleTripods) {
-          count += 1;
-          const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
-          console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
-          
-          const products = await trySearch({
-            classNo: classCode,
-            skillOptionList: [tripod]
+          result.push({
+              tripod,
+              products,
           });
-          single.push({
-            tripod,
-            price: products[0]?.price ?? 0,
-          })
           await new Promise(resolve => setTimeout(resolve, 3000));
       }
-      return {
-        double,
-        single
-      };
+      return result;
     }
 
     let result;
@@ -205,9 +182,7 @@ export function getSearchScript(
     if (btn) {
       btn.remove();
     }
-    getSearchResult(${classCode}, ${JSON.stringify(
-    doubleTripods
-  )}, ${JSON.stringify(singleTripods)}).then(res => {
+    getSearchResult(${classCode}, ${JSON.stringify(tripods)}).then(res => {
     result = res;
     console.log(res);
     const el = document.createElement('button');

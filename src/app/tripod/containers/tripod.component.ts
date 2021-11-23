@@ -195,21 +195,15 @@ export class TripodComponent implements OnInit, OnDestroy {
 
   generate() {
     localStorage.setItem('tripodForm', JSON.stringify(this.formGroup.value));
-
-    const requiredTripodMin = this.selectedCategories.length * 2;
-    if (this.filledTripodForm.length < requiredTripodMin) {
-      this.snackbar.open(
-        `최소 ${requiredTripodMin}개의 트라이포드를 선택해야 합니다.`,
-        '닫기'
-      );
+    if (this.filledTripodForm.length <= 0) {
+      this.snackbar.open(`최소 1개의 트라이포드를 선택해야 합니다.`, '닫기');
       return;
     }
 
-    const searchScript = getSearchScript(
-      this.formGroup.value.classCode,
-      this.getCombinations(),
-      this.filledTripodForm,
-    );
+    const searchScript = getSearchScript(this.formGroup.value.classCode, [
+      ...this.getCombinations(),
+      ...Array.from(combinations(this.filledTripodForm, 1)),
+    ]);
     const copySuccess = this.clipboard.copy(searchScript);
 
     if (copySuccess) {
@@ -252,6 +246,7 @@ export class TripodComponent implements OnInit, OnDestroy {
     };
     this.worker.postMessage({
       searchResult,
+      tripods: this.filledTripodForm,
       selectedCategories: this.selectedCategories,
       filter: this.filterForm.value,
     });

@@ -15,23 +15,14 @@ export interface Product {
   id: string;
   grade: number;
   effects: [TripodText, TripodText, TripodText];
-  price: number;
+  buyPrice: number;
+  auctionPrice: number;
   tradeLeft: number;
 }
 
-export interface SearchResultSingle {
-  tripod: TripodValue;
-  price: number;
-}
-
-export interface SearchResultDouble {
-  tripod: [TripodValue, TripodValue];
-  products: Product[];
-}
-
 export interface SearchResult {
-  double: SearchResultDouble[];
-  single: SearchResultSingle[];
+  tripod: TripodValue[];
+  products: Product[];
 }
 
 export interface ComposeFilter {

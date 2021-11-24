@@ -19,8 +19,12 @@
   flex: 0 1 1080px;
 }
 
-.grow {
-  flex: 1 0 auto;
+.table-card {
+  flex: 1 1 auto;
+}
+
+.single-card {
+  min-width: 208px;
 }
 
 .script {
@@ -30,4 +34,9 @@
 
 .mat-checkbox ~ .mat-checkbox {
   margin-left: 12px;
+}
+
+.layout-bottom {
+  display: flex;
+  gap: 12px;
 }

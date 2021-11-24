@@ -71,20 +71,13 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="restSingles">
-        <th mat-header-cell *matHeaderCellDef>남은 트포</th>
-        <td mat-cell *matCellDef="let element">
-          <div *ngFor="let single of element.restSingles">
-            {{ getTripodString(single.tripod) }} :
-            <ng-container *ngIf="single.price"
-              >{{ single.price | number: ".0-0" }}골드</ng-container
-            ><ng-container *ngIf="!single.price">매물없음</ng-container>
-          </div>
-        </td>
-      </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+      <tr
+        (mouseenter)="hoverResult.emit(row)"
+        (mouseleave)="hoverResult.emit(null)"
+        mat-row
+        *matRowDef="let row; columns: columns"
+      ></tr>
     </table>
   </div>
   <mat-paginator showFirstLastButtons [pageSize]="6"> </mat-paginator>

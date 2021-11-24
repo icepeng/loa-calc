@@ -24,3 +24,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.mat-row:hover {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

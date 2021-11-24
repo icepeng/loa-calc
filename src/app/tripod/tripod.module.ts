@@ -23,6 +23,7 @@ import { TripodSearchDialogComponent } from './components/tripod-search-dialog.c
 import { TripodTableComponent } from './components/tripod-table.component';
 import { TripodComponent } from './containers/tripod.component';
 import { TripodRoutingModule } from './tripod-routing.module';
+import { TripodSingleListComponent } from './components/tripod-single-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TripodRoutingModule } from './tripod-routing.module';
     TripodTableComponent,
     TripodItemViewComponent,
     TripodSearchDialogComponent,
+    TripodSingleListComponent,
   ],
   imports: [
     CommonModule,

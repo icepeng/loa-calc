@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -20,8 +22,8 @@ export class TripodTableComponent implements AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() categories!: number[];
   @Input() filter!: ComposeFilter;
-  @Input() showRestSingles!: boolean;
   @Input() isLoading!: boolean;
+  @Output() hoverResult = new EventEmitter<ComposeResult | null>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<ComposeResult>([]);
@@ -38,14 +40,11 @@ export class TripodTableComponent implements AfterViewInit, OnChanges {
       this.dataSource.data = changes.data.currentValue;
       this.dataSource.paginator?.firstPage();
     }
-    if (changes.categories || changes.showRestSingles) {
+    if (changes.categories) {
       this.columns = [
         'price',
         ...this.categories.map((x: number) => x.toString()),
       ];
-      if (this.showRestSingles) {
-        this.columns.push('restSingles');
-      }
     }
   }
 

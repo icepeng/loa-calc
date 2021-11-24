@@ -41,8 +41,4 @@ export interface Summary {
 export interface ComposeResult {
   price: number;
   summary: Record<number, Summary>;
-  restSingles: {
-    tripod: TripodValue;
-    price: number;
-  }[];
 }

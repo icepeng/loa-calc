@@ -78,18 +78,27 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div class="layout">
-    <mat-card class="grow">
-      <mat-slide-toggle [(ngModel)]="showRestSingles"
-        >전승 재료 가격 표시</mat-slide-toggle
-      >
-      <app-tripod-table
-        [data]="composeResult"
-        [categories]="searchResultCategories"
-        [filter]="lastFilter"
-        [showRestSingles]="showRestSingles"
-        [isLoading]="isLoading"
-      ></app-tripod-table>
+  <div class="layout-bottom">
+    <mat-card class="table-card">
+      <mat-card-subtitle> 도시락 목록 </mat-card-subtitle>
+      <mat-card-content>
+        <app-tripod-table
+          [data]="composeResult"
+          [categories]="searchResultCategories"
+          [filter]="lastFilter"
+          [isLoading]="isLoading"
+          (hoverResult)="hoverResult($event)"
+        ></app-tripod-table>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="single-card">
+      <mat-card-subtitle>전승 재료 목록</mat-card-subtitle>
+      <mat-card-content>
+        <app-tripod-single-list
+          [searchResult]="searchResult"
+          [hoveredResult]="hoveredResult"
+        ></app-tripod-single-list>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>

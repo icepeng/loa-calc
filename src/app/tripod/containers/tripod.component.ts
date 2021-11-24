@@ -66,8 +66,8 @@ export class TripodComponent implements OnInit, OnDestroy {
   composeResult: ComposeResult[] = [];
   searchResultCategories: number[] = [];
   lastFilter: ComposeFilter = this.filterForm.value;
-  showRestSingles = false;
   isLoading = false;
+  hoveredResult: ComposeResult | null = null;
 
   subscribe$ = new Subject<void>();
   worker!: Worker;
@@ -182,6 +182,10 @@ export class TripodComponent implements OnInit, OnDestroy {
 
   resetTripodFilter() {
     this.filterForm.get('requiredTripods')!.reset([]);
+  }
+
+  hoverResult(result: ComposeResult | null) {
+    this.hoveredResult = result;
   }
 
   getCombinations() {

@@ -72,6 +72,18 @@
             <mat-icon>delete</mat-icon>
           </button>
         </div>
+        <div>
+          <span>고정된 도시락 {{ fixedItemsLength }}개</span>
+          <button (click)="resetFixedItems()" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div>
+          <span>제외된 도시락 {{ excludedItemsLength }}개</span>
+          <button (click)="resetExcludedItems()" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
         <button (click)="applySearchResult()" mat-raised-button color="primary">
           적용
         </button>
@@ -88,6 +100,8 @@
           [filter]="lastFilter"
           [isLoading]="isLoading"
           (hoverResult)="hoverResult($event)"
+          (fixItem)="fixItem($event)"
+          (excludeItem)="excludeItem($event)"
         ></app-tripod-table>
       </mat-card-content>
     </mat-card>

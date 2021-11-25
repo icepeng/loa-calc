@@ -25,7 +25,11 @@
   justify-content: center;
 }
 
-.mat-row:hover {
-  background: rgba(0, 0, 0, 0.2);
+.mat-cell:hover:not(:first-of-type) {
+  background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
+}
+
+.mat-row:hover {
+  background: rgba(0, 0, 0, 0.1);
 }

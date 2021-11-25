@@ -63,6 +63,13 @@ function summarySearchResult(
       { gear: shoulder, code: 190050 },
       { gear: weapon, code: 180000 },
     ].forEach(({ gear, code }) => {
+      if (
+        filter.excludedItems[code].find(
+          (x) => JSON.stringify(x.tripod) === JSON.stringify(tripod)
+        )
+      ) {
+        return;
+      }
       if (gear.length > 0) {
         const priceObj = getPrice(gear);
         if (priceObj) {
@@ -78,10 +85,13 @@ function summarySearchResult(
   return obj;
 }
 
-function tripodOverlap(list: Record<string, Summary>, item: Summary) {
-  return !!Object.values(list).find((x) =>
+function tripodOverlap(
+  summaryMap: Record<number, Summary>,
+  tripods: TripodValue[]
+) {
+  return !!Object.values(summaryMap).find((x) =>
     x.tripod.find((y) =>
-      item.tripod.find((z) => z.skill === y.skill && z.tripod === y.tripod)
+      tripods.find((z) => z.skill === y.skill && z.tripod === y.tripod)
     )
   );
 }
@@ -92,9 +102,18 @@ export function compose(
   categoryList: number[],
   filter: ComposeFilter
 ): ComposeResult[] {
-  const tripodCount = Math.min(tripods.length, categoryList.length * 2);
+  const filteredTripods = tripods.filter(
+    (tripod) => !tripodOverlap(filter.fixedItems, [tripod])
+  );
+  const filteredCategoryList = categoryList.filter(
+    (category) => !filter.fixedItems[category]
+  );
+  const tripodThreshold = Math.min(
+    filteredTripods.length,
+    filteredCategoryList.length * 2
+  );
   const summaryRecord =
-    tripodCount === categoryList.length * 2
+    tripodThreshold === filteredCategoryList.length * 2
       ? summarySearchResult(
           searchResult.filter((x) => x.tripod.length >= 2),
           filter
@@ -103,45 +122,53 @@ export function compose(
   const requiredTripodSet = new Set(
     filter.requiredTripods.map((tripod) => hashTripod(tripod))
   );
+
   let results: { summary: Record<number, Summary>; price: number }[] = [];
   function rec(
     summary: Record<number, Summary>,
     totalPrice: number,
     requiredLeft: number,
-    d: number,
-    f: number
+    categoryCount: number,
+    tripodCount: number
   ) {
     if (totalPrice > (results[results.length - 1]?.price ?? Infinity)) {
       return;
     }
-    if (requiredLeft > (categoryList.length - d) * 2) {
+    if (requiredLeft > (filteredCategoryList.length - categoryCount) * 2) {
       return;
     }
-    if (d === categoryList.length) {
-      if (requiredLeft <= 0 && f >= tripodCount) {
+    if (categoryCount === filteredCategoryList.length) {
+      if (requiredLeft <= 0 && tripodCount >= tripodThreshold) {
         results.push({ summary, price: totalPrice });
         results.sort((a, b) => a.price - b.price);
         results = results.slice(0, 100);
       }
       return;
     }
-    const list = summaryRecord[categoryList[d]];
+    const list = summaryRecord[filteredCategoryList[categoryCount]];
     for (let el of list) {
-      if (!tripodOverlap(summary, el)) {
+      if (!tripodOverlap(summary, el.tripod)) {
         const requiredCount = el.tripod.filter((x) =>
           requiredTripodSet.has(hashTripod(x))
         ).length;
         rec(
-          { ...summary, [categoryList[d]]: el },
+          { ...summary, [filteredCategoryList[categoryCount]]: el },
           totalPrice + el.price,
           requiredLeft - requiredCount,
-          d + 1,
-          f + el.tripod.length
+          categoryCount + 1,
+          tripodCount + el.tripod.length
         );
       }
     }
   }
-  rec([], 0, requiredTripodSet.size, 0, 0);
+  rec(
+    filter.fixedItems,
+    Object.values(filter.fixedItems).reduce((sum, x) => sum + x.price, 0),
+    requiredTripodSet.size,
+    0,
+    0
+  );
+
   return results.map((result) => {
     const tripods = Object.values(result.summary).flatMap((x) => x.tripod);
     const restSingles = searchResult

@@ -13,6 +13,7 @@ import {
   ComposeFilter,
   ComposeResult,
   SearchResult,
+  Summary,
   TripodValue,
 } from '../functions/type';
 import { getTripodString } from '../functions/util';
@@ -56,6 +57,17 @@ export class TripodComponent implements OnInit, OnDestroy {
     tradeLeft: new FormControl(2),
     requiredTripods: new FormControl([]),
   });
+  fixedItems: ComposeFilter['fixedItems'] = {};
+  fixedItemsLength = 0;
+  excludedItems: ComposeFilter['excludedItems'] = {
+    180000: [],
+    190010: [],
+    190020: [],
+    190030: [],
+    190040: [],
+    190050: [],
+  };
+  excludedItemsLength = 0;
 
   filledTripodForm: TripodValue[] = [];
   tripodFilters: { text: string; value: TripodValue }[] = [];
@@ -188,6 +200,35 @@ export class TripodComponent implements OnInit, OnDestroy {
     this.hoveredResult = result;
   }
 
+  fixItem({ category, summary }: { category: number; summary: Summary }) {
+    this.fixedItems[category] = summary;
+    this.fixedItemsLength = Object.keys(this.fixedItems).length;
+    this.applySearchResult();
+  }
+
+  resetFixedItems() {
+    this.fixedItems = {};
+    this.fixedItemsLength = 0;
+  }
+
+  excludeItem({ category, summary }: { category: number; summary: Summary }) {
+    this.excludedItems[category].push(summary);
+    this.excludedItemsLength += 1;
+    this.applySearchResult();
+  }
+
+  resetExcludedItems() {
+    this.excludedItems = {
+      180000: [],
+      190010: [],
+      190020: [],
+      190030: [],
+      190040: [],
+      190050: [],
+    };
+    this.excludedItemsLength = 0;
+  }
+
   getCombinations() {
     const allow33 =
       this.filledTripodForm.filter((x) => x.level === 4).length <
@@ -221,6 +262,9 @@ export class TripodComponent implements OnInit, OnDestroy {
           if (data) {
             this.searchResult = data;
             this.searchResultCategories = this.selectedCategories;
+            this.resetTripodFilter();
+            this.resetFixedItems();
+            this.resetExcludedItems();
             this.applySearchResult();
           }
         });
@@ -252,7 +296,11 @@ export class TripodComponent implements OnInit, OnDestroy {
       searchResult,
       tripods: this.filledTripodForm,
       selectedCategories: this.selectedCategories,
-      filter: this.filterForm.value,
+      filter: {
+        ...this.filterForm.value,
+        fixedItems: this.fixedItems,
+        excludedItems: this.excludedItems,
+      },
     });
   }
 }

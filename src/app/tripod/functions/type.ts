@@ -28,6 +28,8 @@ export interface SearchResult {
 export interface ComposeFilter {
   tradeLeft: number;
   requiredTripods: TripodValue[];
+  fixedItems: Record<number, Summary>;
+  excludedItems: Record<number, Summary[]>;
 }
 
 export interface Summary {

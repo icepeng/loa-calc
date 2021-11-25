@@ -10,7 +10,13 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeFilter, ComposeResult, TripodValue } from '../functions/type';
+import { marketData } from '../data';
+import {
+  ComposeFilter,
+  ComposeResult,
+  Summary,
+  TripodValue,
+} from '../functions/type';
 import { getTripodString } from '../functions/util';
 
 @Component({
@@ -24,9 +30,18 @@ export class TripodTableComponent implements AfterViewInit, OnChanges {
   @Input() filter!: ComposeFilter;
   @Input() isLoading!: boolean;
   @Output() hoverResult = new EventEmitter<ComposeResult | null>();
+  @Output() fixItem = new EventEmitter<{
+    category: number;
+    summary: Summary;
+  }>();
+  @Output() excludeItem = new EventEmitter<{
+    category: number;
+    summary: Summary;
+  }>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<ComposeResult>([]);
+  categoryColumns = marketData.marketCategory.filter((x) => x.parent === 10000);
   columns: string[] = ['price'];
 
   constructor() {}

@@ -4,8 +4,8 @@ export interface MarketClass {
 }
 
 export interface MarketCategory {
-  value: 10000;
-  text: '장비';
+  value: number;
+  text: string;
   parent: number;
   playerClassSearch: 0 | 1;
   useLevelSearch: 0 | 1;

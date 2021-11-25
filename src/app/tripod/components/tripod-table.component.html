@@ -11,63 +11,40 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="180000">
-        <th mat-header-cell *matHeaderCellDef>무기</th>
-        <td mat-cell *matCellDef="let element">
+      <ng-container
+        *ngFor="let categoryColumn of categoryColumns"
+        [matColumnDef]="categoryColumn.value.toString()"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ categoryColumn.text }}</th>
+        <td [matMenuTriggerFor]="menu" mat-cell *matCellDef="let element">
           <app-tripod-item-view
-            [item]="element.summary[180000]"
+            [item]="element.summary[categoryColumn.value]"
             [filter]="filter"
           ></app-tripod-item-view>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="190010">
-        <th mat-header-cell *matHeaderCellDef>투구</th>
-        <td mat-cell *matCellDef="let element">
-          <app-tripod-item-view
-            [item]="element.summary[190010]"
-            [filter]="filter"
-          ></app-tripod-item-view>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="190020">
-        <th mat-header-cell *matHeaderCellDef>상의</th>
-        <td mat-cell *matCellDef="let element">
-          <app-tripod-item-view
-            [item]="element.summary[190020]"
-            [filter]="filter"
-          ></app-tripod-item-view>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="190030">
-        <th mat-header-cell *matHeaderCellDef>하의</th>
-        <td mat-cell *matCellDef="let element">
-          <app-tripod-item-view
-            [item]="element.summary[190030]"
-            [filter]="filter"
-          ></app-tripod-item-view>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="190040">
-        <th mat-header-cell *matHeaderCellDef>장갑</th>
-        <td mat-cell *matCellDef="let element">
-          <app-tripod-item-view
-            [item]="element.summary[190040]"
-            [filter]="filter"
-          ></app-tripod-item-view>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="190050">
-        <th mat-header-cell *matHeaderCellDef>어깨</th>
-        <td mat-cell *matCellDef="let element">
-          <app-tripod-item-view
-            [item]="element.summary[190050]"
-            [filter]="filter"
-          ></app-tripod-item-view>
+          <mat-menu #menu="matMenu">
+            <button
+              (click)="
+                fixItem.emit({
+                  category: categoryColumn.value,
+                  summary: element.summary[categoryColumn.value]
+                })
+              "
+              mat-menu-item
+            >
+              고정하고 다시 계산
+            </button>
+            <button
+              (click)="
+                excludeItem.emit({
+                  category: categoryColumn.value,
+                  summary: element.summary[categoryColumn.value]
+                })
+              "
+              mat-menu-item
+            >
+              제외하고 다시 계산
+            </button>
+          </mat-menu>
         </td>
       </ng-container>
 

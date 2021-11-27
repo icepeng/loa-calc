@@ -7,7 +7,7 @@ export type Step = {
   jangin: number;
   price: number;
   breathes: Record<string, number>;
-}
+};
 
 export type Path = Step[];
 
@@ -150,19 +150,10 @@ export function optimize(
       ? defaultBreath
       : buildBreath(priceMap, table.breath, bindedLeft, baseProb);
 
-    if (currentProb + additionalProb >= 1) {
+    if (globalProb <= 0) {
       return {
-        price: basePrice,
-        path: [
-          {
-            baseProb: 1,
-            totalProb: 1,
-            globalProb,
-            jangin,
-            price: basePrice,
-            breathes: {},
-          },
-        ],
+        price: 0,
+        path: [],
       };
     }
     if (jangin >= 1) {
@@ -186,7 +177,10 @@ export function optimize(
 
     for (let i = 0; i <= breathCount; i += 1) {
       const { price: breathPrice, prob: breathProb, breathes } = breath[i];
-      const prob = Math.min(currentProb + additionalProb + breathProb, 1);
+      const prob =
+        Math.round(
+          Math.min(currentProb + additionalProb + breathProb, 1) * 10000
+        ) / 10000;
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
         jangin + prob * 0.4651,
@@ -253,19 +247,10 @@ export function fixed(
       ? defaultBreath
       : buildBreath(priceMap, table.breath, bindedLeft, baseProb);
 
-    if (currentProb + additionalProb >= 1) {
+    if (globalProb <= 0) {
       return {
-        price: basePrice,
-        path: [
-          {
-            baseProb: 1,
-            totalProb: 1,
-            globalProb,
-            jangin,
-            price: basePrice,
-            breathes: {},
-          },
-        ],
+        price: 0,
+        path: [],
       };
     }
     if (jangin >= 1) {
@@ -290,7 +275,10 @@ export function fixed(
       breathes,
     } = breath[breathCount];
 
-    const prob = Math.min(currentProb + additionalProb + breathProb, 1);
+    const prob =
+      Math.round(
+        Math.min(currentProb + additionalProb + breathProb, 1) * 10000
+      ) / 10000;
     const { price: failPrice, path: failPath } = rec(
       Math.min(currentProb + baseProb * 0.1, baseProb * 2),
       jangin + prob * 0.4651,

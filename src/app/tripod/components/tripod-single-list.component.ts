@@ -37,7 +37,7 @@ export class TripodSingleListComponent implements OnChanges {
             };
           }
 
-          const buyPrice = res.products.filter((x) => x.buyPrice)[0].buyPrice;
+          const buyPrice = res.products.filter((x) => x.buyPrice)[0]?.buyPrice;
           if (buyPrice) {
             return {
               name,

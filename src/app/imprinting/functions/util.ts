@@ -73,6 +73,15 @@ export function addItemsToSearchResult(
   additionalItems: { acc: AccMap; price: number }[]
 ) {
   const next = { ...searchResult };
+  const nextKeys = Object.keys(next).map((key) => {
+    const splitted = key.split('_');
+    return {
+      key,
+      imprintOption1: [splitted[0], parseInt(splitted[1], 10)],
+      imprintOption2: [splitted[2], parseInt(splitted[3], 10)],
+      category: splitted[4],
+    };
+  });
   const categoryMap: Record<string, string[]> = {
     목걸이: ['목걸이'],
     귀걸이: ['귀걸이1', '귀걸이2'],
@@ -98,11 +107,22 @@ export function addItemsToSearchResult(
         [data.acc.imprintOption1, data.acc.imprintOption2],
         [data.acc.imprintOption2, data.acc.imprintOption1],
       ]) {
-        const key = `${a[0]}_${a[1]}_${b[0]}_${b[1]}_${category}`;
-        if (next[key]) {
-          next[key] = [...next[key], getFixedItem(data.acc, data.price)];
-          next[key].sort((a, b) => a.price - b.price);
-        }
+        nextKeys
+          .filter((x) => x.category === category)
+          .filter(
+            (x) =>
+              (x.imprintOption1[0] === '잡옵' ||
+                x.imprintOption1[0] === a[0]) &&
+              x.imprintOption1[1] >= a[1] &&
+              (x.imprintOption2[0] === '잡옵' ||
+                x.imprintOption2[0] === b[0]) &&
+              x.imprintOption2[1] >= b[1]
+          )
+          .map((x) => x.key)
+          .forEach((key) => {
+            next[key] = [...next[key], getFixedItem(data.acc, data.price)];
+            next[key].sort((a, b) => a.price - b.price);
+          });
       }
     }
   });

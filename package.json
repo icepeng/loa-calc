@@ -24,6 +24,7 @@
     "angulartics2": "^11.0.0",
     "ng2-adsense": "^10.1.0",
     "rxjs": "^7.4.0",
+    "tesseract.js": "^2.1.5",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

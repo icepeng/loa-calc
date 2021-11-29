@@ -16,6 +16,7 @@ import { DonateModule } from './donate/donate.module';
 import { HomeModule } from './home/home.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
 import { RefiningModule } from './refining/refining.module';
+import { SearchModule } from './search/search.module';
 import { StoneModule } from './stone/stone.module';
 import { TripodModule } from './tripod/tripod.module';
 
@@ -30,6 +31,7 @@ import { TripodModule } from './tripod/tripod.module';
     ImprintingModule,
     TripodModule,
     StoneModule,
+    SearchModule,
     DonateModule,
     MatToolbarModule,
     MatButtonModule,

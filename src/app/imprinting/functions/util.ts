@@ -113,10 +113,10 @@ export function addItemsToSearchResult(
             (x) =>
               (x.imprintOption1[0] === '잡옵' ||
                 x.imprintOption1[0] === a[0]) &&
-              x.imprintOption1[1] >= a[1] &&
+              x.imprintOption1[1] <= a[1] &&
               (x.imprintOption2[0] === '잡옵' ||
                 x.imprintOption2[0] === b[0]) &&
-              x.imprintOption2[1] >= b[1]
+              x.imprintOption2[1] <= b[1]
           )
           .map((x) => x.key)
           .forEach((key) => {

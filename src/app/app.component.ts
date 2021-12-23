@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2';
 import { filter, map, pairwise, startWith } from 'rxjs';
+import { AlertDialogComponent } from './core/components/alert-dialog.component';
 import { MobileDialogComponent } from './core/components/mobile-dialog.component';
 
 @Component({
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit {
     if (this.isMobile()) {
       this.dialog.open(MobileDialogComponent);
     }
+    this.dialog.open(AlertDialogComponent);
   }
 
   isMobile() {

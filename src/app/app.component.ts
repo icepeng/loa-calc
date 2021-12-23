@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
       alertDate == null ||
       +alertDate < new Date().valueOf() - 24 * 60 * 60 * 1000
     ) {
-      this.dialog.open(AlertDialogComponent);
+      this.dialog.open(AlertDialogComponent, { disableClose: true });
       localStorage.setItem('alertDate', new Date().valueOf().toString());
     }
   }

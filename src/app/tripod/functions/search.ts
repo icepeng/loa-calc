@@ -105,8 +105,18 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
         body: body,
         method: "POST",
       })
-        .then((res) => res.text())
+        .then((res) => {
+          if (res.status === 500) {
+            console.log('경매장 검색 서버에 오류가 발생했습니다. 스크립트를 종료합니다.');
+            throw new Error('ERR_INTERNAL_SERVER');
+          }
+          return res.text();
+        })
         .then((html) => {
+          if (html.includes('서비스 점검 중입니다.')) {
+            console.log('경매장 서비스 점검 중입니다. 스크립트를 종료합니다.');
+            throw new Error('ERR_MAINTENANCE');
+          }
           const parser = new DOMParser();
           return parser.parseFromString(html, "text/html");
         })
@@ -162,7 +172,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
               tripod,
               products,
           });
-          await new Promise(resolve => setTimeout(resolve, 3000));
+          await new Promise(resolve => setTimeout(resolve, 6000));
       }
       return result;
     }

@@ -51,7 +51,14 @@ export class AppComponent implements OnInit {
     if (this.isMobile()) {
       this.dialog.open(MobileDialogComponent);
     }
-    this.dialog.open(AlertDialogComponent);
+    const alertDate = localStorage.getItem('alertDate');
+    if (
+      alertDate == null ||
+      +alertDate < new Date().valueOf() - 24 * 60 * 60 * 1000
+    ) {
+      this.dialog.open(AlertDialogComponent);
+      localStorage.setItem('alertDate', new Date().valueOf().toString());
+    }
   }
 
   isMobile() {

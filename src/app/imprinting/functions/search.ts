@@ -249,14 +249,12 @@ export function getSearchScript(
       })
         .then((res) => {
           if (res.status === 500) {
-            console.log('경매장 검색 서버에 오류가 발생했습니다. 스크립트를 종료합니다.');
             throw new Error('ERR_INTERNAL_SERVER');
           }
           return res.text();
         })
         .then((html) => {
           if (html.includes('서비스 점검 중입니다.')) {
-            console.log('경매장 서비스 점검 중입니다. 스크립트를 종료합니다.');
             throw new Error('ERR_MAINTENANCE');
           }
           const parser = new DOMParser();
@@ -264,12 +262,11 @@ export function getSearchScript(
         })
         .then((document) => {
           if (document.querySelector("#idLogin")) {
-            console.log('로그인이 필요합니다. 스크립트를 종료합니다.');
             throw new Error('ERR_NO_LOGIN');
           }
           if (document.querySelector("#auctionListTbody > tr.empty")) {
               if (document.querySelector("#auctionListTbody > tr.empty").innerText.trim() === "경매장 연속 검색으로 인해 검색 이용이 최대 5분간 제한되었습니다.") {
-                return 'ERR_LIMIT_REACHED';
+                throw new Error('ERR_LIMIT_REACHED');
               }
               return [];
           }
@@ -277,6 +274,38 @@ export function getSearchScript(
             .map((index) => parse(document, index))
             .filter((x) => !!x)
         });
+    }
+
+    async function trySearch(form) {
+      let searchResult;
+      let failCount = 0;
+      while (true) {
+        try {
+          searchResult = await search(form);
+          return searchResult;
+        } catch (err) {
+          failCount += 1;
+          if (failCount > 5) {
+              throw new Error('경매장 검색에 5회 연속 실패했습니다. 스크립트를 종료합니다.')
+          }
+          if (err.message === 'ERR_LIMIT_REACHED') {
+              console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
+              await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
+          }
+          if (err.message === 'ERR_INTERNAL_SERVER') {
+            console.log('경매장 검색 서버에 오류가 발생했습니다. 1분 후에 자동으로 재시도합니다.');
+            await new Promise(resolve => setTimeout(resolve, 60000));
+          }
+          if (err.message === 'ERR_MAINTENANCE') {
+            console.log('경매장 서비스 점검 중입니다. 스크립트를 종료합니다.');
+            throw err;
+          }
+          if (err.message === 'ERR_NO_LOGIN') {
+            console.log('로그인이 필요합니다. 스크립트를 종료합니다.');
+            throw err;
+          }
+        }
+      }
     }
     
     async function getSearchResult(imprints, accTypes, accMap, overlapping, searchGrade) {
@@ -291,42 +320,27 @@ export function getSearchScript(
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const acc = accMap[accType];
-          
-          let searchResult;
-          let failCount = 0;
-          while (true) {
-            searchResult = await search({
-                category: category[acc.category],
-                grade: grade[searchGrade],
-                quality: acc.quality,
-                dealOption1: acc.dealOption1 && {
-                    type: dealOption[acc.dealOption1[0]],
-                    min: acc.dealOption1[1],
-                },
-                dealOption2: acc.dealOption2 && {
-                    type: dealOption[acc.dealOption2[0]],
-                    min: acc.dealOption2[1],
-                },
-                imprintOption1: {
-                    type: imprintOption[type1],
-                    min: min1,
-                },
-                imprintOption2: {
-                    type: imprintOption[type2],
-                    min: min2,
-                },
-            });
-            if (searchResult === 'ERR_LIMIT_REACHED') {
-                failCount += 1;
-                if (failCount > 5) {
-                    throw new Error('경매장 검색에 5회 연속 실패했습니다. 스크립트를 종료합니다.')
-                }
-                console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
-                await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
-            } else {
-                break;
-            }
-          }
+          const searchResult = await trySearch({
+            category: category[acc.category],
+            grade: grade[searchGrade],
+            quality: acc.quality,
+            dealOption1: acc.dealOption1 && {
+                type: dealOption[acc.dealOption1[0]],
+                min: acc.dealOption1[1],
+            },
+            dealOption2: acc.dealOption2 && {
+                type: dealOption[acc.dealOption2[0]],
+                min: acc.dealOption2[1],
+            },
+            imprintOption1: {
+                type: imprintOption[type1],
+                min: min1,
+            },
+            imprintOption2: {
+                type: imprintOption[type2],
+                min: min2,
+            },
+          });
           result.push([
             \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
             searchResult,

@@ -161,7 +161,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       for (const tripod of tripods) {
           count += 1;
           const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 3);
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           
           const products = await trySearch({

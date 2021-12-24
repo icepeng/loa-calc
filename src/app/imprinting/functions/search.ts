@@ -287,7 +287,7 @@ export function getSearchScript(
         for (const accType of accTypes) {
           count += 1;
           const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 3.2);
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const acc = accMap[accType];

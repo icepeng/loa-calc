@@ -7,7 +7,7 @@ import {
   itemNames,
   penaltyOptions,
 } from '../functions/const';
-import { AccMap } from '../functions/type';
+import { AccInfo } from '../functions/type';
 
 @Component({
   selector: 'app-acc-form-dialog',
@@ -18,7 +18,7 @@ export class AccFormDialogComponent {
   dealOptions = dealOptions;
   penaltyOptions = penaltyOptions;
 
-  accMap: AccMap = {
+  accInfo: AccInfo = {
     category: '',
     name: '',
     quality: 0,
@@ -41,24 +41,24 @@ export class AccFormDialogComponent {
 
   filterItemName(name: string) {
     return itemNames.filter(
-      (x) => x.includes(name) && x.endsWith(this.accMap.category)
+      (x) => x.includes(name) && x.endsWith(this.accInfo.category)
     );
   }
 
   onSubmit() {
     if (
-      !this.accMap.dealOption1[0] ||
-      !(this.accMap.category !== '목걸이' || this.accMap.dealOption2![0]) ||
-      !this.accMap.imprintOption1[0] ||
-      !this.accMap.imprintOption2[0] ||
-      !this.accMap.imprintPenalty[0] ||
-      !this.accMap.name ||
-      !this.accMap.category
+      !this.accInfo.dealOption1[0] ||
+      !(this.accInfo.category !== '목걸이' || this.accInfo.dealOption2![0]) ||
+      !this.accInfo.imprintOption1[0] ||
+      !this.accInfo.imprintOption2[0] ||
+      !this.accInfo.imprintPenalty[0] ||
+      !this.accInfo.name ||
+      !this.accInfo.category
     ) {
       this.snackbar.open('입력되지 않은 값이 있습니다.', '닫기');
       return;
     }
-    this.dialogRef.close({ acc: this.accMap, price: this.price });
+    this.dialogRef.close({ acc: this.accInfo, price: this.price });
   }
 
   onCancel() {

@@ -1,3 +1,5 @@
+import { Item } from "../models";
+
 export type Imprint = Record<string, number>;
 
 export type Effects = Record<string, number>;
@@ -11,7 +13,7 @@ export interface StoneBook {
   book: [string, number][];
 }
 
-export interface AccMap {
+export interface AccInfo {
   category: string;
   quality: number;
   dealOption1: [string, number];
@@ -25,19 +27,6 @@ export interface AccMap {
 export interface Candidate {
   stoneBook: StoneBook;
   combinations: Imprint[][];
-}
-
-export interface Item {
-  isFixed: boolean;
-  name: string;
-  id: string | null;
-  grade: number | null;
-  tradeLeft: number | null;
-  effects: [string, number][];
-  quality: number;
-  price: number;
-  buyPrice: number;
-  auctionPrice: number;
 }
 
 export interface ComposeResult {

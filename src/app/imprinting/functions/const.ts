@@ -1,4 +1,4 @@
-import { AccMap } from './type';
+import { AccInfo } from './type';
 
 export const imprintOptions = [
   '각성',
@@ -155,7 +155,7 @@ export const itemNames = [
   '솟구치는 신념의 반지',
 ];
 
-export const initialAccMap: Record<string, AccMap> = {
+export const initialAccMap: Record<string, AccInfo> = {
   목걸이: {
     category: '목걸이',
     quality: 0,

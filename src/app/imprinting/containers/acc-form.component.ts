@@ -5,7 +5,7 @@ import {
   itemNames,
   penaltyOptions,
 } from '../functions/const';
-import { AccMap } from '../functions/type';
+import { AccInfo } from '../functions/type';
 
 @Component({
   selector: 'app-acc-form',
@@ -13,7 +13,7 @@ import { AccMap } from '../functions/type';
   styleUrls: ['./acc-form.component.scss'],
 })
 export class AccFormComponent {
-  @Input() accMap!: Record<string, AccMap>;
+  @Input() accMap!: Record<string, AccInfo>;
 
   dealOptions = dealOptions;
   imprintOptions = imprintOptions;

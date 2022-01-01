@@ -1,4 +1,5 @@
-import { AccMap, Item } from './type';
+import { Item } from '../models';
+import { AccInfo } from './type';
 
 export function addRecord(a: Record<string, number>, b: [string, number][]) {
   const result = { ...a };
@@ -36,7 +37,7 @@ export function dedupe<T>(arr: T[]): T[] {
   );
 }
 
-export function getOverlappingAcc(accMap: Record<string, AccMap>) {
+export function getOverlappingAcc(accMap: Record<string, AccInfo>) {
   return {
     귀걸이:
       JSON.stringify(accMap['귀걸이1']) === JSON.stringify(accMap['귀걸이2']),
@@ -44,17 +45,17 @@ export function getOverlappingAcc(accMap: Record<string, AccMap>) {
   };
 }
 
-export function getFixedItem(acc: AccMap, price?: number): Item {
+export function getFixedItem(acc: AccInfo, price: number = 0): Item {
   return {
     isFixed: true,
     name: acc.name,
-    id: null,
+    id: JSON.stringify(acc) + '_' + price.toString(),
     grade: null,
     tradeLeft: null,
     quality: acc.quality,
-    price: price ?? 0,
-    auctionPrice: price ?? 0,
-    buyPrice: price ?? 0,
+    price: price,
+    auctionPrice: price,
+    buyPrice: price,
     effects: addEntries(
       [
         acc.dealOption1,
@@ -69,8 +70,8 @@ export function getFixedItem(acc: AccMap, price?: number): Item {
 
 export function addItemsToSearchResult(
   searchResult: Record<string, Item[]>,
-  accMap: Record<string, AccMap>,
-  additionalItems: { acc: AccMap; price: number }[]
+  accMap: Record<string, AccInfo>,
+  additionalItems: { acc: AccInfo; price: number }[]
 ) {
   const next = { ...searchResult };
   const nextKeys = Object.keys(next).map((key) => {

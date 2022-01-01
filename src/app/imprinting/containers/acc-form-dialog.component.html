@@ -3,7 +3,7 @@
   <div>
     <mat-form-field class="w-240">
       <mat-label>부위</mat-label>
-      <mat-select [(ngModel)]="accMap.category">
+      <mat-select [(ngModel)]="accInfo.category">
         <mat-option value="목걸이"> 목걸이 </mat-option>
         <mat-option value="귀걸이"> 귀걸이 </mat-option>
         <mat-option value="반지"> 반지 </mat-option>
@@ -15,7 +15,7 @@
     <mat-form-field class="w-240">
       <mat-label>아이템명</mat-label>
       <input
-        [(ngModel)]="accMap.name"
+        [(ngModel)]="accInfo.name"
         type="text"
         matInput
         appSelectOnFocus
@@ -23,7 +23,7 @@
       />
       <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
         <mat-option
-          *ngFor="let option of filterItemName(accMap.name)"
+          *ngFor="let option of filterItemName(accInfo.name)"
           [value]="option"
         >
           {{ option }}
@@ -36,7 +36,7 @@
     <mat-form-field class="w-240">
       <mat-label>품질</mat-label>
       <input
-        [(ngModel)]="accMap.quality"
+        [(ngModel)]="accInfo.quality"
         matInput
         appSelectOnFocus
         type="number"
@@ -47,7 +47,7 @@
   <div>
     <mat-form-field class="w-192">
       <mat-label>전투특성1</mat-label>
-      <mat-select [(ngModel)]="accMap.dealOption1[0]">
+      <mat-select [(ngModel)]="accInfo.dealOption1[0]">
         <mat-option *ngFor="let option of dealOptions" [value]="option">
           {{ option }}
         </mat-option>
@@ -56,7 +56,7 @@
     <mat-form-field class="w-48">
       <mat-label>수치</mat-label>
       <input
-        [(ngModel)]="accMap.dealOption1[1]"
+        [(ngModel)]="accInfo.dealOption1[1]"
         matInput
         appSelectOnFocus
         type="number"
@@ -64,10 +64,10 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="accMap.category === '목걸이'">
+  <div *ngIf="accInfo.category === '목걸이'">
     <mat-form-field class="w-192">
       <mat-label>전투특성2</mat-label>
-      <mat-select [(ngModel)]="accMap.dealOption2![0]">
+      <mat-select [(ngModel)]="accInfo.dealOption2![0]">
         <mat-option *ngFor="let option of dealOptions" [value]="option">
           {{ option }}
         </mat-option>
@@ -76,7 +76,7 @@
     <mat-form-field class="w-48">
       <mat-label>수치</mat-label>
       <input
-        [(ngModel)]="accMap.dealOption2![1]"
+        [(ngModel)]="accInfo.dealOption2![1]"
         matInput
         appSelectOnFocus
         type="number"
@@ -88,7 +88,7 @@
     <mat-form-field class="w-192">
       <mat-label>각인1</mat-label>
       <input
-        [(ngModel)]="accMap.imprintOption1[0]"
+        [(ngModel)]="accInfo.imprintOption1[0]"
         type="text"
         matInput
         appSelectOnFocus
@@ -96,7 +96,7 @@
       />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option
-          *ngFor="let option of filterImprint(accMap.imprintOption1[0])"
+          *ngFor="let option of filterImprint(accInfo.imprintOption1[0])"
           [value]="option"
         >
           {{ option }}
@@ -106,7 +106,7 @@
     <mat-form-field class="w-48">
       <mat-label>수치</mat-label>
       <input
-        [(ngModel)]="accMap.imprintOption1[1]"
+        [(ngModel)]="accInfo.imprintOption1[1]"
         matInput
         appSelectOnFocus
         type="number"
@@ -118,7 +118,7 @@
     <mat-form-field class="w-192">
       <mat-label>각인2</mat-label>
       <input
-        [(ngModel)]="accMap.imprintOption2[0]"
+        [(ngModel)]="accInfo.imprintOption2[0]"
         type="text"
         matInput
         appSelectOnFocus
@@ -126,7 +126,7 @@
       />
       <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
         <mat-option
-          *ngFor="let option of filterImprint(accMap.imprintOption2[0])"
+          *ngFor="let option of filterImprint(accInfo.imprintOption2[0])"
           [value]="option"
         >
           {{ option }}
@@ -136,7 +136,7 @@
     <mat-form-field class="w-48">
       <mat-label>수치</mat-label>
       <input
-        [(ngModel)]="accMap.imprintOption2[1]"
+        [(ngModel)]="accInfo.imprintOption2[1]"
         matInput
         appSelectOnFocus
         type="number"
@@ -147,7 +147,7 @@
   <div>
     <mat-form-field class="w-192">
       <mat-label>감소각인</mat-label>
-      <mat-select [(ngModel)]="accMap.imprintPenalty[0]">
+      <mat-select [(ngModel)]="accInfo.imprintPenalty[0]">
         <mat-option *ngFor="let option of penaltyOptions" [value]="option">
           {{ option }}
         </mat-option>
@@ -156,7 +156,7 @@
     <mat-form-field class="w-48">
       <mat-label>수치</mat-label>
       <input
-        [(ngModel)]="accMap.imprintPenalty[1]"
+        [(ngModel)]="accInfo.imprintPenalty[1]"
         matInput
         appSelectOnFocus
         type="number"

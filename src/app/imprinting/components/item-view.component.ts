@@ -13,7 +13,7 @@ import {
   penaltyOptions,
 } from '../functions/const';
 import { getBuyScript } from '../functions/search';
-import { Item } from '../functions/type';
+import { Item } from '../models';
 
 @Component({
   selector: 'app-item-view',

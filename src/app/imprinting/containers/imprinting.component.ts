@@ -14,11 +14,10 @@ import {
 import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
 import {
-  AccMap,
+  AccInfo,
   Candidate,
   ComposeFilter,
   ComposeResult,
-  Item,
   SearchGrade,
   StoneBook,
 } from '../functions/type';
@@ -28,6 +27,7 @@ import {
   filterRecord,
   getFixedItem,
 } from '../functions/util';
+import { Item } from '../models';
 import { AccFormDialogComponent } from './acc-form-dialog.component';
 
 @Component({
@@ -61,7 +61,7 @@ export class ImprintingComponent implements OnInit {
     },
   ];
 
-  accMap: Record<string, AccMap> = initialAccMap;
+  accMap: Record<string, AccInfo> = initialAccMap;
 
   penaltyOptions = penaltyOptions;
 
@@ -82,7 +82,7 @@ export class ImprintingComponent implements OnInit {
     exclude: new Set<string>(),
   };
   additionalItems: {
-    acc: AccMap;
+    acc: AccInfo;
     price: number;
   }[] = [];
 
@@ -156,7 +156,7 @@ export class ImprintingComponent implements OnInit {
       })
       .afterClosed()
       .pipe(take(1))
-      .subscribe((data: { acc: AccMap; price: number }) => {
+      .subscribe((data: { acc: AccInfo; price: number }) => {
         if (data) {
           this.additionalItems.push(data);
         }

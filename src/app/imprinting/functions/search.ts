@@ -1,10 +1,11 @@
-import { AccMap, Item, SearchGrade } from './type';
+import { Item } from '../models';
+import { AccInfo, SearchGrade } from './type';
 import { getOverlappingAcc } from './util';
 
 export function getSearchScript(
   imprints: Record<string, number>[],
   accTypes: string[],
-  accMap: Record<string, AccMap>,
+  accMap: Record<string, AccInfo>,
   searchGrade: SearchGrade
 ) {
   const overlappingAcc = getOverlappingAcc(accMap);

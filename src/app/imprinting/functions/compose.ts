@@ -1,13 +1,12 @@
 import { permutations } from '../../../util';
-import { dealOptions, penaltyOptions } from './const';
+import { Item } from '../models';
+import { penaltyOptions } from './const';
 import {
-  AccMap,
+  AccInfo,
   Candidate,
   ComposeFilter,
   ComposeResult,
   Effects,
-  Imprint,
-  Item,
   StoneBook,
 } from './type';
 import { addRecord, getOverlappingAcc } from './util';
@@ -140,7 +139,7 @@ function prefilter(items: Item[], filter: ComposeFilter) {
 
 export function compose(
   candidates: Candidate[],
-  accMap: Record<string, AccMap>,
+  accMap: Record<string, AccInfo>,
   searchResult: Record<string, Item[]>,
   fixedItems: Record<string, Item>,
   filter: ComposeFilter

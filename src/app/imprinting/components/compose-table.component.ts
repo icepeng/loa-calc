@@ -10,7 +10,8 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ComposeResult, Item, StoneBook } from '../functions/type';
+import { ComposeResult, StoneBook } from '../functions/type';
+import { Item } from '../models';
 
 @Component({
   selector: 'app-compose-table',

@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 import { Angulartics2Module } from 'angulartics2';
 import { AdsenseModule } from 'ng2-adsense';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { CoreModule } from './core/core.module';
 import { DonateModule } from './donate/donate.module';
 import { HomeModule } from './home/home.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
+import { metaReducers } from './reducers';
 import { RefiningModule } from './refining/refining.module';
 import { StoneModule } from './stone/stone.module';
 import { TripodModule } from './tripod/tripod.module';
@@ -42,6 +44,18 @@ import { TripodModule } from './tripod/tripod.module';
     AdsenseModule.forRoot({
       adClient: 'ca-pub-6238355772969385',
     }),
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers,
+        runtimeChecks: {
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+          strictActionWithinNgZone: true,
+          strictActionTypeUniqueness: true,
+        },
+      }
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent],

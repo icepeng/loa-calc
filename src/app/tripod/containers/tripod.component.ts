@@ -117,7 +117,7 @@ export class TripodComponent implements OnInit, OnDestroy {
         startWith(this.formGroup.value.categoryList)
       )
       .subscribe((categories) => {
-        const len = Object.values(categories).filter((x) => x).length * 3;
+        const len = Object.values(categories).filter((x) => x).length * 2 + 6;
         const tripodList = this.formGroup.get('tripodList') as FormArray;
         while (len > tripodList.length) {
           tripodList.push(

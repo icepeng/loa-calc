@@ -54,7 +54,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       };
     }
     
-    async function search(form, pageNo) {
+    async function search(form) {
       const body = new URLSearchParams();
     
       body.append("request[firstCategory]", 10000);
@@ -94,7 +94,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       body.append("request[etcOptionList][3][secondOption]", "");
       body.append("request[etcOptionList][3][minValue]", "");
       body.append("request[etcOptionList][3][maxValue]", "");
-      body.append("request[pageNo]", pageNo);
+      body.append("request[pageNo]", 1);
       body.append("request[sortOption][Sort]", "BUY_PRICE");
       body.append("request[sortOption][IsDesc]", false);
     
@@ -128,26 +128,18 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
               }
               return [];
           }
-          const products = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             .map((index) => parse(document, index))
-            .filter((x) => !!x);
-          
-          const lastPageFn = document.querySelector("a.pagination__last").getAttribute("onclick");
-          const totalPages = lastPageFn ? parseInt(lastPageFn.split(".page(")[1].split(");")[0], 10) : 1;
-
-          return {
-            products,
-            totalPages,
-          }
+            .filter((x) => !!x)
         });
     }
 
-    async function trySearch(form, pageNo) {
+    async function trySearch(form) {
       let failCount = 0;
       while (true) {
         try {
-          const result = await search(form, pageNo);
-          return result;
+          const products = await search(form);
+          return products;
         } catch (err) {
           failCount += 1;
           if (failCount > 5) {
@@ -156,12 +148,10 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
           if (err.message === 'ERR_LIMIT_REACHED') {
               console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
               await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
-              continue;
           }
           if (err.message === 'ERR_INTERNAL_SERVER') {
-            console.log('경매장 검색 서버에 오류가 발생했습니다. 30초 후에 자동으로 재시도합니다.');
-            await new Promise(resolve => setTimeout(resolve, 30000));
-            continue;
+            console.log('경매장 검색 서버에 오류가 발생했습니다. 1분 후에 자동으로 재시도합니다.');
+            await new Promise(resolve => setTimeout(resolve, 60000));
           }
           if (err.message === 'ERR_MAINTENANCE') {
             console.log('경매장 서비스 점검 중입니다. 스크립트를 종료합니다.');
@@ -171,8 +161,6 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
             console.log('로그인이 필요합니다. 스크립트를 종료합니다.');
             throw err;
           }
-          console.log('식별되지 않은 오류가 발생했습니다. 스크립트를 종료합니다.');
-          throw err;
         }
       }
     }
@@ -187,27 +175,14 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
           estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           
-          const { products, totalPages } = await trySearch({
+          const products = await trySearch({
             classNo: classCode,
             skillOptionList: tripod
-          }, 1);
-
-          if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
-            const { products: products5p } = await trySearch({
-              classNo: classCode,
-              skillOptionList: tripod
-            }, Math.max(Math.floor(totalPages / 20), 2));
-            
-            result.push({
-              tripod,
-              products: [...products, ...products5p],
-            });
-          } else {
-            result.push({
+          });
+          result.push({
               tripod,
               products,
-            });
-          }
+          });
           await new Promise(resolve => setTimeout(resolve, 6000));
       }
       return result;

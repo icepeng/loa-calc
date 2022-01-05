@@ -291,12 +291,10 @@ export function getSearchScript(
           if (err.message === 'ERR_LIMIT_REACHED') {
               console.log('경매장 검색 횟수 제한을 초과했습니다. 5분 후에 자동으로 재시도합니다.');
               await new Promise(resolve => setTimeout(resolve, 60000 * 5 + 1000));
-              continue;
           }
           if (err.message === 'ERR_INTERNAL_SERVER') {
-            console.log('경매장 검색 서버에 오류가 발생했습니다. 30초 후에 자동으로 재시도합니다.');
-            await new Promise(resolve => setTimeout(resolve, 30000));
-            continue;
+            console.log('경매장 검색 서버에 오류가 발생했습니다. 1분 후에 자동으로 재시도합니다.');
+            await new Promise(resolve => setTimeout(resolve, 60000));
           }
           if (err.message === 'ERR_MAINTENANCE') {
             console.log('경매장 서비스 점검 중입니다. 스크립트를 종료합니다.');
@@ -306,8 +304,6 @@ export function getSearchScript(
             console.log('로그인이 필요합니다. 스크립트를 종료합니다.');
             throw err;
           }
-          console.log('식별되지 않은 오류가 발생했습니다. 스크립트를 종료합니다.');
-          throw err;
         }
       }
     }

@@ -18,9 +18,12 @@
         <th mat-header-cell *matHeaderCellDef>합계</th>
         <td mat-cell *matCellDef="let element">
           <div>{{ element.price | number: ".0-0" }}골드</div>
-          <div>[치명] +{{ element.effects["치명"] || 0 }}</div>
-          <div>[특화] +{{ element.effects["특화"] || 0 }}</div>
-          <div>[신속] +{{ element.effects["신속"] || 0 }}</div>
+          <div *ngIf="element.effects['치명']">[치명] +{{ element.effects["치명"] }}</div>
+          <div *ngIf="element.effects['특화']">[특화] +{{ element.effects["특화"] }}</div>
+          <div *ngIf="element.effects['신속']">[신속] +{{ element.effects["신속"] }}</div>
+          <div *ngIf="element.effects['제압']">[제압] +{{ element.effects["제압"] }}</div>
+          <div *ngIf="element.effects['인내']">[인내] +{{ element.effects["인내"] }}</div>
+          <div *ngIf="element.effects['숙련']">[숙련] +{{ element.effects["숙련"] }}</div>
         </td>
       </ng-container>
 

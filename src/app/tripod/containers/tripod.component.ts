@@ -192,6 +192,13 @@ export class TripodComponent implements OnInit, OnDestroy {
     });
   }
 
+  setLevelAll(level: number) {
+    const tripodList = this.formGroup.get('tripodList') as FormArray;
+    tripodList.controls.forEach((formControl) =>
+      formControl.patchValue({ level })
+    );
+  }
+
   resetTripodFilter() {
     this.filterForm.get('requiredTripods')!.reset([]);
   }

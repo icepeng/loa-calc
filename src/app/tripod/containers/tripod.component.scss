@@ -36,6 +36,10 @@
   margin-left: 12px;
 }
 
+.mat-stroked-button ~ .mat-stroked-button {
+  margin-left: 8px;
+}
+
 .layout-bottom {
   display: flex;
   gap: 12px;

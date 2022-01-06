@@ -196,7 +196,7 @@ export function optimize(
           baseProb: currentProb + additionalProb,
           totalProb: prob,
           globalProb: globalProb * prob,
-          jangin,
+          jangin: Math.floor(jangin * 10000) / 10000,
           price: basePrice + breathPrice,
           breathes,
         },

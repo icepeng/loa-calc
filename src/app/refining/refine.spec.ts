@@ -10,7 +10,7 @@ const createGetJanginFixed =
 
     const { jangin } = result.path[1];
 
-    return (Math.floor(jangin * 10000) / 10000).toFixed(4);
+    return jangin.toFixed(4);
   }
 
 

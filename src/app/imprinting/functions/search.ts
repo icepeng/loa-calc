@@ -125,6 +125,8 @@ export function getSearchScript(
       환류: 294,
       "황제의 칙령": 201,
       "황후의 은총": 200,
+      회귀: 305,
+      만개: 306,
     };
     
     function parse(document, index) {

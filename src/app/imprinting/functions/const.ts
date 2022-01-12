@@ -23,6 +23,7 @@ export const imprintOptions = [
   '두 번째 동료',
   '마나 효율 증가',
   '마나의 흐름',
+  '만개',
   '멈출 수 없는 충동',
   '바리케이드',
   '버스트',
@@ -86,6 +87,7 @@ export const imprintOptions = [
   '환류',
   '황제의 칙령',
   '황후의 은총',
+  '회귀',
 ];
 
 export const penaltyOptions = [

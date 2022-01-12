@@ -1109,6 +1109,10 @@ export const marketData = {
       value: 512,
       text: '건슬링어',
     },
+    {
+      value: 602,
+      text: '도화가',
+    },
   ],
   marketAuction: {
     marketMenuAuctionSkillList: [
@@ -5987,6 +5991,509 @@ export const marketData = {
           {
             value: 8,
             text: '마지막 한 발',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31420,
+        class: 602,
+        text: '묵법 : 난치기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '정신 강화',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '도화지 강화',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31500,
+        class: 602,
+        text: '묵법 : 달그리기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '단단한 갑옷',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '마나 충전',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '별 그리기',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '먹물 세례',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '검은 달',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '붉은 달',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31480,
+        class: 602,
+        text: '묵법 : 두루미나래',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '정신 강화',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '신선 날개',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '치명적인 일격',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '신속한 준비',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '학익진',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '두루미 폭격',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31440,
+        class: 602,
+        text: '묵법 : 먹오름',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '마나 회복',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '치명적인 일격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '늪의 공포',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '방랑자',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '헤어날 수 없는 늪',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '먹물점정',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31450,
+        class: 602,
+        text: '묵법 : 미리내',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '단단한 갑옷',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '방랑자',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '푸른 별빛',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '움직이는 별빛',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31490,
+        class: 602,
+        text: '묵법 : 범가르기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '비호',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '검은 먹물',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '꿰뚫는 일격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '무력화 강화',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '어둠의 기운',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '두 마리의 호랑이',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '강화된 일격',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31230,
+        class: 602,
+        text: '묵법 : 옹달샘',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '급소타격',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '강화된 일격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '신속한 준비',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '잉어 봉인해제!',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '(잉)어왕출현',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31400,
+        class: 602,
+        text: '묵법 : 해그리기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '보호 강화',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '음의 기운 발산',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '나만의 권능',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31410,
+        class: 602,
+        text: '묵법 : 해우물',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '먹의 비호',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '마무리 공격',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '나만의 우물',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31460,
+        class: 602,
+        text: '묵법 : 호접몽',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '정신 강화',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '신속한 준비',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '꿈의 안식처',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '나비 무리',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31220,
+        class: 602,
+        text: '묵법 : 환영의 문',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '정신 강화',
             isGem: false,
           },
           {
@@ -18497,6 +19004,246 @@ export const marketData = {
           {
             value: 8,
             text: '거대한 가시',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31200,
+        class: 602,
+        text: '필법 : 먹물세례',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 3,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '강화된 먹물',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '끈적한 먹물',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '적묵법',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31510,
+        class: 602,
+        text: '필법 : 올려치기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '정신 강화',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '빙글빙글',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '공중 회전',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '치명적인 일격',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '강화된 일격',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31210,
+        class: 602,
+        text: '필법 : 콩콩이',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '단단한 갑옷',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '노란색 먹물',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '검정색 먹물',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '보라색 먹물',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '일점 타격',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31470,
+        class: 602,
+        text: '필법 : 한획긋기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '끈적한 먹물',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '급소 타격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '연속 긋기',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '거대한 붓',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '강회된 일격',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '도화지 생성',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 31430,
+        class: 602,
+        text: '필법 : 흩뿌리기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '정신 강화',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '직선 긋기',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '마침표 뿌리기',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '검은 먹물',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '방랑자',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '먹의 비호',
             isGem: false,
           },
           {

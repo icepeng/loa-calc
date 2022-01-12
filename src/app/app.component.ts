@@ -51,7 +51,6 @@ export class AppComponent implements OnInit {
     if (this.isMobile()) {
       this.dialog.open(MobileDialogComponent);
     }
-    this.dialog.open(AlertDialogComponent, { disableClose: true });
   }
 
   isMobile() {

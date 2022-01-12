@@ -1,4 +1,3 @@
-import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,7 +11,6 @@ import {
   penaltyOptions,
 } from '../functions/const';
 import { getCombinations } from '../functions/scan';
-import { getSearchScript } from '../functions/search';
 import {
   AccMap,
   Candidate,
@@ -24,7 +22,6 @@ import {
 } from '../functions/type';
 import {
   addItemsToSearchResult,
-  dedupe,
   filterRecord,
   getFixedItem,
 } from '../functions/util';
@@ -96,7 +93,6 @@ export class ImprintingComponent implements OnInit {
 
   constructor(
     private snackbar: MatSnackBar,
-    private clipboard: Clipboard,
     private dialog: MatDialog,
     private titleService: Title
   ) {
@@ -208,7 +204,7 @@ export class ImprintingComponent implements OnInit {
 
     const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
 
-    this.candidates = form.stoneBooks.map((stoneBook) => {
+    const candidates = form.stoneBooks.map((stoneBook) => {
       const initial = filterRecord(
         [
           ...stoneBook.stone,
@@ -234,7 +230,7 @@ export class ImprintingComponent implements OnInit {
       };
     });
 
-    const impossibleIndex = this.candidates.findIndex(
+    const impossibleIndex = candidates.findIndex(
       (candidate) => candidate.combinations.length === 0
     );
     if (impossibleIndex !== -1) {
@@ -245,33 +241,26 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const searchScript = getSearchScript(
-      dedupe(
-        this.candidates.flatMap((candidate) => candidate.combinations).flat()
-      ),
-      accTypes,
-      form.accMap,
-      this.searchGrade
-    );
-
-    const copySuccess = this.clipboard.copy(searchScript);
-    if (copySuccess) {
-      this.dialog
-        .open(ImprintingSearchDialogComponent, {
-          disableClose: true,
-        })
-        .afterClosed()
-        .pipe(take(1))
-        .subscribe((data) => {
-          if (data) {
-            this.searchResult = data;
-            this.applySearchResult();
-          }
-        });
-      this.filter.exclude = new Set();
-    } else {
-      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
-    }
+    this.dialog
+      .open(ImprintingSearchDialogComponent, {
+        disableClose: true,
+        data: {
+          candidates,
+          searchGrade: this.searchGrade,
+          accTypes,
+          accMap: this.accMap,
+        },
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((data) => {
+        if (data) {
+          this.searchResult = data.searchResult;
+          this.candidates = data.candidates;
+          this.applySearchResult();
+        }
+      });
+    this.filter.exclude = new Set();
   }
 
   getFixedItems(): Record<string, Item> {

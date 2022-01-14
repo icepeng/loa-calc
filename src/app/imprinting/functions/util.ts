@@ -47,7 +47,7 @@ export function getOverlappingAcc(accMap: Record<string, AccMap>) {
 export function getFixedItem(acc: AccMap, price?: number): Item {
   return {
     isFixed: true,
-    name: acc.name,
+    name: acc.name.trim(),
     id: null,
     grade: null,
     tradeLeft: null,

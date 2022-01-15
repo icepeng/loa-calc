@@ -188,7 +188,7 @@ export function getSearchScript(
       };
     }
     
-    async function search(form) {
+    async function search(form, pageNo) {
       const body = new URLSearchParams();
     
       body.append("request[firstCategory]", 200000);
@@ -238,7 +238,7 @@ export function getSearchScript(
         form.imprintOption2?.min ?? ""
       );
       body.append("request[etcOptionList][3][maxValue]", "");
-      body.append("request[pageNo]", 1);
+      body.append("request[pageNo]", pageNo);
       body.append("request[sortOption][Sort]", "BUY_PRICE");
       body.append("request[sortOption][IsDesc]", false);
     
@@ -270,20 +270,31 @@ export function getSearchScript(
               if (document.querySelector("#auctionListTbody > tr.empty").innerText.trim() === "경매장 연속 검색으로 인해 검색 이용이 최대 5분간 제한되었습니다.") {
                 throw new Error('ERR_LIMIT_REACHED');
               }
-              return [];
+              return {
+                products: [],
+                totalPages: 1,
+              };
           }
-          return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          const products = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             .map((index) => parse(document, index))
-            .filter((x) => !!x)
+            .filter((x) => !!x);
+          
+          const lastPageFn = document.querySelector("a.pagination__last").getAttribute("onclick");
+          const totalPages = lastPageFn ? parseInt(lastPageFn.split(".page(")[1].split(");")[0], 10) : 1;
+
+          return {
+            products,
+            totalPages,
+          }
         });
     }
 
-    async function trySearch(form) {
+    async function trySearch(form, pageNo) {
       let searchResult;
       let failCount = 0;
       while (true) {
         try {
-          searchResult = await search(form);
+          searchResult = await search(form, pageNo);
           return searchResult;
         } catch (err) {
           failCount += 1;
@@ -326,7 +337,7 @@ export function getSearchScript(
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const acc = accMap[accType];
-          const searchResult = await trySearch({
+          const form = {
             category: category[acc.category],
             grade: grade[searchGrade],
             quality: acc.quality,
@@ -346,21 +357,29 @@ export function getSearchScript(
                 type: imprintOption[type2],
                 min: min2,
             },
-          });
+          };
+          const { products, totalPages } = await trySearch(form, 1);
+          const productsAll = [...products];
+          if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
+            console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
+            await new Promise(resolve => setTimeout(resolve, 6000));
+            const { products: products5p } = await trySearch(form, Math.max(Math.floor(totalPages / 20), 2));
+            productsAll.push(...products5p);
+          }
           result.push([
             \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
-            searchResult,
+            productsAll,
           ]);
           if (accType === "귀걸이1" && overlapping.귀걸이) {
             result.push([
               \`\${type1}_\${min1}_\${type2}_\${min2}_귀걸이2\`,
-              searchResult,
+              productsAll,
             ]);
           }
           if (accType === "반지1" && overlapping.반지) {
             result.push([
               \`\${type1}_\${min1}_\${type2}_\${min2}_반지2\`,
-              searchResult,
+              productsAll,
             ]);
           }
           await new Promise(resolve => setTimeout(resolve, 6000));

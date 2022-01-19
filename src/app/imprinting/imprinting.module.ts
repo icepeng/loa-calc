@@ -27,7 +27,6 @@ import { ImprintingFormComponent } from './containers/imprinting-form.component'
 import { ImprintingComponent } from './containers/imprinting.component';
 import { ImprintingRoutingModule } from './imprinting-routing.module';
 import { AccFormDialogComponent } from './containers/acc-form-dialog.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatMenuModule,
     MatRadioModule,
     MatDialogModule,
-    MatSlideToggleModule,
     ClipboardModule,
     SharedModule,
     AdsenseModule,

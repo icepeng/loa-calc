@@ -199,7 +199,7 @@ export class ImprintingComponent implements OnInit {
     }
 
     const accTypes = Object.entries(form.accMap)
-      .filter(([name, acc]) => !acc.isFixed)
+      .filter(([name, acc]) => !acc.name)
       .map((x) => x[0]);
 
     const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
@@ -210,7 +210,7 @@ export class ImprintingComponent implements OnInit {
           ...stoneBook.stone,
           ...stoneBook.book,
           ...Object.values(form.accMap)
-            .filter((acc) => acc.isFixed)
+            .filter((acc) => acc.name)
             .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
         ].reduce((obj, [name, amount]) => {
           obj[name] -= amount;
@@ -266,7 +266,7 @@ export class ImprintingComponent implements OnInit {
   getFixedItems(): Record<string, Item> {
     return Object.fromEntries(
       Object.entries(this.accMap)
-        .filter(([name, acc]) => acc.isFixed)
+        .filter(([name, acc]) => acc.name)
         .map(([name, acc]) => [name, getFixedItem(acc)])
     );
   }

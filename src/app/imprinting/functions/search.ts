@@ -205,7 +205,7 @@ export function getSearchScript(
       );
       body.append(
         "request[etcOptionList][0][minValue]",
-        form.dealOption1?.min ?? ""
+        0
       );
       body.append("request[etcOptionList][0][maxValue]", "");
       body.append("request[etcOptionList][1][firstOption]", 2);
@@ -215,7 +215,7 @@ export function getSearchScript(
       );
       body.append(
         "request[etcOptionList][1][minValue]",
-        form.dealOption2?.min ?? ""
+        0
       );
       body.append("request[etcOptionList][1][maxValue]", "");
       body.append("request[etcOptionList][2][firstOption]", 3);
@@ -227,7 +227,7 @@ export function getSearchScript(
         "request[etcOptionList][2][minValue]",
         form.imprintOption1?.min ?? ""
       );
-      body.append("request[etcOptionList][2][maxValue]", "");
+      body.append("request[etcOptionList][2][maxValue]", 5);
       body.append("request[etcOptionList][3][firstOption]", 3);
       body.append(
         "request[etcOptionList][3][secondOption]",
@@ -237,7 +237,7 @@ export function getSearchScript(
         "request[etcOptionList][3][minValue]",
         form.imprintOption2?.min ?? ""
       );
-      body.append("request[etcOptionList][3][maxValue]", "");
+      body.append("request[etcOptionList][3][maxValue]", 5);
       body.append("request[pageNo]", pageNo);
       body.append("request[sortOption][Sort]", "BUY_PRICE");
       body.append("request[sortOption][IsDesc]", false);
@@ -326,17 +326,11 @@ export function getSearchScript(
     }
     
     async function getSearchResult(imprints, accTypes, accMap, overlapping, searchGrade) {
-      const result = [];
-      const total = imprints.length * accTypes.length;
-      let count = 0;
+      const queries = [];
       for (const imprint of imprints) {
         for (const accType of accTypes) {
-          count += 1;
-          const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
-          console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
-          const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const acc = accMap[accType];
+          const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const form = {
             category: category[acc.category],
             grade: grade[searchGrade],
@@ -358,34 +352,61 @@ export function getSearchScript(
                 min: min2,
             },
           };
-          const { products, totalPages } = await trySearch(form, 1);
-          const productsAll = [...products];
-          if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
-            console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
-            await new Promise(resolve => setTimeout(resolve, 6000));
-            const { products: products5p } = await trySearch(form, Math.max(Math.floor(totalPages / 20), 2));
-            productsAll.push(...products5p);
-          }
-          result.push([
-            \`\${type1}_\${min1}_\${type2}_\${min2}_\${accType}\`,
-            productsAll,
-          ]);
-          if (accType === "귀걸이1" && overlapping.귀걸이) {
-            result.push([
-              \`\${type1}_\${min1}_\${type2}_\${min2}_귀걸이2\`,
-              productsAll,
-            ]);
-          }
-          if (accType === "반지1" && overlapping.반지) {
-            result.push([
-              \`\${type1}_\${min1}_\${type2}_\${min2}_반지2\`,
-              productsAll,
-            ]);
-          }
-          await new Promise(resolve => setTimeout(resolve, 6000));
+          queries.push({
+            key: \`\${type1}_\${min1}_\${type2}_\${min2}_\${acc.category}_\${acc.quality}\`,
+            form,
+          })
         }
       }
-      return Object.fromEntries(result);
+      
+      const cachedResult = await fetch("https://loa-api.icepeng.com/load-items", {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          keys: queries.map(query => query.key),
+        }),
+        method: "POST",
+      }).then((res) => {
+        if (res.status === 500) {
+          throw new Error('ERR_INTERNAL_SERVER');
+        }
+        return res.json();
+      });
+
+      const filteredQueries = queries.filter(({key}) => !cachedResult[key]);
+      const result = {};
+
+      let count = 0;
+      const total = filteredQueries.length
+      for ({key, form} of filteredQueries) {
+        count += 1;
+        const estimated = new Date();
+        estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
+        console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
+        const { products, totalPages } = await trySearch(form, 1);
+        const productsAll = [...products];
+        if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
+          console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
+          await new Promise(resolve => setTimeout(resolve, 6000));
+          const { products: products5p } = await trySearch(form, Math.max(Math.floor(totalPages / 20), 2));
+          productsAll.push(...products5p);
+        }
+        result[key] = productsAll;
+        await new Promise(resolve => setTimeout(resolve, 6000));
+      }
+
+      if (total > 0) {
+        await fetch("https://loa-api.icepeng.com/add-items", {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(result),
+          method: "POST",
+        });
+      }
+
+      return {...cachedResult, ...result};
     }
 
     let result;

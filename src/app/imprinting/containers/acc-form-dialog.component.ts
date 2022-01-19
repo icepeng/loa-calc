@@ -19,6 +19,7 @@ export class AccFormDialogComponent {
   penaltyOptions = penaltyOptions;
 
   accMap: AccMap = {
+    isFixed: false,
     category: '',
     name: '',
     quality: 0,

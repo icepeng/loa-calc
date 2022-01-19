@@ -160,6 +160,7 @@ export const itemNames = [
 export const initialAccMap: Record<string, AccMap> = {
   목걸이: {
     category: '목걸이',
+    isFixed: false,
     quality: 50,
     dealOption1: ['', 0],
     dealOption2: ['', 0],
@@ -170,6 +171,7 @@ export const initialAccMap: Record<string, AccMap> = {
   },
   귀걸이1: {
     category: '귀걸이',
+    isFixed: false,
     quality: 50,
     dealOption1: ['', 0],
     name: '',
@@ -179,6 +181,7 @@ export const initialAccMap: Record<string, AccMap> = {
   },
   귀걸이2: {
     category: '귀걸이',
+    isFixed: false,
     quality: 50,
     dealOption1: ['', 0],
     name: '',
@@ -188,6 +191,7 @@ export const initialAccMap: Record<string, AccMap> = {
   },
   반지1: {
     category: '반지',
+    isFixed: false,
     quality: 50,
     dealOption1: ['', 0],
     name: '',
@@ -197,6 +201,7 @@ export const initialAccMap: Record<string, AccMap> = {
   },
   반지2: {
     category: '반지',
+    isFixed: false,
     quality: 50,
     dealOption1: ['', 0],
     name: '',
@@ -206,4 +211,4 @@ export const initialAccMap: Record<string, AccMap> = {
   },
 };
 
-export const imprintingFormToken = 'imprintingForm_v4';
+export const imprintingFormToken = 'imprintingForm_v5';

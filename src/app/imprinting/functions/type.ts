@@ -12,6 +12,7 @@ export interface StoneBook {
 }
 
 export interface AccMap {
+  isFixed: boolean;
   category: string;
   quality: number;
   dealOption1: [string, number];

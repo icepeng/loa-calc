@@ -2,6 +2,7 @@
   <thead>
     <tr class="mat-header-row">
       <th class="mat-header-cell">부위</th>
+      <th class="mat-header-cell">고정</th>
       <th class="mat-header-cell">품질</th>
       <th class="mat-header-cell">전투특성1</th>
       <th class="mat-header-cell">전투특성2</th>
@@ -18,14 +19,22 @@
     >
       <td class="mat-cell">{{ accType }}</td>
       <td class="mat-cell">
+        <mat-slide-toggle
+          [(ngModel)]="accMap[accType].isFixed"
+          (change)="toggleFixed($event, accType)"
+        ></mat-slide-toggle>
+      </td>
+      <td class="mat-cell">
         <mat-form-field class="w-48" floatLabel="never">
           <mat-label>수치</mat-label>
-          <input
-            [(ngModel)]="accMap[accType].quality"
-            matInput
-            type="number"
-            appSelectOnFocus
-          />
+          <mat-select [(ngModel)]="accMap[accType].quality">
+            <mat-option
+              *ngFor="let option of [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </td>
       <td class="mat-cell">
@@ -40,6 +49,7 @@
         <mat-form-field class="w-48" floatLabel="never">
           <mat-label>수치</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].dealOption1[1]"
             matInput
             type="number"
@@ -60,6 +70,7 @@
           <mat-form-field class="w-48" floatLabel="never">
             <mat-label>수치</mat-label>
             <input
+              [disabled]="!accMap[accType].isFixed"
               [(ngModel)]="accMap[accType].dealOption2![1]"
               matInput
               type="number"
@@ -69,8 +80,9 @@
       </td>
       <td class="mat-cell">
         <mat-form-field class="w-240" floatLabel="never">
-          <mat-label>보유한 아이템 사용시 입력</mat-label>
+          <mat-label>보유한 아이템 고정시 입력</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].name"
             type="text"
             matInput
@@ -96,6 +108,7 @@
         <mat-form-field class="w-120" floatLabel="never">
           <mat-label>각인명</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             type="text"
             matInput
             [(ngModel)]="accMap[accType].imprintOption1[0]"
@@ -116,6 +129,7 @@
         <mat-form-field class="w-48" floatLabel="never">
           <mat-label>수치</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].imprintOption1[1]"
             matInput
             type="number"
@@ -129,6 +143,7 @@
           <input
             type="text"
             matInput
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].imprintOption2[0]"
             [matAutocomplete]="auto2"
             appSelectOnFocus
@@ -147,6 +162,7 @@
         <mat-form-field class="w-48" floatLabel="never">
           <mat-label>수치</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].imprintOption2[1]"
             matInput
             type="number"
@@ -157,7 +173,10 @@
       <td class="mat-cell">
         <mat-form-field class="w-120" floatLabel="never">
           <mat-label>선택</mat-label>
-          <mat-select [(ngModel)]="accMap[accType].imprintPenalty[0]">
+          <mat-select
+            [disabled]="!accMap[accType].isFixed"
+            [(ngModel)]="accMap[accType].imprintPenalty[0]"
+          >
             <mat-option [value]="''">없음</mat-option>
             <mat-option *ngFor="let option of penaltyOptions" [value]="option">
               {{ option }}
@@ -167,6 +186,7 @@
         <mat-form-field class="w-48" floatLabel="never">
           <mat-label>수치</mat-label>
           <input
+            [disabled]="!accMap[accType].isFixed"
             [(ngModel)]="accMap[accType].imprintPenalty[1]"
             matInput
             type="number"

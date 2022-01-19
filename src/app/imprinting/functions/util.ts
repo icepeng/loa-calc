@@ -108,7 +108,7 @@ export function addItemsToSearchResult(
         [data.acc.imprintOption2, data.acc.imprintOption1],
       ]) {
         nextKeys
-          .filter((x) => x.category === category)
+          .filter((x) => x.category === data.acc.category)
           .filter(
             (x) =>
               (x.imprintOption1[0] === '잡옵' ||

@@ -187,7 +187,7 @@ export function compose(
           const acc = accList[i];
           const imprint = Object.entries(combination[i]);
           const items = prefiltered[
-            `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
+            `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${accMap[acc].category}_${accMap[acc].quality}`
           ].sort((a, b) => a.price - b.price);
           if (items.length > 0) {
             entries.push(items);

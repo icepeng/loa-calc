@@ -88,18 +88,17 @@ export function getCombinations(
   length: number,
   imprintLimit: number
 ) {
-  return [
-    ...product(
-      ...Object.values(target).map((x) => splitNumber(x, imprintLimit))
-    ),
-  ]
+  const imprints = Object.entries(target).sort((a, b) =>
+    a[0].localeCompare(b[0])
+  );
+  const keys = imprints.map((x) => x[0]);
+  const values = imprints.map((x) => x[1]);
+  return [...product(...values.map((x) => splitNumber(x, imprintLimit)))]
     .filter((splits) => splits.flat().length <= length * 2)
     .filter((splits) => splits.flat().filter((num) => num > 3).length <= length)
     .map((splits) => {
       const padding = length * 2 - splits.flat().length;
       return [...splits, Array.from({ length: padding }, () => 3)];
     })
-    .flatMap((splits) =>
-      combine(splits, length, [...Object.keys(target), '잡옵'])
-    );
+    .flatMap((splits) => combine(splits, length, [...keys, '잡옵']));
 }

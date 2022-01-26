@@ -196,6 +196,8 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
           }, 1);
 
           if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
+            console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
+            await new Promise(resolve => setTimeout(resolve, 6000));
             const { products: products5p } = await trySearch({
               classNo: classCode,
               skillOptionList: tripod

@@ -1025,94 +1025,28 @@ export const marketData = {
     },
   ],
   marketClass: [
-    {
-      value: 102,
-      text: '버서커',
-    },
-    {
-      value: 103,
-      text: '디스트로이어',
-    },
-    {
-      value: 104,
-      text: '워로드',
-    },
-    {
-      value: 105,
-      text: '홀리나이트',
-    },
-    {
-      value: 202,
-      text: '아르카나',
-    },
-    {
-      value: 203,
-      text: '서머너',
-    },
-    {
-      value: 204,
-      text: '바드',
-    },
-    {
-      value: 205,
-      text: '소서리스',
-    },
-    {
-      value: 302,
-      text: '배틀마스터',
-    },
-    {
-      value: 303,
-      text: '인파이터',
-    },
-    {
-      value: 304,
-      text: '기공사',
-    },
-    {
-      value: 305,
-      text: '창술사',
-    },
-    {
-      value: 312,
-      text: '스트라이커',
-    },
-    {
-      value: 402,
-      text: '블레이드',
-    },
-    {
-      value: 403,
-      text: '데모닉',
-    },
-    {
-      value: 404,
-      text: '리퍼',
-    },
-    {
-      value: 502,
-      text: '호크아이',
-    },
-    {
-      value: 503,
-      text: '데빌헌터',
-    },
-    {
-      value: 504,
-      text: '블래스터',
-    },
-    {
-      value: 505,
-      text: '스카우터',
-    },
-    {
-      value: 512,
-      text: '건슬링어',
-    },
-    {
-      value: 602,
-      text: '도화가',
-    },
+    { value: 102, text: '버서커' },
+    { value: 103, text: '디스트로이어' },
+    { value: 104, text: '워로드' },
+    { value: 105, text: '홀리나이트' },
+    { value: 202, text: '아르카나' },
+    { value: 203, text: '서머너' },
+    { value: 204, text: '바드' },
+    { value: 205, text: '소서리스' },
+    { value: 302, text: '배틀마스터' },
+    { value: 303, text: '인파이터' },
+    { value: 304, text: '기공사' },
+    { value: 305, text: '창술사' },
+    { value: 312, text: '스트라이커' },
+    { value: 402, text: '블레이드' },
+    { value: 403, text: '데모닉' },
+    { value: 404, text: '리퍼' },
+    { value: 502, text: '호크아이' },
+    { value: 503, text: '데빌헌터' },
+    { value: 504, text: '블래스터' },
+    { value: 505, text: '스카우터' },
+    { value: 512, text: '건슬링어' },
+    { value: 602, text: '도화가' },
   ],
   marketAuction: {
     marketMenuAuctionSkillList: [
@@ -19190,7 +19124,7 @@ export const marketData = {
           },
           {
             value: 7,
-            text: '강회된 일격',
+            text: '강화된 일격',
             isGem: false,
           },
           {

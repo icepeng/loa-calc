@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>거래소 검색</h1>
+<div mat-dialog-content>
+  <div>
+    검색 코드가 복사되었습니다.
+    <a class="link" href="https://icepeng.com/12" target="_blank">설명서</a>의
+    "검색 코드 복사" 부분을 참고해 로스트아크 거래소에 검색을 진행해주세요.
+  </div>
+  <mat-radio-group [(ngModel)]="priceType">
+    <mat-radio-button value="priceYesterday">전일 평균 거래가</mat-radio-button>
+    <mat-radio-button value="priceRecent">최근 거래가</mat-radio-button>
+    <mat-radio-button value="priceLowest">최저가</mat-radio-button>
+  </mat-radio-group>
+  <textarea
+    placeholder="결과 붙여넣기"
+    [(ngModel)]="searchResult"
+    matInput
+  ></textarea>
+  <div class="mat-caption">* 검색을 진행하는 동안 이 창을 닫지 말아주세요.</div>
+  <div class="mat-caption">
+    * 지나치게 많이 사용할 시 로스트아크 이용이 제한될 수 있으니, 신중하게
+    판단해서 사용해주세요.
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onSubmit()">적용</button>
+  <button mat-stroked-button (click)="onCancel()">취소</button>
+</div>

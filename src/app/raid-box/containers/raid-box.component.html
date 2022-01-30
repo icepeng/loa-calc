@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="flex-baseline">
+    <h1 class="mat-h1">더보기 손익</h1>
+    <div class="filler"></div>
+    <button (click)="openSearchDialog()" mat-stroked-button>
+      거래소 가격 검색
+    </button>
+  </div>
+  <div class="layout">
+    <mat-card>
+      <mat-card-subtitle> 장비 정보 </mat-card-subtitle>
+      <app-raid-box-price [priceForm]="priceForm"></app-raid-box-price>
+    </mat-card>
+    <mat-card class="materials">
+      <mat-card-subtitle>더보기 보상</mat-card-subtitle>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>레이드</mat-label>
+          <mat-select [formControl]="raidControl">
+            <mat-option *ngFor="let raid of raidList" [value]="raid">{{
+              raid
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="material-info" *ngFor="let material of materials$ | async">
+          <mat-checkbox [formControl]="getCheckControl(material.name)">
+            <div class="flex-center">
+              <img [attr.src]="'assets/' + material.name + '.png'" />
+              <span>
+                x {{ material.amount | number: ".0-2" }} =
+                {{ material.price | number: ".2-2" }}골드</span
+              >
+            </div>
+          </mat-checkbox>
+        </div>
+
+        <div *ngIf="materialPrice$ | async as materialPrice">
+          합계 : {{ materialPrice | number: ".2-2" }}골드
+        </div>
+        <div *ngIf="openPrice$ | async as openPrice">
+          더보기 가격 : {{ openPrice | number: ".2-2" }}골드
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="notice">
+      <mat-card-title> 주의사항 </mat-card-title>
+      <mat-card-content>
+        <h3>가격 정보는 자동으로 갱신되지 않습니다.</h3>
+        <p>
+          며칠 전 시세 정보를 기준으로 임시로 넣어둔 값이며, 변동된 시세에 따른
+          가격은 상단 우측 "거래소 가격 검색" 기능을 사용하시거나 직접 계산해서
+          기입하시는 것이 정확합니다. 모든 재료의 가격은 1개당 골드로 입력되니,
+          수호석 결정과 같이 10개 단위로 거래되는 재료들의 수치 입력에
+          주의해주세요.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<ng-adsense
+  [className]="'banner-slot'"
+  [adSlot]="3498062236"
+  [fullWidthResponsive]="true"
+  [adFormat]="'horizontal'"
+></ng-adsense>

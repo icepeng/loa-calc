@@ -1,0 +1,9 @@
+textarea {
+  height: 240px;
+  border: 1px solid #ccc;
+  margin: 12px 0;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 12px;
+}

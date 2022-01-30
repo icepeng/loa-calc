@@ -15,6 +15,7 @@ import { CoreModule } from './core/core.module';
 import { DonateModule } from './donate/donate.module';
 import { HomeModule } from './home/home.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
+import { RaidBoxModule } from './raid-box/raid-box.module';
 import { RefiningModule } from './refining/refining.module';
 import { StoneModule } from './stone/stone.module';
 import { TripodModule } from './tripod/tripod.module';
@@ -30,6 +31,7 @@ import { TripodModule } from './tripod/tripod.module';
     ImprintingModule,
     TripodModule,
     StoneModule,
+    RaidBoxModule,
     DonateModule,
     MatToolbarModule,
     MatButtonModule,

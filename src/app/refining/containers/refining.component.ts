@@ -72,6 +72,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     totalProb: new FormControl({ value: null, disabled: true }),
     jangin: new FormControl(0),
     applyResearch: new FormControl(false),
+    applyHyperExpress: new FormControl(false),
   });
   reduceBindedMaterials = false;
   reduceBindedBooks = false;
@@ -127,6 +128,14 @@ export class RefiningComponent implements OnInit, OnDestroy {
         if (itemForm.applyResearch) {
           additionalProb += 10;
         }
+      }
+      if (
+        itemForm.grade === 't3_1340' &&
+        itemForm.target >= 16 &&
+        itemForm.target <= 17 &&
+        itemForm.applyHyperExpress
+      ) {
+        additionalProb += 5;
       }
 
       this.itemForm.patchValue(

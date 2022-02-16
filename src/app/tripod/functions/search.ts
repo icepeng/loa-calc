@@ -180,6 +180,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       }
     }
     
+    const SEARCH_DELAY = 3.2
     async function getSearchResult(classCode, tripods) {
       const result = [];
       const total = tripods.length;
@@ -187,7 +188,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       for (const tripod of tripods) {
           count += 1;
           const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * SEARCH_DELAY);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           
           const { products, totalPages } = await trySearch({
@@ -197,7 +198,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
 
           if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
             console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
-            await new Promise(resolve => setTimeout(resolve, 6000));
+            await new Promise(resolve => setTimeout(resolve, SEARCH_DELAY * 1000));
             const { products: products5p } = await trySearch({
               classNo: classCode,
               skillOptionList: tripod
@@ -213,7 +214,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
               products,
             });
           }
-          await new Promise(resolve => setTimeout(resolve, 6000));
+          await new Promise(resolve => setTimeout(resolve, SEARCH_DELAY * 1000));
       }
       return result;
     }

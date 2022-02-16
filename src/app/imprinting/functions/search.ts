@@ -325,6 +325,7 @@ export function getSearchScript(
       }
     }
     
+    const SEARCH_DELAY = 3.2
     async function getSearchResult(imprints, accTypes, accMap, overlapping, searchGrade) {
       const result = [];
       const total = imprints.length * accTypes.length;
@@ -333,7 +334,7 @@ export function getSearchScript(
         for (const accType of accTypes) {
           count += 1;
           const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * 6);
+          estimated.setSeconds(estimated.getSeconds() + (total - count) * SEARCH_DELAY);
           console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
           const [[type1, min1], [type2, min2]] = Object.entries(imprint);
           const acc = accMap[accType];
@@ -362,7 +363,7 @@ export function getSearchScript(
           const productsAll = [...products];
           if (products.filter(product => product.buyPrice).length <= 3 && totalPages > 1) {
             console.log("1페이지에 충분한 매물이 발견되지 않아 추가 검색을 진행합니다.")
-            await new Promise(resolve => setTimeout(resolve, 6000));
+            await new Promise(resolve => setTimeout(resolve, SEARCH_DELAY * 1000));
             const { products: products5p } = await trySearch(form, Math.max(Math.floor(totalPages / 20), 2));
             productsAll.push(...products5p);
           }
@@ -382,7 +383,7 @@ export function getSearchScript(
               productsAll,
             ]);
           }
-          await new Promise(resolve => setTimeout(resolve, 6000));
+          await new Promise(resolve => setTimeout(resolve, SEARCH_DELAY * 1000));
         }
       }
       return Object.fromEntries(result);

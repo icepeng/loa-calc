@@ -1,28 +1,49 @@
 <div class="container">
-  <div class="flex-baseline">
+  <div class="flex-center">
     <h1 class="mat-h1">더보기 손익</h1>
-    <div class="filler"></div>
-    <button (click)="openSearchDialog()" mat-stroked-button>
+    <button class="heading-button" (click)="openSearchDialog()" mat-stroked-button>
       거래소 가격 검색
     </button>
   </div>
   <div class="layout">
     <mat-card>
       <mat-card-subtitle> 가격 정보 </mat-card-subtitle>
-      <app-raid-box-price [priceForm]="priceForm"></app-raid-box-price>
+      <mat-card-content>
+        <app-raid-box-price [priceForm]="priceForm"></app-raid-box-price>
+      </mat-card-content>
+      <mat-card-actions>
+        </mat-card-actions
+      >
     </mat-card>
     <mat-card class="materials">
       <mat-card-subtitle>더보기 보상</mat-card-subtitle>
       <mat-card-content>
-        <mat-form-field>
-          <mat-label>레이드</mat-label>
-          <mat-select [formControl]="raidControl">
-            <mat-option *ngFor="let raid of raidList" [value]="raid">{{
-              raid
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
+        <div>
+          <mat-form-field class="w-240">
+            <mat-label>레이드</mat-label>
+            <mat-select [formControl]="raidControl">
+              <mat-option *ngFor="let raid of raidList" [value]="raid">{{
+                raid
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-240">
+            <mat-label>재련 재료</mat-label>
+            <mat-select [formControl]="tierControl">
+              <mat-option value="t3_1302"
+                >명돌, 파괴석 결정, 수호석 결정</mat-option
+              >
+              <mat-option value="t3_1340"
+                >위명돌, 파괴석 결정, 수호석 결정</mat-option
+              >
+              <mat-option value="t3_1390"
+                >경명돌, 파괴강석, 수호강석</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="material-info" *ngFor="let material of materials$ | async">
           <mat-checkbox [formControl]="getCheckControl(material.name)">
             <div class="flex-center">

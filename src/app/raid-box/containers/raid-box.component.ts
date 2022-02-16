@@ -24,14 +24,14 @@ import { Raid, rewardData } from '../data';
 })
 export class RaidBoxComponent implements OnInit, OnDestroy {
   priceForm = new FormGroup({
-    파편: new FormControl(0.3128),
-    명돌: new FormControl(21),
-    위명돌: new FormControl(27),
-    경명돌: new FormControl(25),
+    파편: new FormControl(0.1929),
+    명돌: new FormControl(20),
+    위명돌: new FormControl(18),
+    경명돌: new FormControl(22),
     수결: new FormControl(0.1),
-    파결: new FormControl(0.83),
-    수호강석: new FormControl(0.22),
-    파괴강석: new FormControl(4.66),
+    파결: new FormControl(0.92),
+    수호강석: new FormControl(0.21),
+    파괴강석: new FormControl(4.94),
     혼돈의돌: new FormControl(500),
   });
   checkForm = new FormGroup({
@@ -48,6 +48,9 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
     파괴강석: new FormControl(true),
     혼돈의돌: new FormControl(true),
   });
+
+  tierControl = new FormControl('t3_1302');
+
   raidControl = new FormControl('');
   raidList = Object.keys(rewardData);
 
@@ -83,6 +86,9 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
       filter((value) => !!value),
       map((raid: Raid) => rewardData[raid])
     );
+    const itemTier$ = this.tierControl.valueChanges.pipe(
+      startWith(this.tierControl.value)
+    );
 
     this.subscription$ = this.priceForm.valueChanges.subscribe((priceForm) => {
       localStorage.setItem('raid_box_priceForm', JSON.stringify(priceForm));
@@ -91,13 +97,37 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
       priceTable$,
       checkTable$,
       rewardTable$,
+      itemTier$,
     ]).pipe(
-      map(([priceTable, checkTable, rewardTable]) => {
-        return Object.entries(rewardTable.rewards).map(([name, amount]) => ({
-          name,
-          amount,
-          price: checkTable[name] ? priceTable[name] * amount : 0,
-        }));
+      map(([priceTable, checkTable, rewardTable, itemTier]) => {
+        return Object.entries(rewardTable.rewards)
+          .map(([name, amount]): [string, number] => {
+            if (itemTier === 't3_1390') {
+              if (name === '수결') {
+                return ['수호강석', amount / 5];
+              }
+              if (name === '파결') {
+                return ['파괴강석', amount / 5];
+              }
+              if (name === '위명돌') {
+                return ['경명돌', amount / 5];
+              }
+              if (name === '명돌') {
+                return ['경명돌', amount / 25];
+              }
+            }
+            if (itemTier === 't3_1340') {
+              if (name === '명돌') {
+                return ['위명돌', amount / 5];
+              }
+            }
+            return [name, amount];
+          })
+          .map(([name, amount]) => ({
+            name,
+            amount,
+            price: checkTable[name] ? priceTable[name] * amount : 0,
+          }));
       })
     );
     this.materialPrice$ = this.materials$.pipe(

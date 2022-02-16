@@ -1,7 +1,11 @@
 <div class="container">
   <div class="flex-center">
     <h1 class="mat-h1">더보기 손익</h1>
-    <button class="heading-button" (click)="openSearchDialog()" mat-stroked-button>
+    <button
+      class="heading-button"
+      (click)="openSearchDialog()"
+      mat-stroked-button
+    >
       거래소 가격 검색
     </button>
   </div>
@@ -11,9 +15,6 @@
       <mat-card-content>
         <app-raid-box-price [priceForm]="priceForm"></app-raid-box-price>
       </mat-card-content>
-      <mat-card-actions>
-        </mat-card-actions
-      >
     </mat-card>
     <mat-card class="materials">
       <mat-card-subtitle>더보기 보상</mat-card-subtitle>

@@ -1,13 +1,10 @@
 <div class="container">
-  <div class="flex-baseline">
+  <div class="flex-center">
     <h1 class="mat-h1">
       각인 최적화
-      <a class="mat-caption link" href="https://icepeng.com/11" target="_blank"
-        >설명서</a
-      >
     </h1>
-    <div class="grow"></div>
-    <button (click)="reset()" mat-stroked-button>초기화</button>
+    <a href="https://icepeng.com/11" target="_blank" class="heading-button" mat-flat-button color="primary">설명서</a>
+    <button class="heading-button" (click)="reset()" mat-stroked-button>초기화</button>
   </div>
   <div class="layout">
     <app-imprinting-form

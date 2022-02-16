@@ -1,10 +1,15 @@
 <div class="container">
-  <h1 class="mat-h1">
-    트포 도시락
-    <a class="mat-caption link" href="https://icepeng.com/12" target="_blank"
+  <div class="flex-center">
+    <h1 class="mat-h1">트포 도시락</h1>
+    <a
+      href="https://icepeng.com/12"
+      target="_blank"
+      class="heading-button"
+      mat-flat-button
+      color="primary"
       >설명서</a
     >
-  </h1>
+  </div>
   <div class="layout">
     <mat-card [formGroup]="formGroup" class="card">
       <mat-card-content>
@@ -21,8 +26,12 @@
             </mat-select>
           </mat-form-field>
           <div class="filler"></div>
-          <button (click)="setLevelAll(3)" mat-stroked-button>모두 3레벨로 설정</button>
-          <button (click)="setLevelAll(4)" mat-stroked-button>모두 4레벨로 설정</button>
+          <button (click)="setLevelAll(3)" mat-stroked-button>
+            모두 3레벨로 설정
+          </button>
+          <button (click)="setLevelAll(4)" mat-stroked-button>
+            모두 4레벨로 설정
+          </button>
           <button (click)="resetForm()" mat-stroked-button>초기화</button>
         </div>
       </mat-card-content>

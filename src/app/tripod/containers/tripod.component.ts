@@ -281,6 +281,13 @@ export class TripodComponent implements OnInit, OnDestroy {
   }
 
   applySearchResult() {
+    if (this.searchResult.length === 0) {
+      this.snackbar.open(
+        '검색된 매물이 없습니다. 검색을 먼저 진행해주세요.',
+        '닫기'
+      );
+      return;
+    }
     if (this.isLoading) {
       return;
     }

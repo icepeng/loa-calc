@@ -1,7 +1,5 @@
 import { RefineTable } from './data';
 
-const JANGIN_ACCUMULATE_DIVIDER = 2.15;
-
 export type Step = {
   baseProb: number;
   totalProb: number;
@@ -185,7 +183,7 @@ export function optimize(
         ) / 10000;
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-        jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+        jangin + prob * 0.4651,
         globalProb * (1 - prob),
         i,
         subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
@@ -196,7 +194,7 @@ export function optimize(
           baseProb: currentProb + additionalProb,
           totalProb: prob,
           globalProb: globalProb * prob,
-          jangin: Math.floor(jangin * 10000) / 10000,
+          jangin,
           price: basePrice + breathPrice,
           breathes,
         },
@@ -277,13 +275,13 @@ export function fixed(
       breathes,
     } = breath[breathCount];
 
-    const prob = 
+    const prob =
       Math.round(
         Math.min(currentProb + additionalProb + breathProb, 1) * 10000
       ) / 10000;
     const { price: failPrice, path: failPath } = rec(
       Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-      jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+      jangin + prob * 0.4651,
       globalProb * (1 - prob),
       subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
     );
@@ -295,7 +293,7 @@ export function fixed(
           baseProb: currentProb + additionalProb,
           totalProb: prob,
           globalProb: globalProb * prob,
-          jangin: Math.floor(jangin * 10000) / 10000,
+          jangin,
           price: basePrice + breathPrice,
           breathes,
         },

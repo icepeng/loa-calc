@@ -20,13 +20,14 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field class="w-72">
+      <mat-form-field class="w-96">
         <mat-label> 수치 </mat-label>
         <mat-select [(ngModel)]="target[i][1]">
           <mat-option [value]="0">미사용</mat-option>
-          <mat-option [value]="5">1레벨</mat-option>
-          <mat-option [value]="10">2레벨</mat-option>
-          <mat-option [value]="15">3레벨</mat-option>
+          <mat-option [value]="3">+3</mat-option>
+          <mat-option [value]="5">+5 (1레벨)</mat-option>
+          <mat-option [value]="10">+10 (2레벨)</mat-option>
+          <mat-option [value]="15">+15 (3레벨)</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

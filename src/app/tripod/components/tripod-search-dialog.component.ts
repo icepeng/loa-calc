@@ -28,6 +28,10 @@ export class TripodSearchDialogComponent {
   }
 
   onCancel() {
-    this.dialogRef.close();
+    if (
+      window.confirm('경매장 검색 진행중입니다. 정말 취소하시겠습니까?')
+    ) {
+      this.dialogRef.close();
+    }
   }
 }

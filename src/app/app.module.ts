@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { DonateModule } from './donate/donate.module';
+import { DpsModule } from './dps/dps.module';
 import { HomeModule } from './home/home.module';
 import { ImprintingModule } from './imprinting/imprinting.module';
 import { RaidBoxModule } from './raid-box/raid-box.module';
@@ -32,6 +33,7 @@ import { TripodModule } from './tripod/tripod.module';
     TripodModule,
     StoneModule,
     RaidBoxModule,
+    DpsModule,
     DonateModule,
     MatToolbarModule,
     MatButtonModule,

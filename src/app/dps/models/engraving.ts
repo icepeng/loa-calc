@@ -85,13 +85,22 @@ export const engravingData: Engraving[] = [
   },
   {
     name: '아드레날린',
-    props: [],
-    defaultState: { onoff: true, stack: 0 },
-    condition: (_) => true,
+    props: ['stack'],
+    defaultState: { onoff: true, stack: 6 },
+    condition: () => true,
     perLevel: [
-      (_) => Stat({ pattCommon: 1.8, crit: 5 }),
-      (_) => Stat({ pattCommon: 3.6, crit: 10 }),
-      (_) => Stat({ pattCommon: 6, crit: 15 }),
+      ({ stack }) =>
+        Stat({
+          pattCommon: Math.min(stack, 6) * 0.3,
+          crit: stack >= 6 ? 5 : 0,
+        }),
+      ({ stack }) =>
+        Stat({
+          pattCommon: Math.min(stack, 6) * 0.6,
+          crit: stack >= 6 ? 10 : 0,
+        }),
+      ({ stack }) =>
+        Stat({ pattCommon: Math.min(stack, 6) * 1, crit: stack >= 6 ? 15 : 0 }),
     ],
   },
   {
@@ -125,6 +134,17 @@ export const engravingData: Engraving[] = [
       (_) => Stat({ pdamageIndepBack: 5 }),
       (_) => Stat({ pdamageIndepBack: 12 }),
       (_) => Stat({ pdamageIndepBack: 25 }),
+    ],
+  },
+  {
+    name: '에테르 포식자',
+    props: ['stack'],
+    defaultState: { onoff: true, stack: 30 },
+    condition: (_) => true,
+    perLevel: [
+      ({ stack }) => Stat({ pattCommon: Math.min(stack, 30) * 0.2 }),
+      ({ stack }) => Stat({ pattCommon: Math.min(stack, 30) * 0.3 }),
+      ({ stack }) => Stat({ pattCommon: Math.min(stack, 30) * 0.5 }),
     ],
   },
   {

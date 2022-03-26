@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -47,6 +47,7 @@ class ParentMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-gear-form',
   templateUrl: './gear-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GearFormComponent implements DpsForm<GearStatus> {
   gearForm = new FormGroup({

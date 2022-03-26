@@ -23,6 +23,8 @@ import { SkillFormComponent } from './components/skill-form.component';
 import { DpsComponent } from './containers/dps.component';
 import { DpsRoutingModule } from './dps-routing.module';
 import { CommonFormComponent } from './components/common-form.component';
+import { DpsSettingComponent } from './containers/dps-setting.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { CommonFormComponent } from './components/common-form.component';
     SkillFormListComponent,
     SkillActionFormListComponent,
     CommonFormComponent,
+    DpsSettingComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { CommonFormComponent } from './components/common-form.component';
     MatIconModule,
     MatButtonModule,
     MatExpansionModule,
+    MatTabsModule,
   ],
 })
 export class DpsModule {}

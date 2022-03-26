@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { AvatarStatus } from '../models/avatar';
@@ -7,6 +7,7 @@ import { Character } from '../models/character';
 @Component({
   selector: 'app-avatar-form',
   templateUrl: './avatar-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarFormComponent implements DpsForm<AvatarStatus> {
   avatarForm = new FormGroup({

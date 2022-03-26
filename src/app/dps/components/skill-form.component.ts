@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { filter, map, Observable, startWith, tap } from 'rxjs';
-import { scouter } from '../models/job';
+import { filter, map, Observable, startWith } from 'rxjs';
 import { SkillSpec } from '../models/skill-spec';
 import { Tripod } from '../models/tripod';
 
@@ -11,8 +10,8 @@ import { Tripod } from '../models/tripod';
 })
 export class SkillFormComponent implements OnInit {
   @Input() skillForm!: FormGroup;
+  @Input() skillSpecs!: SkillSpec[];
 
-  skills = scouter.skills;
   skill$!: Observable<SkillSpec>;
   skillLevels$!: Observable<number[]>;
   tripods$!: Array<Observable<Tripod[]>>;
@@ -26,7 +25,7 @@ export class SkillFormComponent implements OnInit {
     this.skill$ = this.skillForm.get('name')!.valueChanges.pipe(
       startWith(this.skillForm.get('name')!.value),
       filter(exists),
-      map((name) => this.skills.find((skill) => skill.name === name)),
+      map((name) => this.skillSpecs.find((skill) => skill.name === name)),
       filter(exists)
     );
     this.skillLevels$ = this.skill$.pipe(

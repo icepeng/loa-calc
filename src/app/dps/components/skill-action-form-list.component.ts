@@ -138,6 +138,27 @@ export class SkillActionFormListComponent
     this.subscription$.unsubscribe();
   }
 
+  sync(skillActions: SkillAction[]) {
+    while (this.skillActionFormArray.length > 0) {
+      this.skillActionFormArray.removeAt(0);
+    }
+    skillActions.forEach(({ name, position, buffStatus }) => {
+      const buffStatusForm = this.buildBuffStatusForm(this.buffStatusSchema);
+      buffStatusForm.patchValue(buffStatus);
+      this.skillActionFormArray.push(
+        new FormGroup({
+          name: new FormControl(name, Validators.required),
+          position: new FormControl(position, Validators.required),
+          buffStatus: buffStatusForm,
+        })
+      );
+    });
+  }
+
+  getStatus(): SkillAction[] {
+    return this.skillActionFormArray.value;
+  }
+
   setSkillResults(skillActions: SkillAction[]) {
     this.skillResults = skillActions.map((skillAction) =>
       this.calculate(skillAction)

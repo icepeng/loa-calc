@@ -1,62 +1,18 @@
 <div class="container">
   <h1 class="mat-h1">스펙 시뮬레이터 (베타)</h1>
-  <h2 class="mat-h2">스펙 설정</h2>
-  <div class="row">
-    <mat-card>
-      <mat-card-subtitle>기본 설정</mat-card-subtitle>
-      <app-common-form></app-common-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>장비 설정</mat-card-subtitle>
-      <app-gear-form></app-gear-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>장신구 등급 설정</mat-card-subtitle>
-      <app-accessory-form></app-accessory-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>아바타 등급 설정</mat-card-subtitle>
-      <app-avatar-form></app-avatar-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>카드 설정</mat-card-subtitle>
-      <app-card-form></app-card-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>각인 설정</mat-card-subtitle>
-      <app-engraving-form></app-engraving-form>
-    </mat-card>
-    <mat-card>
-      <mat-card-subtitle>세트 아이템 설정</mat-card-subtitle>
-      <app-setitem-form></app-setitem-form>
-    </mat-card>
-  </div>
-  <div class="row">
-    <app-skill-form-list></app-skill-form-list>
-  </div>
-  <div class="row">
-    <button
-      mat-flat-button
-      color="primary"
-      *ngIf="isEditing"
-      (click)="saveCharacter()"
+  <button mat-flat-button color="primary" (click)="addSetting()">
+    탭 추가
+  </button>
+  <mat-tab-group>
+    <mat-tab
+      *ngFor="let setting of settings; index as i"
+      [label]="(i + 1).toString()"
     >
-      적용
-    </button>
-    <button
-      mat-flat-button
-      color="primary"
-      *ngIf="!isEditing"
-      (click)="editCharacter()"
-    >
-      수정
-    </button>
-  </div>
-  <h2 class="mat-h2">스킬 시전 설정</h2>
-  <app-skill-action-form-list
-    [basisStat]="basisStat"
-    [internalStat]="internalStat"
-    [skills]="skills"
-    [buffs]="buffs"
-  ></app-skill-action-form-list>
+      <app-dps-setting
+        (copySetting)="copySetting($event)"
+        (removeSetting)="removeSetting(i)"
+        [setting]="setting"
+      ></app-dps-setting>
+    </mat-tab>
+  </mat-tab-group>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { Character, CommonStatus } from '../models/character';
@@ -6,6 +6,7 @@ import { Character, CommonStatus } from '../models/character';
 @Component({
   selector: 'app-common-form',
   templateUrl: './common-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [],
 })
 export class CommonFormComponent implements DpsForm<CommonStatus> {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { AccessoryStatus } from '../models/accessory';
@@ -7,6 +7,7 @@ import { Character } from '../models/character';
 @Component({
   selector: 'app-accessory-form',
   templateUrl: './accessory-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccessoryFormComponent implements DpsForm<AccessoryStatus> {
   accessoryForm = new FormGroup({

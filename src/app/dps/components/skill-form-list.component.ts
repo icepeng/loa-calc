@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { Character } from '../models/character';
 import { SkillState, SkillStatus } from '../models/job';
+import { SkillSpec } from '../models/skill-spec';
 
 function getEmptyForm() {
   return new FormGroup({
@@ -51,6 +52,8 @@ function getEmptyForm() {
   ],
 })
 export class SkillFormListComponent implements DpsForm<SkillStatus> {
+  @Input() skillSpecs!: SkillSpec[];
+
   skillFormArray = new FormArray([getEmptyForm()]);
 
   constructor() {}

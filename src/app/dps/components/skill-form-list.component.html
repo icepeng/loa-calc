@@ -10,6 +10,11 @@
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-subtitle>
-  <app-skill-form [skillForm]="formGroup"></app-skill-form>
+  <app-skill-form
+    [skillSpecs]="skillSpecs"
+    [skillForm]="formGroup"
+  ></app-skill-form>
 </mat-card>
-<button *ngIf="skillFormArray.enabled" (click)="addItem()" mat-stroked-button>+</button>
+<button *ngIf="skillFormArray.enabled" (click)="addItem()" mat-stroked-button>
+  +
+</button>

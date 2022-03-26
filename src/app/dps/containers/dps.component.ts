@@ -1,25 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AccessoryFormComponent } from '../components/accessory-form.component';
-import { AvatarFormComponent } from '../components/avatar-form.component';
-import { CardFormComponent } from '../components/card-form.component';
-import { CommonFormComponent } from '../components/common-form.component';
-import { EngravingFormComponent } from '../components/engraving-form.component';
-import { GearFormComponent } from '../components/gear-form.component';
-import { SetitemFormComponent } from '../components/setitem-form.component';
-import { SkillActionFormListComponent } from '../components/skill-action-form-list.component';
-import { SkillFormListComponent } from '../components/skill-form-list.component';
-import { DpsForm } from '../dps-form.interface';
-import { Buff } from '../models/buff';
-import { Character, getBasisStat, getInternalStat } from '../models/character';
-import { getEngravingBuff } from '../models/engraving';
-import { build, scouter } from '../models/job';
-import { getSetitemBuffs } from '../models/setitem';
-import { Skill } from '../models/skill';
-import { InternalStat, Stat } from '../models/stat';
+import { Component } from '@angular/core';
+import { Character } from '../models/character';
+import { Setting } from '../models/setting';
 
 const testCharacter: Character = {
-  jobName: 'scouter',
+  jobName: '스카우터',
   commonStatus: {
     combatLevel: 60,
     expeditionStat: 637,
@@ -138,14 +122,14 @@ const testCharacter: Character = {
 };
 
 const emptyCharacter: Character = {
-  jobName: 'scouter',
+  jobName: null,
   commonStatus: {
-    combatLevel: 60,
-    expeditionStat: 637,
-    crit: 632,
-    special: 1776,
-    swift: 53,
-    weaponPdamage: 23.45,
+    combatLevel: null,
+    expeditionStat: null,
+    crit: null,
+    special: null,
+    swift: null,
+    weaponPdamage: null,
   },
   gearStatus: {
     head: {
@@ -191,116 +175,37 @@ const emptyCharacter: Character = {
   setitemStatus: [{ name: null, setCount: null, level2Count: null }],
   skillStatus: [{ name: null, level: null, gem: null, tripod: [] }],
 } as unknown as Character;
-
 @Component({
   selector: 'app-dps',
   templateUrl: './dps.component.html',
   styles: [
     `
-      .row {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 12px;
-      }
       .container {
         margin: 20px;
       }
     `,
   ],
 })
-export class DpsComponent implements OnInit {
-  @ViewChild(CommonFormComponent, { static: true })
-  commonFormComponent!: CommonFormComponent;
-  @ViewChild(GearFormComponent, { static: true })
-  gearFormComponent!: GearFormComponent;
-  @ViewChild(AccessoryFormComponent, { static: true })
-  accessoryFormComponent!: AccessoryFormComponent;
-  @ViewChild(AvatarFormComponent, { static: true })
-  avatarFormComponent!: AvatarFormComponent;
-  @ViewChild(CardFormComponent, { static: true })
-  cardFormComponent!: CardFormComponent;
-  @ViewChild(EngravingFormComponent, { static: true })
-  engravingFormComponent!: EngravingFormComponent;
-  @ViewChild(SetitemFormComponent, { static: true })
-  setitemFormComponent!: SetitemFormComponent;
-  @ViewChild(SkillFormListComponent, { static: true })
-  skillFormListComponent!: SkillFormListComponent;
-  @ViewChild(SkillActionFormListComponent, { static: true })
-  skillActionFormListComponent!: SkillActionFormListComponent;
-
-  skills: Skill[] = [];
-  buffs: Buff[] = [];
-  internalStat: InternalStat = InternalStat();
-  basisStat: Stat = Stat();
-
-  characterComponents: DpsForm[] = [];
-  isEditing = true;
-
-  character: Character = testCharacter;
+export class DpsComponent {
+  settings: Setting[] = [
+    {
+      character: testCharacter,
+      skillActions: [],
+    },
+  ];
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.characterComponents = [
-      this.commonFormComponent,
-      this.accessoryFormComponent,
-      this.avatarFormComponent,
-      this.gearFormComponent,
-      this.cardFormComponent,
-      this.engravingFormComponent,
-      this.setitemFormComponent,
-      this.skillFormListComponent,
-    ];
-
-    this.characterComponents.forEach((formComponent) => {
-      formComponent.sync(this.character);
-    });
-    this.skillActionFormListComponent.disable();
+  addSetting() {
+    this.settings.push({ character: emptyCharacter, skillActions: [] });
   }
 
-  saveCharacter() {
-    const validities = this.characterComponents.map((component) =>
-      component.isValid()
-    );
-    if (validities.includes(false)) {
-      return;
-    }
-
-    this.character.commonStatus = this.commonFormComponent.getStatus();
-    this.character.accessoryStatus = this.accessoryFormComponent.getStatus();
-    this.character.avatarStatus = this.avatarFormComponent.getStatus();
-    this.character.gearStatus = this.gearFormComponent.getStatus();
-    this.character.cardStatus = this.cardFormComponent.getStatus();
-    this.character.engravingStatus = this.engravingFormComponent.getStatus();
-    this.character.setitemStatus = this.setitemFormComponent.getStatus();
-    this.character.skillStatus = this.skillFormListComponent.getStatus();
-
-    this.characterComponents.forEach((component) => component.disable());
-    this.skillActionFormListComponent.enable();
-    this.isEditing = false;
-
-    this.internalStat = getInternalStat(this.character);
-    this.basisStat = getBasisStat(this.character, this.internalStat);
-
-    const { skills, buffs } = build(
-      scouter,
-      this.character.skillStatus,
-      InternalStat()
-    );
-    this.skills = skills;
-    this.buffs = [
-      ...this.character.engravingStatus.map(({ name, level }) =>
-        getEngravingBuff(name, level)
-      ),
-      ...getSetitemBuffs(this.character.setitemStatus),
-      ...buffs,
-    ];
+  copySetting(setting: Setting) {
+    this.settings.push(setting);
   }
 
-  editCharacter() {
-    this.isEditing = true;
-    this.characterComponents.forEach((component) => component.enable());
-    this.skillActionFormListComponent.disable();
+  removeSetting(index: number) {
+    this.settings.splice(index, 1);
+    this.settings.slice();
   }
 }

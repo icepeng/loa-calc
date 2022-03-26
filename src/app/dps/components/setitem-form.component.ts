@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { Character } from '../models/character';
@@ -7,6 +7,7 @@ import { setitemData, SetitemStatus } from '../models/setitem';
 @Component({
   selector: 'app-setitem-form',
   templateUrl: './setitem-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .add-button {

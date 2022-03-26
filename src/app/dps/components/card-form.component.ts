@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormControl, Validators } from '@angular/forms';
 import { DpsForm } from '../dps-form.interface';
 import { cardData, CardStatus } from '../models/card';
@@ -7,6 +7,7 @@ import { Character } from '../models/character';
 @Component({
   selector: 'app-card-form',
   templateUrl: './card-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       .add-button {

@@ -26,6 +26,7 @@ export const artist: Job = {
         {
           name: '급소 타격',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ crit: 40 }),
             Stat({ crit: 47 }),
@@ -37,6 +38,7 @@ export const artist: Job = {
         {
           name: '연속 긋기',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 40 }),
             Stat({ pdamageIndep: 47.2 }),
@@ -48,6 +50,7 @@ export const artist: Job = {
         {
           name: '거대한 붓',
           tier: 2,
+          maxLevel: 5,
           overrideType: 'Charge',
           statList: [
             Stat({ pdamageIndep: 50 }),
@@ -60,6 +63,7 @@ export const artist: Job = {
         {
           name: '강화된 일격',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 68 }),
@@ -81,6 +85,7 @@ export const artist: Job = {
         {
           name: '치명적인 일격',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ critDamage: 100 }),
             Stat({ critDamage: 115 }),
@@ -92,6 +97,7 @@ export const artist: Job = {
         {
           name: '학익진',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 70 }),
             Stat({ pdamageIndep: 78 }),
@@ -103,6 +109,7 @@ export const artist: Job = {
         {
           name: '두루미 폭격',
           tier: 3,
+          maxLevel: 5,
           overrideType: 'Area',
           statList: [
             Stat({ pdamageIndep: 60 }),
@@ -125,6 +132,7 @@ export const artist: Job = {
         {
           name: '궤뚫는 일격',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ armorIgnore: 50 }),
             Stat({ armorIgnore: 57.5 }),
@@ -136,6 +144,7 @@ export const artist: Job = {
         {
           name: '무력화 강화',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 20 }),
             Stat({ pdamageIndep: 26 }),
@@ -147,6 +156,7 @@ export const artist: Job = {
         {
           name: '어둠의 기운',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ crit: 35 }),
             Stat({ crit: 42 }),
@@ -158,6 +168,7 @@ export const artist: Job = {
         {
           name: '두 마리의 호랑이',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 68 }),
@@ -169,6 +180,7 @@ export const artist: Job = {
         {
           name: '강화된 일격',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 80 }),
             Stat({ pdamageIndep: 90 }),
@@ -189,6 +201,7 @@ export const artist: Job = {
         {
           name: '별 그리기',
           tier: 2,
+          maxLevel: 5,
           overrideType: 'Charge',
           statList: [
             Stat({ pdamageIndep: 60 }),
@@ -201,6 +214,7 @@ export const artist: Job = {
         {
           name: '먹물 세례',
           tier: 2,
+          maxLevel: 5,
           overrideType: 'Normal',
           statList: [
             Stat({ pdamageIndep: 10 * 2 }),
@@ -213,6 +227,7 @@ export const artist: Job = {
         {
           name: '검은 달',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 20 }),
             Stat({ pdamageIndep: 26 }),
@@ -224,6 +239,7 @@ export const artist: Job = {
         {
           name: '붉은 달',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 68 }),
@@ -244,6 +260,7 @@ export const artist: Job = {
         {
           name: '급소타격',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ crit: 20 }),
             Stat({ crit: 26 }),
@@ -255,6 +272,7 @@ export const artist: Job = {
         {
           name: '강화된 일격',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 30 }),
             Stat({ pdamageIndep: 37 }),
@@ -266,6 +284,7 @@ export const artist: Job = {
         {
           name: '잉어 봉인해제!',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 15 }),
             Stat({ pdamageIndep: 21 }),
@@ -277,6 +296,7 @@ export const artist: Job = {
         {
           name: '(잉)어왕출현',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 80 }),
             Stat({ pdamageIndep: 90 }),
@@ -298,6 +318,7 @@ export const artist: Job = {
         {
           name: '치명적인 일격',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ critDamage: 40 }),
             Stat({ critDamage: 52.5 }),
@@ -309,6 +330,7 @@ export const artist: Job = {
         {
           name: '헤어날 수 없는 늪',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 68 }),
@@ -320,6 +342,7 @@ export const artist: Job = {
         {
           name: '먹물점정',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 80 }),
             Stat({ pdamageIndep: 89.6 }),
@@ -340,6 +363,7 @@ export const artist: Job = {
         {
           name: '음의 기운 발산',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 100 }),
             Stat({ pdamageIndep: 111 }),
@@ -351,6 +375,7 @@ export const artist: Job = {
         {
           name: '나만의 권능',
           tier: 3,
+          maxLevel: 5,
           buffStatList: [
             Stat({ crit: 35.0 }),
             Stat({ crit: 38.5 }),
@@ -371,6 +396,7 @@ export const artist: Job = {
         {
           name: '나만의 우물',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 20 }),
             Stat({ pdamageIndep: 26 }),

@@ -162,17 +162,6 @@ export const engravingData: Engraving[] = [
     ],
   },
   {
-    name: '진화의 유산',
-    props: ['skill', 'stack'],
-    defaultState: { onoff: true, stack: 0 },
-    condition: ({ skill }) => skill.tags.includes('싱크 스킬'),
-    perLevel: [
-      ({ stack }) => Stat({ pdamageIndep: stack * 2 }),
-      ({ stack }) => Stat({ pdamageIndep: stack * 4 }),
-      ({ stack }) => Stat({ pdamageIndep: stack * 6 }),
-    ],
-  },
-  {
     name: '슈퍼 차지',
     props: ['skill'],
     defaultState: { onoff: true, stack: 0 },
@@ -183,7 +172,51 @@ export const engravingData: Engraving[] = [
       (_) => Stat({ pdamageIndep: 20 }),
     ],
   },
+  {
+    name: '진화의 유산',
+    props: ['skill', 'stack'],
+    defaultState: { onoff: true, stack: 3 },
+    condition: ({ skill }) => skill.tags.includes('싱크 스킬'),
+    perLevel: [
+      ({ stack }) => Stat({ pdamageIndep: stack * 2 }),
+      ({ stack }) => Stat({ pdamageIndep: stack * 4 }),
+      ({ stack }) => Stat({ pdamageIndep: stack * 6 }),
+    ],
+  },
+  {
+    name: '회귀',
+    props: ['onoff'],
+    defaultState: { onoff: true, stack: 0 },
+    condition: ({ onoff }) => onoff,
+    perLevel: [
+      (_) => Stat({ crit: 6, critDamage: 20 }),
+      (_) => Stat({ crit: 9, critDamage: 30 }),
+      (_) => Stat({ crit: 12, critDamage: 40 }),
+    ],
+  },
+  {
+    name: '잔재된 기운',
+    props: ['onoff', 'stack'],
+    defaultState: { onoff: true, stack: 3 },
+    condition: ({ onoff }) => onoff,
+    perLevel: [
+      ({ stack }) => {
+        const table = [0, 8, 10, 12];
+        return Stat({ pdamageIndep: table[Math.min(stack, 3)] });
+      },
+      ({ stack }) => {
+        const table = [0, 16, 20, 24];
+        return Stat({ pdamageIndep: table[Math.min(stack, 3)] });
+      },
+      ({ stack }) => {
+        const table = [0, 25, 30, 36];
+        return Stat({ pdamageIndep: table[Math.min(stack, 3)] });
+      },
+    ],
+  },
 ];
+
+engravingData.sort((a, b) => a.name.localeCompare(b.name));
 
 export function getEngravingBuff(name: string, level: number): Buff {
   const engraving = engravingData.find((engraving) => engraving.name === name)!;

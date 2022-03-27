@@ -11,6 +11,7 @@ export interface SkillSpec {
   head: boolean;
   back: boolean;
   consumeMana: boolean;
+  configurable: boolean;
   tripods: Tripod[];
   skillAfters: string[];
   selectableOptions: { name: string; stat: Stat }[];
@@ -23,6 +24,7 @@ const defaultSkillSpec = {
   head: false,
   back: false,
   consumeMana: true,
+  configurable: true,
   tripods: [],
   skillAfters: [],
   selectableOptions: [],

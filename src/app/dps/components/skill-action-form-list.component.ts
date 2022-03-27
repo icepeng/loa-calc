@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -52,6 +54,7 @@ export class SkillActionFormListComponent
   @Input() internalStat!: InternalStat;
   @Input() skills: Skill[] = [];
   @Input() buffs: Buff[] = [];
+  @Output() valueChanges = new EventEmitter<SkillAction[]>();
 
   buffStatusSchema: BuffStatusSchema = [];
   skillResults: (SkillResult | null)[] = [];
@@ -78,6 +81,7 @@ export class SkillActionFormListComponent
       .pipe(startWith(this.skillActionFormArray.value))
       .subscribe((skillActions: SkillAction[]) => {
         this.setSkillResults(skillActions);
+        this.valueChanges.emit(skillActions);
       });
   }
 
@@ -121,6 +125,7 @@ export class SkillActionFormListComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.buffs) {
+      const isDisabled = this.skillActionFormArray.disabled;
       this.buffStatusSchema = this.buildBuffStatusSchema();
       this.formGroups.forEach((formGroup) => {
         const prevValue = { ...formGroup.value.buffStatus };
@@ -128,6 +133,9 @@ export class SkillActionFormListComponent
 
         const buffStatusForm = this.buildBuffStatusForm(this.buffStatusSchema);
         buffStatusForm.patchValue(prevValue);
+        if (isDisabled) {
+          buffStatusForm.disable();
+        }
         formGroup.addControl('buffStatus', buffStatusForm);
       });
     }
@@ -142,16 +150,19 @@ export class SkillActionFormListComponent
     while (this.skillActionFormArray.length > 0) {
       this.skillActionFormArray.removeAt(0);
     }
+    const isDisabled = this.skillActionFormArray.disabled;
     skillActions.forEach(({ name, position, buffStatus }) => {
       const buffStatusForm = this.buildBuffStatusForm(this.buffStatusSchema);
       buffStatusForm.patchValue(buffStatus);
-      this.skillActionFormArray.push(
-        new FormGroup({
-          name: new FormControl(name, Validators.required),
-          position: new FormControl(position, Validators.required),
-          buffStatus: buffStatusForm,
-        })
-      );
+      const skillActionForm = new FormGroup({
+        name: new FormControl(name, Validators.required),
+        position: new FormControl(position, Validators.required),
+        buffStatus: buffStatusForm,
+      });
+      if (isDisabled) {
+        skillActionForm.disable();
+      }
+      this.skillActionFormArray.push(skillActionForm);
     });
   }
 

@@ -1,5 +1,3 @@
-
-<h2 class="mat-h2">탭 관리</h2>
 <div class="row">
   <button (click)="copySetting.emit(setting)" mat-flat-button color="primary">
     새 탭으로 복사
@@ -19,6 +17,7 @@
     </mat-select>
   </mat-form-field>
   <button
+    *ngIf="editTarget === 'jobName'"
     (click)="saveJobName(jobNameControl.value)"
     mat-flat-button
     color="primary"
@@ -83,4 +82,5 @@
   [internalStat]="internalStat"
   [skills]="skills"
   [buffs]="buffs"
+  (valueChanges)="saveSkillActions($event)"
 ></app-skill-action-form-list>

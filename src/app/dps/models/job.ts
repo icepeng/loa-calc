@@ -1,8 +1,8 @@
 import { Buff } from './buff';
 import { Skill } from './skill';
 import { getTripod, SkillSpec } from './skill-spec';
-import { addPdamageIndep, addStat, InternalStat, Stat } from './stat';
-import { EMPTY_TRIPOD_STATS, getTripodBuff, getTripodStat } from './tripod';
+import { addStat, InternalStat, Stat } from './stat';
+import { getTripodBuff, getTripodStat } from './tripod';
 
 export interface SkillState {
   name: string;
@@ -76,6 +76,8 @@ export function buildSkill(
   }
 
   if (skillSpec.statFromSpecial) {
+    console.log(skillSpec.name)
+    console.log(skillSpec.statFromSpecial(internalStat.special))
     stat = addStat(stat, skillSpec.statFromSpecial(internalStat.special));
   }
 

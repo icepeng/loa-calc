@@ -5,6 +5,7 @@ import { Stat } from './stat';
 export interface Tripod {
   name: string;
   tier: 1 | 2 | 3;
+  maxLevel: 1 | 5;
   statList?: Stat[];
   buffStatList?: Stat[];
   overrideType?: SkillType;
@@ -31,11 +32,3 @@ export function getTripodBuff(tripod: Tripod, level: number): Buff {
     getStat: (_) => buffStatList[level - 1],
   };
 }
-
-export const EMPTY_TRIPOD_STATS = [
-  Stat({}),
-  Stat({}),
-  Stat({}),
-  Stat({}),
-  Stat({}),
-];

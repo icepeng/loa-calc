@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as FileSaver from 'file-saver';
 import { Character } from '../models/character';
 import { Setting } from '../models/setting';
 
@@ -175,6 +176,7 @@ const emptyCharacter: Character = {
   setitemStatus: [{ name: null, setCount: null, level2Count: null }],
   skillStatus: [{ name: null, level: null, gem: null, tripod: [] }],
 } as unknown as Character;
+
 @Component({
   selector: 'app-dps',
   templateUrl: './dps.component.html',
@@ -182,6 +184,25 @@ const emptyCharacter: Character = {
     `
       .container {
         margin: 20px;
+      }
+
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .visually-hidden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+      }
+
+      input.visually-hidden:focus + label {
+        outline: thin dotted;
       }
     `,
   ],
@@ -198,6 +219,27 @@ export class DpsComponent {
 
   addSetting() {
     this.settings.push({ character: emptyCharacter, skillActions: [] });
+  }
+
+  saveSettings() {
+    const blob = new Blob([JSON.stringify(this.settings, null, 2)], {
+      type: 'text/plain;charset=utf-8',
+    });
+    FileSaver(blob, 'spec.json');
+  }
+
+  async loadSettings(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files!;
+
+    this.settings = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(JSON.parse(reader.result as string));
+      };
+      reader.onerror = reject;
+      reader.readAsText(files[0]);
+    });
   }
 
   copySetting(setting: Setting) {

@@ -2,8 +2,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -25,6 +27,7 @@ import { build } from '../models/job';
 import { getSetitemBuffs } from '../models/setitem';
 import { Setting } from '../models/setting';
 import { Skill } from '../models/skill';
+import { SkillAction } from '../models/skill-action';
 import { SkillSpec } from '../models/skill-spec';
 import { InternalStat, Stat } from '../models/stat';
 
@@ -42,7 +45,7 @@ import { InternalStat, Stat } from '../models/stat';
     `,
   ],
 })
-export class DpsSettingComponent implements OnInit {
+export class DpsSettingComponent implements OnInit, OnChanges {
   @Input() setting!: Setting;
   @Output() copySetting = new EventEmitter<Setting>();
   @Output() removeSetting = new EventEmitter();
@@ -96,7 +99,16 @@ export class DpsSettingComponent implements OnInit {
       this.setitemFormComponent,
       this.skillFormListComponent,
     ];
+    this.sync();
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.setting && !changes.setting.isFirstChange()) {
+      this.sync();
+    }
+  }
+
+  sync() {
     this.setEditTarget('jobName');
     if (this.character.jobName) {
       this.jobNameControl.setValue(this.character.jobName);
@@ -135,7 +147,9 @@ export class DpsSettingComponent implements OnInit {
 
   saveJobName(jobName: string) {
     this.character.jobName = jobName;
-    this.skillSpecs = jobRecord[this.jobNameControl.value].skills;
+    this.skillSpecs = jobRecord[this.jobNameControl.value].skills.filter(
+      (skill) => skill.configurable
+    );
     this.setEditTarget('character');
   }
 
@@ -146,7 +160,7 @@ export class DpsSettingComponent implements OnInit {
     const { skills, buffs } = build(
       jobRecord[this.character.jobName],
       this.character.skillStatus,
-      InternalStat()
+      this.internalStat
     );
     this.skills = skills;
     this.buffs = [
@@ -181,5 +195,9 @@ export class DpsSettingComponent implements OnInit {
 
   editCharacter() {
     this.setEditTarget('character');
+  }
+
+  saveSkillActions(skillActions: SkillAction[]) {
+    this.setting.skillActions = skillActions;
   }
 }

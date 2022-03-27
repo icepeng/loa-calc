@@ -1,7 +1,6 @@
 import { Job } from '../models/job';
 import { SkillSpec } from '../models/skill-spec';
 import { addPdamageIndep, Stat } from '../models/stat';
-import { EMPTY_TRIPOD_STATS } from '../models/tripod';
 
 export const scouter: Job = {
   name: '스카우터',
@@ -31,6 +30,7 @@ export const scouter: Job = {
         {
           name: '정교한 명령',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 25 }),
             Stat({ pdamageIndep: 31 }),
@@ -42,11 +42,12 @@ export const scouter: Job = {
         {
           name: '코어 에너지 수급',
           tier: 1,
-          statList: EMPTY_TRIPOD_STATS,
+          maxLevel: 5,
         },
         {
           name: '배터리 방출',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 30 }),
             Stat({ pdamageIndep: 37 }),
@@ -58,16 +59,17 @@ export const scouter: Job = {
         {
           name: '연발 미사일',
           tier: 2,
-          statList: EMPTY_TRIPOD_STATS,
+          maxLevel: 1,
         },
         {
           name: '유도 미사일',
           tier: 2,
-          statList: EMPTY_TRIPOD_STATS,
+          maxLevel: 1,
         },
         {
           name: '오르간 미사일',
           tier: 2,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: addPdamageIndep(-30, 100) }),
             Stat({ pdamageIndep: addPdamageIndep(-27, 100) }),
@@ -79,6 +81,7 @@ export const scouter: Job = {
         {
           name: '약점 포착',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 69 }),
@@ -90,6 +93,7 @@ export const scouter: Job = {
         {
           name: '대형 미사일',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ crit: 30 }),
             Stat({ crit: 37 }),
@@ -111,6 +115,7 @@ export const scouter: Job = {
         {
           name: '정교한 명령',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 20 }),
             Stat({ pdamageIndep: 26 }),
@@ -122,6 +127,7 @@ export const scouter: Job = {
         {
           name: '급소 공격',
           tier: 1,
+          maxLevel: 5,
           statList: [
             Stat({ crit: 20 }),
             Stat({ crit: 26 }),
@@ -133,11 +139,12 @@ export const scouter: Job = {
         {
           name: '코어 에너지 수급',
           tier: 2,
-          statList: EMPTY_TRIPOD_STATS,
+          maxLevel: 5,
         },
         {
           name: '일제 공격',
           tier: 3,
+          maxLevel: 5,
           statList: [
             Stat({ pdamageIndep: 60 }),
             Stat({ pdamageIndep: 68 }),

@@ -5,9 +5,15 @@ export function getSearchScript(
   imprints: Record<string, number>[],
   accTypes: string[],
   accMap: Record<string, AccMap>,
-  searchGrade: SearchGrade
+  searchGrade: SearchGrade,
+  dedupe: boolean
 ) {
-  const overlappingAcc = getOverlappingAcc(accMap);
+  const overlappingAcc = dedupe
+    ? getOverlappingAcc(accMap)
+    : {
+        귀걸이: false,
+        반지: false,
+      };
   const accTypesToSearch = accTypes.filter((acc) => {
     if (acc === '귀걸이2' && overlappingAcc.귀걸이) {
       return false;

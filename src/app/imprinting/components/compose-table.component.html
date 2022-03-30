@@ -18,12 +18,24 @@
         <th mat-header-cell *matHeaderCellDef>합계</th>
         <td mat-cell *matCellDef="let element">
           <div>{{ element.price | number: ".0-0" }}골드</div>
-          <div *ngIf="element.effects['치명']">[치명] +{{ element.effects["치명"] }}</div>
-          <div *ngIf="element.effects['특화']">[특화] +{{ element.effects["특화"] }}</div>
-          <div *ngIf="element.effects['신속']">[신속] +{{ element.effects["신속"] }}</div>
-          <div *ngIf="element.effects['제압']">[제압] +{{ element.effects["제압"] }}</div>
-          <div *ngIf="element.effects['인내']">[인내] +{{ element.effects["인내"] }}</div>
-          <div *ngIf="element.effects['숙련']">[숙련] +{{ element.effects["숙련"] }}</div>
+          <div *ngIf="element.effects['치명']">
+            [치명] +{{ element.effects["치명"] }}
+          </div>
+          <div *ngIf="element.effects['특화']">
+            [특화] +{{ element.effects["특화"] }}
+          </div>
+          <div *ngIf="element.effects['신속']">
+            [신속] +{{ element.effects["신속"] }}
+          </div>
+          <div *ngIf="element.effects['제압']">
+            [제압] +{{ element.effects["제압"] }}
+          </div>
+          <div *ngIf="element.effects['인내']">
+            [인내] +{{ element.effects["인내"] }}
+          </div>
+          <div *ngIf="element.effects['숙련']">
+            [숙련] +{{ element.effects["숙련"] }}
+          </div>
         </td>
       </ng-container>
 
@@ -48,7 +60,17 @@
       </ng-container>
 
       <ng-container matColumnDef="necklace">
-        <th mat-header-cell *matHeaderCellDef>목걸이</th>
+        <th mat-header-cell *matHeaderCellDef>
+          목걸이
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="handleAdditionalSearch('목걸이')">
+              품질 재검색
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let element">
           <app-item-view
             (exclude)="exclude.emit($event)"
@@ -59,7 +81,17 @@
       </ng-container>
 
       <ng-container matColumnDef="ear1">
-        <th mat-header-cell *matHeaderCellDef>귀걸이1</th>
+        <th mat-header-cell *matHeaderCellDef>
+          귀걸이1
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="handleAdditionalSearch('귀걸이1')">
+              품질 재검색
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let element">
           <app-item-view
             (exclude)="exclude.emit($event)"
@@ -70,7 +102,17 @@
       </ng-container>
 
       <ng-container matColumnDef="ear2">
-        <th mat-header-cell *matHeaderCellDef>귀걸이2</th>
+        <th mat-header-cell *matHeaderCellDef>
+          귀걸이2
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="handleAdditionalSearch('귀걸이2')">
+              품질 재검색
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let element">
           <app-item-view
             (exclude)="exclude.emit($event)"
@@ -81,7 +123,17 @@
       </ng-container>
 
       <ng-container matColumnDef="ring1">
-        <th mat-header-cell *matHeaderCellDef>반지1</th>
+        <th mat-header-cell *matHeaderCellDef>
+          반지1
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="handleAdditionalSearch('반지1')">
+              품질 재검색
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let element">
           <app-item-view
             (exclude)="exclude.emit($event)"
@@ -92,7 +144,17 @@
       </ng-container>
 
       <ng-container matColumnDef="ring2">
-        <th mat-header-cell *matHeaderCellDef>반지2</th>
+        <th mat-header-cell *matHeaderCellDef>
+          반지2
+          <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="handleAdditionalSearch('반지2')">
+              품질 재검색
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let element">
           <app-item-view
             (exclude)="exclude.emit($event)"

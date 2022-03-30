@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
-import { take } from 'rxjs';
+import { lastValueFrom, take } from 'rxjs';
 import { ImprintingSearchDialogComponent } from '../components/imprinting-search-dialog.component';
 import {
   imprintingFormToken,
@@ -62,6 +62,7 @@ export class ImprintingComponent implements OnInit {
   ];
 
   accMap: Record<string, AccMap> = initialAccMap;
+  prevAccMap: Record<string, AccMap> | null = null;
 
   penaltyOptions = penaltyOptions;
 
@@ -179,20 +180,114 @@ export class ImprintingComponent implements OnInit {
     this.filter.exclude = new Set();
   }
 
-  generate() {
-    const form = {
-      target: this.target,
-      stoneBooks: this.stoneBooks,
-      accMap: this.accMap,
-    };
-    localStorage.setItem(imprintingFormToken, JSON.stringify(form));
+  getAccTypes(accMap: Record<string, AccMap>): string[] {
+    return Object.entries(accMap)
+      .filter(([name, acc]) => !acc.name)
+      .map((x) => x[0]);
+  }
 
-    if (form.target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
+  async generate() {
+    localStorage.setItem(
+      imprintingFormToken,
+      JSON.stringify({
+        target: this.target,
+        stoneBooks: this.stoneBooks,
+        accMap: this.accMap,
+      })
+    );
+
+    const candidates = this.getCandidates(
+      this.target,
+      this.accMap,
+      this.stoneBooks
+    );
+    if (!candidates) {
+      return;
+    }
+
+    this.candidates = candidates;
+    const searchScript = getSearchScript(
+      dedupe(
+        this.candidates.flatMap((candidate) => candidate.combinations).flat()
+      ),
+      this.getAccTypes(this.accMap),
+      this.accMap,
+      this.searchGrade,
+      true
+    );
+
+    const copySuccess = this.clipboard.copy(searchScript);
+    if (copySuccess) {
+      this.snackbar.dismiss();
+      const dialog = this.dialog
+        .open(ImprintingSearchDialogComponent, {
+          disableClose: true,
+        })
+        .afterClosed()
+        .pipe(take(1));
+      const data: Record<string, Item[]> = await lastValueFrom(dialog);
+      if (data) {
+        this.searchResult = data;
+        this.applySearchResult();
+      }
+      this.filter.exclude = new Set();
+    } else {
+      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+    }
+  }
+
+  async additionalSearch({
+    accType,
+    quality,
+  }: {
+    accType: string;
+    quality: number;
+  }) {
+    const searchScript = getSearchScript(
+      dedupe(
+        this.candidates.flatMap((candidate) => candidate.combinations).flat()
+      ),
+      [accType],
+      {
+        [accType]: {
+          ...this.accMap[accType],
+          quality,
+        },
+      },
+      this.searchGrade,
+      false
+    );
+
+    const copySuccess = this.clipboard.copy(searchScript);
+    if (copySuccess) {
+      const dialog = this.dialog
+        .open(ImprintingSearchDialogComponent, {
+          disableClose: true,
+        })
+        .afterClosed()
+        .pipe(take(1));
+
+      const data: Record<string, Item[]> = await lastValueFrom(dialog);
+      if (data) {
+        this.searchResult = { ...this.searchResult, ...data };
+        this.applySearchResult();
+      }
+    } else {
+      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+    }
+  }
+
+  getCandidates(
+    target: [string, number][],
+    accMap: Record<string, AccMap>,
+    stoneBooks: StoneBook[]
+  ): Candidate[] | undefined {
+    if (target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
       this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
       return;
     }
     if (
-      Object.values(form.accMap).find(
+      Object.values(accMap).find(
         (x) =>
           !x.dealOption1[0] ||
           (x.category === '목걸이' ? !x.dealOption2![0] : false)
@@ -202,29 +297,25 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const accTypes = Object.entries(form.accMap)
-      .filter(([name, acc]) => !acc.name)
-      .map((x) => x[0]);
-
     const imprintLimit = this.searchGrade === '유물' ? 5 : 6;
 
-    this.candidates = form.stoneBooks.map((stoneBook) => {
+    const candidates = stoneBooks.map((stoneBook) => {
       const initial = filterRecord(
         [
           ...stoneBook.stone,
           ...stoneBook.book,
-          ...Object.values(form.accMap)
+          ...Object.values(accMap)
             .filter((acc) => acc.name)
             .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
         ].reduce((obj, [name, amount]) => {
           obj[name] -= amount;
           return obj;
-        }, Object.fromEntries(form.target))
+        }, Object.fromEntries(target))
       );
 
       const combinations = getCombinations(
         initial,
-        accTypes.length,
+        this.getAccTypes(accMap).length,
         imprintLimit
       );
 
@@ -234,7 +325,7 @@ export class ImprintingComponent implements OnInit {
       };
     });
 
-    const impossibleIndex = this.candidates.findIndex(
+    const impossibleIndex = candidates.findIndex(
       (candidate) => candidate.combinations.length === 0
     );
     if (impossibleIndex !== -1) {
@@ -245,33 +336,7 @@ export class ImprintingComponent implements OnInit {
       return;
     }
 
-    const searchScript = getSearchScript(
-      dedupe(
-        this.candidates.flatMap((candidate) => candidate.combinations).flat()
-      ),
-      accTypes,
-      form.accMap,
-      this.searchGrade
-    );
-
-    const copySuccess = this.clipboard.copy(searchScript);
-    if (copySuccess) {
-      this.dialog
-        .open(ImprintingSearchDialogComponent, {
-          disableClose: true,
-        })
-        .afterClosed()
-        .pipe(take(1))
-        .subscribe((data) => {
-          if (data) {
-            this.searchResult = data;
-            this.applySearchResult();
-          }
-        });
-      this.filter.exclude = new Set();
-    } else {
-      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
-    }
+    return candidates;
   }
 
   getFixedItems(): Record<string, Item> {

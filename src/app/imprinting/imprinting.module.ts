@@ -27,6 +27,7 @@ import { ImprintingFormComponent } from './containers/imprinting-form.component'
 import { ImprintingComponent } from './containers/imprinting.component';
 import { ImprintingRoutingModule } from './imprinting-routing.module';
 import { AccFormDialogComponent } from './containers/acc-form-dialog.component';
+import { AdditionalSearchDialogComponent } from './components/additional-search-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AccFormDialogComponent } from './containers/acc-form-dialog.component';
     ComposeTableComponent,
     ImprintingSearchDialogComponent,
     AccFormDialogComponent,
+    AdditionalSearchDialogComponent,
   ],
   imports: [
     CommonModule,

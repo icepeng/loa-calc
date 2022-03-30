@@ -270,6 +270,7 @@ export class ImprintingComponent implements OnInit {
       const data: Record<string, Item[]> = await lastValueFrom(dialog);
       if (data) {
         this.searchResult = { ...this.searchResult, ...data };
+        this.accMap[accType].quality = quality;
         this.applySearchResult();
       }
     } else {

@@ -26,12 +26,16 @@ $dark-app-theme: mat-dark-theme(
 
 @mixin base-theme($theme) {
   $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
   $_background: map-get($theme, background);
   .tab-group-card {
     background: mat-color($_background, card);
   }
   a.link {
     color: mat-color($primary);
+  }
+  .warn-color {
+    color: mat-color($warn);
   }
 }
 

@@ -22,10 +22,12 @@ import { Item } from '../functions/type';
 })
 export class ItemViewComponent implements OnChanges {
   @Input() item!: Item;
+  @Input() target!: [string, number][];
   @Output() exclude = new EventEmitter<Item>();
   dealOptions: [string, number][] = [];
   imprintOptions: [string, number][] = [];
   penalty?: [string, number];
+  targetMap!: Map<string, number>;
 
   constructor(private clipboard: Clipboard) {}
 
@@ -37,6 +39,9 @@ export class ItemViewComponent implements OnChanges {
         imprintOptions.includes(eff[0])
       );
       this.penalty = effects.find((eff) => penaltyOptions.includes(eff[0]));
+    }
+    if (changes.target) {
+      this.targetMap = new Map(changes.target.currentValue);
     }
   }
 

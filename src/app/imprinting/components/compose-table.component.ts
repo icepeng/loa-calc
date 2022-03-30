@@ -21,6 +21,7 @@ export class ComposeTableComponent implements AfterViewInit, OnChanges {
   @Input() data!: ComposeResult[];
   @Input() progress!: number;
   @Input() isLoading!: boolean;
+  @Input() target!: [string, number][];
   @Input() stoneBooks!: StoneBook[];
   @Output() exclude = new EventEmitter<Item>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

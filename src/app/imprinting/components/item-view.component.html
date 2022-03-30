@@ -19,13 +19,19 @@
     즉시 구매가: {{ item.buyPrice | number: ".0-0" }}골드
   </div>
   <div *ngIf="!item.buyPrice">즉시 구매가: -</div>
-  <div *ngIf="!item.isFixed">최소 입찰가: {{ item.auctionPrice | number: ".0-0" }}골드</div>
+  <div *ngIf="!item.isFixed">
+    최소 입찰가: {{ item.auctionPrice | number: ".0-0" }}골드
+  </div>
 </ng-container>
 <div>
   <span *ngFor="let eff of dealOptions">[{{ eff[0] }}] +{{ eff[1] }} </span>
 </div>
 <div>
-  <span *ngFor="let eff of imprintOptions">[{{ eff[0] }}] +{{ eff[1] }} </span>
+  <span
+    [ngClass]="{ 'warn-color': !targetMap.has(eff[0]) }"
+    *ngFor="let eff of imprintOptions"
+    >[{{ eff[0] }}] +{{ eff[1] }}
+  </span>
 </div>
 <div *ngIf="penalty">
   <span>[{{ penalty[0] }}] +{{ penalty[1] }} </span>

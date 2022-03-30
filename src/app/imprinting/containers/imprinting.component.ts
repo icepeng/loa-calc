@@ -271,6 +271,7 @@ export class ImprintingComponent implements OnInit {
       if (data) {
         this.searchResult = { ...this.searchResult, ...data };
         this.accMap[accType].quality = quality;
+        this.accMap = { ...this.accMap };
         this.applySearchResult();
       }
     } else {

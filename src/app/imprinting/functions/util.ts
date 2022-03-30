@@ -48,7 +48,10 @@ export function getFixedItem(acc: AccMap, price?: number): Item {
   return {
     isFixed: true,
     name: acc.name.trim(),
-    id: null,
+    id:
+      String.fromCharCode(Math.floor(Math.random() * 26) + 97) +
+      Math.random().toString(16).slice(2) +
+      Date.now().toString(16).slice(4),
     grade: null,
     tradeLeft: null,
     quality: acc.quality,

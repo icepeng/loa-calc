@@ -30,7 +30,7 @@ export interface Candidate {
 export interface Item {
   isFixed: boolean;
   name: string;
-  id: string | null;
+  id: string;
   grade: number | null;
   tradeLeft: number | null;
   effects: [string, number][];

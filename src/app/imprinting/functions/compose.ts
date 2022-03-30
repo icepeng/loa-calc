@@ -55,7 +55,7 @@ function chooseItems(
   function rec(
     effects: Effects,
     price: number,
-    usedItemNames: Set<string>,
+    usedItemIds: Set<string>,
     items: Record<string, Item>,
     d: number
   ): ComposeResult[] {
@@ -86,7 +86,7 @@ function chooseItems(
     const afterPriceMin = minPriceCache[d];
 
     for (const item of currentItems) {
-      if (usedItemNames.has(item.name)) {
+      if (usedItemIds.has(item.id)) {
         continue;
       }
       if (price + item.price + afterPriceMin > maxPrice) {
@@ -96,12 +96,12 @@ function chooseItems(
       if (hasPenalty(nextEffects)) {
         continue;
       }
-      usedItemNames.add(item.name);
+      usedItemIds.add(item.id);
       items[accName] = item;
       result.push(
-        ...rec(nextEffects, price + item.price, usedItemNames, items, d + 1)
+        ...rec(nextEffects, price + item.price, usedItemIds, items, d + 1)
       );
-      usedItemNames.delete(item.name);
+      usedItemIds.delete(item.id);
       delete items[accName];
     }
 
@@ -113,7 +113,7 @@ function chooseItems(
       initialEffect
     ),
     0,
-    new Set(Object.values(fixedItems).map((x) => x.name)),
+    new Set(Object.values(fixedItems).map((x) => x.id)),
     fixedItems,
     0
   );

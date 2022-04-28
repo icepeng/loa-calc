@@ -288,10 +288,6 @@ export class ImprintingComponent implements OnInit {
       this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
       return;
     }
-    if (target.find((x) => target.find((y) => x[0] === y[0]))) {
-      this.snackbar.open('중복된 목표 각인명이 있습니다.', '닫기');
-      return;
-    }
     if (
       Object.values(accMap).find(
         (x) =>

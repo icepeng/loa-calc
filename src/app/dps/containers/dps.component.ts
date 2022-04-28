@@ -192,18 +192,6 @@ const emptyCharacter: Character = {
         flex-wrap: wrap;
         margin-bottom: 12px;
       }
-
-      .visually-hidden {
-        position: absolute !important;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-      }
-
-      input.visually-hidden:focus + label {
-        outline: thin dotted;
-      }
     `,
   ],
 })

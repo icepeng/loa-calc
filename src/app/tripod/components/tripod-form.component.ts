@@ -41,15 +41,6 @@ export class TripodFormComponent implements OnInit, OnChanges {
     if (changes.classCode) {
       const classCode: number = changes.classCode.currentValue;
       this.skillOptions = skillList.filter((x) => x.class === classCode);
-
-      if (changes.classCode.previousValue != null) {
-        this.formGroup.reset({
-          skill: null,
-          tripod: null,
-          level: 3,
-          required: true,
-        });
-      }
     }
   }
 }

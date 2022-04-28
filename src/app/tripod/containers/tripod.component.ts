@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
+import * as FileSaver from 'file-saver';
 import { startWith, Subject, take, takeUntil } from 'rxjs';
 import { combinations } from '../../../util';
 import { TripodSearchDialogComponent } from '../components/tripod-search-dialog.component';
@@ -100,6 +101,40 @@ export class TripodComponent implements OnInit, OnDestroy {
       .controls as FormGroup[];
   }
 
+  private buildFormGroup(formData: {
+    classCode: number;
+    categoryList: Record<number, string>;
+    tripodList: {
+      skill: number | null;
+      tripod: number | null;
+      level: number;
+      required: boolean;
+    }[];
+  }) {
+    return new FormGroup({
+      classCode: new FormControl(formData.classCode),
+      categoryList: new FormGroup({
+        180000: new FormControl(formData.categoryList[180000]),
+        190010: new FormControl(formData.categoryList[190010]),
+        190020: new FormControl(formData.categoryList[190020]),
+        190030: new FormControl(formData.categoryList[190030]),
+        190040: new FormControl(formData.categoryList[190040]),
+        190050: new FormControl(formData.categoryList[190050]),
+      }),
+      tripodList: new FormArray(
+        formData.tripodList.map(
+          (tripodData: any) =>
+            new FormGroup({
+              skill: new FormControl(tripodData.skill),
+              tripod: new FormControl(tripodData.tripod),
+              level: new FormControl(tripodData.level),
+              required: new FormControl(tripodData.required),
+            })
+        )
+      ),
+    });
+  }
+
   ngOnInit(): void {
     if (typeof Worker !== 'undefined') {
       this.worker = new Worker(new URL('../tripod.worker', import.meta.url));
@@ -109,6 +144,25 @@ export class TripodComponent implements OnInit, OnDestroy {
         '닫기'
       );
     }
+
+    const savedForm = localStorage.getItem('tripodForm');
+    if (savedForm) {
+      this.formGroup.patchValue(JSON.parse(savedForm));
+    }
+
+    this.formGroup
+      .get('classCode')!
+      .valueChanges.pipe(takeUntil(this.subscribe$))
+      .subscribe(() => {
+        this.tripodFormControls.forEach((form) =>
+          form.reset({
+            skill: null,
+            tripod: null,
+            level: 3,
+            required: true,
+          })
+        );
+      });
 
     this.formGroup
       .get('categoryList')!
@@ -161,16 +215,49 @@ export class TripodComponent implements OnInit, OnDestroy {
           })
           .sort((a, b) => a.text.localeCompare(b.text));
       });
-
-    const savedForm = localStorage.getItem('tripodForm');
-    if (savedForm) {
-      this.formGroup.setValue(JSON.parse(savedForm));
-    }
   }
 
   ngOnDestroy() {
     this.subscribe$.next();
     this.subscribe$.complete();
+  }
+
+  saveSettings() {
+    const blob = new Blob(
+      [
+        JSON.stringify(
+          {
+            version: 1,
+            type: 'tripod_form',
+            data: this.formGroup.value,
+          },
+          null,
+          2
+        ),
+      ],
+      {
+        type: 'text/plain;charset=utf-8',
+      }
+    );
+    FileSaver(blob, 'tripod_form.json');
+  }
+
+  async loadSettings(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files!;
+
+    const fileData = await new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(JSON.parse(reader.result as string));
+      };
+      reader.onerror = reject;
+      reader.readAsText(files[0]);
+    });
+
+    if (fileData.version === 1 && fileData.type === 'tripod_form') {
+      this.formGroup.setValue(fileData.data);
+    }
   }
 
   resetForm() {
@@ -268,7 +355,6 @@ export class TripodComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           if (data) {
             this.searchResult = data;
-            this.searchResultCategories = this.selectedCategories;
             this.resetTripodFilter();
             this.resetFixedItems();
             this.resetExcludedItems();
@@ -296,6 +382,7 @@ export class TripodComponent implements OnInit, OnDestroy {
     const searchResult = this.searchResult;
     this.worker.onmessage = ({ data }) => {
       this.composeResult = data;
+      this.searchResultCategories = this.selectedCategories;
       if (this.composeResult.length === 0) {
         this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
       }

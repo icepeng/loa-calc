@@ -33,6 +33,18 @@
             모두 4레벨로 설정
           </button>
           <button (click)="resetForm()" mat-stroked-button>초기화</button>
+          <button (click)="saveSettings()" mat-stroked-button color="primary">
+            파일로 저장
+          </button>
+          <input
+            #load
+            class="visually-hidden"
+            (change)="loadSettings($event)"
+            type="file"
+          />
+          <button (click)="load.click()" mat-stroked-button color="primary">
+            파일에서 불러오기
+          </button>
         </div>
       </mat-card-content>
       <mat-card-content formGroupName="categoryList">

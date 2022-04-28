@@ -245,7 +245,7 @@ export const marketData = {
       value: 30000,
       text: '어빌리티 스톤',
       parent: 0,
-      playerClassSearch: 1,
+      playerClassSearch: 0,
       useLevelSearch: 0,
       itemLevelSearch: 0,
       itemGradeSearch: 1,
@@ -1025,28 +1025,94 @@ export const marketData = {
     },
   ],
   marketClass: [
-    { value: 102, text: '버서커' },
-    { value: 103, text: '디스트로이어' },
-    { value: 104, text: '워로드' },
-    { value: 105, text: '홀리나이트' },
-    { value: 202, text: '아르카나' },
-    { value: 203, text: '서머너' },
-    { value: 204, text: '바드' },
-    { value: 205, text: '소서리스' },
-    { value: 302, text: '배틀마스터' },
-    { value: 303, text: '인파이터' },
-    { value: 304, text: '기공사' },
-    { value: 305, text: '창술사' },
-    { value: 312, text: '스트라이커' },
-    { value: 402, text: '블레이드' },
-    { value: 403, text: '데모닉' },
-    { value: 404, text: '리퍼' },
-    { value: 502, text: '호크아이' },
-    { value: 503, text: '데빌헌터' },
-    { value: 504, text: '블래스터' },
-    { value: 505, text: '스카우터' },
-    { value: 512, text: '건슬링어' },
-    { value: 602, text: '도화가' },
+    {
+      value: 102,
+      text: '버서커',
+    },
+    {
+      value: 103,
+      text: '디스트로이어',
+    },
+    {
+      value: 104,
+      text: '워로드',
+    },
+    {
+      value: 105,
+      text: '홀리나이트',
+    },
+    {
+      value: 202,
+      text: '아르카나',
+    },
+    {
+      value: 203,
+      text: '서머너',
+    },
+    {
+      value: 204,
+      text: '바드',
+    },
+    {
+      value: 205,
+      text: '소서리스',
+    },
+    {
+      value: 302,
+      text: '배틀마스터',
+    },
+    {
+      value: 303,
+      text: '인파이터',
+    },
+    {
+      value: 304,
+      text: '기공사',
+    },
+    {
+      value: 305,
+      text: '창술사',
+    },
+    {
+      value: 312,
+      text: '스트라이커',
+    },
+    {
+      value: 402,
+      text: '블레이드',
+    },
+    {
+      value: 403,
+      text: '데모닉',
+    },
+    {
+      value: 404,
+      text: '리퍼',
+    },
+    {
+      value: 502,
+      text: '호크아이',
+    },
+    {
+      value: 503,
+      text: '데빌헌터',
+    },
+    {
+      value: 504,
+      text: '블래스터',
+    },
+    {
+      value: 505,
+      text: '스카우터',
+    },
+    {
+      value: 512,
+      text: '건슬링어',
+    },
+    {
+      value: 602,
+      text: '도화가',
+    },
   ],
   marketAuction: {
     marketMenuAuctionSkillList: [
@@ -1859,7 +1925,7 @@ export const marketData = {
           },
           {
             value: 2,
-            text: '약점포착',
+            text: '보호막',
             isGem: false,
           },
           {
@@ -1869,12 +1935,12 @@ export const marketData = {
           },
           {
             value: 4,
-            text: '창끝 공격',
+            text: '파괴하는 창',
             isGem: false,
           },
           {
             value: 5,
-            text: '보호막',
+            text: '약점포착',
             isGem: false,
           },
           {
@@ -1917,7 +1983,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '행운의 코어',
+            text: '재빠른 움직임',
             isGem: false,
           },
           {
@@ -2023,7 +2089,7 @@ export const marketData = {
           },
           {
             value: 6,
-            text: '행운의 코어',
+            text: '기동성 약화',
             isGem: false,
           },
           {
@@ -2052,11 +2118,6 @@ export const marketData = {
           {
             value: 1,
             text: '강화된 일격',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '빠른 준비',
             isGem: false,
           },
           {
@@ -2420,7 +2481,7 @@ export const marketData = {
           },
           {
             value: 2,
-            text: '창끝 공격',
+            text: '급소 타격',
             isGem: false,
           },
           {
@@ -3408,7 +3469,7 @@ export const marketData = {
           },
           {
             value: 4,
-            text: '마무리 사격',
+            text: '숨통 끊기',
             isGem: false,
           },
           {
@@ -3636,11 +3697,6 @@ export const marketData = {
         text: '데모닉 슬래쉬',
         isSkillGroup: false,
         marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '탁월한 기동성',
-            isGem: false,
-          },
           {
             value: 3,
             text: '강화된 일격',
@@ -4234,7 +4290,7 @@ export const marketData = {
           },
           {
             value: 5,
-            text: '날카로운 해머',
+            text: '강화된 일격',
             isGem: false,
           },
           {
@@ -4578,7 +4634,7 @@ export const marketData = {
         marketMenuSkillTripodList: [
           {
             value: 1,
-            text: '행운의 코어',
+            text: '재빠른 움직임',
             isGem: false,
           },
           {
@@ -4588,7 +4644,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '빠른 준비',
+            text: '단단한 신체',
             isGem: false,
           },
           {
@@ -4625,11 +4681,6 @@ export const marketData = {
         isSkillGroup: false,
         marketMenuSkillTripodList: [
           {
-            value: 1,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
             value: 2,
             text: '날렵한 움직임',
             isGem: false,
@@ -4652,6 +4703,11 @@ export const marketData = {
           {
             value: 7,
             text: '붉은 파도',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '붉은 충격',
             isGem: false,
           },
           {
@@ -4770,7 +4826,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '급소 사격',
+            text: '사면초가',
             isGem: false,
           },
           {
@@ -5793,7 +5849,7 @@ export const marketData = {
         marketMenuSkillTripodList: [
           {
             value: 3,
-            text: '배터리 방출',
+            text: '배터리 절약',
             isGem: false,
           },
           {
@@ -6695,7 +6751,7 @@ export const marketData = {
           },
           {
             value: 2,
-            text: '단단한 갑옷',
+            text: '인내의 주먹',
             isGem: false,
           },
           {
@@ -8118,7 +8174,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '창끝 공격',
+            text: '급소 타격',
             isGem: false,
           },
           {
@@ -8305,7 +8361,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '절대적인 힘',
+            text: '단단한 신체',
             isGem: false,
           },
           {
@@ -8320,7 +8376,7 @@ export const marketData = {
           },
           {
             value: 6,
-            text: '날카로운 벽',
+            text: '절대적인 힘',
             isGem: false,
           },
           {
@@ -9251,13 +9307,13 @@ export const marketData = {
             isGem: false,
           },
           {
-            value: 3,
-            text: '약점포착',
+            value: 5,
+            text: '집중',
             isGem: false,
           },
           {
-            value: 5,
-            text: '무자비',
+            value: 6,
+            text: '약점포착',
             isGem: false,
           },
           {
@@ -11513,12 +11569,12 @@ export const marketData = {
         marketMenuSkillTripodList: [
           {
             value: 2,
-            text: '약점 포착',
+            text: '배터리 충전',
             isGem: false,
           },
           {
             value: 4,
-            text: '빠른 준비',
+            text: '약육 사격',
             isGem: false,
           },
           {
@@ -11768,7 +11824,7 @@ export const marketData = {
         marketMenuSkillTripodList: [
           {
             value: 1,
-            text: '약점 포착',
+            text: '배터리 절약',
             isGem: false,
           },
           {
@@ -11817,11 +11873,6 @@ export const marketData = {
           {
             value: 1,
             text: '날렵한 움직임',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '꿰뚫는 일격',
             isGem: false,
           },
           {
@@ -11874,7 +11925,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '행운의 코어',
+            text: '재빠른 움직임',
             isGem: false,
           },
           {
@@ -14793,13 +14844,18 @@ export const marketData = {
             isGem: false,
           },
           {
+            value: 6,
+            text: '파괴하는 창',
+            isGem: false,
+          },
+          {
             value: 7,
             text: '약점포착',
             isGem: false,
           },
           {
             value: 8,
-            text: '조준 거리',
+            text: '치명적인 조준',
             isGem: false,
           },
           {
@@ -15034,7 +15090,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '공격 준비',
+            text: '분노의 타격',
             isGem: false,
           },
           {
@@ -15222,11 +15278,6 @@ export const marketData = {
           {
             value: 4,
             text: '시간의 뒤틀림',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '행운의 코어',
             isGem: false,
           },
           {
@@ -17934,12 +17985,7 @@ export const marketData = {
           },
           {
             value: 3,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '행운의 코어',
+            text: '재빠른 움직임',
             isGem: false,
           },
           {
@@ -18159,7 +18205,7 @@ export const marketData = {
           },
           {
             value: 5,
-            text: '날카로운 해머',
+            text: '절대적인 힘',
             isGem: false,
           },
           {
@@ -18959,6 +19005,11 @@ export const marketData = {
         isSkillGroup: false,
         marketMenuSkillTripodList: [
           {
+            value: 2,
+            text: '기운 강화',
+            isGem: false,
+          },
+          {
             value: 3,
             text: '재빠른 손놀림',
             isGem: false,
@@ -19209,11 +19260,6 @@ export const marketData = {
             isGem: false,
           },
           {
-            value: 3,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
             value: 4,
             text: '약육강식',
             isGem: false,
@@ -19221,6 +19267,11 @@ export const marketData = {
           {
             value: 5,
             text: '잠식하는 힘',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '분노의 괴성',
             isGem: false,
           },
           {
@@ -19354,7 +19405,7 @@ export const marketData = {
           },
           {
             value: 5,
-            text: '행운의 코어',
+            text: '약육강식',
             isGem: false,
           },
           {
@@ -19622,6 +19673,24 @@ export const marketData = {
             text: '날렵한 움직임',
             isGem: false,
           },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 19282,
+        class: 202,
+        text: '황제',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
           {
             value: 500,
             text: '스킬 공격력 증가',

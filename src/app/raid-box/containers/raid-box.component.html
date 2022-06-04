@@ -9,6 +9,26 @@
       거래소 가격 검색
     </button>
   </div>
+  <div>
+    <mat-form-field>
+      <mat-label>레이드</mat-label>
+      <mat-select [formControl]="raidControl">
+        <mat-option *ngFor="let raid of raidList" [value]="raid">{{
+          raid
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-240">
+      <mat-label>재련 재료</mat-label>
+      <mat-select [formControl]="tierControl">
+        <mat-option value="t3_1302">명돌, 파괴석 결정, 수호석 결정</mat-option>
+        <mat-option value="t3_1340"
+          >위명돌, 파괴석 결정, 수호석 결정</mat-option
+        >
+        <mat-option value="t3_1390">경명돌, 파괴강석, 수호강석</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="layout">
     <mat-card>
       <mat-card-subtitle> 가격 정보 </mat-card-subtitle>
@@ -16,55 +36,12 @@
         <app-raid-box-price [priceForm]="priceForm"></app-raid-box-price>
       </mat-card-content>
     </mat-card>
-    <mat-card class="materials">
-      <mat-card-subtitle>더보기 보상</mat-card-subtitle>
-      <mat-card-content>
-        <div>
-          <mat-form-field class="w-240">
-            <mat-label>레이드</mat-label>
-            <mat-select [formControl]="raidControl">
-              <mat-option *ngFor="let raid of raidList" [value]="raid">{{
-                raid
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="w-240">
-            <mat-label>재련 재료</mat-label>
-            <mat-select [formControl]="tierControl">
-              <mat-option value="t3_1302"
-                >명돌, 파괴석 결정, 수호석 결정</mat-option
-              >
-              <mat-option value="t3_1340"
-                >위명돌, 파괴석 결정, 수호석 결정</mat-option
-              >
-              <mat-option value="t3_1390"
-                >경명돌, 파괴강석, 수호강석</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="material-info" *ngFor="let material of materials$ | async">
-          <mat-checkbox [formControl]="getCheckControl(material.name)">
-            <div class="flex-center">
-              <img [attr.src]="'assets/' + material.name + '.png'" />
-              <span>
-                x {{ material.amount | number: ".0-2" }} =
-                {{ material.price | number: ".2-2" }}골드</span
-              >
-            </div>
-          </mat-checkbox>
-        </div>
-
-        <div *ngIf="materialPrice$ | async as materialPrice">
-          합계 : {{ materialPrice | number: ".2-2" }}골드
-        </div>
-        <div *ngIf="openPrice$ | async as openPrice">
-          더보기 가격 : {{ openPrice | number: ".2-2" }}골드
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <app-raid-box-card
+      *ngFor="let raid of raids$ | async"
+      [priceTable]="priceForm.value"
+      [itemTier]="tierControl.value"
+      [raid]="raid"
+    ></app-raid-box-card>
     <mat-card class="notice">
       <mat-card-title> 주의사항 </mat-card-title>
       <mat-card-content>

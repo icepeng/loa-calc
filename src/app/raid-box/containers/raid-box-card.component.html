@@ -1,0 +1,23 @@
+<mat-card class="materials">
+  <mat-card-subtitle>{{ raid }}</mat-card-subtitle>
+  <mat-card-content>
+    <div class="material-info" *ngFor="let material of materials">
+      <mat-checkbox [formControl]="getCheckControl(material.name)">
+        <div class="flex-center">
+          <img [attr.src]="'assets/' + material.name + '.png'" />
+          <span>
+            x {{ material.amount | number: ".0-2" }} =
+            {{ material.price | number: ".2-2" }}골드</span
+          >
+        </div>
+      </mat-checkbox>
+    </div>
+
+    <div *ngIf="materialPrice">
+      합계 : {{ materialPrice | number: ".2-2" }}골드
+    </div>
+    <div *ngIf="openPrice">
+      더보기 가격 : {{ openPrice | number: ".2-2" }}골드
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -15,7 +15,7 @@ import {
 } from 'rxjs';
 import { getSearchScript } from '../../refining/search';
 import { RaidBoxSearchDialogComponent } from '../components/raid-box-search-dialog.component';
-import { Raid, rewardData } from '../data';
+import { Raid, raidGroup, rewardData } from '../data';
 
 @Component({
   selector: 'app-raid-box',
@@ -34,30 +34,12 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
     파괴강석: new FormControl(4.94),
     혼돈의돌: new FormControl(500),
   });
-  checkForm = new FormGroup({
-    파편: new FormControl(true),
-    하급오레하: new FormControl(true),
-    중급오레하: new FormControl(true),
-    상급오레하: new FormControl(true),
-    명돌: new FormControl(true),
-    위명돌: new FormControl(true),
-    경명돌: new FormControl(true),
-    수결: new FormControl(true),
-    파결: new FormControl(true),
-    수호강석: new FormControl(true),
-    파괴강석: new FormControl(true),
-    혼돈의돌: new FormControl(true),
-  });
 
   tierControl = new FormControl('t3_1302');
-
   raidControl = new FormControl('');
-  raidList = Object.keys(rewardData);
+  raidList = Object.keys(raidGroup);
 
-  materials$!: Observable<{ name: string; amount: number; price: number }[]>;
-  materialPrice$!: Observable<number>;
-  openPrice$!: Observable<number>;
-
+  raids$!: Observable<Raid[]>;
   subscription$!: Subscription;
 
   constructor(
@@ -77,65 +59,13 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
       this.priceForm.patchValue(JSON.parse(savedPriceForm));
     }
 
-    const priceTable$: Observable<Record<string, number>> =
-      this.priceForm.valueChanges.pipe(startWith(this.priceForm.value));
-    const checkTable$: Observable<Record<string, boolean>> =
-      this.checkForm.valueChanges.pipe(startWith(this.checkForm.value));
-    const rewardTable$ = this.raidControl.valueChanges.pipe(
+    this.raids$ = this.raidControl.valueChanges.pipe(
       startWith(this.raidControl.value),
-      filter((value) => !!value),
-      map((raid: Raid) => rewardData[raid])
+      map((raid) => raidGroup[raid])
     );
-    const itemTier$ = this.tierControl.valueChanges.pipe(
-      startWith(this.tierControl.value)
-    );
-
     this.subscription$ = this.priceForm.valueChanges.subscribe((priceForm) => {
       localStorage.setItem('raid_box_priceForm', JSON.stringify(priceForm));
     });
-    this.materials$ = combineLatest([
-      priceTable$,
-      checkTable$,
-      rewardTable$,
-      itemTier$,
-    ]).pipe(
-      map(([priceTable, checkTable, rewardTable, itemTier]) => {
-        return Object.entries(rewardTable.rewards)
-          .map(([name, amount]): [string, number] => {
-            if (itemTier === 't3_1390') {
-              if (name === '수결') {
-                return ['수호강석', amount / 5];
-              }
-              if (name === '파결') {
-                return ['파괴강석', amount / 5];
-              }
-              if (name === '위명돌') {
-                return ['경명돌', amount / 5];
-              }
-              if (name === '명돌') {
-                return ['경명돌', amount / 25];
-              }
-            }
-            if (itemTier === 't3_1340') {
-              if (name === '명돌') {
-                return ['위명돌', amount / 5];
-              }
-            }
-            return [name, amount];
-          })
-          .map(([name, amount]) => ({
-            name,
-            amount,
-            price: checkTable[name] ? priceTable[name] * amount : 0,
-          }));
-      })
-    );
-    this.materialPrice$ = this.materials$.pipe(
-      map((materials) => materials.reduce((sum, x) => sum + x.price, 0))
-    );
-    this.openPrice$ = rewardTable$.pipe(
-      map((rewardTable) => rewardTable.price)
-    );
   }
 
   openSearchDialog() {
@@ -153,10 +83,6 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
     } else {
       this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
     }
-  }
-
-  getCheckControl(name: string) {
-    return this.checkForm.get(name) as FormControl;
   }
 
   ngOnDestroy(): void {

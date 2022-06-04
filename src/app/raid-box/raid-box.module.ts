@@ -16,12 +16,14 @@ import { RaidBoxSearchDialogComponent } from './components/raid-box-search-dialo
 import { RaidBoxPriceComponent } from './containers/raid-box-price.component';
 import { RaidBoxComponent } from './containers/raid-box.component';
 import { RaidBoxRoutingModule } from './raid-box-routing.module';
+import { RaidBoxCardComponent } from './containers/raid-box-card.component';
 
 @NgModule({
   declarations: [
     RaidBoxComponent,
     RaidBoxPriceComponent,
     RaidBoxSearchDialogComponent,
+    RaidBoxCardComponent,
   ],
   imports: [
     CommonModule,

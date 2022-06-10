@@ -54,4 +54,6 @@ export interface ComposeFilter {
   tradeLeft: number;
   ancientCountMin: number;
   exclude: Set<string>;
+  ignoredSlots: string[];
+  fixedImprintings: string[];
 }

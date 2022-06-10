@@ -84,6 +84,8 @@ export class ImprintingComponent implements OnInit {
     tradeLeft: 0,
     ancientCountMin: 0,
     exclude: new Set<string>(),
+    ignoredSlots: [],
+    fixedImprintings: [],
   };
   additionalItems: {
     acc: AccMap;
@@ -94,6 +96,10 @@ export class ImprintingComponent implements OnInit {
   isLoading = false;
   progress = 0;
   composeResults: ComposeResult[] = [];
+
+  get validTarget() {
+    return this.target.filter(([name, amount]) => name && amount > 0);
+  }
 
   constructor(
     private snackbar: MatSnackBar,

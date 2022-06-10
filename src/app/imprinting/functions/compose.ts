@@ -1,16 +1,15 @@
 import { permutations } from '../../../util';
-import { dealOptions, penaltyOptions } from './const';
+import { penaltyOptions } from './const';
 import {
   AccMap,
   Candidate,
   ComposeFilter,
   ComposeResult,
   Effects,
-  Imprint,
   Item,
   StoneBook,
 } from './type';
-import { addRecord, getOverlappingAcc } from './util';
+import { addRecord, getOverlappingAcc, getUniqueId } from './util';
 
 function getMinPriceCache(entries: Item[][], len: number) {
   return Array.from({ length: len }, (_, k) => {
@@ -138,6 +137,21 @@ function prefilter(items: Item[], filter: ComposeFilter) {
   return items.filter((item) => item.isFixed || !isItemFiltered(item));
 }
 
+function getDummyItem(imprint: [string, number][]): Item {
+  return {
+    id: getUniqueId(),
+    name: '제외된 슬롯',
+    price: 0,
+    grade: 0,
+    tradeLeft: 0,
+    isFixed: true,
+    effects: imprint,
+    buyPrice: 0,
+    auctionPrice: 0,
+    quality: 0,
+  };
+}
+
 export function compose(
   candidates: Candidate[],
   accMap: Record<string, AccMap>,
@@ -152,21 +166,35 @@ export function compose(
       )
     )
   );
+
   const overlappingAcc = getOverlappingAcc(accMap);
-  if (overlappingAcc.귀걸이) {
+  if (
+    overlappingAcc.귀걸이 &&
+    !(
+      filter.ignoredSlots.includes('귀걸이1') ||
+      filter.ignoredSlots.includes('귀걸이2')
+    )
+  ) {
     accPermutation = accPermutation.filter((permutation) => {
       const index1 = permutation.findIndex((el) => el === '귀걸이1');
       const index2 = permutation.findIndex((el) => el === '귀걸이2');
       return index1 < index2;
     });
   }
-  if (overlappingAcc.반지) {
+  if (
+    overlappingAcc.반지 &&
+    !(
+      filter.ignoredSlots.includes('반지1') ||
+      filter.ignoredSlots.includes('반지2')
+    )
+  ) {
     accPermutation = accPermutation.filter((permutation) => {
       const index1 = permutation.findIndex((el) => el === '반지1');
       const index2 = permutation.findIndex((el) => el === '반지2');
       return index1 < index2;
     });
   }
+
   const total =
     accPermutation.length *
     candidates.flatMap((candidate) => candidate.combinations).length;
@@ -186,6 +214,17 @@ export function compose(
         for (let i = 0; i < accList.length; i += 1) {
           const acc = accList[i];
           const imprint = Object.entries(combination[i]);
+          if (filter.ignoredSlots.includes(acc)) {
+            if (
+              filter.fixedImprintings.includes(imprint[0][0]) ||
+              filter.fixedImprintings.includes(imprint[1][0])
+            ) {
+              continue;
+            }
+            entries.push([getDummyItem(imprint)]);
+            continue;
+          }
+
           const items = prefiltered[
             `${imprint[0][0]}_${imprint[0][1]}_${imprint[1][0]}_${imprint[1][1]}_${acc}`
           ].sort((a, b) => a.price - b.price);

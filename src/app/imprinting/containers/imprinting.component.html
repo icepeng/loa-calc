@@ -1,10 +1,17 @@
 <div class="container">
   <div class="flex-center">
-    <h1 class="mat-h1">
-      각인 최적화
-    </h1>
-    <a href="https://icepeng.com/11" target="_blank" class="heading-button" mat-flat-button color="primary">설명서</a>
-    <button class="heading-button" (click)="reset()" mat-stroked-button>초기화</button>
+    <h1 class="mat-h1">각인 최적화</h1>
+    <a
+      href="https://icepeng.com/11"
+      target="_blank"
+      class="heading-button"
+      mat-flat-button
+      color="primary"
+      >설명서</a
+    >
+    <button class="heading-button" (click)="reset()" mat-stroked-button>
+      초기화
+    </button>
   </div>
   <div class="layout">
     <app-imprinting-form
@@ -110,6 +117,32 @@
                 *ngFor="let penalty of penaltyOptions"
                 [value]="penalty"
                 >{{ penalty }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>제외할 아이템 슬롯</mat-label>
+            <mat-select [(ngModel)]="filter.ignoredSlots" multiple>
+              <mat-option
+                *ngFor="
+                  let slot of ['목걸이', '귀걸이1', '귀걸이2', '반지1', '반지2']
+                "
+                [value]="slot"
+                >{{ slot }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>고정할 각인 목록</mat-label>
+            <mat-select [(ngModel)]="filter.fixedImprintings" multiple>
+              <mat-option
+                *ngFor="let imprinting of validTarget"
+                [value]="imprinting[0]"
+                >{{ imprinting[0] }}</mat-option
               >
             </mat-select>
           </mat-form-field>

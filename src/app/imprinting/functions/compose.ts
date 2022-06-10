@@ -140,7 +140,7 @@ function prefilter(items: Item[], filter: ComposeFilter) {
 function getDummyItem(imprint: [string, number][]): Item {
   return {
     id: getUniqueId(),
-    name: '제외된 슬롯',
+    name: '제외된 부위',
     price: 0,
     grade: 0,
     tradeLeft: 0,

@@ -290,6 +290,10 @@ export class ImprintingComponent implements OnInit {
     accMap: Record<string, AccMap>,
     stoneBooks: StoneBook[]
   ): Candidate[] | undefined {
+    if (this.validTarget.length === 0) {
+      this.snackbar.open('목표 각인 수치가 입력되지 않았습니다.', '닫기');
+      return;
+    }
     if (target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
       this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
       return;

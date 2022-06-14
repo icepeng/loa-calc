@@ -111,12 +111,6 @@
             "webWorkerTsConfig": "tsconfig.worker.json"
           }
         },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "cname": "loa.icepeng.com"
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {

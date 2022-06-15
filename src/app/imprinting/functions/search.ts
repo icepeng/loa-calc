@@ -158,10 +158,13 @@ export function getSearchScript(
           .split("\\n")
           .map((str) => str.trim())
           .filter((str) => !!str)
-          .map((str) => [
-            str.split("[")[1].split("]")[0],
-            parseInt(str.split("+")[1], 10),
-          ]);
+          .map((str) => {
+            const fragments = str.split("[")
+            return [
+              fragments[fragments.length - 1].split("]")[0],
+              parseInt(str.split("+")[1], 10),
+            ]
+          });
       const quality = parseInt(
         row.querySelector(\`td:nth-child(3) > div > span.txt\`).innerText.trim(),
         10

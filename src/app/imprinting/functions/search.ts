@@ -182,6 +182,15 @@ export function getSearchScript(
           .replace(/,/g, "")
       );
       const price = buyPrice || auctionPrice;
+
+      const historyBtn = row.querySelector('div.grade > .button--deal-history');
+      const internalData = {...historyBtn.dataset};
+      if (internalData) {
+        internalData.optionjson = JSON.parse(internalData.optionjson);
+        internalData.optionjson.forEach(item => {
+          item.optionValueHtml = '';
+        });
+      }
     
       return {
         isFixed: false,
@@ -194,6 +203,7 @@ export function getSearchScript(
         price,
         buyPrice,
         auctionPrice,
+        internalData
       };
     }
     
@@ -513,5 +523,137 @@ export function getBuyScript(item: Item) {
 구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
 구매할 캐릭터가 올바르게 선택되었는지 꼭 확인해주세요
 */
+  `;
+}
+
+export function getHistoryScript(item: Item) {
+  if (!item.internalData) {
+    throw new Error('internalData is not defined');
+  }
+
+  const data = item.internalData;
+
+  return `var loader = new lui.utils.Loader();
+
+var content = "";
+
+var firstcategory = "${data.firstcategory}";
+var firstcategoryname = "전체";
+var firstcategoryInfo = _menuJson.marketCategory.filter(function (model) {
+  return (
+    model.auctionEnabled == 1 &&
+    model.parent == 0 &&
+    model.value == firstcategory
+  );
+})[0];
+if (firstcategoryInfo != undefined) {
+  firstcategoryname = firstcategoryInfo.text;
+}
+var secondcategory = "${data.secondcategory}";
+var secondcategoryname = "전체";
+var secondcategoryInfo = _menuJson.marketCategory.filter(function (model) {
+  return (
+    model.auctionEnabled == 1 &&
+    model.parent == firstcategory &&
+    model.value == secondcategory
+  );
+})[0];
+if (secondcategoryInfo != undefined) {
+  secondcategoryname = secondcategoryInfo.text;
+}
+var itemno = "${data.itemno}";
+var itemgrade = "${data.grade}";
+var itemgradename = _menuJson.marketGrade.filter(function (model) {
+  return model.value == itemgrade;
+})[0].text;
+var itemname = "${data.itemname}";
+var itempath = "${data.itempath}";
+var classname =
+  "${data.classname}" == "" ? "전체" : "${data.classname}";
+var tier = ${data.tier};
+var itemlevel =
+  "${data.itemlevel}" == "" ? "-" : "${data.itemlevel}";
+var gradequality = "${data.gradequality}";
+var itemtooltip = "";
+var optionjson = ${JSON.stringify(data.optionjson)};
+
+//html은 필요없음
+optionjson.forEach(function (item) {
+  item.optionValueHtml = "";
+});
+
+//초기 request값 저장
+_requestHistoryInit = setRequestHistoryInit(
+  firstcategory,
+  secondcategory,
+  itemno,
+  tier,
+  itemgrade,
+  gradequality,
+  optionjson
+);
+
+$.when(
+  $.ajax({
+    url: "/Auction/GetHistoryInfo",
+    type: "POST",
+    dataType: "html",
+    data: {
+      request: _requestHistoryInit,
+      optionInfo: optionjson,
+    },
+    success: function (data) {
+      if (!jsonResultCommonCheck(data)) {
+        return false;
+      }
+
+      if (data == "") {
+        commonModalHandler("판매내역 불러오기에 실패하였습니다.");
+        return false;
+      }
+      content = data;
+    },
+    error: function (xhr, status, error) {
+      ajaxErrorHandler(xhr, status, error);
+      return false;
+    },
+  })
+).done(function () {
+  if (content != "") {
+    content = content
+      .replace(/{firstcategoryname}/gi, firstcategoryname)
+      .replace(/{secondcategoryname}/gi, secondcategoryname);
+    content = content.replace(/{classname}/gi, classname);
+    content = content
+      .replace(/{itemlevel}/gi, itemlevel)
+      .replace(/{itemtiername}/gi, "티어 " + tier);
+    content = content
+      .replace(/{itemgrade}/gi, itemgrade)
+      .replace(/{itemgradename}/gi, itemgradename);
+    content = content
+      .replace(/{itemiconpath}/gi, itempath)
+      .replace(/{itemname}/gi, itemname);
+    content = content.replace(/{gradequality}/gi, gradequality);
+
+    var modal = new lui.utils.Modal({
+      id: "modal-deal-history",
+      class: "history",
+      isShowModal: true,
+      isShowClose: true,
+      title: "판매내역",
+      content: content,
+      cbInit: function (e) {
+        $("#modal-deal-history #tooltip").data("item", itemtooltip);
+        /* 아이템 툴팁 */
+        lui.deal.popRenderTooltip();
+      },
+      cbHideCompleted: function () {
+        modal.remove();
+      },
+    });
+  }
+
+  loader.remove();
+});
   `;
 }

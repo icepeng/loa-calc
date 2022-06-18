@@ -38,6 +38,7 @@ export interface Item {
   price: number;
   buyPrice: number;
   auctionPrice: number;
+  internalData?: any;
 }
 
 export interface ComposeResult {

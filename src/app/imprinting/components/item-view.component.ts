@@ -12,7 +12,7 @@ import {
   imprintOptions,
   penaltyOptions,
 } from '../functions/const';
-import { getBuyScript } from '../functions/search';
+import { getBuyScript, getHistoryScript } from '../functions/search';
 import { Item } from '../functions/type';
 
 @Component({
@@ -47,5 +47,9 @@ export class ItemViewComponent implements OnChanges {
 
   copyBuyScript() {
     this.clipboard.copy(getBuyScript(this.item));
+  }
+
+  copyHistoryScript() {
+    this.clipboard.copy(getHistoryScript(this.item));
   }
 }

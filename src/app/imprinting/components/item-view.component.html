@@ -8,6 +8,7 @@
 </button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="exclude.emit(item)">제외하고 계산</button>
+  <button mat-menu-item (click)="copyHistoryScript()">판매 내역 코드 복사</button>
   <button mat-menu-item (click)="copyBuyScript()">구매 코드 복사</button>
 </mat-menu>
 <div [ngClass]="'grade-' + item.grade">{{ item.name }}</div>

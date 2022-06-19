@@ -192,6 +192,7 @@ export function getSearchScript(
           delete item.braceletAliasType;
           delete item.gemType;
         });
+        internalData.optionjson = internalData.optionjson.filter(item => item.penalty === 0);
       }
     
       return {
@@ -412,18 +413,14 @@ export function getSearchScript(
 
     let result;
     function copyResult() {
-      const el = document.createElement('textarea');
-      document.body.appendChild(el);
-      el.value = JSON.stringify(result, null, 2);
-      el.select();
-      const success = document.execCommand('copy');
-      document.body.removeChild(el);
-      if (success) {
-        alert('검색 결과가 복사되었습니다.');
-      } else {
-        alert('검색 결과 복사에 실패했습니다. txt 파일 다운로드로 재시도합니다.');
-        downloadResult();
-      }
+      navigator.clipboard.writeText(JSON.stringify(result, null, 2))
+        .then(() => {
+          alert('검색 결과가 복사되었습니다.');
+        })
+        .catch(() => {
+          alert('검색 결과 복사에 실패했습니다. txt 파일 다운로드로 재시도합니다.');
+          downloadResult();
+        });
     }
 
     function downloadResult() {

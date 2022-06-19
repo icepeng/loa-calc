@@ -38,7 +38,7 @@ export interface Item {
   price: number;
   buyPrice: number;
   auctionPrice: number;
-  internalData?: any;
+  internalData?: ItemInternalData;
 }
 
 export interface ComposeResult {
@@ -57,4 +57,29 @@ export interface ComposeFilter {
   exclude: Set<string>;
   ignoredSlots: string[];
   fixedImprintings: string[];
+}
+
+export interface ItemInternalData {
+  firstcategory: string;
+  secondcategory: string;
+  itemno: string;
+  classname: string;
+  grade: string;
+  itemname: string;
+  itempath: string;
+  tier: string;
+  itemlevel: string;
+  gradequality: string;
+  optionjson: {
+    itemType: number;
+    firstOptionText: string;
+    firstOptionValue: number;
+    secondOptionText: string;
+    secondOptionValue: number;
+    optionValue: number;
+    penalty: 0 | 1;
+    optionType: 2 | 3; // 2 = 특성, 3 = 각인
+    classNo: number;
+    className?: string;
+  }[];
 }

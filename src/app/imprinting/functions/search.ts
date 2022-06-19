@@ -188,7 +188,9 @@ export function getSearchScript(
       if (internalData) {
         internalData.optionjson = JSON.parse(internalData.optionjson);
         internalData.optionjson.forEach(item => {
-          item.optionValueHtml = '';
+          delete item.optionValueHtml;
+          delete item.braceletAliasType;
+          delete item.gemType;
         });
       }
     
@@ -414,9 +416,21 @@ export function getSearchScript(
       document.body.appendChild(el);
       el.value = JSON.stringify(result, null, 2);
       el.select();
-      document.execCommand('copy');
+      const success = document.execCommand('copy');
       document.body.removeChild(el);
-      alert('검색 결과가 복사되었습니다.');
+      if (success) {
+        alert('검색 결과가 복사되었습니다.');
+      } else {
+        alert('검색 결과 복사에 실패했습니다. txt 파일 다운로드로 재시도합니다.');
+        downloadResult();
+      }
+    }
+
+    function downloadResult() {
+      const el = document.createElement('a');
+      el.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(result, null, 2)));
+      el.setAttribute('download', 'imprinting.txt');
+      el.click();
     }
 
     const btn = document.getElementById('copyBtn');

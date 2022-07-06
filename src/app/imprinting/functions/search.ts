@@ -133,6 +133,8 @@ export function getSearchScript(
       "황후의 은총": 200,
       회귀: 305,
       만개: 306,
+      질풍노도: 307,
+      이슬비: 308,
     };
     
     function parse(document, index) {

@@ -1169,807 +1169,6 @@ export const marketData = {
         ],
       },
       {
-        value: 32200,
-        class: 603,
-        text: '날아가기',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 2,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '성장 공격',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '한기',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '낙뢰',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '기류 강화',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32130,
-        class: 603,
-        text: '내려찍기',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 3,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '튼튼한 우산',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '낙뢰',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '햇살 방출',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '궤뚫는 일격',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32170,
-        class: 603,
-        text: '돌개바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 2,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '약점 포착',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '부메랑 우산',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '우산 복제',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32240,
-        class: 603,
-        text: '뙤약볕',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '증기 조절',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '뇌진탕',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '가벼운 표적',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '빛의 부름',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '흑점 폭발',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32230,
-        class: 603,
-        text: '마주바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '마주바람 강화',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32120,
-        class: 603,
-        text: '몰아치기',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '역류',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '혼신',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '재빠른 손놀림',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '부위파괴 강화',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '서리검',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '우레',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '공간베기',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '상승기류',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32250,
-        class: 603,
-        text: '바람송곳',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '역류',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '관통',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '후벼파기',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '번개 바람',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '큰 센바람',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '연쇄 공격',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '단일 공격',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32220,
-        class: 603,
-        text: '봄바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '전투의 달인',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '단단한 갑옷',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '마파람',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '높새바람',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32160,
-        class: 603,
-        text: '센바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '기분 좋은 바람',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '재빠른 손놀림',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '증기 조절',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '향풍',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '댑바람',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32150,
-        class: 603,
-        text: '소나기',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '무기 파괴',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '한파주의보',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '낙뢰주의보',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '국지성 소나기',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32190,
-        class: 603,
-        text: '소용돌이',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 2,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '바람 기둥',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '죽음의 소용돌이',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '신속한 준비',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '증기 조절',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32210,
-        class: 603,
-        text: '싹쓸바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '재빠른 손놀림',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '빠른 준비',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '소멸',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '궤뚫는 회오리',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '폭풍의 눈',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '증기 조절',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32140,
-        class: 603,
-        text: '짙은 안개',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '날렵한 움직임',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '재빠른 손놀림',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '마력 조절',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '전투의 달인',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '질식',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '증기 조절',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32260,
-        class: 603,
-        text: '칼바람',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '질풍검',
-            isGem: false,
-          },
-          {
-            value: 2,
-            text: '거대 돌풍',
-            isGem: false,
-          },
-          {
-            value: 3,
-            text: '화려한 움직임',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '절단',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '역류',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '벼락',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '결빙',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32110,
-        class: 603,
-        text: '펼치기',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 3,
-            text: '증기 획득',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '외부 충격',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '가벼운 발걸음',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '마나 순환',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '날카로운 장막',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '거대 장막',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 32180,
-        class: 603,
-        text: '회오리 걸음',
-        isSkillGroup: false,
-        marketMenuSkillTripodList: [
-          {
-            value: 1,
-            text: '재빠른 손놀림',
-            isGem: false,
-          },
-          {
-            value: 4,
-            text: '예리한 일격',
-            isGem: false,
-          },
-          {
-            value: 5,
-            text: '약육강식',
-            isGem: false,
-          },
-          {
-            value: 6,
-            text: '역류',
-            isGem: false,
-          },
-          {
-            value: 7,
-            text: '마지막 결정타',
-            isGem: false,
-          },
-          {
-            value: 8,
-            text: '초고속 회전',
-            isGem: false,
-          },
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
-        value: 62000,
-        class: 603,
-        text: '여우비 스킬',
-        isSkillGroup: true,
-        marketMenuSkillTripodList: [
-          {
-            value: 500,
-            text: '스킬 공격력 증가',
-            isGem: true,
-          },
-          {
-            value: 2700,
-            text: '스킬 쿨타임 감소',
-            isGem: true,
-          },
-        ],
-      },
-      {
         value: 38120,
         class: 512,
         text: 'AT02 유탄',
@@ -3504,6 +2703,54 @@ export const marketData = {
         ],
       },
       {
+        value: 32200,
+        class: 603,
+        text: '날아가기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '성장 공격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '한기',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '낙뢰',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '기류 강화',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 17030,
         class: 104,
         text: '날카로운 창',
@@ -3628,6 +2875,49 @@ export const marketData = {
           {
             value: 8,
             text: '최후의 속삭임',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32130,
+        class: 603,
+        text: '내려찍기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 3,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '튼튼한 우산',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '낙뢰',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '햇살 방출',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '꿰뚫는 일격',
             isGem: false,
           },
           {
@@ -4972,6 +4262,49 @@ export const marketData = {
         ],
       },
       {
+        value: 32170,
+        class: 603,
+        text: '돌개바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '약점 포착',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '부메랑 우산',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '우산 복제',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 36070,
         class: 105,
         text: '돌진',
@@ -5159,6 +4492,59 @@ export const marketData = {
           {
             value: 7,
             text: '그림자 질주',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32240,
+        class: 603,
+        text: '뙤약볕',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '증기 조절',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '뇌진탕',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '가벼운 표적',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '빛의 부름',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '흑점 폭발',
             isGem: false,
           },
           {
@@ -6109,6 +5495,39 @@ export const marketData = {
         ],
       },
       {
+        value: 32230,
+        class: 603,
+        text: '마주바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '마주바람 강화',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 38110,
         class: 512,
         text: '마탄의 사수',
@@ -6733,6 +6152,64 @@ export const marketData = {
           {
             value: 8,
             text: '레이저 커팅',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32120,
+        class: 603,
+        text: '몰아치기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '역류',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '혼신',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '부위파괴 강화',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '서리검',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '우레',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '공간베기',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '상승기류',
             isGem: false,
           },
           {
@@ -7597,6 +7074,59 @@ export const marketData = {
         ],
       },
       {
+        value: 32250,
+        class: 603,
+        text: '바람송곳',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '역류',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '관통',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '후벼파기',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '번개 바람',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '큰 센바람',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '연쇄 공격',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '단일 공격',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 22120,
         class: 302,
         text: '바람의 속삭임',
@@ -8287,6 +7817,54 @@ export const marketData = {
           {
             value: 7,
             text: '블랙 익스플로젼',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32220,
+        class: 603,
+        text: '봄바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '전투의 달인',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '단단한 갑옷',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '마파람',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '높새바람',
             isGem: false,
           },
           {
@@ -10250,6 +9828,64 @@ export const marketData = {
         ],
       },
       {
+        value: 32160,
+        class: 603,
+        text: '센바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '기분 좋은 바람',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '증기 조절',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '향풍',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '댑바람',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 19140,
         class: 202,
         text: '셀레스티얼 레인',
@@ -10308,6 +9944,54 @@ export const marketData = {
         ],
       },
       {
+        value: 32150,
+        class: 603,
+        text: '소나기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '무기 파괴',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '한파주의보',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '낙뢰주의보',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '국지성 소나기',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 16600,
         class: 102,
         text: '소드 스톰',
@@ -10346,6 +10030,54 @@ export const marketData = {
           {
             value: 8,
             text: '지진 파동',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32190,
+        class: 603,
+        text: '소용돌이',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 2,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '바람 기둥',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '죽음의 소용돌이',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '신속한 준비',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '증기 조절',
             isGem: false,
           },
           {
@@ -12175,6 +11907,54 @@ export const marketData = {
           {
             value: 8,
             text: '확산 파편',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32210,
+        class: 603,
+        text: '싹쓸바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '빠른 준비',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '소멸',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '꿰뚫는 회오리',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '폭풍의 눈',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '증기 조절',
             isGem: false,
           },
           {
@@ -16929,6 +16709,54 @@ export const marketData = {
         ],
       },
       {
+        value: 32140,
+        class: 603,
+        text: '짙은 안개',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '날렵한 움직임',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '마력 조절',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '전투의 달인',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '질식',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '증기 조절',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 17210,
         class: 104,
         text: '차지 스팅거',
@@ -17788,6 +17616,64 @@ export const marketData = {
           {
             value: 7,
             text: '폭격창',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32260,
+        class: 603,
+        text: '칼바람',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '질풍검',
+            isGem: false,
+          },
+          {
+            value: 2,
+            text: '거대 돌풍',
+            isGem: false,
+          },
+          {
+            value: 3,
+            text: '화려한 움직임',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '절단',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '역류',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '벼락',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '결빙',
             isGem: false,
           },
           {
@@ -19117,6 +19003,54 @@ export const marketData = {
           {
             value: 8,
             text: '데스 웨이브',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 32110,
+        class: 603,
+        text: '펼치기',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 3,
+            text: '증기 획득',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '외부 충격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '가벼운 발걸음',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '마나 순환',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '날카로운 장막',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '거대 장막',
             isGem: false,
           },
           {
@@ -20638,6 +20572,54 @@ export const marketData = {
         ],
       },
       {
+        value: 32180,
+        class: 603,
+        text: '회오리 걸음',
+        isSkillGroup: false,
+        marketMenuSkillTripodList: [
+          {
+            value: 1,
+            text: '재빠른 손놀림',
+            isGem: false,
+          },
+          {
+            value: 4,
+            text: '예리한 일격',
+            isGem: false,
+          },
+          {
+            value: 5,
+            text: '약육강식',
+            isGem: false,
+          },
+          {
+            value: 6,
+            text: '역류',
+            isGem: false,
+          },
+          {
+            value: 7,
+            text: '마지막 결정타',
+            isGem: false,
+          },
+          {
+            value: 8,
+            text: '초고속 회전',
+            isGem: false,
+          },
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
         value: 36030,
         class: 105,
         text: '회전 베기',
@@ -20958,6 +20940,24 @@ export const marketData = {
         value: 42000,
         class: 403,
         text: '악마 스킬',
+        isSkillGroup: true,
+        marketMenuSkillTripodList: [
+          {
+            value: 500,
+            text: '스킬 공격력 증가',
+            isGem: true,
+          },
+          {
+            value: 2700,
+            text: '스킬 쿨타임 감소',
+            isGem: true,
+          },
+        ],
+      },
+      {
+        value: 62000,
+        class: 603,
+        text: '여우비 스킬',
         isSkillGroup: true,
         marketMenuSkillTripodList: [
           {

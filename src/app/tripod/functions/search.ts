@@ -179,17 +179,41 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
         }
       }
     }
+
+    function getTrimmedAverage(arr) {
+      if (arr.length <= 2) return 700; // default RTT value
+      var max = arr[0];
+      var min = arr[0];
+      var sum = 0;
+      arr.forEach(function (value) {
+        if (value > max) max = value;
+        if (value < min) min = value;
+        sum += value;
+      });
+      return (sum - max - min) / (arr.length - 2);    
+    }
     
-    const SEARCH_DELAY = 6.2
+    const SEARCH_DELAY = 6.2;
     async function getSearchResult(classCode, tripods) {
       const result = [];
+      const prevRTTMs = [];
+      let prevStartedTimeMs = -1;
       const total = tripods.length;
       let count = 0;
       for (const tripod of tripods) {
-          count += 1;
-          const estimated = new Date();
-          estimated.setSeconds(estimated.getSeconds() + (total - count) * SEARCH_DELAY);
-          console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimated.toLocaleTimeString()}\`)
+        count += 1;
+        if(prevStartedTimeMs > 0) {
+          if(prevRTTMs.length >= 10) prevRTTMs.shift();
+          prevRTTMs.push(Date.now() - prevStartedTimeMs - SEARCH_DELAY * 1000);
+        }
+        prevStartedTimeMs = Date.now();
+        const estimatedFinishTime = new Date();
+        const estimatedDuration = (total - count + 1) * (SEARCH_DELAY + getTrimmedAverage(prevRTTMs) / 1000);
+        estimatedFinishTime.setSeconds(estimatedFinishTime.getSeconds() + estimatedDuration);
+        const estimatedDurationDate = new Date(0);
+        estimatedDurationDate.setSeconds(estimatedDuration);
+        const estimatedDurationString = \`\${estimatedDurationDate.getMinutes()}분 \${estimatedDurationDate.getSeconds()}초\`;
+        console.log(\`검색 진행중 - \${count} / \${total}\n예상 완료 시각: \${estimatedFinishTime.toLocaleTimeString()}, 예상 남은 시간: \${estimatedDurationString}\`);
           
           const { products, totalPages } = await trySearch({
             classNo: classCode,

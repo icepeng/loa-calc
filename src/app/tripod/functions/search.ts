@@ -180,7 +180,7 @@ export function getSearchScript(classCode: number, tripods: TripodValue[][]) {
       }
     }
     
-    const SEARCH_DELAY = 3.2
+    const SEARCH_DELAY = 6.2
     async function getSearchResult(classCode, tripods) {
       const result = [];
       const total = tripods.length;

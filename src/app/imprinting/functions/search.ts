@@ -349,7 +349,7 @@ export function getSearchScript(
       }
     }
     
-    const SEARCH_DELAY = 3.2
+    const SEARCH_DELAY = 6.2
     async function getSearchResult(imprints, accTypes, accMap, overlapping, searchGrade) {
       const result = [];
       const total = imprints.length * accTypes.length;

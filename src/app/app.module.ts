@@ -19,7 +19,6 @@ import { ImprintingModule } from './imprinting/imprinting.module';
 import { RaidBoxModule } from './raid-box/raid-box.module';
 import { RefiningModule } from './refining/refining.module';
 import { StoneModule } from './stone/stone.module';
-import { TripodModule } from './tripod/tripod.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +29,6 @@ import { TripodModule } from './tripod/tripod.module';
     HomeModule,
     RefiningModule,
     ImprintingModule,
-    TripodModule,
     StoneModule,
     RaidBoxModule,
     DpsModule,

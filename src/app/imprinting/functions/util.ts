@@ -45,9 +45,11 @@ export function getOverlappingAcc(accMap: Record<string, AccMap>) {
 }
 
 export function getUniqueId() {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 97) +
-      Math.random().toString(16).slice(2) +
-      Date.now().toString(16).slice(4)
+  return (
+    String.fromCharCode(Math.floor(Math.random() * 26) + 97) +
+    Math.random().toString(16).slice(2) +
+    Date.now().toString(16).slice(4)
+  );
 }
 
 export function getFixedItem(acc: AccMap, price?: number): Item {

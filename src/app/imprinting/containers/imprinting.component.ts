@@ -377,6 +377,12 @@ export class ImprintingComponent implements OnInit {
         this.composeResults = data.result;
         if (this.composeResults.length === 0) {
           this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
+        } else if (data.effFilteredRate > 0.9) {
+          this.snackbar.open(
+            '특성 필터가 검색한 품질에 비해 지나치게 높아 최저가가 보장되지 않습니다.\n품질을 높여서 다시 검색하는 것을 추천합니다.',
+            '닫기',
+            { duration: 10000 }
+          );
         }
         this.isLoading = false;
       } else {

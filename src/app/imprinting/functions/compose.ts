@@ -50,6 +50,8 @@ function chooseItems(
   }
 
   const len = accList.length;
+  let effFilteredCount = 0;
+  let totalCount = 0;
 
   function rec(
     effects: Effects,
@@ -59,7 +61,10 @@ function chooseItems(
     d: number
   ): ComposeResult[] {
     if (d === len) {
+      totalCount += 1;
+
       if (isEffectsFiltered(effects)) {
+        effFilteredCount += 1;
         return [];
       }
       if (
@@ -106,7 +111,8 @@ function chooseItems(
 
     return result;
   }
-  return rec(
+
+  const composeResults = rec(
     Object.values(fixedItems).reduce(
       (sum, x) => addRecord(sum, x.effects),
       initialEffect
@@ -116,6 +122,8 @@ function chooseItems(
     fixedItems,
     0
   );
+
+  return { composeResults, totalCount, effFilteredCount };
 }
 
 function hashResult(result: ComposeResult) {
@@ -204,10 +212,14 @@ export function compose(
       prefilter(value, filter),
     ])
   );
+
   let finished = 0;
+  let totalCount = 0;
+  let effFilteredCount = 0;
   const resultMap = new Map<StoneBook, ComposeResult[]>();
+
   for (const { combinations, stoneBook } of candidates) {
-    let result: ComposeResult[] = [];
+    let composeResults: ComposeResult[] = [];
     for (const combination of combinations) {
       for (const accList of accPermutation) {
         const entries: Item[][] = [];
@@ -233,23 +245,27 @@ export function compose(
           }
         }
         if (entries.length === accList.length) {
-          result.push(
-            ...chooseItems(
-              entries,
-              accList,
-              stoneBook,
-              fixedItems,
-              result.length ? result[result.length - 1].price : Infinity,
-              filter
-            )
+          const result = chooseItems(
+            entries,
+            accList,
+            stoneBook,
+            fixedItems,
+            composeResults.length
+              ? composeResults[composeResults.length - 1].price
+              : Infinity,
+            filter
           );
+          composeResults.push(...result.composeResults);
+          totalCount += result.totalCount;
+          effFilteredCount += result.effFilteredCount;
+
           const temp: Record<string, ComposeResult> = {};
-          result.forEach((res) => {
+          composeResults.forEach((res) => {
             temp[hashResult(res)] = res;
           });
-          result = Object.values(temp);
-          result.sort((a, b) => a.price - b.price);
-          result = result.slice(0, 300);
+          composeResults = Object.values(temp);
+          composeResults.sort((a, b) => a.price - b.price);
+          composeResults = composeResults.slice(0, 300);
         }
 
         finished += 1;
@@ -260,11 +276,12 @@ export function compose(
         });
       }
     }
-    resultMap.set(stoneBook, result);
+    resultMap.set(stoneBook, composeResults);
   }
 
   postMessage({
     done: true,
     result: [...resultMap.values()].flat().sort((a, b) => a.price - b.price),
+    effFilteredRate: effFilteredCount / totalCount,
   });
 }

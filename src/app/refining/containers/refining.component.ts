@@ -139,7 +139,10 @@ export class RefiningComponent implements OnInit, OnDestroy {
       this.setMaterials(table, this.priceForm.value);
 
       let additionalProb = 0;
-      if (itemForm.grade !== 't3_1390' && itemForm.target <= 15) {
+      if (
+        (itemForm.grade === 't3_1340' || itemForm.grade === 't3_1302') &&
+        itemForm.target <= 15
+      ) {
         additionalProb = 20;
         if (itemForm.applyResearch) {
           additionalProb += 10;

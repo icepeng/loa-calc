@@ -111,6 +111,8 @@ export function addItemsToSearchResult(
       ) {
         continue;
       }
+
+      const fixedItem = getFixedItem(data.acc, data.price);
       for (const [a, b] of [
         [data.acc.imprintOption1, data.acc.imprintOption2],
         [data.acc.imprintOption2, data.acc.imprintOption1],
@@ -128,7 +130,7 @@ export function addItemsToSearchResult(
           )
           .map((x) => x.key)
           .forEach((key) => {
-            next[key] = [...next[key], getFixedItem(data.acc, data.price)];
+            next[key] = [...next[key], fixedItem];
             next[key].sort((a, b) => a.price - b.price);
           });
       }

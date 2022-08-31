@@ -42,6 +42,9 @@ export class RefiningSearchDialogComponent {
         상급오레하: data.find((x) => x.name === '상급 오레하 융화 재료')![
           this.priceType
         ],
+        최상급오레하: data.find((x) => x.name === '최상급 오레하 융화 재료')![
+          this.priceType
+        ],
         명돌: data.find((x) => x.name === '명예의 돌파석')![this.priceType],
         위명돌: data.find((x) => x.name === '위대한 명예의 돌파석')![
           this.priceType
@@ -49,10 +52,15 @@ export class RefiningSearchDialogComponent {
         경명돌: data.find((x) => x.name === '경이로운 명예의 돌파석')![
           this.priceType
         ],
+        찬명돌: data.find((x) => x.name === '찬란한 명예의 돌파석')![
+          this.priceType
+        ],
         수결: data.find((x) => x.name === '수호석 결정')![this.priceType] / 10,
         파결: data.find((x) => x.name === '파괴석 결정')![this.priceType] / 10,
         수호강석: data.find((x) => x.name === '수호강석')![this.priceType] / 10,
         파괴강석: data.find((x) => x.name === '파괴강석')![this.priceType] / 10,
+        정제된수호강석: data.find((x) => x.name === '정제된 수호강석')![this.priceType] / 10,
+        정제된파괴강석: data.find((x) => x.name === '정제된 파괴강석')![this.priceType] / 10,
         은총: data.find((x) => x.name === '태양의 은총')![this.priceType],
         축복: data.find((x) => x.name === '태양의 축복')![this.priceType],
         가호: data.find((x) => x.name === '태양의 가호')![this.priceType],
@@ -65,6 +73,12 @@ export class RefiningSearchDialogComponent {
         재봉술심화: data.find((x) => x.name === '재봉술 : 수선 심화')![
           this.priceType
         ],
+        재봉술숙련: data.find((x) => x.name === '재봉술 : 수선 숙련')![
+          this.priceType
+        ],
+        재봉술특화: data.find((x) => x.name === '재봉술 : 수선 특화')![
+          this.priceType
+        ],
         야금술기본: data.find((x) => x.name === '야금술 : 단조 기본')![
           this.priceType
         ],
@@ -72,6 +86,12 @@ export class RefiningSearchDialogComponent {
           this.priceType
         ],
         야금술심화: data.find((x) => x.name === '야금술 : 단조 심화')![
+          this.priceType
+        ],
+        야금술숙련: data.find((x) => x.name === '야금술 : 단조 숙련')![
+          this.priceType
+        ],
+        야금술특화: data.find((x) => x.name === '야금술 : 단조 특화')![
           this.priceType
         ],
       };

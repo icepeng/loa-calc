@@ -13,30 +13,7 @@ export type Step = {
 
 export type Path = Step[];
 
-export const materialNames = [
-  '파편',
-  '하급오레하',
-  '중급오레하',
-  '상급오레하',
-  '명돌',
-  '위명돌',
-  '경명돌',
-  '수결',
-  '파결',
-  '수호강석',
-  '파괴강석',
-];
-
 export const breathNames = ['은총', '축복', '가호'];
-
-export const bookNames = [
-  '재봉술기본',
-  '재봉술응용',
-  '재봉술심화',
-  '야금술기본',
-  '야금술응용',
-  '야금술심화',
-];
 
 function getPrice(
   priceMap: Record<string, number>,
@@ -90,7 +67,7 @@ function buildBreath(
 
   breathes.forEach((name) => {
     const [breathAmount, breathProb] = breathMap[name];
-    if (breathNames.includes(name)) {
+    if (breathNames.includes(name)) { // 숨결
       const amount = Math.min(Math.ceil(probLeft / breathProb), breathAmount);
       adjustedBreathMap[name] = {
         price: Math.max(amount - (bindedMap[name] ?? 0), 0) * priceMap[name],
@@ -98,7 +75,7 @@ function buildBreath(
         amount,
       };
       probLeft -= amount * breathProb;
-    } else {
+    } else { // 책
       adjustedBreathMap[name] = {
         price: Math.max(1 - (bindedMap[name] ?? 0), 0) * priceMap[name],
         prob: breathProb,

@@ -71,13 +71,10 @@ export interface ItemInternalData {
   itemlevel: string;
   gradequality: string;
   optionjson: {
-    itemType: number;
-    firstOptionText: string;
     firstOptionValue: number;
     secondOptionText: string;
     secondOptionValue: number;
     optionValue: number;
-    penalty: 0 | 1;
     optionType: 2 | 3; // 2 = 특성, 3 = 각인
     classNo: number;
     className?: string;

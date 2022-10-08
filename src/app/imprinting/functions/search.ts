@@ -189,12 +189,15 @@ export function getSearchScript(
       const internalData = {...historyBtn.dataset};
       if (internalData) {
         internalData.optionjson = JSON.parse(internalData.optionjson);
-        internalData.optionjson.forEach(item => {
-          delete item.optionValueHtml;
-          delete item.braceletAliasType;
-          delete item.gemType;
-        });
         internalData.optionjson = internalData.optionjson.filter(item => item.penalty === 0);
+        internalData.optionjson.forEach(item => {
+          delete item.optionValueHtml; // not used
+          delete item.braceletAliasType; // not used
+          delete item.gemType; // not used
+          delete item.type; // always 5
+          delete item.penalty; // always 0
+          delete item.firstOptionText; // always ""
+        });
       }
     
       return {
@@ -590,9 +593,11 @@ var gradequality = "${data.gradequality}";
 var itemtooltip = "";
 var optionjson = ${JSON.stringify(data.optionjson)};
 
-//html은 필요없음
 optionjson.forEach(function (item) {
-  item.optionValueHtml = "";
+  item.type = 5;
+  item.penalty = 0;
+  item.firstOptionText = "";
+  item.optionValueHtml = ""; //html은 필요없음
 });
 
 //초기 request값 저장

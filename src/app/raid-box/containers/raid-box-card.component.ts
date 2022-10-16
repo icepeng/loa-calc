@@ -47,10 +47,13 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
     명돌: new FormControl(true),
     위명돌: new FormControl(true),
     경명돌: new FormControl(true),
+    찬명돌: new FormControl(true),
     수결: new FormControl(true),
     파결: new FormControl(true),
     수호강석: new FormControl(true),
     파괴강석: new FormControl(true),
+    정제된수호강석: new FormControl(true),
+    정제된파괴강석: new FormControl(true),
     혼돈의돌: new FormControl(true),
   });
 
@@ -78,6 +81,29 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
   ): { name: string; amount: number; price: number }[] {
     return Object.entries(rewardTable.rewards)
       .map(([name, amount]): [string, number] => {
+        if (itemTier === 't3_1525') {
+          if (name === '수호강석') {
+            return ['정제된수호강석', amount / 5];
+          }
+          if (name === '파괴강석') {
+            return ['정제된파괴강석', amount / 5];
+          }
+          if (name === '경명돌') {
+            return ['찬명돌', amount / 5];
+          }
+          if (name === '수결') {
+            return ['정제된수호강석', amount / 25];
+          }
+          if (name === '파결') {
+            return ['정제된파괴강석', amount / 25];
+          }
+          if (name === '위명돌') {
+            return ['찬명돌', amount / 25];
+          }
+          if (name === '명돌') {
+            return ['찬명돌', amount / 125];
+          }
+        }
         if (itemTier === 't3_1390') {
           if (name === '수결') {
             return ['수호강석', amount / 5];

@@ -40,10 +40,15 @@ export class RaidBoxSearchDialogComponent {
         경명돌: data.find((x) => x.name === '경이로운 명예의 돌파석')![
           this.priceType
         ],
+        찬명돌: data.find((x) => x.name === '찬란한 명예의 돌파석')![
+          this.priceType
+        ],
         수결: data.find((x) => x.name === '수호석 결정')![this.priceType] / 10,
         파결: data.find((x) => x.name === '파괴석 결정')![this.priceType] / 10,
         수호강석: data.find((x) => x.name === '수호강석')![this.priceType] / 10,
         파괴강석: data.find((x) => x.name === '파괴강석')![this.priceType] / 10,
+        정제된수호강석: data.find((x) => x.name === '정제된 수호강석')![this.priceType] / 10,
+        정제된파괴강석: data.find((x) => x.name === '정제된 파괴강석')![this.priceType] / 10,
       };
       this.dialogRef.close(
         Object.fromEntries(

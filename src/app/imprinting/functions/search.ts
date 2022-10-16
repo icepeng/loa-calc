@@ -136,6 +136,8 @@ export function getSearchScript(
       질풍노도: 307,
       이슬비: 308,
     };
+
+    const internalDataMap = new Map();
     
     function parse(document, index) {
       const row = document.querySelector(
@@ -188,16 +190,7 @@ export function getSearchScript(
       const historyBtn = row.querySelector('div.grade > .button--deal-history');
       const internalData = {...historyBtn.dataset};
       if (internalData) {
-        internalData.optionjson = JSON.parse(internalData.optionjson);
-        internalData.optionjson = internalData.optionjson.filter(item => item.penalty === 0);
-        internalData.optionjson.forEach(item => {
-          delete item.optionValueHtml; // not used
-          delete item.braceletAliasType; // not used
-          delete item.gemType; // not used
-          delete item.type; // always 5
-          delete item.penalty; // always 0
-          delete item.firstOptionText; // always ""
-        });
+        internalDataMap.set(id, internalData);
       }
     
       return {
@@ -210,8 +203,7 @@ export function getSearchScript(
         quality,
         price,
         buyPrice,
-        auctionPrice,
-        internalData
+        auctionPrice
       };
     }
     
@@ -543,17 +535,17 @@ export function getBuyScript(item: Item) {
 }
 
 export function getHistoryScript(item: Item) {
-  if (!item.internalData) {
-    throw new Error('internalData is not defined');
-  }
+  return `var internalData = internalDataMap.get("${item.id}");
 
-  const data = item.internalData;
+if (!internalData) {
+  throw new Error('검색 기록에서 아이템을 찾을 수 없습니다. 검색에 사용한 탭을 그대로 사용해야 합니다.');
+}
 
-  return `var loader = new lui.utils.Loader();
+var loader = new lui.utils.Loader();
 
 var content = "";
 
-var firstcategory = "${data.firstcategory}";
+var firstcategory = internalData.firstcategory;
 var firstcategoryname = "전체";
 var firstcategoryInfo = _menuJson.marketCategory.filter(function (model) {
   return (
@@ -565,7 +557,7 @@ var firstcategoryInfo = _menuJson.marketCategory.filter(function (model) {
 if (firstcategoryInfo != undefined) {
   firstcategoryname = firstcategoryInfo.text;
 }
-var secondcategory = "${data.secondcategory}";
+var secondcategory = internalData.secondcategory;
 var secondcategoryname = "전체";
 var secondcategoryInfo = _menuJson.marketCategory.filter(function (model) {
   return (
@@ -577,26 +569,23 @@ var secondcategoryInfo = _menuJson.marketCategory.filter(function (model) {
 if (secondcategoryInfo != undefined) {
   secondcategoryname = secondcategoryInfo.text;
 }
-var itemno = "${data.itemno}";
-var itemgrade = "${data.grade}";
+var itemno = internalData.itemno;
+var itemgrade = internalData.grade;
 var itemgradename = _menuJson.marketGrade.filter(function (model) {
   return model.value == itemgrade;
 })[0].text;
-var itemname = "${data.itemname}";
-var itempath = "${data.itempath}";
+var itemname = internalData.itemname;
+var itempath = internalData.itempath;
 var classname =
-  "${data.classname}" == "" ? "전체" : "${data.classname}";
-var tier = ${data.tier};
+  internalData.classname == "" ? "전체" : internalData.classname;
+var tier = internalData.tier;
 var itemlevel =
-  "${data.itemlevel}" == "" ? "-" : "${data.itemlevel}";
-var gradequality = "${data.gradequality}";
+  internalData.itemlevel == "" ? "-" : internalData.itemlevel;
+var gradequality = internalData.gradequality;
 var itemtooltip = "";
-var optionjson = ${JSON.stringify(data.optionjson)};
+var optionjson = JSON.parse(internalData.optionjson);
 
 optionjson.forEach(function (item) {
-  item.type = 5;
-  item.penalty = 0;
-  item.firstOptionText = "";
   item.optionValueHtml = ""; //html은 필요없음
 });
 

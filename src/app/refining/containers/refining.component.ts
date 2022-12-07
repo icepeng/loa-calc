@@ -1,4 +1,3 @@
-import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -112,7 +111,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private dialog: MatDialog,
-    private clipboard: Clipboard,
     private snackbar: MatSnackBar
   ) {
     this.titleService.setTitle(
@@ -121,10 +119,14 @@ export class RefiningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const savedPriceForm = getPriceData();
-    if (savedPriceForm) {
-      this.priceForm.patchValue(savedPriceForm);
-    }
+    getPriceData()
+      .then((data) => this.priceForm.patchValue(data))
+      .catch(() =>
+        this.snackbar.open(
+          '가격 정보를 가져오는 중에 오류가 발생하였습니다.',
+          '닫기'
+        )
+      );
 
     this.subscription$ = this.itemForm.valueChanges.subscribe((itemForm) => {
       const table = getRefineTable(

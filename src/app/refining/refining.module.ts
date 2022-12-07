@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -15,7 +14,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AdsenseModule } from 'ng2-adsense';
 import { RefineTableComponent } from './components/refine-table.component';
-import { RefiningSearchDialogComponent } from './components/refining-search-dialog.component';
 import { RefiningBindedComponent } from './containers/refining-binded.component';
 import { RefiningItemComponent } from './containers/refining-item.component';
 import { RefiningPriceComponent } from './containers/refining-price.component';
@@ -29,7 +27,6 @@ import { RefiningRoutingModule } from './refining-routing.module';
     RefiningItemComponent,
     RefiningPriceComponent,
     RefiningBindedComponent,
-    RefiningSearchDialogComponent,
   ],
   exports: [RefiningComponent],
   imports: [
@@ -45,7 +42,6 @@ import { RefiningRoutingModule } from './refining-routing.module';
     MatCheckboxModule,
     MatTableModule,
     MatTabsModule,
-    MatDialogModule,
     MatSnackBarModule,
     MatRadioModule,
     ClipboardModule,

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  marketPriceUrl:
+    'https://pub-230a05675f8f4c8cb5a3f28ed44c27dd.r2.dev/refine.json',
 };
 
 /*

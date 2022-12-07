@@ -8,7 +8,7 @@ import { Subscription, take } from 'rxjs';
 import { RefiningSearchDialogComponent } from '../components/refining-search-dialog.component';
 import { getRefineTable, RefineTable } from '../data';
 import { breathNames, fixed, optimize, Path } from '../refine';
-import { getSearchScript } from '../search';
+import { getPriceData } from '../functions/getPriceData';
 
 @Component({
   selector: 'app-refining',
@@ -18,36 +18,36 @@ import { getSearchScript } from '../search';
 export class RefiningComponent implements OnInit, OnDestroy {
   subscription$!: Subscription;
   priceForm = new FormGroup({
-    파편: new FormControl(0.4378),
-    하급오레하: new FormControl(14),
-    중급오레하: new FormControl(16),
-    상급오레하: new FormControl(34),
-    최상급오레하: new FormControl(67),
-    명돌: new FormControl(11),
-    위명돌: new FormControl(20),
-    경명돌: new FormControl(49),
-    찬명돌: new FormControl(99),
-    수결: new FormControl(0.1),
-    파결: new FormControl(0.42),
-    수호강석: new FormControl(0.1),
-    파괴강석: new FormControl(2.1),
-    정제된수호강석: new FormControl(0.43),
-    정제된파괴강석: new FormControl(10.8),
-    혼돈의돌: new FormControl(500),
-    은총: new FormControl(57),
-    축복: new FormControl(112),
-    가호: new FormControl(226),
-    재봉술기본: new FormControl(4),
-    재봉술응용: new FormControl(12),
-    재봉술심화: new FormControl(296),
-    재봉술숙련: new FormControl(1023),
-    재봉술특화: new FormControl(3959),
-    야금술기본: new FormControl(11),
-    야금술응용: new FormControl(33),
-    야금술심화: new FormControl(565),
-    야금술숙련: new FormControl(1795),
-    야금술특화: new FormControl(7563),
-    골드: new FormControl(1),
+    파편: new FormControl(0),
+    하급오레하: new FormControl(0),
+    중급오레하: new FormControl(0),
+    상급오레하: new FormControl(0),
+    최상급오레하: new FormControl(0),
+    명돌: new FormControl(0),
+    위명돌: new FormControl(0),
+    경명돌: new FormControl(0),
+    찬명돌: new FormControl(0),
+    수결: new FormControl(0),
+    파결: new FormControl(0),
+    수호강석: new FormControl(0),
+    파괴강석: new FormControl(0),
+    정제된수호강석: new FormControl(0),
+    정제된파괴강석: new FormControl(0),
+    혼돈의돌: new FormControl(0),
+    은총: new FormControl(0),
+    축복: new FormControl(0),
+    가호: new FormControl(0),
+    재봉술기본: new FormControl(0),
+    재봉술응용: new FormControl(0),
+    재봉술심화: new FormControl(0),
+    재봉술숙련: new FormControl(0),
+    재봉술특화: new FormControl(0),
+    야금술기본: new FormControl(0),
+    야금술응용: new FormControl(0),
+    야금술심화: new FormControl(0),
+    야금술숙련: new FormControl(0),
+    야금술특화: new FormControl(0),
+    골드: new FormControl(0),
   });
   bindedForm = new FormGroup({
     파편: new FormControl(0),
@@ -121,9 +121,9 @@ export class RefiningComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const savedPriceForm = localStorage.getItem('priceForm');
+    const savedPriceForm = getPriceData();
     if (savedPriceForm) {
-      this.priceForm.patchValue(JSON.parse(savedPriceForm));
+      this.priceForm.patchValue(savedPriceForm);
     }
 
     this.subscription$ = this.itemForm.valueChanges.subscribe((itemForm) => {
@@ -192,20 +192,15 @@ export class RefiningComponent implements OnInit, OnDestroy {
   }
 
   openSearchDialog() {
-    const copySuccess = this.clipboard.copy(getSearchScript());
-    if (copySuccess) {
-      this.dialog
-        .open(RefiningSearchDialogComponent, { disableClose: true })
-        .afterClosed()
-        .pipe(take(1))
-        .subscribe((data) => {
-          if (data) {
-            this.priceForm.patchValue(data);
-          }
-        });
-    } else {
-      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
-    }
+    this.dialog
+      .open(RefiningSearchDialogComponent, { disableClose: true })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((data) => {
+        if (data) {
+          this.priceForm.patchValue(data);
+        }
+      });
   }
 
   setMaterials(refineTable: RefineTable, priceForm: Record<string, number>) {

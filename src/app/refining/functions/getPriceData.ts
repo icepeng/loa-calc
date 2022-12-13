@@ -49,7 +49,7 @@ export async function getPriceData() {
     return result.data[0].Stats[0]?.AvgPrice;
   };
 
-  return {
+  const result = {
     파편: Math.min(
       (await getData(66130131)) / 500,
       (await getData(66130132)) / 1000,
@@ -83,4 +83,11 @@ export async function getPriceData() {
     야금술숙련: await getData(66112531),
     야금술특화: await getData(66112532),
   };
+
+  return Object.fromEntries(
+    Object.entries(result).map(([key, value]) => [
+      key,
+      Math.round(value * 10000) / 10000,
+    ])
+  );
 }

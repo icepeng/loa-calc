@@ -20,16 +20,7 @@ export class RefiningSearchDialogComponent {
 
   onSubmit() {
     getPriceData()
-      .then((result) =>
-        this.dialogRef.close(
-          Object.fromEntries(
-            Object.entries(result).map(([key, value]) => [
-              key,
-              Math.round(value * 10000) / 10000,
-            ])
-          )
-        )
-      )
+      .then((result) => this.dialogRef.close(result))
       .catch((err) =>
         this.snackbar.open('정보 갱신 중 오류가 발생하였습니다.', '닫기')
       );

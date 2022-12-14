@@ -4,16 +4,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
-import {
-  map,
-  Observable,
-  startWith,
-  Subscription,
-  take
-} from 'rxjs';
+import { map, Observable, startWith, Subscription, take } from 'rxjs';
 import { getSearchScript } from '../../refining/search';
 import { RaidBoxSearchDialogComponent } from '../components/raid-box-search-dialog.component';
 import { Raid, raidGroup } from '../data';
+import { getPriceData } from '../../refining/functions/getPriceData';
 
 @Component({
   selector: 'app-raid-box',
@@ -22,18 +17,18 @@ import { Raid, raidGroup } from '../data';
 })
 export class RaidBoxComponent implements OnInit, OnDestroy {
   priceForm = new FormGroup({
-    파편: new FormControl(0.4378),
-    명돌: new FormControl(11),
-    위명돌: new FormControl(20),
-    경명돌: new FormControl(49),
-    찬명돌: new FormControl(99),
-    수결: new FormControl(0.1),
-    파결: new FormControl(0.42),
-    수호강석: new FormControl(0.1),
-    파괴강석: new FormControl(2.1),
-    정제된수호강석: new FormControl(0.43),
-    정제된파괴강석: new FormControl(10.8),
-    혼돈의돌: new FormControl(500),
+    파편: new FormControl(0),
+    명돌: new FormControl(0),
+    위명돌: new FormControl(0),
+    경명돌: new FormControl(0),
+    찬명돌: new FormControl(0),
+    수결: new FormControl(0),
+    파결: new FormControl(0),
+    수호강석: new FormControl(0),
+    파괴강석: new FormControl(0),
+    정제된수호강석: new FormControl(0),
+    정제된파괴강석: new FormControl(0),
+    혼돈의돌: new FormControl(0),
   });
 
   tierControl = new FormControl('t3_1302');
@@ -55,10 +50,14 @@ export class RaidBoxComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const savedPriceForm = localStorage.getItem('raid_box_priceForm');
-    if (savedPriceForm) {
-      this.priceForm.patchValue(JSON.parse(savedPriceForm));
-    }
+    getPriceData()
+      .then((data) => this.priceForm.patchValue(data))
+      .catch(() =>
+        this.snackbar.open(
+          '가격 정보를 가져오는 중에 오류가 발생하였습니다.',
+          '닫기'
+        )
+      );
 
     this.raids$ = this.raidControl.valueChanges.pipe(
       startWith(this.raidControl.value),

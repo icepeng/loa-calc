@@ -12,6 +12,29 @@
     <button class="heading-button" (click)="reset()" mat-stroked-button>
       초기화
     </button>
+    <div class="filler"></div>
+    <mat-form-field class="w-240">
+      <mat-label>API 키</mat-label>
+      <input matInput [formControl]="apiKeyControl" />
+    </mat-form-field>
+    <button
+      class="heading-button"
+      color="primary"
+      *ngIf="!isApiMode"
+      mat-flat-button
+      (click)="setApiClient()"
+    >
+      API 모드 (Beta) 켜기
+    </button>
+    <button
+      class="heading-button"
+      color="primary"
+      *ngIf="isApiMode"
+      mat-flat-button
+      (click)="removeApiClient()"
+    >
+      API 모드 (Beta) 끄기
+    </button>
   </div>
   <div class="layout">
     <app-imprinting-form
@@ -33,8 +56,25 @@
         </mat-radio-group>
       </mat-card-content>
       <mat-card-content>
-        <button (click)="generate()" mat-raised-button color="primary">
+        <button
+          *ngIf="!isApiMode"
+          (click)="generate()"
+          mat-raised-button
+          color="primary"
+        >
           검색 코드 복사
+        </button>
+        <button
+          *ngIf="isApiMode"
+          (click)="generate()"
+          mat-raised-button
+          color="primary"
+        >
+          검색 시작
+          <ng-container *ngIf="searchProgress.total > 0"
+            >{{ searchProgress.finished }} /
+            {{ searchProgress.total }}</ng-container
+          >
         </button>
       </mat-card-content>
       <mat-card-subtitle>필터</mat-card-subtitle>

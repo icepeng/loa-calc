@@ -15,19 +15,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { AdsenseModule } from 'ng2-adsense';
 import { SharedModule } from '../shared/shared.module';
+import { AdditionalSearchDialogComponent } from './components/additional-search-dialog.component';
 import { ComposeTableComponent } from './components/compose-table.component';
 import { ImprintingSearchDialogComponent } from './components/imprinting-search-dialog.component';
 import { ItemViewComponent } from './components/item-view.component';
+import { AccFormDialogComponent } from './containers/acc-form-dialog.component';
 import { AccFormComponent } from './containers/acc-form.component';
 import { ImprintingFormComponent } from './containers/imprinting-form.component';
 import { ImprintingComponent } from './containers/imprinting.component';
 import { ImprintingRoutingModule } from './imprinting-routing.module';
-import { AccFormDialogComponent } from './containers/acc-form-dialog.component';
-import { AdditionalSearchDialogComponent } from './components/additional-search-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AdditionalSearchDialogComponent } from './components/additional-search-
     MatMenuModule,
     MatRadioModule,
     MatDialogModule,
+    MatSlideToggleModule,
     ClipboardModule,
     SharedModule,
     AdsenseModule,

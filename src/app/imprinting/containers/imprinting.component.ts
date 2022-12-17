@@ -1,5 +1,6 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
@@ -13,6 +14,7 @@ import {
 } from '../functions/const';
 import { getCombinations } from '../functions/scan';
 import { getSearchScript } from '../functions/search';
+import { getSearchClient, SearchClient } from '../functions/search-api';
 import {
   AccMap,
   Candidate,
@@ -94,6 +96,12 @@ export class ImprintingComponent implements OnInit {
 
   worker!: Worker;
   isLoading = false;
+
+  isApiMode = false;
+  apiKeyControl = new FormControl('');
+  searchClient: SearchClient | undefined;
+  searchProgress = { total: 0, finished: 0 };
+
   progress = 0;
   composeResults: ComposeResult[] = [];
 
@@ -129,6 +137,12 @@ export class ImprintingComponent implements OnInit {
       this.target = form.target;
       this.stoneBooks = form.stoneBooks;
       this.accMap = form.accMap;
+    }
+
+    const savedApiKey = localStorage.getItem('apiKey');
+    if (savedApiKey) {
+      this.apiKeyControl.setValue(savedApiKey);
+      this.setApiClient();
     }
   }
 
@@ -186,6 +200,22 @@ export class ImprintingComponent implements OnInit {
     this.filter.exclude = new Set();
   }
 
+  setApiClient() {
+    this.searchClient = getSearchClient(this.apiKeyControl.value);
+    this.isApiMode = true;
+    this.apiKeyControl.disable();
+
+    localStorage.setItem('apiKey', this.apiKeyControl.value);
+  }
+
+  removeApiClient() {
+    this.isApiMode = false;
+    this.searchClient = undefined;
+    this.apiKeyControl.enable();
+
+    localStorage.removeItem('apiKey');
+  }
+
   getAccTypes(accMap: Record<string, AccMap>): string[] {
     return Object.entries(accMap)
       .filter(([name, acc]) => !acc.name)
@@ -212,33 +242,53 @@ export class ImprintingComponent implements OnInit {
     }
 
     this.candidates = candidates;
-    const searchScript = getSearchScript(
-      dedupe(
-        this.candidates.flatMap((candidate) => candidate.combinations).flat()
-      ),
-      this.getAccTypes(this.accMap),
-      this.accMap,
-      this.searchGrade,
-      true
+    const imprintsToSearch = dedupe(
+      this.candidates.flatMap((candidate) => candidate.combinations).flat()
     );
+    const accTypes = this.getAccTypes(this.accMap);
+    if (this.isApiMode) {
+      try {
+        const data = await this.searchClient!.getSearchResult(
+          imprintsToSearch,
+          accTypes,
+          this.accMap,
+          this.searchGrade,
+          true,
+          (progress) => (this.searchProgress = progress)
+        );
 
-    const copySuccess = this.clipboard.copy(searchScript);
-    if (copySuccess) {
-      this.snackbar.dismiss();
-      const dialog = this.dialog
-        .open(ImprintingSearchDialogComponent, {
-          disableClose: true,
-        })
-        .afterClosed()
-        .pipe(take(1));
-      const data: Record<string, Item[]> = await lastValueFrom(dialog);
-      if (data) {
         this.searchResult = data;
         this.applySearchResult();
+      } catch {
+        this.snackbar.open('API 검색에 실패했습니다. API 키를 확인해주세요.');
       }
-      this.filter.exclude = new Set();
     } else {
-      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+      const searchScript = getSearchScript(
+        imprintsToSearch,
+        accTypes,
+        this.accMap,
+        this.searchGrade,
+        true
+      );
+
+      const copySuccess = this.clipboard.copy(searchScript);
+      if (copySuccess) {
+        this.snackbar.dismiss();
+        const dialog = this.dialog
+          .open(ImprintingSearchDialogComponent, {
+            disableClose: true,
+          })
+          .afterClosed()
+          .pipe(take(1));
+        const data: Record<string, Item[]> = await lastValueFrom(dialog);
+        if (data) {
+          this.searchResult = data;
+          this.applySearchResult();
+        }
+        this.filter.exclude = new Set();
+      } else {
+        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+      }
     }
   }
 
@@ -249,39 +299,56 @@ export class ImprintingComponent implements OnInit {
     accType: string;
     quality: number;
   }) {
-    const searchScript = getSearchScript(
-      dedupe(
-        this.candidates.flatMap((candidate) => candidate.combinations).flat()
-      ),
-      [accType],
-      {
-        [accType]: {
-          ...this.accMap[accType],
-          quality,
-        },
-      },
-      this.searchGrade,
-      false
+    const imprintsToSearch = dedupe(
+      this.candidates.flatMap((candidate) => candidate.combinations).flat()
     );
-
-    const copySuccess = this.clipboard.copy(searchScript);
-    if (copySuccess) {
-      const dialog = this.dialog
-        .open(ImprintingSearchDialogComponent, {
-          disableClose: true,
-        })
-        .afterClosed()
-        .pipe(take(1));
-
-      const data: Record<string, Item[]> = await lastValueFrom(dialog);
-      if (data) {
-        this.searchResult = { ...this.searchResult, ...data };
-        this.accMap[accType].quality = quality;
-        this.accMap = { ...this.accMap };
-        this.applySearchResult();
-      }
+    const accTypes = [accType];
+    const accMap = {
+      [accType]: {
+        ...this.accMap[accType],
+        quality,
+      },
+    };
+    if (this.isApiMode) {
+      const data = await this.searchClient!.getSearchResult(
+        imprintsToSearch,
+        accTypes,
+        accMap,
+        this.searchGrade,
+        false
+      );
+      this.searchResult = { ...this.searchResult, ...data };
+      this.accMap[accType].quality = quality;
+      this.accMap = { ...this.accMap };
+      this.applySearchResult();
     } else {
-      this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+      const searchScript = getSearchScript(
+        imprintsToSearch,
+        accTypes,
+        accMap,
+        this.searchGrade,
+        false
+      );
+
+      const copySuccess = this.clipboard.copy(searchScript);
+      if (copySuccess) {
+        const dialog = this.dialog
+          .open(ImprintingSearchDialogComponent, {
+            disableClose: true,
+          })
+          .afterClosed()
+          .pipe(take(1));
+
+        const data: Record<string, Item[]> = await lastValueFrom(dialog);
+        if (data) {
+          this.searchResult = { ...this.searchResult, ...data };
+          this.accMap[accType].quality = quality;
+          this.accMap = { ...this.accMap };
+          this.applySearchResult();
+        }
+      } else {
+        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+      }
     }
   }
 

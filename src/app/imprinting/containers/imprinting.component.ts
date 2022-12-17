@@ -248,6 +248,10 @@ export class ImprintingComponent implements OnInit {
     const accTypes = this.getAccTypes(this.accMap);
     if (this.isApiMode) {
       try {
+        this.snackbar.open(
+          'API 검색은 1분에 100회까지 가능합니다. 검색이 잠시 멈추더라도 기다려주세요.',
+          '닫기'
+        );
         const data = await this.searchClient!.getSearchResult(
           imprintsToSearch,
           accTypes,

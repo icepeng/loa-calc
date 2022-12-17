@@ -201,11 +201,17 @@ export class ImprintingComponent implements OnInit {
   }
 
   setApiClient() {
-    this.searchClient = getSearchClient(this.apiKeyControl.value);
+    const apiKey = this.apiKeyControl.value;
+    if (!apiKey) {
+      this.snackbar.open('API 키를 입력해주세요.', '닫기');
+      return;
+    }
+
+    this.searchClient = getSearchClient(apiKey);
     this.isApiMode = true;
     this.apiKeyControl.disable();
 
-    localStorage.setItem('apiKey', this.apiKeyControl.value);
+    localStorage.setItem('apiKey', apiKey);
   }
 
   removeApiClient() {

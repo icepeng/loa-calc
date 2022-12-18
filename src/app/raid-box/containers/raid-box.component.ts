@@ -13,17 +13,17 @@ import { Raid, raidGroup } from '../data';
 })
 export class RaidBoxComponent implements OnInit {
   priceForm = new FormGroup({
-    파편: new FormControl(0),
-    명돌: new FormControl(0),
-    위명돌: new FormControl(0),
-    경명돌: new FormControl(0),
-    찬명돌: new FormControl(0),
-    수결: new FormControl(0),
-    파결: new FormControl(0),
-    수호강석: new FormControl(0),
-    파괴강석: new FormControl(0),
-    정제된수호강석: new FormControl(0),
-    정제된파괴강석: new FormControl(0),
+    파편: new FormControl(0.4384),
+    명돌: new FormControl(17.4),
+    위명돌: new FormControl(18.7),
+    경명돌: new FormControl(38.9),
+    찬명돌: new FormControl(58.4),
+    수결: new FormControl(0.1),
+    파결: new FormControl(0.36),
+    수호강석: new FormControl(0.1),
+    파괴강석: new FormControl(1.87),
+    정제된수호강석: new FormControl(0.25),
+    정제된파괴강석: new FormControl(9.69),
     혼돈의돌: new FormControl(500),
   });
 

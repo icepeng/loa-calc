@@ -43,7 +43,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     야금술심화: new FormControl(478.4),
     야금술숙련: new FormControl(2055.3),
     야금술특화: new FormControl(4848.5),
-    골드: new FormControl(0),
+    골드: new FormControl(1),
   });
   bindedForm = new FormGroup({
     파편: new FormControl(0),

@@ -1,5 +1,12 @@
+export interface RefineTableData {
+  baseProb: number;
+  amount: Record<string, number>;
+  breath: Record<string, [number, number]>;
+}
+
 export interface RefineTable {
   baseProb: number;
+  additionalProb: number;
   amount: Record<string, number>;
   breath: Record<string, [number, number]>;
 }
@@ -64,18 +71,18 @@ const breathTable: Record<number, Record<string, [number, number]>> = {
 
 export const refineData: Record<
   string,
-  Record<string, Record<number, RefineTable>>
+  Record<string, Record<number, RefineTableData>>
 > = {
   armor: {
     t3_1302: {
       7: {
         baseProb: 0.6,
         amount: {
-          수결: 78,
-          명돌: 2,
-          하급오레하: 1,
-          파편: 21,
-          골드: 110,
+          수결: 156,
+          명돌: 4,
+          하급오레하: 2,
+          파편: 42,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -85,11 +92,11 @@ export const refineData: Record<
       8: {
         baseProb: 0.45,
         amount: {
-          수결: 78,
-          명돌: 2,
-          하급오레하: 1,
-          파편: 21,
-          골드: 110,
+          수결: 156,
+          명돌: 4,
+          하급오레하: 2,
+          파편: 42,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -99,11 +106,11 @@ export const refineData: Record<
       9: {
         baseProb: 0.3,
         amount: {
-          수결: 78,
-          명돌: 2,
-          하급오레하: 1,
-          파편: 21,
-          골드: 110,
+          수결: 156,
+          명돌: 4,
+          하급오레하: 2,
+          파편: 42,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -113,11 +120,11 @@ export const refineData: Record<
       10: {
         baseProb: 0.3,
         amount: {
-          수결: 96,
-          명돌: 3,
-          하급오레하: 2,
-          파편: 25,
-          골드: 110,
+          수결: 192,
+          명돌: 6,
+          하급오레하: 4,
+          파편: 50,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -127,11 +134,11 @@ export const refineData: Record<
       11: {
         baseProb: 0.3,
         amount: {
-          수결: 96,
-          명돌: 3,
-          하급오레하: 2,
-          파편: 25,
-          골드: 110,
+          수결: 192,
+          명돌: 6,
+          하급오레하: 4,
+          파편: 50,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -141,11 +148,11 @@ export const refineData: Record<
       12: {
         baseProb: 0.15,
         amount: {
-          수결: 96,
-          명돌: 3,
-          하급오레하: 2,
-          파편: 25,
-          골드: 110,
+          수결: 192,
+          명돌: 6,
+          하급오레하: 4,
+          파편: 50,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -155,11 +162,11 @@ export const refineData: Record<
       13: {
         baseProb: 0.15,
         amount: {
-          수결: 114,
-          명돌: 3,
-          하급오레하: 2,
-          파편: 30,
-          골드: 110,
+          수결: 228,
+          명돌: 6,
+          하급오레하: 4,
+          파편: 60,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -169,11 +176,11 @@ export const refineData: Record<
       14: {
         baseProb: 0.15,
         amount: {
-          수결: 114,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 30,
-          골드: 110,
+          수결: 228,
+          명돌: 8,
+          하급오레하: 4,
+          파편: 60,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -183,11 +190,11 @@ export const refineData: Record<
       15: {
         baseProb: 0.1,
         amount: {
-          수결: 114,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 30,
-          골드: 110,
+          수결: 228,
+          명돌: 8,
+          하급오레하: 4,
+          파편: 60,
+          골드: 220,
         },
         breath: {
           재봉술기본: [1, 0.1],
@@ -199,11 +206,11 @@ export const refineData: Record<
       7: {
         baseProb: 0.6,
         amount: {
-          수결: 162,
-          위명돌: 3,
-          중급오레하: 2,
-          파편: 43,
-          골드: 132,
+          수결: 404,
+          위명돌: 8,
+          중급오레하: 6,
+          파편: 108,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -213,11 +220,11 @@ export const refineData: Record<
       8: {
         baseProb: 0.45,
         amount: {
-          수결: 162,
-          위명돌: 4,
-          중급오레하: 2,
-          파편: 43,
-          골드: 132,
+          수결: 404,
+          위명돌: 10,
+          중급오레하: 6,
+          파편: 108,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -227,11 +234,11 @@ export const refineData: Record<
       9: {
         baseProb: 0.3,
         amount: {
-          수결: 162,
-          위명돌: 4,
-          중급오레하: 2,
-          파편: 43,
-          골드: 132,
+          수결: 404,
+          위명돌: 10,
+          중급오레하: 6,
+          파편: 108,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -241,11 +248,11 @@ export const refineData: Record<
       10: {
         baseProb: 0.3,
         amount: {
-          수결: 199,
-          위명돌: 4,
-          중급오레하: 3,
-          파편: 53,
-          골드: 132,
+          수결: 498,
+          위명돌: 10,
+          중급오레하: 8,
+          파편: 132,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -255,11 +262,11 @@ export const refineData: Record<
       11: {
         baseProb: 0.3,
         amount: {
-          수결: 199,
-          위명돌: 4,
-          중급오레하: 3,
-          파편: 53,
-          골드: 132,
+          수결: 498,
+          위명돌: 10,
+          중급오레하: 8,
+          파편: 132,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -269,11 +276,11 @@ export const refineData: Record<
       12: {
         baseProb: 0.15,
         amount: {
-          수결: 199,
-          위명돌: 5,
-          중급오레하: 3,
-          파편: 53,
-          골드: 132,
+          수결: 498,
+          위명돌: 12,
+          중급오레하: 8,
+          파편: 132,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -283,11 +290,11 @@ export const refineData: Record<
       13: {
         baseProb: 0.15,
         amount: {
-          수결: 237,
-          위명돌: 5,
-          중급오레하: 3,
-          파편: 63,
-          골드: 132,
+          수결: 592,
+          위명돌: 12,
+          중급오레하: 8,
+          파편: 158,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -297,11 +304,11 @@ export const refineData: Record<
       14: {
         baseProb: 0.15,
         amount: {
-          수결: 237,
-          위명돌: 5,
-          중급오레하: 3,
-          파편: 63,
-          골드: 132,
+          수결: 592,
+          위명돌: 12,
+          중급오레하: 8,
+          파편: 158,
+          골드: 330,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -311,11 +318,11 @@ export const refineData: Record<
       15: {
         baseProb: 0.1,
         amount: {
-          수결: 237,
-          위명돌: 5,
-          중급오레하: 3,
-          파편: 63,
-          골드: 140,
+          수결: 592,
+          위명돌: 12,
+          중급오레하: 8,
+          파편: 158,
+          골드: 350,
         },
         breath: {
           재봉술응용: [1, 0.1],
@@ -865,11 +872,11 @@ export const refineData: Record<
       7: {
         baseProb: 0.6,
         amount: {
-          파결: 129,
+          파결: 258,
           명돌: 4,
-          하급오레하: 2,
-          파편: 30,
-          골드: 200,
+          하급오레하: 4,
+          파편: 60,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -879,11 +886,11 @@ export const refineData: Record<
       8: {
         baseProb: 0.45,
         amount: {
-          파결: 129,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 30,
-          골드: 200,
+          파결: 258,
+          명돌: 8,
+          하급오레하: 4,
+          파편: 60,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -893,11 +900,11 @@ export const refineData: Record<
       9: {
         baseProb: 0.3,
         amount: {
-          파결: 129,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 30,
-          골드: 200,
+          파결: 258,
+          명돌: 8,
+          하급오레하: 4,
+          파편: 60,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -907,11 +914,11 @@ export const refineData: Record<
       10: {
         baseProb: 0.3,
         amount: {
-          파결: 160,
-          명돌: 5,
-          하급오레하: 2,
-          파편: 37,
-          골드: 200,
+          파결: 320,
+          명돌: 10,
+          하급오레하: 4,
+          파편: 74,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -921,11 +928,11 @@ export const refineData: Record<
       11: {
         baseProb: 0.3,
         amount: {
-          파결: 160,
-          명돌: 5,
-          하급오레하: 2,
-          파편: 37,
-          골드: 200,
+          파결: 320,
+          명돌: 10,
+          하급오레하: 4,
+          파편: 74,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -935,11 +942,11 @@ export const refineData: Record<
       12: {
         baseProb: 0.15,
         amount: {
-          파결: 160,
-          명돌: 5,
-          하급오레하: 2,
-          파편: 37,
-          골드: 200,
+          파결: 320,
+          명돌: 10,
+          하급오레하: 4,
+          파편: 74,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -949,11 +956,11 @@ export const refineData: Record<
       13: {
         baseProb: 0.15,
         amount: {
-          파결: 190,
-          명돌: 5,
-          하급오레하: 3,
-          파편: 44,
-          골드: 200,
+          파결: 380,
+          명돌: 10,
+          하급오레하: 6,
+          파편: 88,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -963,11 +970,11 @@ export const refineData: Record<
       14: {
         baseProb: 0.15,
         amount: {
-          파결: 190,
-          명돌: 5,
-          하급오레하: 3,
-          파편: 44,
-          골드: 200,
+          파결: 380,
+          명돌: 12,
+          하급오레하: 6,
+          파편: 88,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -977,11 +984,11 @@ export const refineData: Record<
       15: {
         baseProb: 0.1,
         amount: {
-          파결: 190,
-          명돌: 5,
-          하급오레하: 3,
-          파편: 44,
-          골드: 200,
+          파결: 380,
+          명돌: 12,
+          하급오레하: 6,
+          파편: 88,
+          골드: 400,
         },
         breath: {
           야금술기본: [1, 0.1],
@@ -993,11 +1000,11 @@ export const refineData: Record<
       7: {
         baseProb: 0.6,
         amount: {
-          파결: 269,
-          위명돌: 5,
-          중급오레하: 2,
-          파편: 62,
-          골드: 256,
+          파결: 672,
+          위명돌: 12,
+          중급오레하: 6,
+          파편: 156,
+          골드: 640,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1007,11 +1014,11 @@ export const refineData: Record<
       8: {
         baseProb: 0.45,
         amount: {
-          파결: 269,
-          위명돌: 6,
-          중급오레하: 2,
-          파편: 62,
-          골드: 256,
+          파결: 672,
+          위명돌: 14,
+          중급오레하: 6,
+          파편: 156,
+          골드: 640,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1021,11 +1028,11 @@ export const refineData: Record<
       9: {
         baseProb: 0.3,
         amount: {
-          파결: 269,
-          위명돌: 6,
-          중급오레하: 3,
-          파편: 62,
-          골드: 256,
+          파결: 672,
+          위명돌: 14,
+          중급오레하: 8,
+          파편: 156,
+          골드: 640,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1035,11 +1042,11 @@ export const refineData: Record<
       10: {
         baseProb: 0.3,
         amount: {
-          파결: 332,
-          위명돌: 6,
-          중급오레하: 3,
-          파편: 77,
-          골드: 256,
+          파결: 830,
+          위명돌: 16,
+          중급오레하: 8,
+          파편: 192,
+          골드: 640,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1049,11 +1056,11 @@ export const refineData: Record<
       11: {
         baseProb: 0.3,
         amount: {
-          파결: 332,
-          위명돌: 6,
-          중급오레하: 3,
-          파편: 77,
-          골드: 264,
+          파결: 830,
+          위명돌: 16,
+          중급오레하: 8,
+          파편: 192,
+          골드: 660,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1063,11 +1070,11 @@ export const refineData: Record<
       12: {
         baseProb: 0.15,
         amount: {
-          파결: 332,
-          위명돌: 7,
-          중급오레하: 3,
-          파편: 77,
-          골드: 264,
+          파결: 830,
+          위명돌: 18,
+          중급오레하: 8,
+          파편: 192,
+          골드: 660,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1077,11 +1084,11 @@ export const refineData: Record<
       13: {
         baseProb: 0.15,
         amount: {
-          파결: 394,
-          위명돌: 7,
-          중급오레하: 4,
-          파편: 91,
-          골드: 264,
+          파결: 986,
+          위명돌: 18,
+          중급오레하: 10,
+          파편: 228,
+          골드: 660,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1091,11 +1098,11 @@ export const refineData: Record<
       14: {
         baseProb: 0.15,
         amount: {
-          파결: 394,
-          위명돌: 8,
-          중급오레하: 4,
-          파편: 91,
-          골드: 264,
+          파결: 986,
+          위명돌: 20,
+          중급오레하: 10,
+          파편: 228,
+          골드: 660,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1105,11 +1112,11 @@ export const refineData: Record<
       15: {
         baseProb: 0.1,
         amount: {
-          파결: 394,
-          위명돌: 8,
-          중급오레하: 4,
-          파편: 91,
-          골드: 264,
+          파결: 986,
+          위명돌: 20,
+          중급오레하: 10,
+          파편: 228,
+          골드: 660,
         },
         breath: {
           야금술응용: [1, 0.1],
@@ -1652,7 +1659,7 @@ export const refineData: Record<
           ...breathTable[0.005],
         },
       },
-    }
+    },
   },
 };
 
@@ -1669,10 +1676,63 @@ export function getTargetList(
 export function getRefineTable(
   itemType: string | undefined,
   itemGrade: string | undefined,
-  refineTarget: number | undefined
-) {
+  refineTarget: number | undefined,
+  applyResearch: boolean
+): RefineTable | undefined {
   if (!itemType || !itemGrade || !refineTarget) {
     return undefined;
   }
-  return refineData[itemType][itemGrade][refineTarget];
+  const data = refineData[itemType][itemGrade][refineTarget];
+
+  let additionalProb = 0;
+  let costReduction = 0;
+  let goldReduction = 0;
+  if (itemGrade === 't3_1302' && refineTarget <= 15) {
+    additionalProb = 0.2;
+    costReduction = 0.5;
+    goldReduction = 1;
+  }
+  if (itemGrade === 't3_1340' && refineTarget <= 15) {
+    additionalProb = 0.2;
+    costReduction = 0.6;
+    goldReduction = 1;
+  }
+  if (itemGrade === 't3_1340' && refineTarget >= 16 && refineTarget <= 17) {
+    additionalProb += 0.1;
+    costReduction = 0.3;
+    goldReduction = 1;
+  }
+  if (itemGrade === 't3_1340' && refineTarget === 18) {
+    additionalProb += 0.05;
+    costReduction = 0.3;
+    goldReduction = 1;
+  }
+
+  if (applyResearch) {
+    if (itemGrade === 't3_1302' && refineTarget <= 15) {
+      additionalProb += 0.1;
+    }
+    if (itemGrade === 't3_1340' && refineTarget <= 15) {
+      additionalProb += 0.1;
+    }
+    if (itemGrade === 't3_1340' && refineTarget >= 16 && refineTarget <= 18) {
+      additionalProb += 0.05;
+    }
+  }
+
+  additionalProb = Math.round(additionalProb * 100) / 100;
+
+  return {
+    additionalProb,
+    amount: Object.fromEntries(
+      Object.entries(data.amount).map(([name, value]) => [
+        name,
+        name === '골드'
+          ? Math.round(value * (1 - goldReduction))
+          : Math.round(value * (1 - costReduction)),
+      ])
+    ),
+    baseProb: data.baseProb,
+    breath: data.breath,
+  };
 }

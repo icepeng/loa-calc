@@ -85,7 +85,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
     totalProb: new FormControl({ value: null, disabled: true }),
     jangin: new FormControl(0),
     applyResearch: new FormControl(false),
-    applyHyperExpress: new FormControl(false),
   });
   reduceBindedMaterials = false;
   reduceBindedBooks = false;
@@ -136,7 +135,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
       const table = getRefineTable(
         itemForm.type,
         itemForm.grade,
-        itemForm.target
+        itemForm.target,
+        itemForm.applyResearch
       );
 
       if (!table) {
@@ -145,31 +145,14 @@ export class RefiningComponent implements OnInit, OnDestroy {
 
       this.setMaterials(table, this.priceForm.value);
 
-      let additionalProb = 0;
-      if (
-        (itemForm.grade === 't3_1340' || itemForm.grade === 't3_1302') &&
-        itemForm.target <= 15
-      ) {
-        additionalProb = 20;
-        if (itemForm.applyResearch) {
-          additionalProb += 10;
-        }
-      }
-      if (
-        itemForm.grade === 't3_1340' &&
-        itemForm.target >= 16 &&
-        itemForm.target <= 17 &&
-        itemForm.applyHyperExpress
-      ) {
-        additionalProb += 5;
-      }
-
       this.itemForm.patchValue(
         {
           baseProb: table.baseProb * 100,
-          additionalProb,
+          additionalProb: table.additionalProb * 100,
           totalProb:
-            table.baseProb * 100 + additionalProb + itemForm.probFromFailure,
+            table.baseProb * 100 +
+            table.additionalProb * 100 +
+            itemForm.probFromFailure,
         },
         {
           emitEvent: false,
@@ -182,7 +165,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
       const table = getRefineTable(
         itemForm.type,
         itemForm.grade,
-        itemForm.target
+        itemForm.target,
+        itemForm.applyResearch
       );
 
       if (!table) {
@@ -221,7 +205,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
     const table = getRefineTable(
       itemInfo.type,
       itemInfo.grade,
-      itemInfo.target
+      itemInfo.target,
+      itemInfo.applyResearch
     );
     if (!table) {
       return;
@@ -248,7 +233,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
       table,
       this.priceForm.value,
       bindedMap,
-      itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100
     );
@@ -260,7 +244,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
       table,
       this.priceForm.value,
       bindedMap,
-      itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,
       0
@@ -273,7 +256,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
       table,
       this.priceForm.value,
       bindedMap,
-      itemInfo.additionalProb / 100,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,
       Object.keys(table.breath).length

@@ -67,7 +67,8 @@ function buildBreath(
 
   breathes.forEach((name) => {
     const [breathAmount, breathProb] = breathMap[name];
-    if (breathNames.includes(name)) { // 숨결
+    if (breathNames.includes(name)) {
+      // 숨결
       const amount = Math.min(Math.ceil(probLeft / breathProb), breathAmount);
       adjustedBreathMap[name] = {
         price: Math.max(amount - (bindedMap[name] ?? 0), 0) * priceMap[name],
@@ -75,7 +76,8 @@ function buildBreath(
         amount,
       };
       probLeft -= amount * breathProb;
-    } else { // 책
+    } else {
+      // 책
       adjustedBreathMap[name] = {
         price: Math.max(1 - (bindedMap[name] ?? 0), 0) * priceMap[name],
         prob: breathProb,
@@ -103,11 +105,11 @@ export function optimize(
   table: RefineTable,
   priceMap: Record<string, number>,
   bindedMap: Record<string, number>,
-  additionalProb: number,
   probFromFailure: number,
   startJangin: number
 ) {
   const baseProb = table.baseProb;
+  const additionalProb = table.additionalProb;
   const defaultBasePrice = getPrice(priceMap, {}, table.amount);
   const defaultBreath = buildBreath(priceMap, table.breath, {}, baseProb);
 
@@ -200,12 +202,12 @@ export function fixed(
   table: RefineTable,
   priceMap: Record<string, number>,
   bindedMap: Record<string, number>,
-  additionalProb: number,
   probFromFailure: number,
   startJangin: number,
   breathCount: number
 ) {
   const baseProb = table.baseProb;
+  const additionalProb = table.additionalProb;
   const defaultBasePrice = getPrice(priceMap, {}, table.amount);
   const defaultBreath = buildBreath(priceMap, table.breath, {}, baseProb);
 
@@ -254,7 +256,7 @@ export function fixed(
       breathes,
     } = breath[breathCount];
 
-    const prob = 
+    const prob =
       Math.round(
         Math.min(currentProb + additionalProb + breathProb, 1) * 10000
       ) / 10000;

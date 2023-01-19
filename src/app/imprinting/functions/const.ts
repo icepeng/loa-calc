@@ -74,6 +74,7 @@ export const imprintOptions = [
   '진화의 유산',
   '질량 증가',
   '질풍노도',
+  '처단자',
   '초심',
   '최대 마나 증가',
   '추진력',
@@ -82,6 +83,7 @@ export const imprintOptions = [
   '타격의 대가',
   '탈출의 명수',
   '포격 강화',
+  '포식자',
   '폭발물 전문가',
   '피스메이커',
   '핸드거너',
@@ -271,6 +273,8 @@ export const imprintOptionMap = {
   만개: 306,
   질풍노도: 307,
   이슬비: 308,
+  포식자: 309,
+  처단자: 310,
 };
 
 export const initialAccMap: Record<string, AccMap> = {

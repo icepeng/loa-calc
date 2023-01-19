@@ -13,6 +13,7 @@ import {
 } from './const';
 import { AccMap, SearchGrade } from './type';
 import { getOverlappingAcc } from './util';
+import pRetry from 'p-retry';
 
 export function getSearchClient(apiKey: string) {
   const sdk = getSDK({
@@ -66,22 +67,24 @@ export function getSearchClient(apiKey: string) {
   }
 
   async function search(form: RequestAuctionItems) {
-    return sdk.auctionsGetItems(form).then((res: Auction) => {
-      if (res.Items == null) {
+    return pRetry(() => sdk.auctionsGetItems(form), { retries: 10 }).then(
+      (res: Auction) => {
+        if (res.Items == null) {
+          return {
+            products: [],
+            totalPages: 1,
+          };
+        }
+
+        const products = res.Items.map((item) => parse(item));
+        const totalPages = Math.ceil(res.TotalCount! / 10);
+
         return {
-          products: [],
-          totalPages: 1,
+          products,
+          totalPages,
         };
       }
-
-      const products = res.Items.map((item) => parse(item));
-      const totalPages = Math.ceil(res.TotalCount! / 10);
-
-      return {
-        products,
-        totalPages,
-      };
-    });
+    );
   }
 
   async function getSearchResult(

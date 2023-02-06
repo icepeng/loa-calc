@@ -4,7 +4,7 @@ export type Reward = typeof rewardData[Raid];
 export const raidGroup: Record<string, Raid[]> = {
   '오레하의 우물(노말)': ['아이라의 눈(노말)', '오레하 프라바사(노말)'],
   '오레하의 우물(하드)': ['아이라의 눈(하드)', '오레하 프라바사(하드)'],
-  아르고스: ['아르고스'],
+  '아르고스': ['아르고스 1관문', '아르고스 2관문', '아르고스 3관문'],
   '발탄(노말)': ['발탄 1관문(노말)', '발탄 2관문(노말)'],
   '발탄(하드)': ['발탄 1관문(하드)', '발탄 2관문(하드)'],
   '비아키스(노말)': [
@@ -69,34 +69,52 @@ export const rewardData = {
     },
   },
   '아이라의 눈(하드)': {
-    price: 300,
+    price: 100,
     rewards: {
       파결: 60,
       수결: 120,
-      명돌: 4,
+      위명돌: 16,
       파편: 600,
     },
   },
   '오레하 프라바사(하드)': {
-    price: 500,
+    price: 150,
     rewards: {
       파결: 90,
       수결: 180,
-      명돌: 4,
+      위명돌: 20,
       파편: 800,
     },
   },
-  아르고스: {
-    price: 500,
+  '아르고스 1관문': {
+    price: 100,
+    rewards: {
+      파결: 60,
+      수결: 120,
+      위명돌: 14,
+      파편: 520,
+    },
+  },
+  '아르고스 2관문': {
+    price: 150,
+    rewards: {
+      파결: 90,
+      수결: 180,
+      위명돌: 14,
+      파편: 680,
+    },
+  },
+  '아르고스 3관문': {
+    price: 150,
     rewards: {
       파결: 120,
       수결: 240,
-      위명돌: 5,
+      위명돌: 17,
       파편: 720,
     },
   },
   '발탄 1관문(노말)': {
-    price: 500,
+    price: 300,
     rewards: {
       파결: 240,
       수결: 480,
@@ -106,7 +124,7 @@ export const rewardData = {
     },
   },
   '발탄 2관문(노말)': {
-    price: 800,
+    price: 400,
     rewards: {
       파결: 300,
       수결: 600,
@@ -116,7 +134,7 @@ export const rewardData = {
     },
   },
   '발탄 1관문(하드)': {
-    price: 900,
+    price: 450,
     rewards: {
       파결: 360,
       수결: 720,
@@ -126,7 +144,7 @@ export const rewardData = {
     },
   },
   '발탄 2관문(하드)': {
-    price: 1200,
+    price: 600,
     rewards: {
       파결: 480,
       수결: 960,
@@ -136,7 +154,7 @@ export const rewardData = {
     },
   },
   '비아키스 1관문(노말)': {
-    price: 400,
+    price: 200,
     rewards: {
       파결: 150,
       수결: 300,
@@ -146,7 +164,7 @@ export const rewardData = {
     },
   },
   '비아키스 2관문(노말)': {
-    price: 600,
+    price: 250,
     rewards: {
       파결: 240,
       수결: 480,
@@ -156,7 +174,7 @@ export const rewardData = {
     },
   },
   '비아키스 3관문(노말)': {
-    price: 800,
+    price: 400,
     rewards: {
       파결: 300,
       수결: 600,
@@ -166,7 +184,7 @@ export const rewardData = {
     },
   },
   '비아키스 1관문(하드)': {
-    price: 700,
+    price: 300,
     rewards: {
       파결: 240,
       수결: 480,
@@ -176,7 +194,7 @@ export const rewardData = {
     },
   },
   '비아키스 2관문(하드)': {
-    price: 900,
+    price: 300,
     rewards: {
       파결: 360,
       수결: 720,
@@ -186,7 +204,7 @@ export const rewardData = {
     },
   },
   '비아키스 3관문(하드)': {
-    price: 1200,
+    price: 600,
     rewards: {
       파결: 480,
       수결: 960,

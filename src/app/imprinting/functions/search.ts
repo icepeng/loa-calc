@@ -158,7 +158,7 @@ export function getSearchScript(
       body.append("request[sortOption][Sort]", "BUY_PRICE");
       body.append("request[sortOption][IsDesc]", false);
     
-      return fetch("https://lostark.game.onstove.com/Auction/GetAuctionListV2", {
+      return fetch("https://lostark.game.onstove.com/Auction", {
         headers: {
           "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
         },

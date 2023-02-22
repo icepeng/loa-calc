@@ -258,13 +258,7 @@ export class ImprintingComponent implements OnInit {
           'API 검색은 1분에 100회까지 가능합니다. 검색이 잠시 멈추더라도 기다려주세요.',
           '닫기'
         );
-        // FIXME: API 모드 슬레이어 검색 오류 해결될 시 제거할 것
-        if (this.target.find((x) => ['포식자', '처단자'].includes(x[0]))) {
-          this.snackbar.open(
-            '로스트아크 API의 포식자, 처단자 각인 검색이 불안정한 상태입니다. 오류가 지속될 시 API 모드를 종료해주세요.',
-            '닫기'
-          );
-        }
+
         const data = await this.searchClient!.getSearchResult(
           imprintsToSearch,
           accTypes,

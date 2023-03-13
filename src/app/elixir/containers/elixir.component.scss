@@ -33,54 +33,6 @@
   gap: 12px;
 }
 
-.effect {
-  display: flex;
-
-  gap: 12px;
-  align-items: center;
-
-  cursor: pointer;
-}
-
-.effect-prob {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 1px solid black;
-  border-radius: 100%;
-
-  width: 48px;
-  height: 48px;
-}
-
-.effect-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.effect-name {
-  font-weight: bold;
-}
-
-.effect-value {
-  display: flex;
-}
-
-.effect-value-square {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  width: 24px;
-  height: 24px;
-
-  &.is-filled {
-    background-color: black;
-    color: white;
-  }
-}
-
 .power-container {
   display: flex;
   gap: 4px;
@@ -93,7 +45,7 @@
   border-radius: 100%;
 
   &.is-filled {
-    background-color: #7ce9fe;
+    background-color: #14acff;
   }
 }
 
@@ -104,7 +56,7 @@
   border-radius: 100%;
 
   &.is-filled {
-    background-color: #f8baeb;
+    background-color: #b25db0;
   }
 }
 

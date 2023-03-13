@@ -7716,7 +7716,7 @@ function createInitialState2(config) {
     rerollLeft: 2,
     effects: [
       {
-        name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
+        name: "\uBCF4\uC2A4 \uD53C\uD574",
         value: 0,
         isSealed: false
       },
@@ -7731,7 +7731,7 @@ function createInitialState2(config) {
         isSealed: false
       },
       {
-        name: "\uBCF4\uC2A4 \uD53C\uD574",
+        name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
         value: 0,
         isSealed: false
       },

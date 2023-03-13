@@ -9,9 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ElixirComponent } from './containers/elixir.component';
 import { ElixirRoutingModule } from './elixir-routing.module';
+import { ElixirEffectComponent } from './components/elixir-effect.component';
 
 @NgModule({
-  declarations: [ElixirComponent],
+  declarations: [ElixirComponent, ElixirEffectComponent],
   imports: [
     CommonModule,
     FormsModule,

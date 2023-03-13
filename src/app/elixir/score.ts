@@ -1,4 +1,4 @@
-import { data, GameState } from '../../../.yalc/@mokoko/elixir';
+import { data, GameState } from '../../../.yalc/@mokoko/elixir/dist';
 
 function createIndexTable() {
   let i = 0;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { api } from '../../../../.yalc/@mokoko/elixir';
-import { createScoreCalculator } from '../table';
+import { createScoreCalculator } from '../score';
 import * as JSZip from 'jszip';
 
 @Component({
@@ -30,7 +30,7 @@ export class ElixirComponent implements OnInit {
       .then((res) => res.blob())
       .then(async (compressed) => {
         const zip = new JSZip();
-        const data = await zip.loadAsync(compressed);
+        await zip.loadAsync(compressed);
         const adviceCounting = await zip
           .file('advice_counting_53_44_01.json')
           ?.async('string')
@@ -69,14 +69,6 @@ export class ElixirComponent implements OnInit {
 
   get luckyRatios() {
     return api.queryLuckyRatios(this.gameState);
-  }
-
-  get valueSquares() {
-    return Array.from({ length: this.gameState.config.maxEnchant }, (_, i) =>
-      api.getEffectLevel(i) !== api.getEffectLevel(i + 1)
-        ? api.getEffectLevel(i + 1)
-        : null
-    );
   }
 
   get sages() {

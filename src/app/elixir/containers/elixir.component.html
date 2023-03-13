@@ -27,18 +27,18 @@
             ></div>
           </div>
           <div>{{ sageDescription(idx) }}</div>
-          <div>커브밸류 {{ curveScores[idx] * 100 | number : ".2-5" }}</div>
+          <div>스택점수 {{ curveScores[idx] * 100 | number : ".2-2" }}</div>
           <ng-container *ngFor="let score of adviceScores[idx]; index as i">
             <div *ngIf="adviceScores[idx].length > 1">
               ({{ effectName(i) }} 선택)
             </div>
             <div>
-              조언밸류
-              {{ score * 10000 | number : ".2-5" }}
+              조언점수
+              {{ score * 10000 | number : ".2-2" }}
             </div>
             <div>
-              최종밸류
-              {{ curveScores[idx] * score * 1000000 | number : ".2-5" }}
+              최종점수
+              {{ curveScores[idx] * score * 1000000 | number : ".2-2" }}
             </div>
           </ng-container>
         </ng-container>
@@ -46,7 +46,6 @@
           <div>{{ sageDescription(idx) }}</div>
         </ng-container>
       </mat-card-content>
-      <mat-card-actions> </mat-card-actions>
     </mat-card>
     <div class="effect-list">
       <mat-card
@@ -55,33 +54,12 @@
         (click)="selectEffect(i)"
       >
         <mat-card-content>
-          <div class="effect">
-            <div class="effect-prob">
-              <ng-container *ngIf="!gameState.effects[i].isSealed">
-                {{ pickRatios[i] | percent : ".1" }}
-              </ng-container>
-              <ng-container *ngIf="gameState.effects[i].isSealed">
-                봉인
-              </ng-container>
-            </div>
-            <div class="effect-info">
-              <div class="effect-name">
-                {{ effect.name }}
-              </div>
-              <div class="effect-value">
-                <div
-                  class="effect-value-square"
-                  *ngFor="let level of valueSquares; index as idx"
-                  [ngClass]="{ 'is-filled': effect.value > idx }"
-                >
-                  <span>{{ level }}</span>
-                </div>
-              </div>
-              <div class="effect-lucky">
-                대성공 {{ luckyRatios[i] | percent : ".0" }}
-              </div>
-            </div>
-          </div>
+          <app-elixir-effect
+            [gameState]="gameState"
+            [pickRatios]="pickRatios"
+            [luckyRatios]="luckyRatios"
+            [index]="i"
+          ></app-elixir-effect>
         </mat-card-content>
       </mat-card>
     </div>
@@ -120,7 +98,7 @@
         >
           다른 조언 보기 ({{ gameState.rerollLeft }}회 남음)
         </button>
-        <button (click)="reset()">reset</button>
+        <button mat-flat-button color="warn" (click)="reset()">초기화</button>
       </mat-card-content>
     </mat-card>
   </div>

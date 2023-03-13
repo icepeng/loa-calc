@@ -1,0 +1,23 @@
+<div class="effect">
+  <div class="effect-prob">
+    <ng-container *ngIf="!effect.isSealed">
+      {{ pickRatio | percent : ".1" }}
+    </ng-container>
+    <ng-container *ngIf="effect.isSealed"> 봉인 </ng-container>
+  </div>
+  <div class="effect-info">
+    <div class="effect-name">
+      {{ effect.name }}
+    </div>
+    <div class="effect-value">
+      <div
+        class="effect-value-square"
+        *ngFor="let level of valueSquares; index as idx"
+        [ngClass]="{ 'is-filled': effect.value > idx }"
+      >
+        <span>{{ level }}</span>
+      </div>
+    </div>
+    <div class="effect-lucky">대성공 {{ luckyRatio | percent : ".0" }}</div>
+  </div>
+</div>

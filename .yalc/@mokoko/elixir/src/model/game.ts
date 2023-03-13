@@ -94,7 +94,7 @@ function createInitialState(config: GameConfiguration): GameState {
     rerollLeft: 2,
     effects: [
       {
-        name: "자원의 축복",
+        name: "보스 피해",
         value: 0,
         isSealed: false,
       },
@@ -109,7 +109,7 @@ function createInitialState(config: GameConfiguration): GameState {
         isSealed: false,
       },
       {
-        name: "보스 피해",
+        name: "자원의 축복",
         value: 0,
         isSealed: false,
       },

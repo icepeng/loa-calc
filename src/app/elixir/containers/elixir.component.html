@@ -1,0 +1,127 @@
+<div class="container">
+  <h1 class="mat-h1">엘릭서</h1>
+  <div class="layout">
+    <mat-card
+      *ngFor="let idx of [0, 1, 2]"
+      class="sage"
+      [class.mat-elevation-z8]="selectedSageIndex === idx"
+      (click)="selectSage(idx)"
+    >
+      <mat-card-content>
+        <div class="penguin">
+          <img src="assets/penguin.jpg" />
+        </div>
+        <ng-container *ngIf="!sages[idx].isExhausted">
+          <div class="power-container" *ngIf="sages[idx].type === 'lawful'">
+            <div
+              *ngFor="let i of [1, 2, 3]"
+              class="lawful-power"
+              [ngClass]="{ 'is-filled': sages[idx].power >= i }"
+            ></div>
+          </div>
+          <div class="power-container" *ngIf="sages[idx].type === 'chaos'">
+            <div
+              *ngFor="let i of [1, 2, 3, 4, 5, 6]"
+              class="chaos-power"
+              [ngClass]="{ 'is-filled': sages[idx].power >= i }"
+            ></div>
+          </div>
+          <div>{{ sageDescription(idx) }}</div>
+          <div>커브밸류 {{ curveScores[idx] * 100 | number : ".2-5" }}</div>
+          <ng-container *ngFor="let score of adviceScores[idx]; index as i">
+            <div *ngIf="adviceScores[idx].length > 1">
+              ({{ effectName(i) }} 선택)
+            </div>
+            <div>
+              조언밸류
+              {{ score * 10000 | number : ".2-5" }}
+            </div>
+            <div>
+              최종밸류
+              {{ curveScores[idx] * score * 1000000 | number : ".2-5" }}
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="sages[idx].isExhausted">
+          <div>{{ sageDescription(idx) }}</div>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-actions> </mat-card-actions>
+    </mat-card>
+    <div class="effect-list">
+      <mat-card
+        *ngFor="let effect of gameState.effects; index as i"
+        [class.mat-elevation-z8]="selectedEffectIndex === i"
+        (click)="selectEffect(i)"
+      >
+        <mat-card-content>
+          <div class="effect">
+            <div class="effect-prob">
+              <ng-container *ngIf="!gameState.effects[i].isSealed">
+                {{ pickRatios[i] | percent : ".1" }}
+              </ng-container>
+              <ng-container *ngIf="gameState.effects[i].isSealed">
+                봉인
+              </ng-container>
+            </div>
+            <div class="effect-info">
+              <div class="effect-name">
+                {{ effect.name }}
+              </div>
+              <div class="effect-value">
+                <div
+                  class="effect-value-square"
+                  *ngFor="let level of valueSquares; index as idx"
+                  [ngClass]="{ 'is-filled': effect.value > idx }"
+                >
+                  <span>{{ level }}</span>
+                </div>
+              </div>
+              <div class="effect-lucky">
+                대성공 {{ luckyRatios[i] | percent : ".0" }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="layout">
+    <mat-card class="enchant-area">
+      <mat-card-content>
+        <div>남은 연성 {{ gameState.turnLeft }}회</div>
+        <mat-card-actions>
+          <button
+            [disabled]="phase !== 'council'"
+            (click)="applyCouncil()"
+            mat-flat-button
+            color="primary"
+          >
+            조언 적용
+          </button>
+          <button
+            [disabled]="phase !== 'enchant'"
+            (click)="enchant()"
+            mat-flat-button
+            color="primary"
+          >
+            연성
+          </button>
+        </mat-card-actions>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <button
+          (click)="reroll()"
+          mat-flat-button
+          color="primary"
+          [disabled]="phase !== 'council' || gameState.rerollLeft === 0"
+        >
+          다른 조언 보기 ({{ gameState.rerollLeft }}회 남음)
+        </button>
+        <button (click)="reset()">reset</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

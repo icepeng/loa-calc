@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@mokoko/elixir": {
+      "signature": "f5d9cde60973f84eebe2f7e1536d5683",
+      "file": true
+    }
+  }
+}

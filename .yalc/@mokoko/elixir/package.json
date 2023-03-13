@@ -1,0 +1,45 @@
+{
+  "name": "@mokoko/elixir",
+  "version": "0.0.1",
+  "description": "Lostark engraving calcuation utilities",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "author": {
+    "email": "typ0@naver.com",
+    "name": "icepeng"
+  },
+  "repository": {
+    "name": "mokoko",
+    "url": "https://github.com/icepeng/mokoko",
+    "directory": "packages/engrave"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build-fast": "tsup src/index.ts --format esm,cjs",
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "test": "uvu -r tsm test",
+    "test:watch": "watchlist src test -- yarn test",
+    "e2e": "env-cmd uvu -r tsm e2e",
+    "push": "yalc push"
+  },
+  "dependencies": {
+    "chance": "^1.1.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "yalcSig": "f5d9cde60973f84eebe2f7e1536d5683"
+}

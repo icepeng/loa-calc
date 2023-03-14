@@ -13,6 +13,7 @@ export interface GameState {
   config: GameConfiguration;
   phase: "restart" | "council" | "enchant" | "done";
   turnLeft: number;
+  turnPassed: number;
   rerollLeft: number;
   effects: EffectState[];
   mutations: Mutation[];
@@ -91,6 +92,7 @@ function createInitialState(config: GameConfiguration): GameState {
     config,
     phase: "council",
     turnLeft: config.totalTurn,
+    turnPassed: 0,
     rerollLeft: 2,
     effects: [
       {
@@ -160,6 +162,7 @@ function passTurn(state: GameState, selectedSageIndex: number): GameState {
     ...state,
     phase: nextPhase,
     turnLeft: state.turnLeft - 1,
+    turnPassed: state.turnPassed + 1,
     mutations: state.mutations
       .map(mutationEntity.passTurn)
       .filter((mutation) => mutation.remainTurn > 0),

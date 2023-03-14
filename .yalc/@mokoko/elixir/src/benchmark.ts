@@ -3,7 +3,7 @@ import { GameConfiguration, GameState } from "./model/game";
 import { UiState } from "./model/ui";
 
 interface BenchmarkOptions {
-  selectionFn: (state: GameState) => UiState;
+  selectionFn: (state: GameState, uiStateHistory: UiState[]) => UiState;
   scoreFn: (state: GameState) => number;
   iteration: number;
   config: GameConfiguration;
@@ -17,21 +17,29 @@ export function benchmark({
   config,
   seed,
 }: BenchmarkOptions) {
-  api.seedRng(seed);
+  api.rng.setSeed(seed);
 
   let totalScore: number = 0;
   for (let i = 0; i < iteration; i++) {
-    let state = api.getInitialGameState(config);
+    if (i % 1000 === 0) {
+      console.log(`Iteration: ${i} Score: ${totalScore}`);
+    }
+
+    let state = api.game.getInitialGameState(config);
+    let uiStateHistory: UiState[] = [];
 
     while (state.phase !== "done") {
-      const uiState = selectionFn(state);
-      state = api.applyCouncil(state, uiState);
+      const uiState = selectionFn(state, uiStateHistory);
+      state = api.game.applyCouncil(state, uiState);
+      uiStateHistory.push(uiState);
 
       if (state.phase === "restart") {
-        state = api.getInitialGameState(config);
+        state = api.game.getInitialGameState(config);
+        uiStateHistory = [];
+        continue;
       }
 
-      api.enchant(state, uiState);
+      state = api.game.enchant(state, uiState);
     }
 
     totalScore += scoreFn(state);

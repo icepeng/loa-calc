@@ -1,4 +1,5 @@
 import game, { GameConfiguration, GameState } from "../model/game";
+import effectEntity from "../model/effect";
 import { UiState } from "../model/ui";
 import { CouncilService } from "./council";
 import { LogicService } from "./logic";
@@ -29,6 +30,25 @@ export function createGameService(
     const logics = councilService.getLogics(sage.councilId);
 
     return logics.some((logic) => logic.targetType === "userSelect");
+  }
+
+  function getEffectLevel(state: GameState, index: number): number {
+    const effect = state.effects[index];
+    return effectEntity.getLevel(effect);
+  }
+
+  function getSelectableSages(state: GameState): number[] {
+    return state.sages
+      .map((sage, index) => ({ sage, index }))
+      .filter(({ sage }) => !sage.isExhausted)
+      .map(({ index }) => index);
+  }
+
+  function getSelectableEffects(state: GameState): number[] {
+    return state.effects
+      .map((effect, index) => ({ effect, index }))
+      .filter(({ effect }) => !effect.isSealed)
+      .map(({ index }) => index);
   }
 
   function applyCouncil(state: GameState, ui: UiState): GameState {
@@ -110,6 +130,9 @@ export function createGameService(
   }
   return {
     getInitialGameState,
+    getEffectLevel,
+    getSelectableSages,
+    getSelectableEffects,
     isEffectSelectionRequired,
     applyCouncil,
     enchant,

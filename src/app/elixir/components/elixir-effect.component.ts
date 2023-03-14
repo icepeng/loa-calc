@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { api, GameState } from '../../../../.yalc/@mokoko/elixir';
+import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 
 @Component({
   selector: 'app-elixir-effect',
@@ -16,8 +16,8 @@ export class ElixirEffectComponent {
 
   get valueSquares() {
     return Array.from({ length: this.gameState.config.maxEnchant }, (_, i) =>
-      api.getEffectLevel(i) !== api.getEffectLevel(i + 1)
-        ? api.getEffectLevel(i + 1)
+      data.effectLevelTable[i] !== data.effectLevelTable[i + 1]
+        ? data.effectLevelTable[i + 1]
         : null
     );
   }

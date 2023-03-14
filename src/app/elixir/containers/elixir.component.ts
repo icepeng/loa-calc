@@ -16,7 +16,7 @@ export class ElixirComponent implements OnInit {
     );
   }
 
-  gameState = api.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
+  gameState = api.game.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
   selectedSageIndex: number | null = null;
   selectedEffectIndex: number | null = null;
 
@@ -26,27 +26,61 @@ export class ElixirComponent implements OnInit {
   valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
 
   ngOnInit(): void {
-    fetch('assets/elixir_53_44_01.zip')
+    fetch('assets/elixir_53_44_any.zip')
       .then((res) => res.blob())
       .then(async (compressed) => {
         const zip = new JSZip();
         await zip.loadAsync(compressed);
         const adviceCounting = await zip
-          .file('advice_counting_53_44_01.json')
+          .file('advice_counting.json')
           ?.async('string')
           .then(JSON.parse);
-        const curveRank = await zip
-          .file('curve_rank_53_44_01.json')
+        const curveRank12 = await zip
+          .file('curve_rank_12.json')
           ?.async('string')
           .then(JSON.parse);
-        const curveProb = await zip
-          .file('curve_prob_53_44_01.json')
+        const curveRank13 = await zip
+          .file('curve_rank_13.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveRank14 = await zip
+          .file('curve_rank_14.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveRank15 = await zip
+          .file('curve_rank_15.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveProb12 = await zip
+          .file('curve_prob_12.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveProb13 = await zip
+          .file('curve_prob_13.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveProb14 = await zip
+          .file('curve_prob_14.json')
+          ?.async('string')
+          .then(JSON.parse);
+        const curveProb15 = await zip
+          .file('curve_prob_15.json')
           ?.async('string')
           .then(JSON.parse);
         this.valueCalculator = createScoreCalculator({
           adviceCounting,
-          curveRank,
-          curveProb,
+          curveRankRecord: {
+            12: curveRank12,
+            13: curveRank13,
+            14: curveRank14,
+            15: curveRank15,
+          },
+          curveProbRecord: {
+            12: curveProb12,
+            13: curveProb13,
+            14: curveProb14,
+            15: curveProb15,
+          },
         });
         this.updateScores();
       });
@@ -64,11 +98,11 @@ export class ElixirComponent implements OnInit {
   }
 
   get pickRatios() {
-    return api.queryPickRatios(this.gameState);
+    return api.mutation.queryPickRatios(this.gameState);
   }
 
   get luckyRatios() {
-    return api.queryLuckyRatios(this.gameState);
+    return api.mutation.queryLuckyRatios(this.gameState);
   }
 
   updateScores() {
@@ -96,13 +130,13 @@ export class ElixirComponent implements OnInit {
   applyCouncil() {
     if (this.selectedSageIndex === null) return;
     if (
-      api.isEffectSelectionRequired(this.gameState, this.uiState) &&
+      api.game.isEffectSelectionRequired(this.gameState, this.uiState) &&
       this.selectedEffectIndex === null
     ) {
       return;
     }
 
-    this.gameState = api.applyCouncil(this.gameState, this.uiState);
+    this.gameState = api.game.applyCouncil(this.gameState, this.uiState);
 
     if (this.gameState.phase === 'restart') {
       this.reset();
@@ -112,7 +146,7 @@ export class ElixirComponent implements OnInit {
   enchant() {
     if (this.selectedSageIndex === null) return;
 
-    this.gameState = api.enchant(this.gameState, this.uiState);
+    this.gameState = api.game.enchant(this.gameState, this.uiState);
     this.currentCurve = [...this.currentCurve, this.selectedSageIndex];
     this.updateScores();
     this.selectedSageIndex = null;
@@ -120,14 +154,17 @@ export class ElixirComponent implements OnInit {
   }
 
   reroll() {
-    this.gameState = api.reroll(this.gameState);
+    this.gameState = api.game.reroll(this.gameState);
     this.updateScores();
   }
 
   benchmark() {}
 
   reset() {
-    this.gameState = api.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
+    this.gameState = api.game.getInitialGameState({
+      maxEnchant: 10,
+      totalTurn: 14,
+    });
     this.selectedSageIndex = null;
     this.selectedEffectIndex = null;
     this.currentCurve = [];

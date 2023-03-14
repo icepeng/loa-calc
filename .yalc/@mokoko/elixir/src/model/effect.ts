@@ -10,7 +10,8 @@ function isMutable(effect: EffectState, maxEnchant: number) {
   return effect.isSealed === false && effect.value < maxEnchant;
 }
 
-function getLevel(value: number) {
+function getLevel(effect: EffectState) {
+  const value = effect.value;
   if (value < 0 || value > 10) {
     throw new Error(`Invalid effect value: ${value}`);
   }

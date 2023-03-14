@@ -7455,54 +7455,6 @@ var effectLevelTable = {
   10: 5
 };
 
-// src/model/effect.ts
-function isMutable(effect, maxEnchant) {
-  return effect.isSealed === false && effect.value < maxEnchant;
-}
-function getLevel(value) {
-  if (value < 0 || value > 10) {
-    throw new Error(`Invalid effect value: ${value}`);
-  }
-  return effectLevelTable[value];
-}
-function setValue(effect, value) {
-  if (effect.isSealed && effect.value !== value) {
-    throw new Error("Effect is sealed");
-  }
-  if (value < 0) {
-    throw new Error("Effect value must be positive");
-  }
-  return {
-    ...effect,
-    value
-  };
-}
-function seal(effect) {
-  if (effect.isSealed) {
-    throw new Error("Effect is already sealed");
-  }
-  return {
-    ...effect,
-    isSealed: true
-  };
-}
-function unseal(effect) {
-  if (!effect.isSealed) {
-    throw new Error("Effect is already unsealed");
-  }
-  return {
-    ...effect,
-    isSealed: false
-  };
-}
-var effect_default = {
-  isMutable,
-  getLevel,
-  setValue,
-  seal,
-  unseal
-};
-
 // src/model/mutation.ts
 function createProbMutation(index, value, remainTurn) {
   return {
@@ -7617,6 +7569,55 @@ var sage_default = {
   createInitialState
 };
 
+// src/model/effect.ts
+function isMutable(effect, maxEnchant) {
+  return effect.isSealed === false && effect.value < maxEnchant;
+}
+function getLevel(effect) {
+  const value = effect.value;
+  if (value < 0 || value > 10) {
+    throw new Error(`Invalid effect value: ${value}`);
+  }
+  return effectLevelTable[value];
+}
+function setValue(effect, value) {
+  if (effect.isSealed && effect.value !== value) {
+    throw new Error("Effect is sealed");
+  }
+  if (value < 0) {
+    throw new Error("Effect value must be positive");
+  }
+  return {
+    ...effect,
+    value
+  };
+}
+function seal(effect) {
+  if (effect.isSealed) {
+    throw new Error("Effect is already sealed");
+  }
+  return {
+    ...effect,
+    isSealed: true
+  };
+}
+function unseal(effect) {
+  if (!effect.isSealed) {
+    throw new Error("Effect is already unsealed");
+  }
+  return {
+    ...effect,
+    isSealed: false
+  };
+}
+var effect_default = {
+  isMutable,
+  getLevel,
+  setValue,
+  seal,
+  unseal
+};
+
 // src/util/clamp.ts
 function clamp(value, max) {
   return Math.min(Math.max(value, 0), max);
@@ -7686,6 +7687,7 @@ function createInitialState2(config) {
     config,
     phase: "council",
     turnLeft: config.totalTurn,
+    turnPassed: 0,
     rerollLeft: 2,
     effects: [
       {
@@ -7749,6 +7751,7 @@ function passTurn2(state, selectedSageIndex) {
     ...state,
     phase: nextPhase,
     turnLeft: state.turnLeft - 1,
+    turnPassed: state.turnPassed + 1,
     mutations: state.mutations.map(mutation_default.passTurn).filter((mutation) => mutation.remainTurn > 0),
     sages: state.sages.map(
       (sage) => sage_default.updatePower(sage, selectedSageIndex)
@@ -7963,6 +7966,16 @@ function createGameService(chance2, sageService2, councilService2, logicService2
     const logics = councilService2.getLogics(sage.councilId);
     return logics.some((logic) => logic.targetType === "userSelect");
   }
+  function getEffectLevel(state, index) {
+    const effect = state.effects[index];
+    return effect_default.getLevel(effect);
+  }
+  function getSelectableSages(state) {
+    return state.sages.map((sage, index) => ({ sage, index })).filter(({ sage }) => !sage.isExhausted).map(({ index }) => index);
+  }
+  function getSelectableEffects(state) {
+    return state.effects.map((effect, index) => ({ effect, index })).filter(({ effect }) => !effect.isSealed).map(({ index }) => index);
+  }
   function applyCouncil(state, ui) {
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
@@ -8023,6 +8036,9 @@ function createGameService(chance2, sageService2, councilService2, logicService2
   }
   return {
     getInitialGameState,
+    getEffectLevel,
+    getSelectableSages,
+    getSelectableEffects,
     isEffectSelectionRequired,
     applyCouncil,
     enchant,
@@ -8719,15 +8735,18 @@ var gameService = createGameService(
   mutationService
 );
 var api = {
-  ...gameService,
-  ...mutationService,
-  seedRng: chance.setSeed,
-  getCouncil: councilService.getOne,
-  getEffectLevel: effect_default.getLevel,
-  getSageDescription: sageService.getDescription
+  game: gameService,
+  sage: sageService,
+  council: councilService,
+  logic: logicService,
+  target: targetService,
+  mutation: mutationService,
+  effect: effectService,
+  rng: chance
 };
 var data = {
-  councils
+  councils,
+  effectLevelTable
 };
 
 // src/benchmark.ts
@@ -8738,17 +8757,24 @@ function benchmark({
   config,
   seed
 }) {
-  api.seedRng(seed);
+  api.rng.setSeed(seed);
   let totalScore = 0;
   for (let i = 0; i < iteration; i++) {
-    let state = api.getInitialGameState(config);
+    if (i % 1e3 === 0) {
+      console.log(`Iteration: ${i} Score: ${totalScore}`);
+    }
+    let state = api.game.getInitialGameState(config);
+    let uiStateHistory = [];
     while (state.phase !== "done") {
-      const uiState = selectionFn(state);
-      state = api.applyCouncil(state, uiState);
+      const uiState = selectionFn(state, uiStateHistory);
+      state = api.game.applyCouncil(state, uiState);
+      uiStateHistory.push(uiState);
       if (state.phase === "restart") {
-        state = api.getInitialGameState(config);
+        state = api.game.getInitialGameState(config);
+        uiStateHistory = [];
+        continue;
       }
-      api.enchant(state, uiState);
+      state = api.game.enchant(state, uiState);
     }
     totalScore += scoreFn(state);
   }

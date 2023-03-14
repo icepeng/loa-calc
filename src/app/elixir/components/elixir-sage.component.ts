@@ -19,7 +19,7 @@ export class ElixirSageComponent {
   }
 
   get description() {
-    return api.getSageDescription(this.gameState, this.index);
+    return api.sage.getDescription(this.gameState, this.index);
   }
 
   get curveScore() {

@@ -41,26 +41,26 @@ const requireSelect = [
 
 interface ScoreCalculatorData {
   adviceCounting: number[][][][][][];
-  curveRank: number[][];
-  curveProb: number[];
+  curveRankRecord: Record<number, number[][]>;
+  curveProbRecord: Record<number, number[]>;
 }
 
 export function createScoreCalculator({
   adviceCounting,
-  curveRank,
-  curveProb,
+  curveRankRecord,
+  curveProbRecord,
 }: ScoreCalculatorData) {
-  const preIndexedCurveRank: Record<string, number> = {};
-  curveRank.forEach((arr, index) => {
-    for (let i = 0; i < arr.length; i++) {
-      const key = arr.slice(0, i + 1).join('');
-      if (!preIndexedCurveRank[key]) preIndexedCurveRank[key] = index;
-    }
-  });
+  function getCurveScores(gameState: GameState, currentCurve: number[]) {
+    const gameLength = gameState.turnLeft + gameState.turnPassed;
+    const curveRank = curveRankRecord[Math.min(gameLength, 15)];
+    const curveProb = curveProbRecord[Math.min(gameLength, 15)];
 
-  function getCurveScores(currentCurve: number[]) {
-    const bestCurveIndexes = [0, 1, 2].map(
-      (nextIndex) => preIndexedCurveRank[[...currentCurve, nextIndex].join('')]
+    const bestCurveIndexes = [0, 1, 2].map((nextIndex) =>
+      curveRank.findIndex((curve) =>
+        [...currentCurve, nextIndex].every(
+          (value, index) => value === curve[index]
+        )
+      )
     );
     const curveScores = bestCurveIndexes.map((index) => curveProb[index]);
     return curveScores;
@@ -68,7 +68,8 @@ export function createScoreCalculator({
 
   function getAdviceScores(gameState: GameState) {
     const adviceScores = gameState.sages.map((sage) => {
-      if (indexTable[sage.councilId] === -1) {
+      const councilIndex = indexTable[sage.councilId];
+      if (councilIndex === -1) {
         return 0;
       }
 
@@ -81,11 +82,11 @@ export function createScoreCalculator({
 
       if (requireSelect.includes(sage.councilId)) {
         return Math.max(
-          ...[-5, -4, -3, -2, -1].map((i) => e[indexTable[sage.councilId] + i])
+          ...[-5, -4, -3, -2, -1].map((i) => e[councilIndex + i])
         );
       }
 
-      return e[indexTable[sage.councilId]];
+      return e[councilIndex];
     });
 
     return adviceScores;
@@ -93,7 +94,7 @@ export function createScoreCalculator({
 
   function calculateScores(gameState: GameState, currentCurve: number[]) {
     return {
-      curveScores: getCurveScores(currentCurve),
+      curveScores: getCurveScores(gameState, currentCurve),
       adviceScores: getAdviceScores(gameState),
     };
   }

@@ -1,5 +1,5 @@
 import { councils } from "./data/council";
-import effect from "./model/effect";
+import { effectLevelTable } from "./data/effect";
 import { createCouncilService } from "./service/council";
 import { createEffectService } from "./service/effect";
 import { createGameService } from "./service/game";
@@ -28,14 +28,17 @@ const gameService = createGameService(
 );
 
 export const api = {
-  ...gameService,
-  ...mutationService,
-  seedRng: chance.setSeed,
-  getCouncil: councilService.getOne,
-  getEffectLevel: effect.getLevel,
-  getSageDescription: sageService.getDescription,
+  game: gameService,
+  sage: sageService,
+  council: councilService,
+  logic: logicService,
+  target: targetService,
+  mutation: mutationService,
+  effect: effectService,
+  rng: chance,
 };
 
 export const data = {
   councils: councils,
+  effectLevelTable: effectLevelTable,
 };

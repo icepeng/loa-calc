@@ -1,7 +1,7 @@
 import { CouncilLogic, CouncilLogicType } from "../model/council";
 import game, { GameState } from "../model/game";
 import mutation, { Mutation } from "../model/mutation";
-import { cycle, partition } from "../util";
+import { cycle } from "../util";
 import { EffectService } from "./effect";
 import { RngService } from "./rng";
 
@@ -281,18 +281,20 @@ export function createLogicService(
   ): GameState {
     const values = state.effects.map((eff) => eff.value);
     const direction = logic.value[0] as 0 | 1; // 0=up, 1=down
+    const shiftedValues: number[] = [];
 
-    const shiftedIndexes = [0, 1, 2, 3, 4].map((i) => {
+    for (let i = 0; i < 5; i++) {
       if (game.isEffectSealed(state, i)) {
-        return i;
+        shiftedValues[i] = values[i];
       }
+
       let j = i;
-      while (game.isEffectSealed(state, j)) {
+      do {
         j = cycle(j, 5, direction);
-      }
-      return j;
-    });
-    const shiftedValues = [0, 1, 2, 3, 4].map((i) => values[shiftedIndexes[i]]);
+      } while (game.isEffectSealed(state, j));
+
+      shiftedValues[j] = values[i];
+    }
 
     return game.setEffectValueAll(state, shiftedValues);
   }

@@ -55,13 +55,12 @@ export function createGameService(
       state
     );
 
-    if (counciledState.phase === "restart") {
-      return getInitialGameState(counciledState.config);
-    }
+    const nextPhase =
+      counciledState.phase === "restart" ? "restart" : "enchant";
 
     return {
       ...counciledState,
-      phase: "enchant",
+      phase: nextPhase,
     };
   }
 

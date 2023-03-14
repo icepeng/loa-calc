@@ -30,6 +30,7 @@ const gameService = createGameService(
 export const api = {
   ...gameService,
   ...mutationService,
+  seedRng: chance.setSeed,
   getCouncil: councilService.getOne,
   getEffectLevel: effect.getLevel,
   getSageDescription: sageService.getDescription,

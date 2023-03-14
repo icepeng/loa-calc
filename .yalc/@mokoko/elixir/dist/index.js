@@ -21,6 +21,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   api: () => api,
+  benchmark: () => benchmark,
   data: () => data
 });
 module.exports = __toCommonJS(src_exports);
@@ -8007,12 +8008,10 @@ function createGameService(chance2, sageService2, councilService2, logicService2
       ),
       state
     );
-    if (counciledState.phase === "restart") {
-      return getInitialGameState(counciledState.config);
-    }
+    const nextPhase = counciledState.phase === "restart" ? "restart" : "enchant";
     return {
       ...counciledState,
-      phase: "enchant"
+      phase: nextPhase
     };
   }
   function enchant(state, ui) {
@@ -8203,17 +8202,17 @@ function createLogicService(chance2, effectService2) {
   function shiftAll(state, logic, targets) {
     const values = state.effects.map((eff) => eff.value);
     const direction = logic.value[0];
-    const shiftedIndexes = [0, 1, 2, 3, 4].map((i) => {
+    const shiftedValues = [];
+    for (let i = 0; i < 5; i++) {
       if (game_default.isEffectSealed(state, i)) {
-        return i;
+        shiftedValues[i] = values[i];
       }
       let j = i;
-      while (game_default.isEffectSealed(state, j)) {
+      do {
         j = cycle(j, 5, direction);
-      }
-      return j;
-    });
-    const shiftedValues = [0, 1, 2, 3, 4].map((i) => values[shiftedIndexes[i]]);
+      } while (game_default.isEffectSealed(state, j));
+      shiftedValues[j] = values[i];
+    }
     return game_default.setEffectValueAll(state, shiftedValues);
   }
   function swapValues(state, logic, targets) {
@@ -8750,6 +8749,7 @@ var gameService = createGameService(
 var api = {
   ...gameService,
   ...mutationService,
+  seedRng: chance.setSeed,
   getCouncil: councilService.getOne,
   getEffectLevel: effect_default.getLevel,
   getSageDescription: sageService.getDescription
@@ -8757,8 +8757,37 @@ var api = {
 var data = {
   councils
 };
+
+// src/benchmark.ts
+function benchmark({
+  selectionFn,
+  scoreFn,
+  iteration,
+  config,
+  seed
+}) {
+  api.seedRng(seed);
+  let totalScore = 0;
+  for (let i = 0; i < iteration; i++) {
+    let state = api.getInitialGameState(config);
+    while (state.phase !== "done") {
+      const uiState = selectionFn(state);
+      state = api.applyCouncil(state, uiState);
+      if (state.phase === "restart") {
+        state = api.getInitialGameState(config);
+      }
+      api.enchant(state, uiState);
+    }
+    totalScore += scoreFn(state);
+  }
+  return {
+    totalScore,
+    iteration
+  };
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   api,
+  benchmark,
   data
 });

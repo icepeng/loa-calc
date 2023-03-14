@@ -50,18 +50,26 @@ export function createScoreCalculator({
   curveRank,
   curveProb,
 }: ScoreCalculatorData) {
-  function calculateScores(gameState: GameState, currentCurve: number[]) {
-    const bestCurveIndexes = [0, 1, 2].map((nextIndex) =>
-      curveRank.findIndex((curve) =>
-        [...currentCurve, nextIndex].every(
-          (value, index) => value === curve[index]
-        )
-      )
+  const preIndexedCurveRank: Record<string, number> = {};
+  curveRank.forEach((arr, index) => {
+    for (let i = 0; i < arr.length; i++) {
+      const key = arr.slice(0, i + 1).join('');
+      if (!preIndexedCurveRank[key]) preIndexedCurveRank[key] = index;
+    }
+  });
+
+  function getCurveScores(currentCurve: number[]) {
+    const bestCurveIndexes = [0, 1, 2].map(
+      (nextIndex) => preIndexedCurveRank[[...currentCurve, nextIndex].join('')]
     );
     const curveScores = bestCurveIndexes.map((index) => curveProb[index]);
+    return curveScores;
+  }
+
+  function getAdviceScores(gameState: GameState) {
     const adviceScores = gameState.sages.map((sage) => {
       if (indexTable[sage.councilId] === -1) {
-        return [0];
+        return 0;
       }
 
       const values = gameState.effects.map((effect) => effect.value);
@@ -72,17 +80,21 @@ export function createScoreCalculator({
       const e = d[values[4]];
 
       if (requireSelect.includes(sage.councilId)) {
-        return [-5, -4, -3, -2, -1].map(
-          (i) => e[indexTable[sage.councilId] + i]
+        return Math.max(
+          ...[-5, -4, -3, -2, -1].map((i) => e[indexTable[sage.councilId] + i])
         );
       }
-      const f = e[indexTable[sage.councilId]];
-      return [f];
+
+      return e[indexTable[sage.councilId]];
     });
 
+    return adviceScores;
+  }
+
+  function calculateScores(gameState: GameState, currentCurve: number[]) {
     return {
-      curveScores,
-      adviceScores,
+      curveScores: getCurveScores(currentCurve),
+      adviceScores: getAdviceScores(gameState),
     };
   }
 

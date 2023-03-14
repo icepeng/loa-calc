@@ -6,7 +6,7 @@
 
 .container {
   margin: 20px;
-  max-width: 1200px;
+  max-width: 1024px;
 }
 
 .sage {
@@ -15,49 +15,12 @@
   box-sizing: border-box;
 }
 
-.penguin {
-  display: flex;
-  justify-content: center;
-
-  img {
-    width: 240px;
-    height: auto;
-  }
-}
-
 .effect-list {
   flex: 1 0 auto;
 
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.power-container {
-  display: flex;
-  gap: 4px;
-}
-
-.lawful-power {
-  width: 24px;
-  height: 24px;
-  border: 1px solid black;
-  border-radius: 100%;
-
-  &.is-filled {
-    background-color: #14acff;
-  }
-}
-
-.chaos-power {
-  width: 24px;
-  height: 24px;
-  border: 1px solid black;
-  border-radius: 100%;
-
-  &.is-filled {
-    background-color: #b25db0;
-  }
 }
 
 .enchant-area {

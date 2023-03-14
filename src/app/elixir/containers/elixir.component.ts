@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { api } from '../../../../.yalc/@mokoko/elixir';
+import { api, benchmark } from '../../../../.yalc/@mokoko/elixir';
 import { createScoreCalculator } from '../score';
 import * as JSZip from 'jszip';
 
@@ -22,7 +22,7 @@ export class ElixirComponent implements OnInit {
 
   currentCurve: number[] = [];
   curveScores: number[] = [];
-  adviceScores: number[][] = [];
+  adviceScores: number[] = [];
   valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
 
   ngOnInit(): void {
@@ -71,10 +71,6 @@ export class ElixirComponent implements OnInit {
     return api.queryLuckyRatios(this.gameState);
   }
 
-  get sages() {
-    return this.gameState.sages;
-  }
-
   updateScores() {
     if (this.valueCalculator === null) return;
 
@@ -85,14 +81,6 @@ export class ElixirComponent implements OnInit {
 
     this.curveScores = scores.curveScores;
     this.adviceScores = scores.adviceScores;
-  }
-
-  sageDescription(index: number) {
-    return api.getSageDescription(this.gameState, index);
-  }
-
-  effectName(index: number) {
-    return this.gameState.effects[index].name;
   }
 
   selectSage(index: number) {
@@ -115,6 +103,10 @@ export class ElixirComponent implements OnInit {
     }
 
     this.gameState = api.applyCouncil(this.gameState, this.uiState);
+
+    if (this.gameState.phase === 'restart') {
+      this.reset();
+    }
   }
 
   enchant() {
@@ -131,6 +123,8 @@ export class ElixirComponent implements OnInit {
     this.gameState = api.reroll(this.gameState);
     this.updateScores();
   }
+
+  benchmark() {}
 
   reset() {
     this.gameState = api.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });

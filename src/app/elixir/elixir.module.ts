@@ -10,9 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { ElixirComponent } from './containers/elixir.component';
 import { ElixirRoutingModule } from './elixir-routing.module';
 import { ElixirEffectComponent } from './components/elixir-effect.component';
+import { ElixirSageComponent } from './components/elixir-sage.component';
 
 @NgModule({
-  declarations: [ElixirComponent, ElixirEffectComponent],
+  declarations: [ElixirComponent, ElixirEffectComponent, ElixirSageComponent],
   imports: [
     CommonModule,
     FormsModule,

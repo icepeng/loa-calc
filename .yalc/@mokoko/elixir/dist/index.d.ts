@@ -69,6 +69,7 @@ interface UiState {
 }
 
 declare const api: {
+    seedRng: (seed: number) => void;
     getCouncil: (id: string) => Council;
     getEffectLevel: (value: number) => number;
     getSageDescription: (state: GameState, sageIndex: number) => string;
@@ -86,4 +87,16 @@ declare const data: {
     councils: readonly Council[];
 };
 
-export { Council, CouncilLogic, CouncilLogicType, CouncilTargetType, CouncilType, EffectState, GameConfiguration, GameState, Mutation, SageState, SageType, UiState, api, data };
+interface BenchmarkOptions {
+    selectionFn: (state: GameState) => UiState;
+    scoreFn: (state: GameState) => number;
+    iteration: number;
+    config: GameConfiguration;
+    seed: number;
+}
+declare function benchmark({ selectionFn, scoreFn, iteration, config, seed, }: BenchmarkOptions): {
+    totalScore: number;
+    iteration: number;
+};
+
+export { Council, CouncilLogic, CouncilLogicType, CouncilTargetType, CouncilType, EffectState, GameConfiguration, GameState, Mutation, SageState, SageType, UiState, api, benchmark, data };

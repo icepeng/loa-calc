@@ -12,3 +12,4 @@ export type { SageState, SageType } from "./model/sage";
 export type { UiState } from "./model/ui";
 
 export { api, data } from "./api";
+export { benchmark } from "./benchmark";

@@ -6,9 +6,13 @@
     <ng-container *ngIf="effect.isSealed"> 봉인 </ng-container>
   </div>
   <div class="effect-info">
-    <div class="effect-name">
-      {{ effect.name }}
-    </div>
+    <mat-form-field>
+      <mat-select [(ngModel)]="gameState.effects[index].optionId">
+        <mat-option *ngFor="let option of effectOptions" [value]="option.id">
+          {{ option.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="effect-value">
       <div
         class="effect-value-square"
@@ -18,6 +22,9 @@
         <span>{{ level }}</span>
       </div>
     </div>
-    <div class="effect-lucky">대성공 {{ luckyRatio | percent : ".0" }}</div>
+    <span class="effect-lucky mat-body"
+      >대성공 {{ luckyRatio | percent : ".0" }}</span
+    >
+    <span class="mat-caption bluegrey">{{ effectOptionDescription }}</span>
   </div>
 </div>

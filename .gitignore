@@ -46,3 +46,6 @@ testem.log
 Thumbs.db
 
 fixtures/
+
+src/assets/elixir*
+!src/assets/elixir*.zip

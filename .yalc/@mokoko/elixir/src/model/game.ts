@@ -96,27 +96,32 @@ function createInitialState(config: GameConfiguration): GameState {
     rerollLeft: 2,
     effects: [
       {
-        name: "보스 피해",
+        optionId: "12000",
+        index: 0,
         value: 0,
         isSealed: false,
       },
       {
-        name: "무기 공격력",
+        optionId: "10101",
+        index: 1,
         value: 0,
         isSealed: false,
       },
       {
-        name: "민첩",
+        optionId: "10000",
+        index: 2,
         value: 0,
         isSealed: false,
       },
       {
-        name: "자원의 축복",
+        optionId: "10106",
+        index: 3,
         value: 0,
         isSealed: false,
       },
       {
-        name: "무력화",
+        optionId: "10108",
+        index: 4,
         value: 0,
         isSealed: false,
       },

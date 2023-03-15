@@ -1,4 +1,4 @@
-import { data, GameState } from '../../../.yalc/@mokoko/elixir/dist';
+import { data, GameState } from '@mokoko/elixir';
 
 function createIndexTable() {
   let i = 0;
@@ -43,12 +43,14 @@ interface ScoreCalculatorData {
   adviceCounting: number[][][][][][];
   curveRankRecord: Record<number, number[][]>;
   curveProbRecord: Record<number, number[]>;
+  preIndexedCurveRank: Record<string, number>;
 }
 
 export function createScoreCalculator({
   adviceCounting,
   curveRankRecord,
   curveProbRecord,
+  preIndexedCurveRank,
 }: ScoreCalculatorData) {
   function getCurveScores(gameState: GameState, currentCurve: number[]) {
     const gameLength = gameState.turnLeft + gameState.turnPassed;

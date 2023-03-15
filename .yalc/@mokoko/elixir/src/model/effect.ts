@@ -1,9 +1,16 @@
-import { effectLevelTable } from "../data/effect";
+import { effectLevelTable, effectOptionsRecord } from "../data/effect";
 
 export interface EffectState {
-  name: string;
+  index: number;
+  optionId: keyof typeof effectOptionsRecord;
   value: number;
   isSealed: boolean;
+}
+
+export interface EffectOption {
+  id: string;
+  name: string;
+  optionDescriptions: [string, string, string, string, string, string];
 }
 
 function isMutable(effect: EffectState, maxEnchant: number) {
@@ -19,6 +26,24 @@ function getLevel(effect: EffectState) {
   return effectLevelTable[value as keyof typeof effectLevelTable];
 }
 
+function getEffectOptionById(id: string): EffectOption {
+  const option = effectOptionsRecord[id];
+  if (!option) {
+    throw new Error(`Invalid effect option id: ${id}`);
+  }
+
+  return option;
+}
+
+function getEffectOptionNameById(id: string) {
+  return getEffectOptionById(id).name;
+}
+
+function getEffectOptionDescriptionByIdAndLevel(id: string, level: number) {
+  const option = getEffectOptionById(id);
+  return option.optionDescriptions[level];
+}
+
 function setValue(effect: EffectState, value: number) {
   if (effect.isSealed && effect.value !== value) {
     throw new Error("Effect is sealed");
@@ -30,6 +55,17 @@ function setValue(effect: EffectState, value: number) {
   return {
     ...effect,
     value,
+  };
+}
+
+function setOption(effect: EffectState, option: EffectOption) {
+  if (effect.isSealed) {
+    throw new Error("Effect is sealed");
+  }
+
+  return {
+    ...effect,
+    option,
   };
 }
 
@@ -58,7 +94,11 @@ function unseal(effect: EffectState) {
 export default {
   isMutable,
   getLevel,
+  getEffectOptionById,
+  getEffectOptionNameById,
+  getEffectOptionDescriptionByIdAndLevel,
   setValue,
+  setOption,
   seal,
   unseal,
 };

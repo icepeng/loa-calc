@@ -1,4 +1,5 @@
 import { GameState } from "../model/game";
+import effectEntity from "../model/effect";
 import { CouncilService } from "./council";
 
 export function createSageService(councilService: CouncilService) {
@@ -32,7 +33,9 @@ export function createSageService(councilService: CouncilService) {
       throw new Error("Invalid council id");
     }
 
-    const effectNames = state.effects.map((eff) => eff.name);
+    const effectNames = state.effects.map((eff) =>
+      effectEntity.getEffectOptionNameById(eff.optionId)
+    );
     return council.descriptions[sageIndex]
       .replaceAll("{0}", effectNames[0])
       .replaceAll("{1}", effectNames[1])

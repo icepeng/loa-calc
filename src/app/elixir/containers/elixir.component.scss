@@ -6,11 +6,11 @@
 
 .container {
   margin: 20px;
-  max-width: 1024px;
+  max-width: 1200px;
 }
 
 .sage {
-  flex: 1 1 auto;
+  width: 240px;
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -26,4 +26,8 @@
 .enchant-area {
   flex: 1 1 auto;
   min-height: 120px;
+}
+
+.is-focused {
+  border: 1px solid #000;
 }

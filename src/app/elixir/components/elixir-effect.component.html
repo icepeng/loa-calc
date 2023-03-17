@@ -25,6 +25,10 @@
     <span class="effect-lucky mat-body"
       >대성공 {{ luckyRatio | percent : ".0" }}</span
     >
-    <span class="mat-caption bluegrey">{{ effectOptionDescription }}</span>
+  </div>
+  <div>
+    <button (click)="onFocusTarget($event)" mat-flat-button color="primary">
+      목표로 지정
+    </button>
   </div>
 </div>

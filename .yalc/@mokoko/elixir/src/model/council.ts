@@ -115,10 +115,15 @@ function getLogics(id: string) {
   return getOne(id).logics;
 }
 
+function isIncludingLogicType(id: string, type: CouncilLogicType) {
+  return getLogics(id).some((logic) => logic.type === type);
+}
+
 const query = {
   isCouncilAvailable,
   getOne,
   getLogics,
+  isIncludingLogicType,
 };
 
 export const Council = {

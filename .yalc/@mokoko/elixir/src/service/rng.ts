@@ -1,7 +1,7 @@
 import { Chance } from "chance";
 
 export function createRngService() {
-  let chance = new Chance(123);
+  let chance = new Chance();
 
   function setSeed(seed: number) {
     chance = new Chance(seed);

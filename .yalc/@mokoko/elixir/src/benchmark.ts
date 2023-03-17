@@ -2,8 +2,20 @@ import { api } from "./api";
 import { GameConfiguration, GameState } from "./model/game";
 import { UiState } from "./model/ui";
 
+interface EnchantAction {
+  type: "enchant";
+  sageIndex: number;
+  effectIndex: number | null;
+}
+
+interface RerollAction {
+  type: "reroll";
+}
+
+export type Action = EnchantAction | RerollAction;
+
 interface BenchmarkOptions {
-  selectionFn: (state: GameState, uiStateHistory: UiState[]) => UiState;
+  selectionFn: (state: GameState, uiStateHistory: UiState[]) => Action;
   scoreFn: (state: GameState) => number;
   iteration: number;
   config: GameConfiguration;
@@ -22,14 +34,26 @@ export function benchmark({
   let totalScore: number = 0;
   for (let i = 0; i < iteration; i++) {
     if (i % 1000 === 0) {
-      console.log(`Iteration: ${i} Score: ${totalScore}`);
+      console.log(
+        `Iteration: ${i} Score: ${totalScore} Ratio: ${totalScore / i}`
+      );
     }
 
     let state = api.game.getInitialGameState(config);
     let uiStateHistory: UiState[] = [];
 
     while (state.phase !== "done") {
-      const uiState = selectionFn(state, uiStateHistory);
+      const action = selectionFn(state, uiStateHistory);
+      if (action.type === "reroll") {
+        state = api.game.reroll(state);
+        continue;
+      }
+
+      const uiState = {
+        selectedSageIndex: action.sageIndex,
+        selectedEffectIndex: action.effectIndex,
+      };
+
       state = api.game.applyCouncil(state, uiState);
       uiStateHistory.push(uiState);
 

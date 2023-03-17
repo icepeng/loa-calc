@@ -78,11 +78,6 @@ const fetchInitialData = async () => {
       ?.async('string')
       .then(JSON.parse);
 
-    const preIndexedCurveRank = await zip
-      .file('pre_indexed_curve_rank.json')
-      ?.async('string')
-      .then(JSON.parse);
-
     postMessage({
       action: 'fetch',
       payload: {
@@ -99,7 +94,6 @@ const fetchInitialData = async () => {
           14: curveProb14,
           15: curveProb15,
         },
-        preIndexedCurveRank,
       },
     });
   });

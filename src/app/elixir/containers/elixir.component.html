@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="mat-h1">엘릭서</h1>
-  <h2>Dev alpha. 옵션 관계없이 합 8레벨 이상 목표.</h2>
+  <h2>Dev alpha. 합 8레벨 이상 목표.</h2>
   <div>
     <div>
       <div class="layout">
@@ -24,6 +24,7 @@
           <mat-card
             *ngFor="let effect of gameState.effects; index as i"
             [class.mat-elevation-z8]="selectedEffectIndex === i"
+            [class.is-focused]="focusedIndices.includes(i)"
             (click)="selectEffect(i)"
           >
             <mat-card-content>
@@ -32,6 +33,7 @@
                 [pickRatios]="pickRatios"
                 [luckyRatios]="luckyRatios"
                 [index]="i"
+                (focusTarget)="onFocusTarget($event)"
               ></app-elixir-effect>
             </mat-card-content>
           </mat-card>
@@ -63,17 +65,22 @@
         </mat-card>
         <mat-card>
           <mat-card-content>
-            <button
-              (click)="reroll()"
-              mat-flat-button
-              color="primary"
-              [disabled]="phase !== 'council' || gameState.rerollLeft === 0"
-            >
-              다른 조언 보기 ({{ gameState.rerollLeft }}회 남음)
-            </button>
-            <button mat-flat-button color="warn" (click)="reset()">
-              초기화
-            </button>
+            <div>
+              <button
+                (click)="reroll()"
+                mat-flat-button
+                color="primary"
+                [disabled]="phase !== 'council' || gameState.rerollLeft === 0"
+              >
+                다른 조언 보기 ({{ gameState.rerollLeft }}회 남음)
+              </button>
+            </div>
+            <div>
+              <button mat-flat-button (click)="undo()">되돌리기</button>
+              <button mat-flat-button color="warn" (click)="reset()">
+                초기화
+              </button>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>

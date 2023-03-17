@@ -170,6 +170,7 @@ type CouncilType = "common" | "lawful" | "lawfulSeal" | "seal" | "chaos" | "chao
 declare function isCouncilAvailable(state: GameState, council: Council, sageIndex: number, pickedCouncils: string[]): boolean;
 declare function getOne(id: string): Council;
 declare function getLogics(id: string): CouncilLogicData[];
+declare function isIncludingLogicType(id: string, type: CouncilLogicType): boolean;
 interface Council {
     id: string;
     pickRatio: number;
@@ -185,6 +186,7 @@ declare const Council: {
         isCouncilAvailable: typeof isCouncilAvailable;
         getOne: typeof getOne;
         getLogics: typeof getLogics;
+        isIncludingLogicType: typeof isIncludingLogicType;
     };
 };
 
@@ -286,8 +288,17 @@ declare const data: {
     effectOptions: readonly EffectOption[];
 };
 
+interface EnchantAction {
+    type: "enchant";
+    sageIndex: number;
+    effectIndex: number | null;
+}
+interface RerollAction {
+    type: "reroll";
+}
+type Action = EnchantAction | RerollAction;
 interface BenchmarkOptions {
-    selectionFn: (state: GameState, uiStateHistory: UiState[]) => UiState;
+    selectionFn: (state: GameState, uiStateHistory: UiState[]) => Action;
     scoreFn: (state: GameState) => number;
     iteration: number;
     config: GameConfiguration;

@@ -8559,10 +8559,14 @@ function getOne(id) {
 function getLogics(id) {
   return getOne(id).logics;
 }
+function isIncludingLogicType(id, type) {
+  return getLogics(id).some((logic) => logic.type === type);
+}
 var query4 = {
   isCouncilAvailable,
   getOne,
-  getLogics
+  getLogics,
+  isIncludingLogicType
 };
 var Council = {
   query: query4
@@ -8705,13 +8709,13 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
       pickRatios[selectedEffectIndex] = 0;
       const luckyRatio = luckyRatios[selectedEffectIndex];
       const isLucky = chance2.bool({ likelihood: luckyRatio * 100 });
-      state = GameState.increaseEffectValue(
+      nextState = GameState.increaseEffectValue(
         nextState,
         selectedEffectIndex,
         enchantIncreaseAmount + (isLucky ? 1 : 0)
       );
     }
-    nextState = GameState.passTurn(state, ui.selectedSageIndex);
+    nextState = GameState.passTurn(nextState, ui.selectedSageIndex);
     if (nextState.phase === "done") {
       return nextState;
     }
@@ -9192,7 +9196,7 @@ function createLogicGuardService() {
 // src/service/rng.ts
 var import_chance = require("chance");
 function createRngService() {
-  let chance2 = new import_chance.Chance(123);
+  let chance2 = new import_chance.Chance();
   function setSeed(seed) {
     chance2 = new import_chance.Chance(seed);
   }
@@ -9388,12 +9392,22 @@ function benchmark({
   let totalScore = 0;
   for (let i = 0; i < iteration; i++) {
     if (i % 1e3 === 0) {
-      console.log(`Iteration: ${i} Score: ${totalScore}`);
+      console.log(
+        `Iteration: ${i} Score: ${totalScore} Ratio: ${totalScore / i}`
+      );
     }
     let state = api.game.getInitialGameState(config);
     let uiStateHistory = [];
     while (state.phase !== "done") {
-      const uiState = selectionFn(state, uiStateHistory);
+      const action = selectionFn(state, uiStateHistory);
+      if (action.type === "reroll") {
+        state = api.game.reroll(state);
+        continue;
+      }
+      const uiState = {
+        selectedSageIndex: action.sageIndex,
+        selectedEffectIndex: action.effectIndex
+      };
       state = api.game.applyCouncil(state, uiState);
       uiStateHistory.push(uiState);
       if (state.phase === "restart") {

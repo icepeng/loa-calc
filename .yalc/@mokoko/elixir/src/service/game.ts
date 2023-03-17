@@ -103,14 +103,14 @@ export function createGameService(
       const luckyRatio = luckyRatios[selectedEffectIndex];
       const isLucky = chance.bool({ likelihood: luckyRatio * 100 });
 
-      state = GameState.increaseEffectValue(
+      nextState = GameState.increaseEffectValue(
         nextState,
         selectedEffectIndex,
         enchantIncreaseAmount + (isLucky ? 1 : 0)
       );
     }
 
-    nextState = GameState.passTurn(state, ui.selectedSageIndex);
+    nextState = GameState.passTurn(nextState, ui.selectedSageIndex);
 
     if (nextState.phase === "done") {
       return nextState;

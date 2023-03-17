@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 
 @Component({
@@ -11,6 +11,7 @@ export class ElixirEffectComponent {
   @Input() pickRatios!: number[];
   @Input() luckyRatios!: number[];
   @Input() index!: number;
+  @Output() focusTarget = new EventEmitter<number>();
 
   constructor() {}
 
@@ -38,10 +39,8 @@ export class ElixirEffectComponent {
     return api.effect.getUiSelectableEffects(this.gameState, this.index);
   }
 
-  get effectOptionDescription() {
-    return api.effect.getEffectOptionCurrentDescription(
-      this.gameState,
-      this.index
-    );
+  onFocusTarget(event: MouseEvent) {
+    event.stopPropagation();
+    this.focusTarget.emit(this.index);
   }
 }

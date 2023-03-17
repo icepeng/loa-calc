@@ -34,7 +34,7 @@
     "test:watch": "watchlist src test -- yarn test",
     "e2e": "env-cmd uvu -r tsm e2e",
     "push": "yalc push",
-    "benchmark": "node -r tsm ./benchmark/random.ts"
+    "benchmark": "node -r tsm ./benchmark/jeantrouble2/index.ts"
   },
   "dependencies": {
     "chance": "^1.1.10"
@@ -42,5 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "yalcSig": "d5e8e67675b7e5806659fc16345ffbb4"
+  "yalcSig": "312067c7c02cf4f657effbf14a96e994"
 }

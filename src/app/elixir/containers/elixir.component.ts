@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { api, query } from '../../../../.yalc/@mokoko/elixir';
-import { createScoreCalculator } from '../score';
+import { createScoreCalculator } from '../functions/score';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { GameState } from '@mokoko/elixir';
 
 interface FetchInitialDataPayload {
   action: 'fetch';
@@ -39,10 +40,15 @@ export class ElixirComponent implements OnInit {
   selectedSageIndex: number | null = null;
   selectedEffectIndex: number | null = null;
 
+  focusedIndices: [number, number] = [0, 1];
+
   currentCurve: number[] = [];
   curveScores: number[] = [];
   adviceScores: number[] = [];
   totalScores: number[] = [];
+
+  stateHistory: GameState[] = [this.gameState];
+
   valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
 
   dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
@@ -118,7 +124,8 @@ export class ElixirComponent implements OnInit {
 
     const scores = this.valueCalculator.calculateScores(
       this.gameState,
-      this.currentCurve
+      this.currentCurve,
+      this.focusedIndices
     );
 
     this.curveScores = scores.curveScores;
@@ -146,9 +153,11 @@ export class ElixirComponent implements OnInit {
     }
 
     this.gameState = api.game.applyCouncil(this.gameState, this.uiState);
+    this.stateHistory.push(this.gameState);
 
     if (this.gameState.phase === 'restart') {
       this.reset();
+      return;
     }
   }
 
@@ -156,20 +165,39 @@ export class ElixirComponent implements OnInit {
     if (this.selectedSageIndex === null) return;
 
     this.gameState = api.game.enchant(this.gameState, this.uiState);
+    this.stateHistory.push(this.gameState);
     this.currentCurve = [...this.currentCurve, this.selectedSageIndex];
-    this.updateScores();
     this.selectedSageIndex = null;
     this.selectedEffectIndex = null;
+
+    if (this.gameState.phase !== 'done') {
+      this.updateScores();
+    }
   }
 
   reroll() {
     this.gameState = api.game.reroll(this.gameState);
+    this.stateHistory.push(this.gameState);
     this.updateScores();
   }
 
-  benchmark() {}
+  onFocusTarget(index: number) {
+    if (this.focusedIndices.includes(index)) {
+      return;
+    }
+    this.focusedIndices = [this.focusedIndices[1], index];
+    this.updateScores();
+  }
+
+  undo() {
+    this.gameState = this.stateHistory[this.stateHistory.length - 2];
+    this.stateHistory.pop();
+  }
 
   reset() {
+    const isConfirmed = window.confirm('정말 초기화하시겠습니까?');
+    if (!isConfirmed) return;
+
     this.gameState = api.game.getInitialGameState({
       maxEnchant: 10,
       totalTurn: 14,
@@ -177,6 +205,7 @@ export class ElixirComponent implements OnInit {
     this.selectedSageIndex = null;
     this.selectedEffectIndex = null;
     this.currentCurve = [];
+    this.stateHistory = [this.gameState];
     this.updateScores();
   }
 }

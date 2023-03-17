@@ -1,5 +1,5 @@
-import { data, GameState } from '../../../.yalc/@mokoko/elixir';
-import { adviceIndexConverter } from './index-converter';
+import { data, GameState } from '../../../../.yalc/@mokoko/elixir';
+import { councilConverter } from './index-converter';
 
 function createIndexTable() {
   let i = 0;
@@ -44,14 +44,12 @@ interface ScoreCalculatorData {
   adviceCounting: number[][][][];
   curveRankRecord: Record<number, number[][]>;
   curveProbRecord: Record<number, number[]>;
-  preIndexedCurveRank: Record<string, number>;
 }
 
 export function createScoreCalculator({
   adviceCounting,
   curveRankRecord,
   curveProbRecord,
-  preIndexedCurveRank,
 }: ScoreCalculatorData) {
   function getCurveScores(gameState: GameState, currentCurve: number[]) {
     const gameLength = gameState.turnLeft + gameState.turnPassed;
@@ -69,26 +67,26 @@ export function createScoreCalculator({
     return curveScores;
   }
 
-  function getAdviceScores(gameState: GameState) {
+  function getAdviceScores(
+    gameState: GameState,
+    [firstIdx, secondIdx]: [number, number]
+  ) {
     const values = gameState.effects.map((effect) =>
       effect.isSealed ? 0 : effect.value
     );
-    const sealed = gameState.effects.map((effect) => effect.isSealed);
-    const [first, second] = getMaxN(values, 2);
+    const firstValue = values[firstIdx];
+    const secondValue = values[secondIdx];
 
     const adviceScores = gameState.sages.map((sage) => {
-      const councilIndex = indexTable[sage.councilId];
-      if (councilIndex === -1) {
+      if (indexTable[sage.councilId] === -1) {
         return 0;
       }
 
-      const convertedIndex = adviceIndexConverter(
-        [first.index, second.index],
-        councilIndex
-      );
+      const convertedIndex =
+        indexTable[councilConverter([firstIdx, secondIdx], sage.councilId)];
 
-      const a = adviceCounting[first.value];
-      const b = a[second.value];
+      const a = adviceCounting[firstValue];
+      const b = a[secondValue];
       const c = b[gameState.turnLeft - 1];
 
       if (requireSelect.includes(sage.councilId)) {
@@ -103,16 +101,22 @@ export function createScoreCalculator({
     return adviceScores;
   }
 
-  function calculateScores(gameState: GameState, currentCurve: number[]) {
+  function calculateScores(
+    gameState: GameState,
+    currentCurve: number[],
+    targetIndices: [number, number]
+  ) {
     const curveScores = getCurveScores(gameState, currentCurve);
-    const adviceScores = getAdviceScores(gameState);
+    const adviceScores = getAdviceScores(gameState, targetIndices);
 
     return {
       curveScores,
       adviceScores,
       totalScores: curveScores.map(
         (curveScore, index) =>
-          curveScore * (adviceScores[index] * 100) * (adviceScores[index] * 100)
+          (curveScore + 0.001) *
+          (adviceScores[index] * 100) *
+          (adviceScores[index] * 100)
       ),
     };
   }
@@ -125,6 +129,6 @@ export function createScoreCalculator({
 function getMaxN(arr: number[], n: number): { value: number; index: number }[] {
   return [...arr]
     .map((value, index) => ({ value, index }))
-    .sort()
+    .sort((a, b) => b.value - a.value)
     .slice(0, n);
 }

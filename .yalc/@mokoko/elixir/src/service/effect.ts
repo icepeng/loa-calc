@@ -1,4 +1,4 @@
-import effect, { EffectState } from "../model/effect";
+import { EffectState } from "../model/effect";
 import { RngService } from "./rng";
 
 export function createEffectService(chance: RngService) {

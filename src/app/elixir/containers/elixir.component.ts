@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { api, benchmark } from '../../../../.yalc/@mokoko/elixir';
+import { api } from '../../../../.yalc/@mokoko/elixir';
 import { createScoreCalculator } from '../score';
 import * as JSZip from 'jszip';
 
@@ -84,6 +84,10 @@ export class ElixirComponent implements OnInit {
         });
         this.updateScores();
       });
+  }
+
+  get seed() {
+    return api.rng.getSeed();
   }
 
   get phase() {

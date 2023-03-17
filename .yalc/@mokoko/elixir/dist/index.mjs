@@ -8240,7 +8240,6 @@ function createLogicService(chance2, effectService2) {
   }
   function increaseMinAndDecreaseTarget(state, logic, targets) {
     const [_, pickedMin] = effectService2.pickMinValueIndex(state.effects);
-    const target = targets[0];
     const increasedState = game_default.increaseEffectValue(
       state,
       pickedMin,
@@ -8289,7 +8288,7 @@ function createLogicService(chance2, effectService2) {
     return game_default.setEffectValue(
       game_default.setEffectValue(state, pickedMax, min),
       pickedMin,
-      max
+      max - 1
     );
   }
   function decreaseFirstTargetAndSwap(state, logic, targets) {
@@ -8411,7 +8410,10 @@ function createLogicGuardService() {
   }
   function setValueRanged(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      const index = logic.targetCondition - 1;
+      const isMutable2 = game_default.isEffectMutable(state, index);
+      const isLowerThanMax = state.effects[index].value < logic.value[1];
+      return isMutable2 && isLowerThanMax;
     }
     return true;
   }
@@ -8566,6 +8568,9 @@ function createRngService() {
   function setSeed(seed) {
     chance2 = new Chance(seed);
   }
+  function getSeed() {
+    return chance2.seed;
+  }
   function bool(opts) {
     if (opts?.likelihood === 1e4) {
       return true;
@@ -8592,6 +8597,7 @@ function createRngService() {
   }
   return {
     setSeed,
+    getSeed,
     bool,
     pickone,
     pickset,

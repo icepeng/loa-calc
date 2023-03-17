@@ -133,7 +133,10 @@ export function createLogicGuardService() {
   // <{0}> 효과의 단계를 [<1>~<2>] 중 하나로 바꿔주지.
   function setValueRanged(state: GameState, logic: CouncilLogicData): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      const index = logic.targetCondition - 1;
+      const isMutable = game.isEffectMutable(state, index);
+      const isLowerThanMax = state.effects[index].value < logic.value[1];
+      return isMutable && isLowerThanMax;
     }
     return true;
   }

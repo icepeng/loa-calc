@@ -107,6 +107,7 @@ declare const api: {
     };
     rng: {
         setSeed: (seed: number) => void;
+        getSeed: () => number;
         bool: (opts?: {
             likelihood: number;
         } | undefined) => boolean;

@@ -368,7 +368,6 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const [_, pickedMin] = effectService.pickMinValueIndex(state.effects);
-    const target = targets[0];
 
     const increasedState = game.increaseEffectValue(
       state,
@@ -441,7 +440,7 @@ export function createLogicService(
     return game.setEffectValue(
       game.setEffectValue(state, pickedMax, min),
       pickedMin,
-      max
+      max - 1
     );
   }
 

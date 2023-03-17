@@ -1,8 +1,10 @@
-import { EffectState } from '../model/effect';
-import { RngService } from './rng';
+import { effectOptions } from "../data/effect";
+import { Effect } from "../model/effect";
+import { GameState } from "../model/game";
+import { RngService } from "./rng";
 
 export function createEffectService(chance: RngService) {
-  function pickMinValueIndex(effects: EffectState[]) {
+  function pickMinValueIndex(effects: Effect[]) {
     const values = effects
       .filter((eff) => !eff.isSealed)
       .map((eff) => eff.value);
@@ -16,7 +18,7 @@ export function createEffectService(chance: RngService) {
     return [min, pickedMin];
   }
 
-  function pickMaxValueIndex(effects: EffectState[]) {
+  function pickMaxValueIndex(effects: Effect[]) {
     const values = effects
       .filter((eff) => !eff.isSealed)
       .map((eff) => eff.value);
@@ -42,8 +44,8 @@ export function createEffectService(chance: RngService) {
 
   function getEffectOptionCurrentDescription(state: GameState, index: number) {
     const eff = state.effects[index];
-    const option = effect.getEffectOptionById(eff.optionId);
-    const level = effect.getLevel(eff);
+    const option = Effect.query.getEffectOptionById(eff.optionId);
+    const level = Effect.query.getLevel(eff);
     return option.optionDescriptions[level];
   }
 

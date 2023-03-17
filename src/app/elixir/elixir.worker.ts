@@ -14,7 +14,7 @@ const dispatch = (type: actionType, payload: any) => {
   }
 };
 
-const INITIAL_DATA_FILE_NAME = 'elixir_53_44_any';
+const INITIAL_DATA_FILE_NAME = 'elixir_53_44_01_mini2';
 const INITIAL_DATA_URL = `assets/${INITIAL_DATA_FILE_NAME}.zip`;
 
 const fetchInitialData = async () => {

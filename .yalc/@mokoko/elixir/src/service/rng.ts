@@ -1,14 +1,10 @@
 import { Chance } from "chance";
 
 export function createRngService() {
-  let chance = new Chance();
+  let chance = new Chance(123);
 
   function setSeed(seed: number) {
     chance = new Chance(seed);
-  }
-
-  function getSeed(): number {
-    return chance.seed as number;
   }
 
   function bool(opts?: { likelihood: number }) {
@@ -43,7 +39,6 @@ export function createRngService() {
 
   return {
     setSeed,
-    getSeed,
     bool,
     pickone,
     pickset,

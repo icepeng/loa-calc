@@ -1,4 +1,5 @@
 import { data, GameState } from '../../../.yalc/@mokoko/elixir';
+import { adviceIndexConverter } from './index-converter';
 
 function createIndexTable() {
   let i = 0;
@@ -40,7 +41,7 @@ const requireSelect = [
 ];
 
 interface ScoreCalculatorData {
-  adviceCounting: number[][][][][][];
+  adviceCounting: number[][][][];
   curveRankRecord: Record<number, number[][]>;
   curveProbRecord: Record<number, number[]>;
   preIndexedCurveRank: Record<string, number>;
@@ -69,39 +70,61 @@ export function createScoreCalculator({
   }
 
   function getAdviceScores(gameState: GameState) {
+    const values = gameState.effects.map((effect) =>
+      effect.isSealed ? 0 : effect.value
+    );
+    const sealed = gameState.effects.map((effect) => effect.isSealed);
+    const [first, second] = getMaxN(values, 2);
+
     const adviceScores = gameState.sages.map((sage) => {
       const councilIndex = indexTable[sage.councilId];
       if (councilIndex === -1) {
         return 0;
       }
 
-      const values = gameState.effects.map((effect) => effect.value);
-      const a = adviceCounting[values[0]];
-      const b = a[values[1]];
-      const c = b[values[2]];
-      const d = c[values[3]];
-      const e = d[values[4]];
+      const convertedIndex = adviceIndexConverter(
+        [first.index, second.index],
+        councilIndex
+      );
+
+      const a = adviceCounting[first.value];
+      const b = a[second.value];
+      const c = b[gameState.turnLeft - 1];
 
       if (requireSelect.includes(sage.councilId)) {
         return Math.max(
-          ...[-5, -4, -3, -2, -1].map((i) => e[councilIndex + i])
+          ...[-5, -4, -3, -2, -1].map((i) => c[convertedIndex + i])
         );
       }
 
-      return e[councilIndex];
+      return c[convertedIndex];
     });
 
     return adviceScores;
   }
 
   function calculateScores(gameState: GameState, currentCurve: number[]) {
+    const curveScores = getCurveScores(gameState, currentCurve);
+    const adviceScores = getAdviceScores(gameState);
+
     return {
-      curveScores: getCurveScores(gameState, currentCurve),
-      adviceScores: getAdviceScores(gameState),
+      curveScores,
+      adviceScores,
+      totalScores: curveScores.map(
+        (curveScore, index) =>
+          curveScore * (adviceScores[index] * 100) * (adviceScores[index] * 100)
+      ),
     };
   }
 
   return {
     calculateScores,
   };
+}
+
+function getMaxN(arr: number[], n: number): { value: number; index: number }[] {
+  return [...arr]
+    .map((value, index) => ({ value, index }))
+    .sort()
+    .slice(0, n);
 }

@@ -1,6 +1,6 @@
 import { effectLevelTable, effectOptionsRecord } from "../data/effect";
 
-export interface EffectState {
+export interface Effect {
   index: number;
   optionId: keyof typeof effectOptionsRecord;
   value: number;
@@ -13,11 +13,60 @@ export interface EffectOption {
   optionDescriptions: [string, string, string, string, string, string];
 }
 
-function isMutable(effect: EffectState, maxEnchant: number) {
+// reducers
+function setValue(effect: Effect, value: number): Effect {
+  if (effect.isSealed && effect.value !== value) {
+    throw new Error("Effect is sealed");
+  }
+  if (value < 0) {
+    throw new Error("Effect value must be positive");
+  }
+
+  return {
+    ...effect,
+    value,
+  };
+}
+
+function setOptionId(effect: Effect, optionId: string): Effect {
+  if (effect.isSealed) {
+    throw new Error("Effect is sealed");
+  }
+
+  return {
+    ...effect,
+    optionId,
+  };
+}
+
+function seal(effect: Effect): Effect {
+  if (effect.isSealed) {
+    throw new Error("Effect is already sealed");
+  }
+
+  return {
+    ...effect,
+    isSealed: true,
+  };
+}
+
+function unseal(effect: Effect): Effect {
+  if (!effect.isSealed) {
+    throw new Error("Effect is already unsealed");
+  }
+
+  return {
+    ...effect,
+    isSealed: false,
+  };
+}
+
+// queries
+function isMutable(effect: Effect, maxEnchant: number) {
   return effect.isSealed === false && effect.value < maxEnchant;
 }
 
-function getLevel(effect: EffectState) {
+function getLevel(effect: Effect) {
   const value = effect.value;
   if (value < 0 || value > 10) {
     throw new Error(`Invalid effect value: ${value}`);
@@ -44,61 +93,18 @@ function getEffectOptionDescriptionByIdAndLevel(id: string, level: number) {
   return option.optionDescriptions[level];
 }
 
-function setValue(effect: EffectState, value: number) {
-  if (effect.isSealed && effect.value !== value) {
-    throw new Error("Effect is sealed");
-  }
-  if (value < 0) {
-    throw new Error("Effect value must be positive");
-  }
-
-  return {
-    ...effect,
-    value,
-  };
-}
-
-function setOption(effect: EffectState, option: EffectOption) {
-  if (effect.isSealed) {
-    throw new Error("Effect is sealed");
-  }
-
-  return {
-    ...effect,
-    option,
-  };
-}
-
-function seal(effect: EffectState) {
-  if (effect.isSealed) {
-    throw new Error("Effect is already sealed");
-  }
-
-  return {
-    ...effect,
-    isSealed: true,
-  };
-}
-
-function unseal(effect: EffectState) {
-  if (!effect.isSealed) {
-    throw new Error("Effect is already unsealed");
-  }
-
-  return {
-    ...effect,
-    isSealed: false,
-  };
-}
-
-export default {
+const query = {
   isMutable,
   getLevel,
   getEffectOptionById,
   getEffectOptionNameById,
   getEffectOptionDescriptionByIdAndLevel,
+};
+
+export const Effect = {
   setValue,
-  setOption,
+  setOptionId,
   seal,
   unseal,
+  query,
 };

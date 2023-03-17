@@ -9,6 +9,7 @@ export interface Mutation {
   remainTurn: number;
 }
 
+// constructors
 function createProbMutation(
   index: number,
   value: number,
@@ -53,6 +54,7 @@ function createEnchantEffectCountMutation(value: number): Mutation {
   };
 }
 
+// reducers
 function passTurn(mutation: Mutation) {
   return {
     ...mutation,
@@ -60,7 +62,7 @@ function passTurn(mutation: Mutation) {
   };
 }
 
-export default {
+export const Mutation = {
   createProbMutation,
   createLuckyRatioMutation,
   createEnchantIncreaseAmountMutation,

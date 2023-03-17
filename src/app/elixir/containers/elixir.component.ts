@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { api } from '../../../../.yalc/@mokoko/elixir';
+import { api, query } from '../../../../.yalc/@mokoko/elixir';
 import { createScoreCalculator } from '../score';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 interface FetchInitialDataPayload {
   action: 'fetch';
@@ -40,6 +42,7 @@ export class ElixirComponent implements OnInit {
   currentCurve: number[] = [];
   curveScores: number[] = [];
   adviceScores: number[] = [];
+  totalScores: number[] = [];
   valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
 
   dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
@@ -91,10 +94,6 @@ export class ElixirComponent implements OnInit {
     this.worker.postMessage({ action: 'fetch' });
   }
 
-  get seed() {
-    return api.rng.getSeed();
-  }
-
   get phase() {
     return this.gameState.phase;
   }
@@ -107,11 +106,11 @@ export class ElixirComponent implements OnInit {
   }
 
   get pickRatios() {
-    return api.mutation.queryPickRatios(this.gameState);
+    return query.game.getPickRatios(this.gameState);
   }
 
   get luckyRatios() {
-    return api.mutation.queryLuckyRatios(this.gameState);
+    return query.game.getLuckyRatios(this.gameState);
   }
 
   updateScores() {
@@ -124,6 +123,7 @@ export class ElixirComponent implements OnInit {
 
     this.curveScores = scores.curveScores;
     this.adviceScores = scores.adviceScores;
+    this.totalScores = scores.totalScores;
   }
 
   selectSage(index: number) {

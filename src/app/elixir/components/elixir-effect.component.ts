@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { api, data, GameState } from '@mokoko/elixir';
+import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 
 @Component({
   selector: 'app-elixir-effect',

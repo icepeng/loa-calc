@@ -1,3 +1,154 @@
+declare function createProbMutation(index: number, value: number, remainTurn: number): Mutation;
+declare function createLuckyRatioMutation(index: number, value: number, remainTurn: number): Mutation;
+declare function createEnchantIncreaseAmountMutation(value: number): Mutation;
+declare function createEnchantEffectCountMutation(value: number): Mutation;
+declare function passTurn$1(mutation: Mutation): {
+    remainTurn: number;
+    target: "prob" | "luckyRatio" | "enchantIncreaseAmount" | "enchantEffectCount";
+    index: number;
+    value: number;
+};interface Mutation {
+    target: "prob" | "luckyRatio" | "enchantIncreaseAmount" | "enchantEffectCount";
+    index: number;
+    value: number;
+    remainTurn: number;
+}
+declare const Mutation: {
+    createProbMutation: typeof createProbMutation;
+    createLuckyRatioMutation: typeof createLuckyRatioMutation;
+    createEnchantIncreaseAmountMutation: typeof createEnchantIncreaseAmountMutation;
+    createEnchantEffectCountMutation: typeof createEnchantEffectCountMutation;
+    passTurn: typeof passTurn$1;
+};
+
+type SageType = "none" | "lawful" | "chaos";
+declare function createInitialState$1(index: 0 | 1 | 2): Sage;
+declare function updatePower(sage: Sage, selectedIndex: number): Sage;
+declare function exhaust(sage: Sage): Sage;
+declare function isLawfulFull(sage: Sage): boolean;
+declare function isChaosFull(sage: Sage): boolean;
+interface Sage {
+    index: 0 | 1 | 2;
+    type: SageType;
+    power: number;
+    isExhausted: boolean;
+    councilId: string;
+}
+declare const Sage: {
+    updatePower: typeof updatePower;
+    exhaust: typeof exhaust;
+    createInitialState: typeof createInitialState$1;
+    query: {
+        isLawfulFull: typeof isLawfulFull;
+        isChaosFull: typeof isChaosFull;
+    };
+};
+
+declare const effectOptionsRecord: Record<string, EffectOption>;
+
+interface EffectOption {
+    id: string;
+    name: string;
+    optionDescriptions: [string, string, string, string, string, string];
+}
+declare function setValue(effect: Effect, value: number): Effect;
+declare function setOptionId(effect: Effect, optionId: string): Effect;
+declare function seal(effect: Effect): Effect;
+declare function unseal(effect: Effect): Effect;
+declare function isMutable(effect: Effect, maxEnchant: number): boolean;
+declare function getLevel(effect: Effect): number;
+declare function getEffectOptionById(id: string): EffectOption;
+declare function getEffectOptionNameById(id: string): string;
+declare function getEffectOptionDescriptionByIdAndLevel(id: string, level: number): string;
+interface Effect {
+    index: number;
+    optionId: keyof typeof effectOptionsRecord;
+    value: number;
+    isSealed: boolean;
+}
+declare const Effect: {
+    setValue: typeof setValue;
+    setOptionId: typeof setOptionId;
+    seal: typeof seal;
+    unseal: typeof unseal;
+    query: {
+        isMutable: typeof isMutable;
+        getLevel: typeof getLevel;
+        getEffectOptionById: typeof getEffectOptionById;
+        getEffectOptionNameById: typeof getEffectOptionNameById;
+        getEffectOptionDescriptionByIdAndLevel: typeof getEffectOptionDescriptionByIdAndLevel;
+    };
+};
+
+interface GameConfiguration {
+    totalTurn: number;
+    maxEnchant: number;
+}
+declare function createInitialState(config: GameConfiguration): GameState;
+declare function markAsRestart(state: GameState): GameState;
+declare function decreaseTurn(state: GameState, amount: number): GameState;
+declare function passTurn(state: GameState, selectedSageIndex: number): GameState;
+declare function increaseRerollLeft(state: GameState, amount: number): GameState;
+declare function decreaseRerollLeft(state: GameState): GameState;
+declare function exhaustSage(state: GameState, sageIndex: number): GameState;
+declare function setEffectValue(state: GameState, effectIndex: number, value: number): GameState;
+declare function setEffectValueAll(state: GameState, values: number[]): GameState;
+declare function increaseEffectValue(state: GameState, effectIndex: number, diff: number): GameState;
+declare function increaseEffectValueAll(state: GameState, diffs: number[]): GameState;
+declare function sealEffect(state: GameState, effectIndex: number): GameState;
+declare function unsealEffect(state: GameState, effectIndex: number): GameState;
+declare function addMutations(state: GameState, mutations: Mutation[]): GameState;
+declare function isEffectMutable(state: GameState, effectIndex: number): boolean;
+declare function isEffectSealed(state: GameState, effectIndex: number): boolean;
+declare function getEffectValue(state: GameState, effectIndex: number): number;
+declare function checkSealNeeded(state: GameState): boolean;
+declare function getCouncilType(state: GameState, sageIndex: number): CouncilType;
+declare function isTurnInRange(state: GameState, [min, max]: [number, number]): boolean;
+declare function getCouncilDescription(state: GameState, sageIndex: number): string;
+declare function getPickRatios(state: GameState): number[];
+declare function getLuckyRatios(state: GameState): number[];
+declare function getEnchantEffectCount(state: GameState): number;
+declare function getEnchantIncreaseAmount(state: GameState): number;
+interface GameState {
+    config: GameConfiguration;
+    phase: "restart" | "council" | "enchant" | "done";
+    turnLeft: number;
+    turnPassed: number;
+    rerollLeft: number;
+    effects: Effect[];
+    mutations: Mutation[];
+    sages: Sage[];
+}
+declare const GameState: {
+    query: {
+        isEffectMutable: typeof isEffectMutable;
+        isEffectSealed: typeof isEffectSealed;
+        getEffectValue: typeof getEffectValue;
+        checkSealNeeded: typeof checkSealNeeded;
+        getCouncilType: typeof getCouncilType;
+        isTurnInRange: typeof isTurnInRange;
+        getCouncilDescription: typeof getCouncilDescription;
+        getPickRatios: typeof getPickRatios;
+        getLuckyRatios: typeof getLuckyRatios;
+        getEnchantEffectCount: typeof getEnchantEffectCount;
+        getEnchantIncreaseAmount: typeof getEnchantIncreaseAmount;
+    };
+    createInitialState: typeof createInitialState;
+    markAsRestart: typeof markAsRestart;
+    decreaseTurn: typeof decreaseTurn;
+    passTurn: typeof passTurn;
+    increaseRerollLeft: typeof increaseRerollLeft;
+    decreaseRerollLeft: typeof decreaseRerollLeft;
+    exhaustSage: typeof exhaustSage;
+    setEffectValue: typeof setEffectValue;
+    setEffectValueAll: typeof setEffectValueAll;
+    increaseEffectValue: typeof increaseEffectValue;
+    increaseEffectValueAll: typeof increaseEffectValueAll;
+    sealEffect: typeof sealEffect;
+    unsealEffect: typeof unsealEffect;
+    addMutations: typeof addMutations;
+};
+
 type CouncilLogicType = "mutateProb" | "mutateLuckyRatio" | "increaseTargetWithRatio" | "increaseTargetRanged" | "decreaseTurnLeft" | "shuffleAll" | "setEnchantTargetAndAmount" | "unsealAndSealOther" | "changeEffect" | "sealTarget" | "increaseReroll" | "decreasePrice" | "restart" | "setEnchantIncreaseAmount" | "setEnchantEffectCount" | "setValueRanged" | "redistributeAll" | "redistributeSelectedToOthers" | "shiftAll" | "swapValues" | "swapMinMax" | "exhaust" | "increaseMaxAndDecreaseTarget" | "increaseMinAndDecreaseTarget" | "redistributeMinToOthers" | "redistributeMaxToOthers" | "decreaseMaxAndSwapMinMax" | "decreaseFirstTargetAndSwap";
 type CouncilTargetType = "none" | "random" | "proposed" | "maxValue" | "minValue" | "userSelect" | "lteValue" | "oneThreeFive" | "twoFour";
 interface CouncilLogicData {
@@ -16,6 +167,9 @@ interface CouncilLogic {
     remainTurn: number;
 }
 type CouncilType = "common" | "lawful" | "lawfulSeal" | "seal" | "chaos" | "chaosSeal" | "exhausted";
+declare function isCouncilAvailable(state: GameState, council: Council, sageIndex: number, pickedCouncils: string[]): boolean;
+declare function getOne(id: string): Council;
+declare function getLogics(id: string): CouncilLogicData[];
 interface Council {
     id: string;
     pickRatio: number;
@@ -26,162 +180,12 @@ interface Council {
     applyLimit: number;
     logics: CouncilLogicData[];
 }
-
-declare const effectOptionsRecord: Record<string, EffectOption>;
-
-interface EffectState {
-    index: number;
-    optionId: keyof typeof effectOptionsRecord;
-    value: number;
-    isSealed: boolean;
-}
-interface EffectOption {
-    id: string;
-    name: string;
-    optionDescriptions: [string, string, string, string, string, string];
-}
-declare function isMutable(effect: EffectState, maxEnchant: number): boolean;
-declare function getLevel(effect: EffectState): number;
-declare function getEffectOptionById(id: string): EffectOption;
-declare function getEffectOptionNameById(id: string): string;
-declare function getEffectOptionDescriptionByIdAndLevel(id: string, level: number): string;
-declare function setValue(effect: EffectState, value: number): {
-    value: number;
-    index: number;
-    optionId: string;
-    isSealed: boolean;
-};
-declare function setOption(effect: EffectState, option: EffectOption): {
-    option: EffectOption;
-    index: number;
-    optionId: string;
-    value: number;
-    isSealed: boolean;
-};
-declare function seal(effect: EffectState): {
-    isSealed: boolean;
-    index: number;
-    optionId: string;
-    value: number;
-};
-declare function unseal(effect: EffectState): {
-    isSealed: boolean;
-    index: number;
-    optionId: string;
-    value: number;
-};
-declare const _default$3: {
-    isMutable: typeof isMutable;
-    getLevel: typeof getLevel;
-    getEffectOptionById: typeof getEffectOptionById;
-    getEffectOptionNameById: typeof getEffectOptionNameById;
-    getEffectOptionDescriptionByIdAndLevel: typeof getEffectOptionDescriptionByIdAndLevel;
-    setValue: typeof setValue;
-    setOption: typeof setOption;
-    seal: typeof seal;
-    unseal: typeof unseal;
-};
-
-interface Mutation {
-    target: "prob" | "luckyRatio" | "enchantIncreaseAmount" | "enchantEffectCount";
-    index: number;
-    value: number;
-    remainTurn: number;
-}
-declare function createProbMutation(index: number, value: number, remainTurn: number): Mutation;
-declare function createLuckyRatioMutation(index: number, value: number, remainTurn: number): Mutation;
-declare function createEnchantIncreaseAmountMutation(value: number): Mutation;
-declare function createEnchantEffectCountMutation(value: number): Mutation;
-declare function passTurn$1(mutation: Mutation): {
-    remainTurn: number;
-    target: "prob" | "luckyRatio" | "enchantIncreaseAmount" | "enchantEffectCount";
-    index: number;
-    value: number;
-};
-declare const _default$2: {
-    createProbMutation: typeof createProbMutation;
-    createLuckyRatioMutation: typeof createLuckyRatioMutation;
-    createEnchantIncreaseAmountMutation: typeof createEnchantIncreaseAmountMutation;
-    createEnchantEffectCountMutation: typeof createEnchantEffectCountMutation;
-    passTurn: typeof passTurn$1;
-};
-
-type SageType = "none" | "lawful" | "chaos";
-interface SageState {
-    index: 0 | 1 | 2;
-    type: SageType;
-    power: number;
-    isExhausted: boolean;
-    councilId: string;
-}
-declare function isLawfulFull(sage: SageState): boolean;
-declare function isChaosFull(sage: SageState): boolean;
-declare function updatePower(sage: SageState, selectedIndex: number): SageState;
-declare function exhaust(sage: SageState): SageState;
-declare function createInitialState$1(index: 0 | 1 | 2): SageState;
-declare const _default$1: {
-    isLawfulFull: typeof isLawfulFull;
-    isChaosFull: typeof isChaosFull;
-    updatePower: typeof updatePower;
-    exhaust: typeof exhaust;
-    createInitialState: typeof createInitialState$1;
-};
-
-interface GameConfiguration {
-    totalTurn: number;
-    maxEnchant: number;
-}
-interface GameState {
-    config: GameConfiguration;
-    phase: "restart" | "council" | "enchant" | "done";
-    turnLeft: number;
-    turnPassed: number;
-    rerollLeft: number;
-    effects: EffectState[];
-    mutations: Mutation[];
-    sages: SageState[];
-}
-declare function isEffectMutable(state: GameState, effectIndex: number): boolean;
-declare function isEffectSealed(state: GameState, effectIndex: number): boolean;
-declare function getEffectValue(state: GameState, effectIndex: number): number;
-declare function checkSealNeeded(state: GameState): boolean;
-declare function getCouncilType(state: GameState, sageIndex: number): CouncilType;
-declare function isTurnInRange(state: GameState, [min, max]: [number, number]): boolean;
-declare function createInitialState(config: GameConfiguration): GameState;
-declare function markAsRestart(state: GameState): GameState;
-declare function decreaseTurn(state: GameState, amount: number): GameState;
-declare function passTurn(state: GameState, selectedSageIndex: number): GameState;
-declare function increaseRerollLeft(state: GameState, amount: number): GameState;
-declare function decreaseRerollLeft(state: GameState): GameState;
-declare function exhaustSage(state: GameState, sageIndex: number): GameState;
-declare function setEffectValue(state: GameState, effectIndex: number, value: number): GameState;
-declare function setEffectValueAll(state: GameState, values: number[]): GameState;
-declare function increaseEffectValue(state: GameState, effectIndex: number, diff: number): GameState;
-declare function increaseEffectValueAll(state: GameState, diffs: number[]): GameState;
-declare function sealEffect(state: GameState, effectIndex: number): GameState;
-declare function unsealEffect(state: GameState, effectIndex: number): GameState;
-declare function addMutations(state: GameState, mutations: Mutation[]): GameState;
-declare const _default: {
-    isEffectMutable: typeof isEffectMutable;
-    isEffectSealed: typeof isEffectSealed;
-    getEffectValue: typeof getEffectValue;
-    checkSealNeeded: typeof checkSealNeeded;
-    getCouncilType: typeof getCouncilType;
-    isTurnInRange: typeof isTurnInRange;
-    createInitialState: typeof createInitialState;
-    markAsRestart: typeof markAsRestart;
-    decreaseTurn: typeof decreaseTurn;
-    passTurn: typeof passTurn;
-    increaseRerollLeft: typeof increaseRerollLeft;
-    decreaseRerollLeft: typeof decreaseRerollLeft;
-    exhaustSage: typeof exhaustSage;
-    setEffectValue: typeof setEffectValue;
-    setEffectValueAll: typeof setEffectValueAll;
-    increaseEffectValue: typeof increaseEffectValue;
-    increaseEffectValueAll: typeof increaseEffectValueAll;
-    sealEffect: typeof sealEffect;
-    unsealEffect: typeof unsealEffect;
-    addMutations: typeof addMutations;
+declare const Council: {
+    query: {
+        isCouncilAvailable: typeof isCouncilAvailable;
+        getOne: typeof getOne;
+        getLogics: typeof getLogics;
+    };
 };
 
 interface UiState {
@@ -189,6 +193,37 @@ interface UiState {
     selectedEffectIndex: number | null;
 }
 
+declare const query: {
+    council: {
+        isCouncilAvailable: (state: GameState, council: Council, sageIndex: number, pickedCouncils: string[]) => boolean;
+        getOne: (id: string) => Council;
+        getLogics: (id: string) => CouncilLogicData[];
+    };
+    effect: {
+        isMutable: (effect: Effect, maxEnchant: number) => boolean;
+        getLevel: (effect: Effect) => number;
+        getEffectOptionById: (id: string) => EffectOption;
+        getEffectOptionNameById: (id: string) => string;
+        getEffectOptionDescriptionByIdAndLevel: (id: string, level: number) => string;
+    };
+    game: {
+        isEffectMutable: (state: GameState, effectIndex: number) => boolean;
+        isEffectSealed: (state: GameState, effectIndex: number) => boolean;
+        getEffectValue: (state: GameState, effectIndex: number) => number;
+        checkSealNeeded: (state: GameState) => boolean;
+        getCouncilType: (state: GameState, sageIndex: number) => CouncilType;
+        isTurnInRange: (state: GameState, [min, max]: [number, number]) => boolean;
+        getCouncilDescription: (state: GameState, sageIndex: number) => string;
+        getPickRatios: (state: GameState) => number[];
+        getLuckyRatios: (state: GameState) => number[];
+        getEnchantEffectCount: (state: GameState) => number;
+        getEnchantIncreaseAmount: (state: GameState) => number;
+    };
+    sage: {
+        isLawfulFull: (sage: Sage) => boolean;
+        isChaosFull: (sage: Sage) => boolean;
+    };
+};
 declare const api: {
     game: {
         getInitialGameState: (config: GameConfiguration) => GameState;
@@ -202,12 +237,9 @@ declare const api: {
     };
     sage: {
         updateCouncils: (state: GameState) => GameState;
-        getDescription: (state: GameState, sageIndex: number) => string;
     };
     council: {
         pick: (state: GameState, sageIndex: number, pickedCouncils: string[]) => string;
-        getOne: (id: string) => Council;
-        getLogics: (id: string) => CouncilLogicData[];
     };
     logic: {
         runLogic: (state: GameState, logic: CouncilLogic, targets: number[]) => GameState;
@@ -215,21 +247,14 @@ declare const api: {
     target: {
         getTargets: (state: GameState, ui: UiState, logic: CouncilLogicData) => number[];
     };
-    mutation: {
-        queryPickRatios: (state: GameState) => number[];
-        queryLuckyRatios: (state: GameState) => number[];
-        queryEnchantEffectCount: (state: GameState) => number;
-        queryEnchantIncreaseAmount: (state: GameState) => number;
-    };
     effect: {
-        pickMinValueIndex: (effects: EffectState[]) => number[];
-        pickMaxValueIndex: (effects: EffectState[]) => number[];
+        pickMinValueIndex: (effects: Effect[]) => number[];
+        pickMaxValueIndex: (effects: Effect[]) => number[];
         getUiSelectableEffects: (state: GameState, index: number) => EffectOption[];
         getEffectOptionCurrentDescription: (state: GameState, index: number) => string;
     };
     rng: {
         setSeed: (seed: number) => void;
-        getSeed: () => number;
         bool: (opts?: {
             likelihood: number;
         } | undefined) => boolean;
@@ -273,4 +298,4 @@ declare function benchmark({ selectionFn, scoreFn, iteration, config, seed, }: B
     iteration: number;
 };
 
-export { Council, CouncilLogic, CouncilLogicType, CouncilTargetType, CouncilType, EffectOption, EffectState, GameConfiguration, GameState, Mutation, SageState, SageType, UiState, api, benchmark, data, _default$3 as effect, _default as game, _default$2 as mutation, _default$1 as sage };
+export { Council, CouncilLogic, CouncilLogicType, CouncilTargetType, CouncilType, Effect, EffectOption, GameConfiguration, GameState, Mutation, Sage, SageType, UiState, api, benchmark, data, query };

@@ -1,9 +1,8 @@
-import game, { GameConfiguration, GameState } from "../model/game";
-import effectEntity from "../model/effect";
+import { Council } from "../model/council";
+import { Effect } from "../model/effect";
+import { GameConfiguration, GameState } from "../model/game";
 import { UiState } from "../model/ui";
-import { CouncilService } from "./council";
 import { LogicService } from "./logic";
-import { MutationService } from "./mutation";
 import { RngService } from "./rng";
 import { SageService } from "./sage";
 import { TargetService } from "./target";
@@ -11,13 +10,11 @@ import { TargetService } from "./target";
 export function createGameService(
   chance: RngService,
   sageService: SageService,
-  councilService: CouncilService,
   logicService: LogicService,
-  targetService: TargetService,
-  mutationService: MutationService
+  targetService: TargetService
 ) {
   function getInitialGameState(config: GameConfiguration): GameState {
-    const state = game.createInitialState(config);
+    const state = GameState.createInitialState(config);
     return sageService.updateCouncils(state);
   }
 
@@ -27,14 +24,14 @@ export function createGameService(
     }
 
     const sage = state.sages[ui.selectedSageIndex];
-    const logics = councilService.getLogics(sage.councilId);
+    const logics = Council.query.getLogics(sage.councilId);
 
     return logics.some((logic) => logic.targetType === "userSelect");
   }
 
   function getEffectLevel(state: GameState, index: number): number {
     const effect = state.effects[index];
-    return effectEntity.getLevel(effect);
+    return Effect.query.getLevel(effect);
   }
 
   function getSelectableSages(state: GameState): number[] {
@@ -63,7 +60,7 @@ export function createGameService(
     }
 
     const sage = state.sages[ui.selectedSageIndex];
-    const logics = councilService.getLogics(sage.councilId);
+    const logics = Council.query.getLogics(sage.councilId);
 
     const counciledState = logics.reduce(
       (acc, logic) =>
@@ -89,11 +86,11 @@ export function createGameService(
       throw new Error("Sage is not selected");
     }
 
-    const enchantEffectCount = mutationService.queryEnchantEffectCount(state);
+    const enchantEffectCount = GameState.query.getEnchantEffectCount(state);
     const enchantIncreaseAmount =
-      mutationService.queryEnchantIncreaseAmount(state);
-    const luckyRatios = mutationService.queryLuckyRatios(state);
-    const pickRatios = mutationService.queryPickRatios(state);
+      GameState.query.getEnchantIncreaseAmount(state);
+    const luckyRatios = GameState.query.getLuckyRatios(state);
+    const pickRatios = GameState.query.getPickRatios(state);
 
     let nextState = state;
     for (let i = 0; i < enchantEffectCount; i += 1) {
@@ -106,14 +103,14 @@ export function createGameService(
       const luckyRatio = luckyRatios[selectedEffectIndex];
       const isLucky = chance.bool({ likelihood: luckyRatio * 100 });
 
-      state = game.increaseEffectValue(
+      state = GameState.increaseEffectValue(
         nextState,
         selectedEffectIndex,
         enchantIncreaseAmount + (isLucky ? 1 : 0)
       );
     }
 
-    nextState = game.passTurn(state, ui.selectedSageIndex);
+    nextState = GameState.passTurn(state, ui.selectedSageIndex);
 
     if (nextState.phase === "done") {
       return nextState;
@@ -126,7 +123,7 @@ export function createGameService(
       throw new Error("No reroll left");
     }
 
-    return sageService.updateCouncils(game.decreaseRerollLeft(state));
+    return sageService.updateCouncils(GameState.decreaseRerollLeft(state));
   }
   return {
     getInitialGameState,

@@ -1,6 +1,6 @@
 import { CouncilLogic, CouncilLogicType } from "../model/council";
-import game, { GameState } from "../model/game";
-import mutation, { Mutation } from "../model/mutation";
+import { GameState } from "../model/game";
+import { Mutation } from "../model/mutation";
 import { cycle } from "../util";
 import { EffectService } from "./effect";
 import { RngService } from "./rng";
@@ -17,14 +17,14 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const mutations = targets.map((index) =>
-      mutation.createProbMutation(
+      Mutation.createProbMutation(
         index,
         logic.value[0] / 10000,
         logic.remainTurn
       )
     );
 
-    return game.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
 
   // 이번 연성에서 {0} 효과의 대성공 확률을 x% 올려주지.
@@ -35,14 +35,14 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const mutations = targets.map((index) =>
-      mutation.createLuckyRatioMutation(
+      Mutation.createLuckyRatioMutation(
         index,
         logic.value[0] / 10000,
         logic.remainTurn
       )
     );
 
-    return game.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
 
   // <{0}> 효과의 단계를 <1> 올려보겠어. <25>% 확률로 성공하겠군.
@@ -54,7 +54,7 @@ export function createLogicService(
     return targets.reduce((acc, index) => {
       const isSuccess = chance.bool({ likelihood: logic.ratio / 100 });
       if (isSuccess) {
-        return game.increaseEffectValue(acc, index, logic.value[0]);
+        return GameState.increaseEffectValue(acc, index, logic.value[0]);
       }
 
       return acc;
@@ -72,7 +72,7 @@ export function createLogicService(
         min: logic.value[0],
         max: logic.value[1],
       });
-      return game.increaseEffectValue(acc, index, diff);
+      return GameState.increaseEffectValue(acc, index, diff);
     }, state);
   }
 
@@ -82,7 +82,7 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return game.decreaseTurn(state, logic.value[0]);
+    return GameState.decreaseTurn(state, logic.value[0]);
   }
 
   // <모든 효과>의 단계를 뒤섞도록 하지. 어떻게 뒤섞일지 보자고.
@@ -92,16 +92,16 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const beforeShuffle = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const afterShuffle = chance.shuffle(beforeShuffle);
 
     return beforeShuffle.reduce(
       (acc, index, i) =>
-        game.setEffectValue(
+        GameState.setEffectValue(
           acc,
           index,
-          game.getEffectValue(state, afterShuffle[i])
+          GameState.query.getEffectValue(state, afterShuffle[i])
         ),
       state
     );
@@ -114,11 +114,11 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const mutations = targets.flatMap<Mutation>((index) => [
-      mutation.createProbMutation(index, 1, logic.remainTurn),
-      mutation.createEnchantIncreaseAmountMutation(logic.value[0]),
+      Mutation.createProbMutation(index, 1, logic.remainTurn),
+      Mutation.createEnchantIncreaseAmountMutation(logic.value[0]),
     ]);
 
-    return game.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
 
   // <임의의 효과> <1>개의 봉인을 해제하고, 다른 효과 <1>개를 봉인해주지.
@@ -128,17 +128,17 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const sealedIndexes = [0, 1, 2, 3, 4].filter((index) =>
-      game.isEffectSealed(state, index)
+      GameState.query.isEffectSealed(state, index)
     );
     const unsealedIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
 
     const sealedIndex = chance.pickone(sealedIndexes);
     const unsealedIndex = chance.pickone(unsealedIndexes);
 
-    return game.sealEffect(
-      game.unsealEffect(state, sealedIndex),
+    return GameState.sealEffect(
+      GameState.unsealEffect(state, sealedIndex),
       unsealedIndex
     );
   }
@@ -159,7 +159,10 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return targets.reduce((acc, index) => game.sealEffect(acc, index), state);
+    return targets.reduce(
+      (acc, index) => GameState.sealEffect(acc, index),
+      state
+    );
   }
 
   // 조언이 더 필요한가? 다른 조언 보기 횟수를 <2>회 늘려주지.
@@ -168,7 +171,7 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return game.increaseRerollLeft(state, logic.value[0]);
+    return GameState.increaseRerollLeft(state, logic.value[0]);
   }
 
   // 남은 모든 연성에서 비용이 <20%> 덜 들겠어.
@@ -186,7 +189,7 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return game.markAsRestart(state);
+    return GameState.markAsRestart(state);
   }
 
   // 이번에 연성되는 효과는 <2>단계 올라갈거야.
@@ -195,8 +198,8 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return game.addMutations(state, [
-      mutation.createEnchantIncreaseAmountMutation(logic.value[0]),
+    return GameState.addMutations(state, [
+      Mutation.createEnchantIncreaseAmountMutation(logic.value[0]),
     ]);
   }
 
@@ -206,8 +209,8 @@ export function createLogicService(
     logic: CouncilLogic,
     targets: number[]
   ): GameState {
-    return game.addMutations(state, [
-      mutation.createEnchantEffectCountMutation(logic.value[0]),
+    return GameState.addMutations(state, [
+      Mutation.createEnchantEffectCountMutation(logic.value[0]),
     ]);
   }
 
@@ -222,7 +225,7 @@ export function createLogicService(
         min: logic.value[0],
         max: logic.value[1],
       });
-      return game.setEffectValue(acc, index, value);
+      return GameState.setEffectValue(acc, index, value);
     }, state);
   }
 
@@ -236,10 +239,12 @@ export function createLogicService(
       .filter((eff) => !eff.isSealed)
       .reduce((acc, eff) => acc + eff.value, 0);
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const values = [0, 1, 2, 3, 4].map((index) =>
-      game.isEffectSealed(state, index) ? game.getEffectValue(state, index) : 0
+      GameState.query.isEffectSealed(state, index)
+        ? GameState.query.getEffectValue(state, index)
+        : 0
     );
 
     for (let i = 0; i < totalValue; i++) {
@@ -247,7 +252,7 @@ export function createLogicService(
       values[index]++;
     }
 
-    return game.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
 
   // <네가 고르는> 효과의 단계를 전부 다른 효과에 나누지. 어떻게 나뉠지 보자고.
@@ -257,12 +262,13 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const target = targets[0];
-    const selectedValue = game.getEffectValue(state, target);
+    const selectedValue = GameState.query.getEffectValue(state, target);
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index) && index !== target
+      (index) =>
+        !GameState.query.isEffectSealed(state, index) && index !== target
     );
     const values = [0, 1, 2, 3, 4].map((index) =>
-      index !== target ? game.getEffectValue(state, index) : 0
+      index !== target ? GameState.query.getEffectValue(state, index) : 0
     );
 
     for (let i = 0; i < selectedValue; i++) {
@@ -270,7 +276,7 @@ export function createLogicService(
       values[index]++;
     }
 
-    return game.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
 
   // <모든 효과>의 단계를 위로 <1> 슬롯 씩 옮겨주겠어.
@@ -284,19 +290,19 @@ export function createLogicService(
     const shiftedValues: number[] = [];
 
     for (let i = 0; i < 5; i++) {
-      if (game.isEffectSealed(state, i)) {
+      if (GameState.query.isEffectSealed(state, i)) {
         shiftedValues[i] = values[i];
       }
 
       let j = i;
       do {
         j = cycle(j, 5, direction);
-      } while (game.isEffectSealed(state, j));
+      } while (GameState.query.isEffectSealed(state, j));
 
       shiftedValues[j] = values[i];
     }
 
-    return game.setEffectValueAll(state, shiftedValues);
+    return GameState.setEffectValueAll(state, shiftedValues);
   }
 
   // <{0}> 효과와 <{1}> 효과의 단계를 뒤바꿔줄게.
@@ -306,11 +312,11 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const [target1, target2] = logic.value;
-    const value1 = game.getEffectValue(state, target1);
-    const value2 = game.getEffectValue(state, target2);
+    const value1 = GameState.query.getEffectValue(state, target1);
+    const value2 = GameState.query.getEffectValue(state, target2);
 
-    return game.setEffectValue(
-      game.setEffectValue(state, target1, value2),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, target1, value2),
       target2,
       value1
     );
@@ -325,8 +331,8 @@ export function createLogicService(
     const [max, pickedMax] = effectService.pickMaxValueIndex(state.effects);
     const [min, pickedMin] = effectService.pickMinValueIndex(state.effects);
 
-    return game.setEffectValue(
-      game.setEffectValue(state, pickedMax, min),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, pickedMax, min),
       pickedMin,
       max
     );
@@ -339,7 +345,7 @@ export function createLogicService(
     targets: number[]
   ): GameState {
     const sageIndex = logic.value[0] - 1;
-    return game.exhaustSage(state, sageIndex);
+    return GameState.exhaustSage(state, sageIndex);
   }
 
   // <최고 단계> 효과 <1>개의 단계를 <1> 올려주지. 하지만 <최하 단계> 효과 <1>개의 단계는 <1> 내려갈 거야.
@@ -350,13 +356,13 @@ export function createLogicService(
   ): GameState {
     const [_, pickedMax] = effectService.pickMaxValueIndex(state.effects);
 
-    const increasedState = game.increaseEffectValue(
+    const increasedState = GameState.increaseEffectValue(
       state,
       pickedMax,
       logic.value[0]
     );
     return targets.reduce(
-      (acc, index) => game.increaseEffectValue(acc, index, logic.value[1]),
+      (acc, index) => GameState.increaseEffectValue(acc, index, logic.value[1]),
       increasedState
     );
   }
@@ -369,13 +375,13 @@ export function createLogicService(
   ): GameState {
     const [_, pickedMin] = effectService.pickMinValueIndex(state.effects);
 
-    const increasedState = game.increaseEffectValue(
+    const increasedState = GameState.increaseEffectValue(
       state,
       pickedMin,
       logic.value[0]
     );
     return targets.reduce(
-      (acc, index) => game.increaseEffectValue(acc, index, logic.value[1]),
+      (acc, index) => GameState.increaseEffectValue(acc, index, logic.value[1]),
       increasedState
     );
   }
@@ -390,10 +396,11 @@ export function createLogicService(
       state.effects
     );
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index) && index !== pickedMin
+      (index) =>
+        !GameState.query.isEffectSealed(state, index) && index !== pickedMin
     );
     const values = [0, 1, 2, 3, 4].map((index) =>
-      index !== pickedMin ? game.getEffectValue(state, index) : 0
+      index !== pickedMin ? GameState.query.getEffectValue(state, index) : 0
     );
 
     for (let i = 0; i < minValue; i++) {
@@ -401,7 +408,7 @@ export function createLogicService(
       values[index]++;
     }
 
-    return game.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
 
   // <최고 단계> 효과 <1>개의 단계를 전부 다른 효과에 나누지. 어떻게 나뉠지 보자고.
@@ -414,10 +421,11 @@ export function createLogicService(
       state.effects
     );
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game.isEffectSealed(state, index) && index !== pickedMax
+      (index) =>
+        !GameState.query.isEffectSealed(state, index) && index !== pickedMax
     );
     const values = [0, 1, 2, 3, 4].map((index) =>
-      index !== pickedMax ? game.getEffectValue(state, index) : 0
+      index !== pickedMax ? GameState.query.getEffectValue(state, index) : 0
     );
 
     for (let i = 0; i < maxValue; i++) {
@@ -425,7 +433,7 @@ export function createLogicService(
       values[index]++;
     }
 
-    return game.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
 
   // <최고 단계> 효과 <1>개의 단계를 <1> 소모하겠다. 대신 <최고 단계> 효과 <1>개와 <최하 단계> 효과 <1>개의 단계를 뒤바꿔주지.
@@ -437,8 +445,8 @@ export function createLogicService(
     const [max, pickedMax] = effectService.pickMaxValueIndex(state.effects);
     const [min, pickedMin] = effectService.pickMinValueIndex(state.effects);
 
-    return game.setEffectValue(
-      game.setEffectValue(state, pickedMax, min),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, pickedMax, min),
       pickedMin,
       max - 1
     );
@@ -452,11 +460,11 @@ export function createLogicService(
   ): GameState {
     const [target1, target2] = logic.value;
 
-    const value1 = game.getEffectValue(state, target1);
-    const value2 = game.getEffectValue(state, target2);
+    const value1 = GameState.query.getEffectValue(state, target1);
+    const value2 = GameState.query.getEffectValue(state, target2);
 
-    return game.setEffectValue(
-      game.setEffectValue(state, target1, value2),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, target1, value2),
       target2,
       value1 - 1
     );

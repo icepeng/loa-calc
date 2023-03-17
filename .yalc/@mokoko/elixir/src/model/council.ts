@@ -1,3 +1,6 @@
+import { councilRecord } from "../data/council";
+import { GameState } from "./game";
+
 export type CouncilLogicType =
   | "mutateProb"
   | "mutateLuckyRatio"
@@ -75,3 +78,49 @@ export interface Council {
   applyLimit: number;
   logics: CouncilLogicData[];
 }
+
+// queries
+
+function isCouncilAvailable(
+  state: GameState,
+  council: Council,
+  sageIndex: number,
+  pickedCouncils: string[]
+) {
+  if (!GameState.query.isTurnInRange(state, council.range)) {
+    return false;
+  }
+
+  if (pickedCouncils.includes(council.id)) {
+    return false;
+  }
+
+  if (council.slotType === 3) {
+    return true;
+  }
+
+  return council.slotType === sageIndex;
+}
+
+function getOne(id: string) {
+  const council = councilRecord[id];
+  if (!council) {
+    throw new Error("Invalid council id");
+  }
+
+  return council;
+}
+
+function getLogics(id: string) {
+  return getOne(id).logics;
+}
+
+const query = {
+  isCouncilAvailable,
+  getOne,
+  getLogics,
+};
+
+export const Council = {
+  query,
+};

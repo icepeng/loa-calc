@@ -1,12 +1,12 @@
 import { CouncilLogicData, CouncilLogicType } from "../model/council";
-import game, { GameState } from "../model/game";
+import { GameState } from "../model/game";
 
 export function createLogicGuardService() {
   // 이번 연성에서 {0} 효과가 연성될 확률을 x% 올려주지.
   // 남은 모든 연성에서 {0} 효과가 연성될 확률을 x% 올려주지.
   function mutateProb(state: GameState, logic: CouncilLogicData): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -18,7 +18,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -29,7 +29,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -40,7 +40,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -64,7 +64,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -125,8 +125,8 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     return (
-      state.effects.filter((_, i) => game.isEffectMutable(state, i)).length >=
-      logic.value[0]
+      state.effects.filter((_, i) => GameState.query.isEffectMutable(state, i))
+        .length >= logic.value[0]
     );
   }
 
@@ -134,7 +134,7 @@ export function createLogicGuardService() {
   function setValueRanged(state: GameState, logic: CouncilLogicData): boolean {
     if (logic.targetType === "proposed") {
       const index = logic.targetCondition - 1;
-      const isMutable = game.isEffectMutable(state, index);
+      const isMutable = GameState.query.isEffectMutable(state, index);
       const isLowerThanMax = state.effects[index].value < logic.value[1];
       return isMutable && isLowerThanMax;
     }
@@ -162,8 +162,8 @@ export function createLogicGuardService() {
   // <{0}> 효과와 <{1}> 효과의 단계를 뒤바꿔줄게.
   function swapValues(state: GameState, logic: CouncilLogicData): boolean {
     return (
-      game.isEffectMutable(state, logic.value[0]) &&
-      game.isEffectMutable(state, logic.value[1])
+      GameState.query.isEffectMutable(state, logic.value[0]) &&
+      GameState.query.isEffectMutable(state, logic.value[1])
     );
   }
 
@@ -183,7 +183,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -194,7 +194,7 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     if (logic.targetType === "proposed") {
-      return game.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -229,8 +229,8 @@ export function createLogicGuardService() {
     logic: CouncilLogicData
   ): boolean {
     return (
-      game.isEffectMutable(state, logic.value[0]) &&
-      game.isEffectMutable(state, logic.value[1])
+      GameState.query.isEffectMutable(state, logic.value[0]) &&
+      GameState.query.isEffectMutable(state, logic.value[1])
     );
   }
 

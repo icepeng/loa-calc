@@ -1,8 +1,8 @@
-import mutationEntity, { Mutation } from "./mutation";
-import sageEntity, { SageState } from "./sage";
-import effectEntity, { EffectState } from "./effect";
+import { Mutation } from "./mutation";
+import { Sage } from "./sage";
+import { Effect } from "./effect";
 import { clamp } from "../util";
-import { CouncilType } from "./council";
+import { Council, CouncilType } from "./council";
 
 export interface GameConfiguration {
   totalTurn: number;
@@ -15,78 +15,12 @@ export interface GameState {
   turnLeft: number;
   turnPassed: number;
   rerollLeft: number;
-  effects: EffectState[];
+  effects: Effect[];
   mutations: Mutation[];
-  sages: SageState[];
+  sages: Sage[];
 }
 
-// getters
-function isEffectMutable(state: GameState, effectIndex: number): boolean {
-  return effectEntity.isMutable(
-    state.effects[effectIndex],
-    state.config.maxEnchant
-  );
-}
-
-function isEffectSealed(state: GameState, effectIndex: number): boolean {
-  return state.effects[effectIndex].isSealed;
-}
-
-function getEffectValue(state: GameState, effectIndex: number): number {
-  return state.effects[effectIndex].value;
-}
-
-function checkSealNeeded(state: GameState) {
-  const sealedEffectCount = state.effects.filter(
-    (effect) => effect.isSealed
-  ).length;
-  const toSeal = 3 - sealedEffectCount;
-
-  return state.turnLeft <= toSeal;
-}
-
-function getCouncilType(state: GameState, sageIndex: number): CouncilType {
-  const sage = state.sages[sageIndex];
-  const isSealNeeded = checkSealNeeded(state);
-
-  if (sage.isExhausted) {
-    return "exhausted";
-  }
-
-  if (sageEntity.isLawfulFull(sage)) {
-    if (isSealNeeded) {
-      return "lawfulSeal";
-    }
-
-    return "lawful";
-  }
-
-  if (sageEntity.isChaosFull(sage)) {
-    if (isSealNeeded) {
-      return "chaosSeal";
-    }
-
-    return "chaos";
-  }
-
-  if (isSealNeeded) {
-    return "seal";
-  }
-
-  return "common";
-}
-
-function isTurnInRange(state: GameState, [min, max]: [number, number]) {
-  if (min === 0) {
-    return true;
-  }
-
-  const turn = state.config.totalTurn - state.turnLeft + 1;
-  return turn >= min && turn < max;
-}
-
-// setters
-// game
+// constructor
 function createInitialState(config: GameConfiguration): GameState {
   return {
     config,
@@ -108,7 +42,7 @@ function createInitialState(config: GameConfiguration): GameState {
         isSealed: false,
       },
       {
-        optionId: "10000",
+        optionId: "10001",
         index: 2,
         value: 0,
         isSealed: false,
@@ -128,13 +62,15 @@ function createInitialState(config: GameConfiguration): GameState {
     ],
     mutations: [],
     sages: [
-      sageEntity.createInitialState(0),
-      sageEntity.createInitialState(1),
-      sageEntity.createInitialState(2),
+      Sage.createInitialState(0),
+      Sage.createInitialState(1),
+      Sage.createInitialState(2),
     ],
   };
 }
 
+// reducers
+// game
 function markAsRestart(state: GameState): GameState {
   return {
     ...state,
@@ -169,11 +105,9 @@ function passTurn(state: GameState, selectedSageIndex: number): GameState {
     turnLeft: state.turnLeft - 1,
     turnPassed: state.turnPassed + 1,
     mutations: state.mutations
-      .map(mutationEntity.passTurn)
+      .map(Mutation.passTurn)
       .filter((mutation) => mutation.remainTurn > 0),
-    sages: state.sages.map((sage) =>
-      sageEntity.updatePower(sage, selectedSageIndex)
-    ),
+    sages: state.sages.map((sage) => Sage.updatePower(sage, selectedSageIndex)),
   };
 }
 
@@ -200,7 +134,7 @@ function exhaustSage(state: GameState, sageIndex: number): GameState {
   return {
     ...state,
     sages: state.sages.map((sage, index) =>
-      index === sageIndex ? sageEntity.exhaust(sage) : sage
+      index === sageIndex ? Sage.exhaust(sage) : sage
     ),
   };
 }
@@ -216,9 +150,7 @@ function setEffectValue(
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      index === effectIndex
-        ? effectEntity.setValue(effect, clampedValue)
-        : effect
+      index === effectIndex ? Effect.setValue(effect, clampedValue) : effect
     ),
   };
 }
@@ -231,7 +163,7 @@ function setEffectValueAll(state: GameState, values: number[]): GameState {
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      effectEntity.setValue(effect, clampedValues[index])
+      Effect.setValue(effect, clampedValues[index])
     ),
   };
 }
@@ -249,9 +181,7 @@ function increaseEffectValue(
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      index === effectIndex
-        ? effectEntity.setValue(effect, clampedValue)
-        : effect
+      index === effectIndex ? Effect.setValue(effect, clampedValue) : effect
     ),
   };
 }
@@ -264,7 +194,7 @@ function increaseEffectValueAll(state: GameState, diffs: number[]): GameState {
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      effectEntity.setValue(effect, clampedValues[index])
+      Effect.setValue(effect, clampedValues[index])
     ),
   };
 }
@@ -273,7 +203,7 @@ function sealEffect(state: GameState, effectIndex: number): GameState {
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      index === effectIndex ? effectEntity.seal(effect) : effect
+      index === effectIndex ? Effect.seal(effect) : effect
     ),
   };
 }
@@ -282,7 +212,7 @@ function unsealEffect(state: GameState, effectIndex: number): GameState {
   return {
     ...state,
     effects: state.effects.map((effect, index) =>
-      index === effectIndex ? effectEntity.unseal(effect) : effect
+      index === effectIndex ? Effect.unseal(effect) : effect
     ),
   };
 }
@@ -295,15 +225,177 @@ function addMutations(state: GameState, mutations: Mutation[]): GameState {
   };
 }
 
-export default {
-  // getters
+// queries
+// effect
+function isEffectMutable(state: GameState, effectIndex: number): boolean {
+  return Effect.query.isMutable(
+    state.effects[effectIndex],
+    state.config.maxEnchant
+  );
+}
+
+function isEffectSealed(state: GameState, effectIndex: number): boolean {
+  return state.effects[effectIndex].isSealed;
+}
+
+function getEffectValue(state: GameState, effectIndex: number): number {
+  return state.effects[effectIndex].value;
+}
+
+function checkSealNeeded(state: GameState) {
+  const sealedEffectCount = state.effects.filter(
+    (effect) => effect.isSealed
+  ).length;
+  const toSeal = 3 - sealedEffectCount;
+
+  return state.turnLeft <= toSeal;
+}
+
+// sage
+function getCouncilType(state: GameState, sageIndex: number): CouncilType {
+  const sage = state.sages[sageIndex];
+  const isSealNeeded = checkSealNeeded(state);
+
+  if (sage.isExhausted) {
+    return "exhausted";
+  }
+
+  if (Sage.query.isLawfulFull(sage)) {
+    if (isSealNeeded) {
+      return "lawfulSeal";
+    }
+
+    return "lawful";
+  }
+
+  if (Sage.query.isChaosFull(sage)) {
+    if (isSealNeeded) {
+      return "chaosSeal";
+    }
+
+    return "chaos";
+  }
+
+  if (isSealNeeded) {
+    return "seal";
+  }
+
+  return "common";
+}
+
+function isTurnInRange(state: GameState, [min, max]: [number, number]) {
+  if (min === 0) {
+    return true;
+  }
+
+  const turn = state.config.totalTurn - state.turnLeft + 1;
+  return turn >= min && turn < max;
+}
+
+function getCouncilDescription(state: GameState, sageIndex: number) {
+  const id = state.sages[sageIndex].councilId;
+  const council = Council.query.getOne(id);
+  if (!council) {
+    throw new Error("Invalid council id");
+  }
+  const effectNames = state.effects.map((eff) =>
+    Effect.query.getEffectOptionNameById(eff.optionId)
+  );
+
+  return council.descriptions[sageIndex]
+    .replaceAll("{0}", effectNames[0])
+    .replaceAll("{1}", effectNames[1])
+    .replaceAll("{2}", effectNames[2])
+    .replaceAll("{3}", effectNames[3])
+    .replaceAll("{4}", effectNames[4]);
+}
+
+// mutation
+function getPickRatios(state: GameState) {
+  const mutableCount = [0, 1, 2, 3, 4].filter((index) =>
+    isEffectMutable(state, index)
+  ).length;
+
+  const pickRatios = Array.from({ length: 5 }, (_, i) =>
+    isEffectMutable(state, i) ? 1 / mutableCount : 0
+  );
+
+  if (mutableCount === 1) {
+    return pickRatios;
+  }
+
+  const probMutations = state.mutations.filter(
+    (mutation) => mutation.target === "prob"
+  );
+
+  for (const mutation of probMutations) {
+    if (!isEffectMutable(state, mutation.index)) {
+      continue;
+    }
+
+    const targetProb = pickRatios[mutation.index];
+    const updatedProb = Math.max(Math.min(targetProb + mutation.value, 1), 0);
+    const actualDiff = updatedProb - targetProb;
+
+    for (let i = 0; i < 5; i += 1) {
+      if (i === mutation.index) {
+        pickRatios[i] = updatedProb;
+      } else {
+        pickRatios[i] = pickRatios[i] * (1 - actualDiff / (1 - targetProb));
+      }
+    }
+  }
+
+  return pickRatios;
+}
+
+function getLuckyRatios(state: GameState) {
+  const luckyRatios = Array.from({ length: 5 }, () => 0.1);
+
+  const luckyRatioMutations = state.mutations.filter(
+    (mutation) => mutation.target === "luckyRatio"
+  );
+  for (const mutation of luckyRatioMutations) {
+    luckyRatios[mutation.index] = Math.max(
+      Math.min(luckyRatios[mutation.index] + mutation.value, 1),
+      0
+    );
+  }
+
+  return luckyRatios;
+}
+
+function getEnchantEffectCount(state: GameState) {
+  return (
+    state.mutations.find((mutation) => mutation.target === "enchantEffectCount")
+      ?.value ?? 1
+  );
+}
+
+function getEnchantIncreaseAmount(state: GameState) {
+  return (
+    state.mutations.find(
+      (mutation) => mutation.target === "enchantIncreaseAmount"
+    )?.value ?? 1
+  );
+}
+
+const query = {
   isEffectMutable,
   isEffectSealed,
   getEffectValue,
   checkSealNeeded,
   getCouncilType,
   isTurnInRange,
-  // setters
+  getCouncilDescription,
+  getPickRatios,
+  getLuckyRatios,
+  getEnchantEffectCount,
+  getEnchantIncreaseAmount,
+};
+
+export const GameState = {
+  query,
   createInitialState,
   markAsRestart,
   decreaseTurn,

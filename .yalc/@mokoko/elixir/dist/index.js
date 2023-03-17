@@ -23,1366 +23,9 @@ __export(src_exports, {
   api: () => api,
   benchmark: () => benchmark,
   data: () => data,
-  effect: () => effect_default,
-  game: () => game_default,
-  mutation: () => mutation_default,
-  sage: () => sage_default
+  query: () => query5
 });
 module.exports = __toCommonJS(src_exports);
-
-// src/data/effect.ts
-var effectLevelTable = {
-  0: 0,
-  1: 0,
-  2: 0,
-  3: 1,
-  4: 1,
-  5: 1,
-  6: 2,
-  7: 2,
-  8: 3,
-  9: 4,
-  10: 5
-};
-var effectOptions = [
-  {
-    id: "10000",
-    name: "\uC2A4\uD0EF",
-    optionDescriptions: [
-      "\uC2A4\uD0EF(\uD798/\uBBFC\uCCA9/\uC9C0\uB2A5)",
-      "\uC2A4\uD0EF +720/+864",
-      "\uC2A4\uD0EF +1782",
-      "\uC2A4\uD0EF +2700",
-      "\uC2A4\uD0EF +4050",
-      "\uC2A4\uD0EF +5400"
-    ]
-  },
-  // {
-  //   "id": "10001",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +720",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10002",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10003",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10004",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10005",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10006",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +720",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10007",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10008",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10009",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10010",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10011",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10012",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10013",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10014",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10015",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10016",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +720",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10017",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10018",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "힘",
-  //     "힘 +864",
-  //     "힘 +1782",
-  //     "힘 +2700",
-  //     "힘 +4050",
-  //     "힘 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10019",
-  //   "name": "힘",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10020",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10021",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10022",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10023",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10024",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10025",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10026",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10027",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10028",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10029",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "민첩",
-  //     "민첩 +864",
-  //     "민첩 +1782",
-  //     "민첩 +2700",
-  //     "민첩 +4050",
-  //     "민첩 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10030",
-  //   "name": "민첩",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10031",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  // {
-  //   "id": "10032",
-  //   "name": "지능",
-  //   "optionDescriptions": [
-  //     "지능",
-  //     "지능 +864",
-  //     "지능 +1782",
-  //     "지능 +2700",
-  //     "지능 +4050",
-  //     "지능 +5400"
-  //   ]
-  // },
-  {
-    id: "10100",
-    name: "\uACF5\uACA9\uB825",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +122",
-      "\uACF5\uACA9\uB825 +253",
-      "\uACF5\uACA9\uB825 +383",
-      "\uACF5\uACA9\uB825 +575",
-      "\uACF5\uACA9\uB825 +767"
-    ]
-  },
-  {
-    id: "10101",
-    name: "\uBB34\uAE30 \uACF5\uACA9\uB825",
-    optionDescriptions: [
-      "\uBB34\uAE30 \uACF5\uACA9\uB825",
-      "\uBB34\uAE30 \uACF5\uACA9\uB825 +236",
-      "\uBB34\uAE30 \uACF5\uACA9\uB825 +488",
-      "\uBB34\uAE30 \uACF5\uACA9\uB825 +740",
-      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1110",
-      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1480"
-    ]
-  },
-  {
-    id: "10102",
-    name: "\uD0C8\uCD9C\uC758 \uB2EC\uC778",
-    optionDescriptions: [
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
-      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
-    ]
-  },
-  {
-    id: "10103",
-    name: "\uD68C\uD53C\uC758 \uB2EC\uC778",
-    optionDescriptions: [
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
-      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
-    ]
-  },
-  {
-    id: "10104",
-    name: "\uB9C8\uB098",
-    optionDescriptions: [
-      "\uCD5C\uB300 \uB9C8\uB098",
-      "\uCD5C\uB300 \uB9C8\uB098 +15",
-      "\uCD5C\uB300 \uB9C8\uB098 +32",
-      "\uCD5C\uB300 \uB9C8\uB098 +49",
-      "\uCD5C\uB300 \uB9C8\uB098 +73",
-      "\uCD5C\uB300 \uB9C8\uB098 +98"
-    ]
-  },
-  {
-    id: "10105",
-    name: "\uC0DD\uBA85\uC758 \uCD95\uBCF5",
-    optionDescriptions: [
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9",
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +6",
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +12",
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +19",
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +29",
-      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +39"
-    ]
-  },
-  {
-    id: "10106",
-    name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
-    optionDescriptions: [
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.46%",
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.95%",
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.45%",
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.17%",
-      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.9%"
-    ]
-  },
-  {
-    id: "10107",
-    name: "\uBC29\uB791\uC790",
-    optionDescriptions: [
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00",
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +0.8%",
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +1.65%",
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +2.5%",
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +3.75%",
-      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +5%"
-    ]
-  },
-  {
-    id: "10108",
-    name: "\uBB34\uB825\uD654",
-    optionDescriptions: [
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9",
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.38%",
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.79%",
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.2%",
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.8%",
-      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +2.4%"
-    ]
-  },
-  {
-    id: "10109",
-    name: "\uBB3C\uC57D \uC911\uB3C5",
-    optionDescriptions: [
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.13%",
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.34%",
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +3.55%",
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +5.32%",
-      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +7.1%"
-    ]
-  },
-  {
-    id: "10110",
-    name: "\uD3ED\uBC1C\uBB3C \uB2EC\uC778",
-    optionDescriptions: [
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00",
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +1.6%",
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +3.3%",
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +5%",
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +7.5%",
-      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +10%"
-    ]
-  },
-  {
-    id: "11000",
-    name: "\uD589\uC6B4 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11001",
-    name: "\uD68C\uC2EC (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11002",
-    name: "\uB2EC\uC778 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11003",
-    name: "\uAC15\uB9F9 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11004",
-    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11005",
-    name: "\uC120\uBD09\uB300 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uACF5\uACA9\uB825",
-      "\uACF5\uACA9\uB825 +0.23%",
-      "\uACF5\uACA9\uB825 +0.47%",
-      "\uACF5\uACA9\uB825 +0.72%",
-      "\uACF5\uACA9\uB825 +1.08%",
-      "\uACF5\uACA9\uB825 +1.44%"
-    ]
-  },
-  {
-    id: "11006",
-    name: "\uC120\uAC01\uC790 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
-    ]
-  },
-  {
-    id: "11007",
-    name: "\uC9C4\uAD70 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
-    ]
-  },
-  {
-    id: "11008",
-    name: "\uC2E0\uB150 (\uC9C8\uC11C)",
-    optionDescriptions: [
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
-    ]
-  },
-  {
-    id: "12000",
-    name: "\uBCF4\uC2A4 \uD53C\uD574",
-    optionDescriptions: [
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.38%",
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.79%",
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.2%",
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.8%",
-      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +2.4%"
-    ]
-  },
-  {
-    id: "12001",
-    name: "\uAC01\uC131\uAE30 \uD53C\uD574",
-    optionDescriptions: [
-      "\uAC01\uC131\uAE30 \uD53C\uD574",
-      "\uAC01\uC131\uAE30 \uD53C\uD574 +1.2%",
-      "\uAC01\uC131\uAE30 \uD53C\uD574 +2.47%",
-      "\uAC01\uC131\uAE30 \uD53C\uD574 +3.75%",
-      "\uAC01\uC131\uAE30 \uD53C\uD574 +5.62%",
-      "\uAC01\uC131\uAE30 \uD53C\uD574 +7.5%"
-    ]
-  },
-  {
-    id: "12002",
-    name: "\uBCF4\uD638\uB9C9 \uAC15\uD654",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.67%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.38%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +2.1%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +3.15%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +4.2%"
-    ]
-  },
-  {
-    id: "12003",
-    name: "\uD68C\uBCF5 \uAC15\uD654",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +0.67%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +1.38%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +2.1%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +3.15%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +4.2%"
-    ]
-  },
-  {
-    id: "13000",
-    name: "\uCD5C\uB300 \uC0DD\uBA85\uB825",
-    optionDescriptions: [
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825",
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +2720",
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +5610",
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +8500",
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +12750",
-      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +17000"
-    ]
-  },
-  {
-    id: "13001",
-    name: "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
-    optionDescriptions: [
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +1.6%",
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +3.3%",
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +5%",
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +7.5%",
-      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +10%"
-    ]
-  },
-  {
-    id: "13002",
-    name: "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
-    optionDescriptions: [
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +960",
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +1980",
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +3000",
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +4500",
-      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +6000"
-    ]
-  },
-  {
-    id: "13003",
-    name: "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
-    optionDescriptions: [
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +960",
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +1980",
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +3000",
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +4500",
-      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +6000"
-    ]
-  },
-  {
-    id: "14000",
-    name: "\uCE58\uBA85\uD0C0 \uD53C\uD574",
-    optionDescriptions: [
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574",
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +1.12%",
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +2.31%",
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +3.5%",
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +5.25%",
-      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +7%"
-    ]
-  },
-  {
-    id: "14001",
-    name: "\uCD94\uAC00 \uD53C\uD574",
-    optionDescriptions: [
-      "\uCD94\uAC00 \uD53C\uD574",
-      "\uCD94\uAC00 \uD53C\uD574 +0.49%",
-      "\uCD94\uAC00 \uD53C\uD574 +1.02%",
-      "\uCD94\uAC00 \uD53C\uD574 +1.55%",
-      "\uCD94\uAC00 \uD53C\uD574 +2.32%",
-      "\uCD94\uAC00 \uD53C\uD574 +3.1%"
-    ]
-  },
-  {
-    id: "14002",
-    name: "\uC544\uC774\uB374\uD2F0\uD2F0 \uD68D\uB4DD",
-    optionDescriptions: [
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9",
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +0.64%",
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +1.32%",
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +2%",
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +3%",
-      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +4%"
-    ]
-  },
-  {
-    id: "14003",
-    name: "\uC544\uAD70 \uAC15\uD654",
-    optionDescriptions: [
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.96%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.98%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4.5%",
-      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +6%"
-    ]
-  },
-  {
-    id: "15000",
-    name: "\uD589\uC6B4 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15001",
-    name: "\uD68C\uC2EC (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15002",
-    name: "\uB2EC\uC778 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15003",
-    name: "\uAC15\uB9F9 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uCD94\uAC00 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15004",
-    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15005",
-    name: "\uC120\uBD09\uB300 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
-      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
-    ]
-  },
-  {
-    id: "15006",
-    name: "\uC120\uAC01\uC790 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
-    ]
-  },
-  {
-    id: "15007",
-    name: "\uC9C4\uAD70 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
-    ]
-  },
-  {
-    id: "15008",
-    name: "\uC2E0\uB150 (\uD63C\uB3C8)",
-    optionDescriptions: [
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
-      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
-    ]
-  }
-];
-var effectOptionsRecord = Object.fromEntries(effectOptions.map((item) => [item.id, item]));
-
-// src/model/effect.ts
-function isMutable(effect, maxEnchant) {
-  return effect.isSealed === false && effect.value < maxEnchant;
-}
-function getLevel(effect) {
-  const value = effect.value;
-  if (value < 0 || value > 10) {
-    throw new Error(`Invalid effect value: ${value}`);
-  }
-  return effectLevelTable[value];
-}
-function getEffectOptionById(id) {
-  const option = effectOptionsRecord[id];
-  if (!option) {
-    throw new Error(`Invalid effect option id: ${id}`);
-  }
-  return option;
-}
-function getEffectOptionNameById(id) {
-  return getEffectOptionById(id).name;
-}
-function getEffectOptionDescriptionByIdAndLevel(id, level) {
-  const option = getEffectOptionById(id);
-  return option.optionDescriptions[level];
-}
-function setValue(effect, value) {
-  if (effect.isSealed && effect.value !== value) {
-    throw new Error("Effect is sealed");
-  }
-  if (value < 0) {
-    throw new Error("Effect value must be positive");
-  }
-  return {
-    ...effect,
-    value
-  };
-}
-function setOption(effect, option) {
-  if (effect.isSealed) {
-    throw new Error("Effect is sealed");
-  }
-  return {
-    ...effect,
-    option
-  };
-}
-function seal(effect) {
-  if (effect.isSealed) {
-    throw new Error("Effect is already sealed");
-  }
-  return {
-    ...effect,
-    isSealed: true
-  };
-}
-function unseal(effect) {
-  if (!effect.isSealed) {
-    throw new Error("Effect is already unsealed");
-  }
-  return {
-    ...effect,
-    isSealed: false
-  };
-}
-var effect_default = {
-  isMutable,
-  getLevel,
-  getEffectOptionById,
-  getEffectOptionNameById,
-  getEffectOptionDescriptionByIdAndLevel,
-  setValue,
-  setOption,
-  seal,
-  unseal
-};
-
-// src/model/mutation.ts
-function createProbMutation(index, value, remainTurn) {
-  return {
-    target: "prob",
-    index,
-    value,
-    remainTurn
-  };
-}
-function createLuckyRatioMutation(index, value, remainTurn) {
-  return {
-    target: "luckyRatio",
-    index,
-    value,
-    remainTurn
-  };
-}
-function createEnchantIncreaseAmountMutation(value) {
-  return {
-    target: "enchantIncreaseAmount",
-    index: -1,
-    value,
-    remainTurn: 1
-  };
-}
-function createEnchantEffectCountMutation(value) {
-  return {
-    target: "enchantEffectCount",
-    index: -1,
-    value,
-    remainTurn: 1
-  };
-}
-function passTurn(mutation) {
-  return {
-    ...mutation,
-    remainTurn: mutation.remainTurn - 1
-  };
-}
-var mutation_default = {
-  createProbMutation,
-  createLuckyRatioMutation,
-  createEnchantIncreaseAmountMutation,
-  createEnchantEffectCountMutation,
-  passTurn
-};
-
-// src/data/const.ts
-var MAX_LAWFUL = 3;
-var MAX_CHAOS = 6;
-
-// src/model/sage.ts
-function isLawfulFull(sage) {
-  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
-}
-function isChaosFull(sage) {
-  return sage.type === "chaos" && sage.power === MAX_CHAOS;
-}
-function updatePower(sage, selectedIndex) {
-  if (sage.type === "none") {
-    if (sage.index === selectedIndex) {
-      return { ...sage, type: "lawful", power: 1 };
-    }
-    return { ...sage, type: "chaos", power: 1 };
-  }
-  if (sage.type === "lawful") {
-    if (sage.index === selectedIndex) {
-      return {
-        ...sage,
-        type: "lawful",
-        power: sage.power === MAX_LAWFUL ? 1 : sage.power + 1
-      };
-    }
-    return {
-      ...sage,
-      type: "chaos",
-      power: 1
-    };
-  }
-  if (sage.type === "chaos") {
-    if (sage.index === selectedIndex) {
-      return { ...sage, type: "lawful", power: 1 };
-    }
-    return {
-      ...sage,
-      type: "chaos",
-      power: sage.power === MAX_CHAOS ? 1 : sage.power + 1
-    };
-  }
-  throw new Error("Invalid sage type");
-}
-function exhaust(sage) {
-  return {
-    ...sage,
-    isExhausted: true
-  };
-}
-function createInitialState(index) {
-  return {
-    index,
-    type: "none",
-    power: 0,
-    isExhausted: false,
-    councilId: ""
-  };
-}
-var sage_default = {
-  isLawfulFull,
-  isChaosFull,
-  updatePower,
-  exhaust,
-  createInitialState
-};
-
-// src/util/clamp.ts
-function clamp(value, max) {
-  return Math.min(Math.max(value, 0), max);
-}
-
-// src/util/cycle.ts
-function cycle(n, mod, direction) {
-  if (direction === 0) {
-    return (n + mod - 1) % mod;
-  } else {
-    return (n + 1) % mod;
-  }
-}
-
-// src/model/game.ts
-function isEffectMutable(state, effectIndex) {
-  return effect_default.isMutable(
-    state.effects[effectIndex],
-    state.config.maxEnchant
-  );
-}
-function isEffectSealed(state, effectIndex) {
-  return state.effects[effectIndex].isSealed;
-}
-function getEffectValue(state, effectIndex) {
-  return state.effects[effectIndex].value;
-}
-function checkSealNeeded(state) {
-  const sealedEffectCount = state.effects.filter(
-    (effect) => effect.isSealed
-  ).length;
-  const toSeal = 3 - sealedEffectCount;
-  return state.turnLeft <= toSeal;
-}
-function getCouncilType(state, sageIndex) {
-  const sage = state.sages[sageIndex];
-  const isSealNeeded = checkSealNeeded(state);
-  if (sage.isExhausted) {
-    return "exhausted";
-  }
-  if (sage_default.isLawfulFull(sage)) {
-    if (isSealNeeded) {
-      return "lawfulSeal";
-    }
-    return "lawful";
-  }
-  if (sage_default.isChaosFull(sage)) {
-    if (isSealNeeded) {
-      return "chaosSeal";
-    }
-    return "chaos";
-  }
-  if (isSealNeeded) {
-    return "seal";
-  }
-  return "common";
-}
-function isTurnInRange(state, [min, max]) {
-  if (min === 0) {
-    return true;
-  }
-  const turn = state.config.totalTurn - state.turnLeft + 1;
-  return turn >= min && turn < max;
-}
-function createInitialState2(config) {
-  return {
-    config,
-    phase: "council",
-    turnLeft: config.totalTurn,
-    turnPassed: 0,
-    rerollLeft: 2,
-    effects: [
-      {
-        optionId: "12000",
-        index: 0,
-        value: 0,
-        isSealed: false
-      },
-      {
-        optionId: "10101",
-        index: 1,
-        value: 0,
-        isSealed: false
-      },
-      {
-        optionId: "10000",
-        index: 2,
-        value: 0,
-        isSealed: false
-      },
-      {
-        optionId: "10106",
-        index: 3,
-        value: 0,
-        isSealed: false
-      },
-      {
-        optionId: "10108",
-        index: 4,
-        value: 0,
-        isSealed: false
-      }
-    ],
-    mutations: [],
-    sages: [
-      sage_default.createInitialState(0),
-      sage_default.createInitialState(1),
-      sage_default.createInitialState(2)
-    ]
-  };
-}
-function markAsRestart(state) {
-  return {
-    ...state,
-    phase: "restart"
-  };
-}
-function decreaseTurn(state, amount) {
-  if (state.turnLeft <= 0) {
-    throw new Error("No turn left");
-  }
-  return {
-    ...state,
-    turnLeft: state.turnLeft - amount
-  };
-}
-function passTurn2(state, selectedSageIndex) {
-  if (state.phase !== "enchant") {
-    throw new Error("Invalid phase");
-  }
-  if (state.turnLeft <= 0) {
-    throw new Error("No turn left");
-  }
-  const nextPhase = state.turnLeft === 1 ? "done" : "council";
-  return {
-    ...state,
-    phase: nextPhase,
-    turnLeft: state.turnLeft - 1,
-    turnPassed: state.turnPassed + 1,
-    mutations: state.mutations.map(mutation_default.passTurn).filter((mutation) => mutation.remainTurn > 0),
-    sages: state.sages.map(
-      (sage) => sage_default.updatePower(sage, selectedSageIndex)
-    )
-  };
-}
-function increaseRerollLeft(state, amount) {
-  return {
-    ...state,
-    rerollLeft: state.rerollLeft + amount
-  };
-}
-function decreaseRerollLeft(state) {
-  if (state.rerollLeft <= 0) {
-    throw new Error("No reroll left");
-  }
-  return {
-    ...state,
-    rerollLeft: state.rerollLeft - 1
-  };
-}
-function exhaustSage(state, sageIndex) {
-  return {
-    ...state,
-    sages: state.sages.map(
-      (sage, index) => index === sageIndex ? sage_default.exhaust(sage) : sage
-    )
-  };
-}
-function setEffectValue(state, effectIndex, value) {
-  const clampedValue = clamp(value, state.config.maxEnchant);
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
-    )
-  };
-}
-function setEffectValueAll(state, values) {
-  const clampedValues = values.map(
-    (value) => clamp(value, state.config.maxEnchant)
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => effect_default.setValue(effect, clampedValues[index])
-    )
-  };
-}
-function increaseEffectValue(state, effectIndex, diff) {
-  const clampedValue = clamp(
-    getEffectValue(state, effectIndex) + diff,
-    state.config.maxEnchant
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
-    )
-  };
-}
-function increaseEffectValueAll(state, diffs) {
-  const clampedValues = diffs.map(
-    (diff, index) => clamp(getEffectValue(state, index) + diff, state.config.maxEnchant)
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => effect_default.setValue(effect, clampedValues[index])
-    )
-  };
-}
-function sealEffect(state, effectIndex) {
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.seal(effect) : effect
-    )
-  };
-}
-function unsealEffect(state, effectIndex) {
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.unseal(effect) : effect
-    )
-  };
-}
-function addMutations(state, mutations) {
-  return {
-    ...state,
-    mutations: [...state.mutations, ...mutations]
-  };
-}
-var game_default = {
-  // getters
-  isEffectMutable,
-  isEffectSealed,
-  getEffectValue,
-  checkSealNeeded,
-  getCouncilType,
-  isTurnInRange,
-  // setters
-  createInitialState: createInitialState2,
-  markAsRestart,
-  decreaseTurn,
-  passTurn: passTurn2,
-  increaseRerollLeft,
-  decreaseRerollLeft,
-  exhaustSage,
-  setEffectValue,
-  setEffectValueAll,
-  increaseEffectValue,
-  increaseEffectValueAll,
-  sealEffect,
-  unsealEffect,
-  addMutations
-};
 
 // src/data/council.ts
 var councils = [
@@ -8826,34 +7469,1111 @@ var councilsPerType = {
   seal: councils.filter((data2) => data2.type === "seal")
 };
 
+// src/data/effect.ts
+var effectLevelTable = {
+  0: 0,
+  1: 0,
+  2: 0,
+  3: 1,
+  4: 1,
+  5: 1,
+  6: 2,
+  7: 2,
+  8: 3,
+  9: 4,
+  10: 5
+};
+var effectOptions = [
+  {
+    id: "10001",
+    name: "\uD798",
+    optionDescriptions: [
+      "\uD798",
+      "\uD798 +864",
+      "\uD798 +1782",
+      "\uD798 +2700",
+      "\uD798 +4050",
+      "\uD798 +5400"
+    ]
+  },
+  {
+    id: "10008",
+    name: "\uC9C0\uB2A5",
+    optionDescriptions: [
+      "\uC9C0\uB2A5",
+      "\uC9C0\uB2A5 +864",
+      "\uC9C0\uB2A5 +1782",
+      "\uC9C0\uB2A5 +2700",
+      "\uC9C0\uB2A5 +4050",
+      "\uC9C0\uB2A5 +5400"
+    ]
+  },
+  {
+    id: "10020",
+    name: "\uBBFC\uCCA9",
+    optionDescriptions: [
+      "\uBBFC\uCCA9",
+      "\uBBFC\uCCA9 +864",
+      "\uBBFC\uCCA9 +1782",
+      "\uBBFC\uCCA9 +2700",
+      "\uBBFC\uCCA9 +4050",
+      "\uBBFC\uCCA9 +5400"
+    ]
+  },
+  {
+    id: "10100",
+    name: "\uACF5\uACA9\uB825",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +122",
+      "\uACF5\uACA9\uB825 +253",
+      "\uACF5\uACA9\uB825 +383",
+      "\uACF5\uACA9\uB825 +575",
+      "\uACF5\uACA9\uB825 +767"
+    ]
+  },
+  {
+    id: "10101",
+    name: "\uBB34\uAE30 \uACF5\uACA9\uB825",
+    optionDescriptions: [
+      "\uBB34\uAE30 \uACF5\uACA9\uB825",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +236",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +488",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +740",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1110",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1480"
+    ]
+  },
+  {
+    id: "10102",
+    name: "\uD0C8\uCD9C\uC758 \uB2EC\uC778",
+    optionDescriptions: [
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
+    ]
+  },
+  {
+    id: "10103",
+    name: "\uD68C\uD53C\uC758 \uB2EC\uC778",
+    optionDescriptions: [
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
+    ]
+  },
+  {
+    id: "10104",
+    name: "\uB9C8\uB098",
+    optionDescriptions: [
+      "\uCD5C\uB300 \uB9C8\uB098",
+      "\uCD5C\uB300 \uB9C8\uB098 +15",
+      "\uCD5C\uB300 \uB9C8\uB098 +32",
+      "\uCD5C\uB300 \uB9C8\uB098 +49",
+      "\uCD5C\uB300 \uB9C8\uB098 +73",
+      "\uCD5C\uB300 \uB9C8\uB098 +98"
+    ]
+  },
+  {
+    id: "10105",
+    name: "\uC0DD\uBA85\uC758 \uCD95\uBCF5",
+    optionDescriptions: [
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +6",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +12",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +19",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +29",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +39"
+    ]
+  },
+  {
+    id: "10106",
+    name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
+    optionDescriptions: [
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.46%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.95%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.45%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.17%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.9%"
+    ]
+  },
+  {
+    id: "10107",
+    name: "\uBC29\uB791\uC790",
+    optionDescriptions: [
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +0.8%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +1.65%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +2.5%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +3.75%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +5%"
+    ]
+  },
+  {
+    id: "10108",
+    name: "\uBB34\uB825\uD654",
+    optionDescriptions: [
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.38%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.79%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.2%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.8%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +2.4%"
+    ]
+  },
+  {
+    id: "10109",
+    name: "\uBB3C\uC57D \uC911\uB3C5",
+    optionDescriptions: [
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.13%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.34%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +3.55%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +5.32%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +7.1%"
+    ]
+  },
+  {
+    id: "10110",
+    name: "\uD3ED\uBC1C\uBB3C \uB2EC\uC778",
+    optionDescriptions: [
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +1.6%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +3.3%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +5%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +7.5%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +10%"
+    ]
+  },
+  {
+    id: "11000",
+    name: "\uD589\uC6B4 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11001",
+    name: "\uD68C\uC2EC (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11002",
+    name: "\uB2EC\uC778 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11003",
+    name: "\uAC15\uB9F9 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11004",
+    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11005",
+    name: "\uC120\uBD09\uB300 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11006",
+    name: "\uC120\uAC01\uC790 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "11007",
+    name: "\uC9C4\uAD70 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "11008",
+    name: "\uC2E0\uB150 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "12000",
+    name: "\uBCF4\uC2A4 \uD53C\uD574",
+    optionDescriptions: [
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.38%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.79%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.2%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.8%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +2.4%"
+    ]
+  },
+  {
+    id: "12001",
+    name: "\uAC01\uC131\uAE30 \uD53C\uD574",
+    optionDescriptions: [
+      "\uAC01\uC131\uAE30 \uD53C\uD574",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +1.2%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +2.47%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +3.75%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +5.62%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +7.5%"
+    ]
+  },
+  {
+    id: "12002",
+    name: "\uBCF4\uD638\uB9C9 \uAC15\uD654",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.67%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.38%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +2.1%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +3.15%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +4.2%"
+    ]
+  },
+  {
+    id: "12003",
+    name: "\uD68C\uBCF5 \uAC15\uD654",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +0.67%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +1.38%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +2.1%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +3.15%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +4.2%"
+    ]
+  },
+  {
+    id: "13000",
+    name: "\uCD5C\uB300 \uC0DD\uBA85\uB825",
+    optionDescriptions: [
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +2720",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +5610",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +8500",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +12750",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +17000"
+    ]
+  },
+  {
+    id: "13001",
+    name: "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
+    optionDescriptions: [
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +1.6%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +3.3%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +5%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +7.5%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +10%"
+    ]
+  },
+  {
+    id: "13002",
+    name: "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
+    optionDescriptions: [
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +960",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +1980",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +3000",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +4500",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +6000"
+    ]
+  },
+  {
+    id: "13003",
+    name: "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
+    optionDescriptions: [
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +960",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +1980",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +3000",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +4500",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +6000"
+    ]
+  },
+  {
+    id: "14000",
+    name: "\uCE58\uBA85\uD0C0 \uD53C\uD574",
+    optionDescriptions: [
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +1.12%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +2.31%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +3.5%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +5.25%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +7%"
+    ]
+  },
+  {
+    id: "14001",
+    name: "\uCD94\uAC00 \uD53C\uD574",
+    optionDescriptions: [
+      "\uCD94\uAC00 \uD53C\uD574",
+      "\uCD94\uAC00 \uD53C\uD574 +0.49%",
+      "\uCD94\uAC00 \uD53C\uD574 +1.02%",
+      "\uCD94\uAC00 \uD53C\uD574 +1.55%",
+      "\uCD94\uAC00 \uD53C\uD574 +2.32%",
+      "\uCD94\uAC00 \uD53C\uD574 +3.1%"
+    ]
+  },
+  {
+    id: "14002",
+    name: "\uC544\uC774\uB374\uD2F0\uD2F0 \uD68D\uB4DD",
+    optionDescriptions: [
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +0.64%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +1.32%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +2%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +3%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +4%"
+    ]
+  },
+  {
+    id: "14003",
+    name: "\uC544\uAD70 \uAC15\uD654",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.96%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.98%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4.5%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +6%"
+    ]
+  },
+  {
+    id: "15000",
+    name: "\uD589\uC6B4 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15001",
+    name: "\uD68C\uC2EC (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15002",
+    name: "\uB2EC\uC778 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15003",
+    name: "\uAC15\uB9F9 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uCD94\uAC00 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15004",
+    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15005",
+    name: "\uC120\uBD09\uB300 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15006",
+    name: "\uC120\uAC01\uC790 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  },
+  {
+    id: "15007",
+    name: "\uC9C4\uAD70 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  },
+  {
+    id: "15008",
+    name: "\uC2E0\uB150 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  }
+];
+var effectOptionsRecord = Object.fromEntries(effectOptions.map((item) => [item.id, item]));
+
+// src/model/mutation.ts
+function createProbMutation(index, value, remainTurn) {
+  return {
+    target: "prob",
+    index,
+    value,
+    remainTurn
+  };
+}
+function createLuckyRatioMutation(index, value, remainTurn) {
+  return {
+    target: "luckyRatio",
+    index,
+    value,
+    remainTurn
+  };
+}
+function createEnchantIncreaseAmountMutation(value) {
+  return {
+    target: "enchantIncreaseAmount",
+    index: -1,
+    value,
+    remainTurn: 1
+  };
+}
+function createEnchantEffectCountMutation(value) {
+  return {
+    target: "enchantEffectCount",
+    index: -1,
+    value,
+    remainTurn: 1
+  };
+}
+function passTurn(mutation) {
+  return {
+    ...mutation,
+    remainTurn: mutation.remainTurn - 1
+  };
+}
+var Mutation = {
+  createProbMutation,
+  createLuckyRatioMutation,
+  createEnchantIncreaseAmountMutation,
+  createEnchantEffectCountMutation,
+  passTurn
+};
+
+// src/data/const.ts
+var MAX_LAWFUL = 3;
+var MAX_CHAOS = 6;
+
+// src/model/sage.ts
+function createInitialState(index) {
+  return {
+    index,
+    type: "none",
+    power: 0,
+    isExhausted: false,
+    councilId: ""
+  };
+}
+function updatePower(sage, selectedIndex) {
+  if (sage.type === "none") {
+    if (sage.index === selectedIndex) {
+      return { ...sage, type: "lawful", power: 1 };
+    }
+    return { ...sage, type: "chaos", power: 1 };
+  }
+  if (sage.type === "lawful") {
+    if (sage.index === selectedIndex) {
+      return {
+        ...sage,
+        type: "lawful",
+        power: sage.power === MAX_LAWFUL ? 1 : sage.power + 1
+      };
+    }
+    return {
+      ...sage,
+      type: "chaos",
+      power: 1
+    };
+  }
+  if (sage.type === "chaos") {
+    if (sage.index === selectedIndex) {
+      return { ...sage, type: "lawful", power: 1 };
+    }
+    return {
+      ...sage,
+      type: "chaos",
+      power: sage.power === MAX_CHAOS ? 1 : sage.power + 1
+    };
+  }
+  throw new Error("Invalid sage type");
+}
+function exhaust(sage) {
+  return {
+    ...sage,
+    isExhausted: true
+  };
+}
+function isLawfulFull(sage) {
+  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
+}
+function isChaosFull(sage) {
+  return sage.type === "chaos" && sage.power === MAX_CHAOS;
+}
+var query = {
+  isLawfulFull,
+  isChaosFull
+};
+var Sage = {
+  updatePower,
+  exhaust,
+  createInitialState,
+  query
+};
+
+// src/model/effect.ts
+function setValue(effect, value) {
+  if (effect.isSealed && effect.value !== value) {
+    throw new Error("Effect is sealed");
+  }
+  if (value < 0) {
+    throw new Error("Effect value must be positive");
+  }
+  return {
+    ...effect,
+    value
+  };
+}
+function setOptionId(effect, optionId) {
+  if (effect.isSealed) {
+    throw new Error("Effect is sealed");
+  }
+  return {
+    ...effect,
+    optionId
+  };
+}
+function seal(effect) {
+  if (effect.isSealed) {
+    throw new Error("Effect is already sealed");
+  }
+  return {
+    ...effect,
+    isSealed: true
+  };
+}
+function unseal(effect) {
+  if (!effect.isSealed) {
+    throw new Error("Effect is already unsealed");
+  }
+  return {
+    ...effect,
+    isSealed: false
+  };
+}
+function isMutable(effect, maxEnchant) {
+  return effect.isSealed === false && effect.value < maxEnchant;
+}
+function getLevel(effect) {
+  const value = effect.value;
+  if (value < 0 || value > 10) {
+    throw new Error(`Invalid effect value: ${value}`);
+  }
+  return effectLevelTable[value];
+}
+function getEffectOptionById(id) {
+  const option = effectOptionsRecord[id];
+  if (!option) {
+    throw new Error(`Invalid effect option id: ${id}`);
+  }
+  return option;
+}
+function getEffectOptionNameById(id) {
+  return getEffectOptionById(id).name;
+}
+function getEffectOptionDescriptionByIdAndLevel(id, level) {
+  const option = getEffectOptionById(id);
+  return option.optionDescriptions[level];
+}
+var query2 = {
+  isMutable,
+  getLevel,
+  getEffectOptionById,
+  getEffectOptionNameById,
+  getEffectOptionDescriptionByIdAndLevel
+};
+var Effect = {
+  setValue,
+  setOptionId,
+  seal,
+  unseal,
+  query: query2
+};
+
+// src/util/clamp.ts
+function clamp(value, max) {
+  return Math.min(Math.max(value, 0), max);
+}
+
+// src/util/cycle.ts
+function cycle(n, mod, direction) {
+  if (direction === 0) {
+    return (n + mod - 1) % mod;
+  } else {
+    return (n + 1) % mod;
+  }
+}
+
+// src/model/game.ts
+function createInitialState2(config) {
+  return {
+    config,
+    phase: "council",
+    turnLeft: config.totalTurn,
+    turnPassed: 0,
+    rerollLeft: 2,
+    effects: [
+      {
+        optionId: "12000",
+        index: 0,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10101",
+        index: 1,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10001",
+        index: 2,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10106",
+        index: 3,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10108",
+        index: 4,
+        value: 0,
+        isSealed: false
+      }
+    ],
+    mutations: [],
+    sages: [
+      Sage.createInitialState(0),
+      Sage.createInitialState(1),
+      Sage.createInitialState(2)
+    ]
+  };
+}
+function markAsRestart(state) {
+  return {
+    ...state,
+    phase: "restart"
+  };
+}
+function decreaseTurn(state, amount) {
+  if (state.turnLeft <= 0) {
+    throw new Error("No turn left");
+  }
+  return {
+    ...state,
+    turnLeft: state.turnLeft - amount
+  };
+}
+function passTurn2(state, selectedSageIndex) {
+  if (state.phase !== "enchant") {
+    throw new Error("Invalid phase");
+  }
+  if (state.turnLeft <= 0) {
+    throw new Error("No turn left");
+  }
+  const nextPhase = state.turnLeft === 1 ? "done" : "council";
+  return {
+    ...state,
+    phase: nextPhase,
+    turnLeft: state.turnLeft - 1,
+    turnPassed: state.turnPassed + 1,
+    mutations: state.mutations.map(Mutation.passTurn).filter((mutation) => mutation.remainTurn > 0),
+    sages: state.sages.map((sage) => Sage.updatePower(sage, selectedSageIndex))
+  };
+}
+function increaseRerollLeft(state, amount) {
+  return {
+    ...state,
+    rerollLeft: state.rerollLeft + amount
+  };
+}
+function decreaseRerollLeft(state) {
+  if (state.rerollLeft <= 0) {
+    throw new Error("No reroll left");
+  }
+  return {
+    ...state,
+    rerollLeft: state.rerollLeft - 1
+  };
+}
+function exhaustSage(state, sageIndex) {
+  return {
+    ...state,
+    sages: state.sages.map(
+      (sage, index) => index === sageIndex ? Sage.exhaust(sage) : sage
+    )
+  };
+}
+function setEffectValue(state, effectIndex, value) {
+  const clampedValue = clamp(value, state.config.maxEnchant);
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? Effect.setValue(effect, clampedValue) : effect
+    )
+  };
+}
+function setEffectValueAll(state, values) {
+  const clampedValues = values.map(
+    (value) => clamp(value, state.config.maxEnchant)
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => Effect.setValue(effect, clampedValues[index])
+    )
+  };
+}
+function increaseEffectValue(state, effectIndex, diff) {
+  const clampedValue = clamp(
+    getEffectValue(state, effectIndex) + diff,
+    state.config.maxEnchant
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? Effect.setValue(effect, clampedValue) : effect
+    )
+  };
+}
+function increaseEffectValueAll(state, diffs) {
+  const clampedValues = diffs.map(
+    (diff, index) => clamp(getEffectValue(state, index) + diff, state.config.maxEnchant)
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => Effect.setValue(effect, clampedValues[index])
+    )
+  };
+}
+function sealEffect(state, effectIndex) {
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? Effect.seal(effect) : effect
+    )
+  };
+}
+function unsealEffect(state, effectIndex) {
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? Effect.unseal(effect) : effect
+    )
+  };
+}
+function addMutations(state, mutations) {
+  return {
+    ...state,
+    mutations: [...state.mutations, ...mutations]
+  };
+}
+function isEffectMutable(state, effectIndex) {
+  return Effect.query.isMutable(
+    state.effects[effectIndex],
+    state.config.maxEnchant
+  );
+}
+function isEffectSealed(state, effectIndex) {
+  return state.effects[effectIndex].isSealed;
+}
+function getEffectValue(state, effectIndex) {
+  return state.effects[effectIndex].value;
+}
+function checkSealNeeded(state) {
+  const sealedEffectCount = state.effects.filter(
+    (effect) => effect.isSealed
+  ).length;
+  const toSeal = 3 - sealedEffectCount;
+  return state.turnLeft <= toSeal;
+}
+function getCouncilType(state, sageIndex) {
+  const sage = state.sages[sageIndex];
+  const isSealNeeded = checkSealNeeded(state);
+  if (sage.isExhausted) {
+    return "exhausted";
+  }
+  if (Sage.query.isLawfulFull(sage)) {
+    if (isSealNeeded) {
+      return "lawfulSeal";
+    }
+    return "lawful";
+  }
+  if (Sage.query.isChaosFull(sage)) {
+    if (isSealNeeded) {
+      return "chaosSeal";
+    }
+    return "chaos";
+  }
+  if (isSealNeeded) {
+    return "seal";
+  }
+  return "common";
+}
+function isTurnInRange(state, [min, max]) {
+  if (min === 0) {
+    return true;
+  }
+  const turn = state.config.totalTurn - state.turnLeft + 1;
+  return turn >= min && turn < max;
+}
+function getCouncilDescription(state, sageIndex) {
+  const id = state.sages[sageIndex].councilId;
+  const council = Council.query.getOne(id);
+  if (!council) {
+    throw new Error("Invalid council id");
+  }
+  const effectNames = state.effects.map(
+    (eff) => Effect.query.getEffectOptionNameById(eff.optionId)
+  );
+  return council.descriptions[sageIndex].replaceAll("{0}", effectNames[0]).replaceAll("{1}", effectNames[1]).replaceAll("{2}", effectNames[2]).replaceAll("{3}", effectNames[3]).replaceAll("{4}", effectNames[4]);
+}
+function getPickRatios(state) {
+  const mutableCount = [0, 1, 2, 3, 4].filter(
+    (index) => isEffectMutable(state, index)
+  ).length;
+  const pickRatios = Array.from(
+    { length: 5 },
+    (_, i) => isEffectMutable(state, i) ? 1 / mutableCount : 0
+  );
+  if (mutableCount === 1) {
+    return pickRatios;
+  }
+  const probMutations = state.mutations.filter(
+    (mutation) => mutation.target === "prob"
+  );
+  for (const mutation of probMutations) {
+    if (!isEffectMutable(state, mutation.index)) {
+      continue;
+    }
+    const targetProb = pickRatios[mutation.index];
+    const updatedProb = Math.max(Math.min(targetProb + mutation.value, 1), 0);
+    const actualDiff = updatedProb - targetProb;
+    for (let i = 0; i < 5; i += 1) {
+      if (i === mutation.index) {
+        pickRatios[i] = updatedProb;
+      } else {
+        pickRatios[i] = pickRatios[i] * (1 - actualDiff / (1 - targetProb));
+      }
+    }
+  }
+  return pickRatios;
+}
+function getLuckyRatios(state) {
+  const luckyRatios = Array.from({ length: 5 }, () => 0.1);
+  const luckyRatioMutations = state.mutations.filter(
+    (mutation) => mutation.target === "luckyRatio"
+  );
+  for (const mutation of luckyRatioMutations) {
+    luckyRatios[mutation.index] = Math.max(
+      Math.min(luckyRatios[mutation.index] + mutation.value, 1),
+      0
+    );
+  }
+  return luckyRatios;
+}
+function getEnchantEffectCount(state) {
+  return state.mutations.find((mutation) => mutation.target === "enchantEffectCount")?.value ?? 1;
+}
+function getEnchantIncreaseAmount(state) {
+  return state.mutations.find(
+    (mutation) => mutation.target === "enchantIncreaseAmount"
+  )?.value ?? 1;
+}
+var query3 = {
+  isEffectMutable,
+  isEffectSealed,
+  getEffectValue,
+  checkSealNeeded,
+  getCouncilType,
+  isTurnInRange,
+  getCouncilDescription,
+  getPickRatios,
+  getLuckyRatios,
+  getEnchantEffectCount,
+  getEnchantIncreaseAmount
+};
+var GameState = {
+  query: query3,
+  createInitialState: createInitialState2,
+  markAsRestart,
+  decreaseTurn,
+  passTurn: passTurn2,
+  increaseRerollLeft,
+  decreaseRerollLeft,
+  exhaustSage,
+  setEffectValue,
+  setEffectValueAll,
+  increaseEffectValue,
+  increaseEffectValueAll,
+  sealEffect,
+  unsealEffect,
+  addMutations
+};
+
+// src/model/council.ts
+function isCouncilAvailable(state, council, sageIndex, pickedCouncils) {
+  if (!GameState.query.isTurnInRange(state, council.range)) {
+    return false;
+  }
+  if (pickedCouncils.includes(council.id)) {
+    return false;
+  }
+  if (council.slotType === 3) {
+    return true;
+  }
+  return council.slotType === sageIndex;
+}
+function getOne(id) {
+  const council = councilRecord[id];
+  if (!council) {
+    throw new Error("Invalid council id");
+  }
+  return council;
+}
+function getLogics(id) {
+  return getOne(id).logics;
+}
+var query4 = {
+  isCouncilAvailable,
+  getOne,
+  getLogics
+};
+var Council = {
+  query: query4
+};
+
 // src/service/council.ts
 function createCouncilService(chance2, logicGuardService2) {
-  function isCouncilAvailable(state, council, sageIndex, pickedCouncils) {
-    if (!game_default.isTurnInRange(state, council.range)) {
-      return false;
-    }
-    if (pickedCouncils.includes(council.id)) {
-      return false;
-    }
-    if (council.slotType === 3) {
-      return true;
-    }
-    return council.slotType === sageIndex;
-  }
-  function getOne(id) {
-    const council = councilRecord[id];
-    if (!council) {
-      throw new Error("Invalid council id");
-    }
-    return council;
-  }
-  function getLogics(id) {
-    return getOne(id).logics;
-  }
   function pick(state, sageIndex, pickedCouncils) {
-    const councilType = game_default.getCouncilType(state, sageIndex);
+    const councilType = GameState.query.getCouncilType(state, sageIndex);
     const availableCouncils = councilsPerType[councilType].filter(
-      (data2) => isCouncilAvailable(state, data2, sageIndex, pickedCouncils)
+      (data2) => Council.query.isCouncilAvailable(state, data2, sageIndex, pickedCouncils)
     );
     if (availableCouncils.length === 0) {
       throw new Error("No council available");
@@ -8877,9 +8597,7 @@ function createCouncilService(chance2, logicGuardService2) {
     return selected.id;
   }
   return {
-    pick,
-    getOne,
-    getLogics
+    pick
   };
 }
 
@@ -8911,8 +8629,8 @@ function createEffectService(chance2) {
   }
   function getEffectOptionCurrentDescription(state, index) {
     const eff = state.effects[index];
-    const option = effect_default.getEffectOptionById(eff.optionId);
-    const level = effect_default.getLevel(eff);
+    const option = Effect.query.getEffectOptionById(eff.optionId);
+    const level = Effect.query.getLevel(eff);
     return option.optionDescriptions[level];
   }
   return {
@@ -8924,9 +8642,9 @@ function createEffectService(chance2) {
 }
 
 // src/service/game.ts
-function createGameService(chance2, sageService2, councilService2, logicService2, targetService2, mutationService2) {
+function createGameService(chance2, sageService2, logicService2, targetService2) {
   function getInitialGameState(config) {
-    const state = game_default.createInitialState(config);
+    const state = GameState.createInitialState(config);
     return sageService2.updateCouncils(state);
   }
   function isEffectSelectionRequired(state, ui) {
@@ -8934,12 +8652,12 @@ function createGameService(chance2, sageService2, councilService2, logicService2
       return false;
     }
     const sage = state.sages[ui.selectedSageIndex];
-    const logics = councilService2.getLogics(sage.councilId);
+    const logics = Council.query.getLogics(sage.councilId);
     return logics.some((logic) => logic.targetType === "userSelect");
   }
   function getEffectLevel(state, index) {
     const effect = state.effects[index];
-    return effect_default.getLevel(effect);
+    return Effect.query.getLevel(effect);
   }
   function getSelectableSages(state) {
     return state.sages.map((sage, index) => ({ sage, index })).filter(({ sage }) => !sage.isExhausted).map(({ index }) => index);
@@ -8955,7 +8673,7 @@ function createGameService(chance2, sageService2, councilService2, logicService2
       throw new Error("Effect is not selected");
     }
     const sage = state.sages[ui.selectedSageIndex];
-    const logics = councilService2.getLogics(sage.councilId);
+    const logics = Council.query.getLogics(sage.councilId);
     const counciledState = logics.reduce(
       (acc, logic) => logicService2.runLogic(
         acc,
@@ -8974,10 +8692,10 @@ function createGameService(chance2, sageService2, councilService2, logicService2
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
-    const enchantEffectCount = mutationService2.queryEnchantEffectCount(state);
-    const enchantIncreaseAmount = mutationService2.queryEnchantIncreaseAmount(state);
-    const luckyRatios = mutationService2.queryLuckyRatios(state);
-    const pickRatios = mutationService2.queryPickRatios(state);
+    const enchantEffectCount = GameState.query.getEnchantEffectCount(state);
+    const enchantIncreaseAmount = GameState.query.getEnchantIncreaseAmount(state);
+    const luckyRatios = GameState.query.getLuckyRatios(state);
+    const pickRatios = GameState.query.getPickRatios(state);
     let nextState = state;
     for (let i = 0; i < enchantEffectCount; i += 1) {
       if (pickRatios.every((ratio) => ratio === 0)) {
@@ -8987,13 +8705,13 @@ function createGameService(chance2, sageService2, councilService2, logicService2
       pickRatios[selectedEffectIndex] = 0;
       const luckyRatio = luckyRatios[selectedEffectIndex];
       const isLucky = chance2.bool({ likelihood: luckyRatio * 100 });
-      state = game_default.increaseEffectValue(
+      state = GameState.increaseEffectValue(
         nextState,
         selectedEffectIndex,
         enchantIncreaseAmount + (isLucky ? 1 : 0)
       );
     }
-    nextState = game_default.passTurn(state, ui.selectedSageIndex);
+    nextState = GameState.passTurn(state, ui.selectedSageIndex);
     if (nextState.phase === "done") {
       return nextState;
     }
@@ -9003,7 +8721,7 @@ function createGameService(chance2, sageService2, councilService2, logicService2
     if (state.rerollLeft <= 0) {
       throw new Error("No reroll left");
     }
-    return sageService2.updateCouncils(game_default.decreaseRerollLeft(state));
+    return sageService2.updateCouncils(GameState.decreaseRerollLeft(state));
   }
   return {
     getInitialGameState,
@@ -9021,29 +8739,29 @@ function createGameService(chance2, sageService2, councilService2, logicService2
 function createLogicService(chance2, effectService2) {
   function mutateProb(state, logic, targets) {
     const mutations = targets.map(
-      (index) => mutation_default.createProbMutation(
+      (index) => Mutation.createProbMutation(
         index,
         logic.value[0] / 1e4,
         logic.remainTurn
       )
     );
-    return game_default.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
   function mutateLuckyRatio(state, logic, targets) {
     const mutations = targets.map(
-      (index) => mutation_default.createLuckyRatioMutation(
+      (index) => Mutation.createLuckyRatioMutation(
         index,
         logic.value[0] / 1e4,
         logic.remainTurn
       )
     );
-    return game_default.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
   function increaseTargetWithRatio(state, logic, targets) {
     return targets.reduce((acc, index) => {
       const isSuccess = chance2.bool({ likelihood: logic.ratio / 100 });
       if (isSuccess) {
-        return game_default.increaseEffectValue(acc, index, logic.value[0]);
+        return GameState.increaseEffectValue(acc, index, logic.value[0]);
       }
       return acc;
     }, state);
@@ -9054,44 +8772,44 @@ function createLogicService(chance2, effectService2) {
         min: logic.value[0],
         max: logic.value[1]
       });
-      return game_default.increaseEffectValue(acc, index, diff);
+      return GameState.increaseEffectValue(acc, index, diff);
     }, state);
   }
   function decreaseTurnLeft(state, logic, targets) {
-    return game_default.decreaseTurn(state, logic.value[0]);
+    return GameState.decreaseTurn(state, logic.value[0]);
   }
   function shuffleAll(state, logic, targets) {
     const beforeShuffle = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const afterShuffle = chance2.shuffle(beforeShuffle);
     return beforeShuffle.reduce(
-      (acc, index, i) => game_default.setEffectValue(
+      (acc, index, i) => GameState.setEffectValue(
         acc,
         index,
-        game_default.getEffectValue(state, afterShuffle[i])
+        GameState.query.getEffectValue(state, afterShuffle[i])
       ),
       state
     );
   }
   function setEnchantTargetAndAmount(state, logic, targets) {
     const mutations = targets.flatMap((index) => [
-      mutation_default.createProbMutation(index, 1, logic.remainTurn),
-      mutation_default.createEnchantIncreaseAmountMutation(logic.value[0])
+      Mutation.createProbMutation(index, 1, logic.remainTurn),
+      Mutation.createEnchantIncreaseAmountMutation(logic.value[0])
     ]);
-    return game_default.addMutations(state, mutations);
+    return GameState.addMutations(state, mutations);
   }
   function unsealAndSealOther(state, logic, targets) {
     const sealedIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => game_default.isEffectSealed(state, index)
+      (index) => GameState.query.isEffectSealed(state, index)
     );
     const unsealedIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const sealedIndex = chance2.pickone(sealedIndexes);
     const unsealedIndex = chance2.pickone(unsealedIndexes);
-    return game_default.sealEffect(
-      game_default.unsealEffect(state, sealedIndex),
+    return GameState.sealEffect(
+      GameState.unsealEffect(state, sealedIndex),
       unsealedIndex
     );
   }
@@ -9099,25 +8817,28 @@ function createLogicService(chance2, effectService2) {
     return state;
   }
   function sealTarget(state, logic, targets) {
-    return targets.reduce((acc, index) => game_default.sealEffect(acc, index), state);
+    return targets.reduce(
+      (acc, index) => GameState.sealEffect(acc, index),
+      state
+    );
   }
   function increaseReroll(state, logic, targets) {
-    return game_default.increaseRerollLeft(state, logic.value[0]);
+    return GameState.increaseRerollLeft(state, logic.value[0]);
   }
   function decreasePrice(state, logic, targets) {
     return state;
   }
   function restart(state, logic, targets) {
-    return game_default.markAsRestart(state);
+    return GameState.markAsRestart(state);
   }
   function setEnchantIncreaseAmount(state, logic, targets) {
-    return game_default.addMutations(state, [
-      mutation_default.createEnchantIncreaseAmountMutation(logic.value[0])
+    return GameState.addMutations(state, [
+      Mutation.createEnchantIncreaseAmountMutation(logic.value[0])
     ]);
   }
   function setEnchantEffectCount(state, logic, targets) {
-    return game_default.addMutations(state, [
-      mutation_default.createEnchantEffectCountMutation(logic.value[0])
+    return GameState.addMutations(state, [
+      Mutation.createEnchantEffectCountMutation(logic.value[0])
     ]);
   }
   function setValueRanged(state, logic, targets) {
@@ -9126,60 +8847,60 @@ function createLogicService(chance2, effectService2) {
         min: logic.value[0],
         max: logic.value[1]
       });
-      return game_default.setEffectValue(acc, index, value);
+      return GameState.setEffectValue(acc, index, value);
     }, state);
   }
   function redistributeAll(state, logic, targets) {
     const totalValue = state.effects.filter((eff) => !eff.isSealed).reduce((acc, eff) => acc + eff.value, 0);
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const values = [0, 1, 2, 3, 4].map(
-      (index) => game_default.isEffectSealed(state, index) ? game_default.getEffectValue(state, index) : 0
+      (index) => GameState.query.isEffectSealed(state, index) ? GameState.query.getEffectValue(state, index) : 0
     );
     for (let i = 0; i < totalValue; i++) {
       const index = chance2.pickone(availableIndexes);
       values[index]++;
     }
-    return game_default.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
   function redistributeSelectedToOthers(state, logic, targets) {
     const target = targets[0];
-    const selectedValue = game_default.getEffectValue(state, target);
+    const selectedValue = GameState.query.getEffectValue(state, target);
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index) && index !== target
+      (index) => !GameState.query.isEffectSealed(state, index) && index !== target
     );
     const values = [0, 1, 2, 3, 4].map(
-      (index) => index !== target ? game_default.getEffectValue(state, index) : 0
+      (index) => index !== target ? GameState.query.getEffectValue(state, index) : 0
     );
     for (let i = 0; i < selectedValue; i++) {
       const index = chance2.pickone(availableIndexes);
       values[index]++;
     }
-    return game_default.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
   function shiftAll(state, logic, targets) {
     const values = state.effects.map((eff) => eff.value);
     const direction = logic.value[0];
     const shiftedValues = [];
     for (let i = 0; i < 5; i++) {
-      if (game_default.isEffectSealed(state, i)) {
+      if (GameState.query.isEffectSealed(state, i)) {
         shiftedValues[i] = values[i];
       }
       let j = i;
       do {
         j = cycle(j, 5, direction);
-      } while (game_default.isEffectSealed(state, j));
+      } while (GameState.query.isEffectSealed(state, j));
       shiftedValues[j] = values[i];
     }
-    return game_default.setEffectValueAll(state, shiftedValues);
+    return GameState.setEffectValueAll(state, shiftedValues);
   }
   function swapValues(state, logic, targets) {
     const [target1, target2] = logic.value;
-    const value1 = game_default.getEffectValue(state, target1);
-    const value2 = game_default.getEffectValue(state, target2);
-    return game_default.setEffectValue(
-      game_default.setEffectValue(state, target1, value2),
+    const value1 = GameState.query.getEffectValue(state, target1);
+    const value2 = GameState.query.getEffectValue(state, target2);
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, target1, value2),
       target2,
       value1
     );
@@ -9187,37 +8908,37 @@ function createLogicService(chance2, effectService2) {
   function swapMinMax(state, logic, targets) {
     const [max, pickedMax] = effectService2.pickMaxValueIndex(state.effects);
     const [min, pickedMin] = effectService2.pickMinValueIndex(state.effects);
-    return game_default.setEffectValue(
-      game_default.setEffectValue(state, pickedMax, min),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, pickedMax, min),
       pickedMin,
       max
     );
   }
   function exhaust2(state, logic, targets) {
     const sageIndex = logic.value[0] - 1;
-    return game_default.exhaustSage(state, sageIndex);
+    return GameState.exhaustSage(state, sageIndex);
   }
   function increaseMaxAndDecreaseTarget(state, logic, targets) {
     const [_, pickedMax] = effectService2.pickMaxValueIndex(state.effects);
-    const increasedState = game_default.increaseEffectValue(
+    const increasedState = GameState.increaseEffectValue(
       state,
       pickedMax,
       logic.value[0]
     );
     return targets.reduce(
-      (acc, index) => game_default.increaseEffectValue(acc, index, logic.value[1]),
+      (acc, index) => GameState.increaseEffectValue(acc, index, logic.value[1]),
       increasedState
     );
   }
   function increaseMinAndDecreaseTarget(state, logic, targets) {
     const [_, pickedMin] = effectService2.pickMinValueIndex(state.effects);
-    const increasedState = game_default.increaseEffectValue(
+    const increasedState = GameState.increaseEffectValue(
       state,
       pickedMin,
       logic.value[0]
     );
     return targets.reduce(
-      (acc, index) => game_default.increaseEffectValue(acc, index, logic.value[1]),
+      (acc, index) => GameState.increaseEffectValue(acc, index, logic.value[1]),
       increasedState
     );
   }
@@ -9226,48 +8947,48 @@ function createLogicService(chance2, effectService2) {
       state.effects
     );
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index) && index !== pickedMin
+      (index) => !GameState.query.isEffectSealed(state, index) && index !== pickedMin
     );
     const values = [0, 1, 2, 3, 4].map(
-      (index) => index !== pickedMin ? game_default.getEffectValue(state, index) : 0
+      (index) => index !== pickedMin ? GameState.query.getEffectValue(state, index) : 0
     );
     for (let i = 0; i < minValue; i++) {
       const index = chance2.pickone(availableIndexes);
       values[index]++;
     }
-    return game_default.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
   function redistributeMaxToOthers(state, logic, targets) {
     const [maxValue, pickedMax] = effectService2.pickMaxValueIndex(
       state.effects
     );
     const availableIndexes = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index) && index !== pickedMax
+      (index) => !GameState.query.isEffectSealed(state, index) && index !== pickedMax
     );
     const values = [0, 1, 2, 3, 4].map(
-      (index) => index !== pickedMax ? game_default.getEffectValue(state, index) : 0
+      (index) => index !== pickedMax ? GameState.query.getEffectValue(state, index) : 0
     );
     for (let i = 0; i < maxValue; i++) {
       const index = chance2.pickone(availableIndexes);
       values[index]++;
     }
-    return game_default.setEffectValueAll(state, values);
+    return GameState.setEffectValueAll(state, values);
   }
   function decreaseMaxAndSwapMinMax(state, logic, targets) {
     const [max, pickedMax] = effectService2.pickMaxValueIndex(state.effects);
     const [min, pickedMin] = effectService2.pickMinValueIndex(state.effects);
-    return game_default.setEffectValue(
-      game_default.setEffectValue(state, pickedMax, min),
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, pickedMax, min),
       pickedMin,
       max - 1
     );
   }
   function decreaseFirstTargetAndSwap(state, logic, targets) {
     const [target1, target2] = logic.value;
-    const value1 = game_default.getEffectValue(state, target1);
-    const value2 = game_default.getEffectValue(state, target2);
-    return game_default.setEffectValue(
-      game_default.setEffectValue(state, target1, value2),
+    const value1 = GameState.query.getEffectValue(state, target1);
+    const value2 = GameState.query.getEffectValue(state, target2);
+    return GameState.setEffectValue(
+      GameState.setEffectValue(state, target1, value2),
       target2,
       value1 - 1
     );
@@ -9314,25 +9035,25 @@ function createLogicService(chance2, effectService2) {
 function createLogicGuardService() {
   function mutateProb(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
   function mutateLuckyRatio(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
   function increaseTargetWithRatio(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
   function increaseTargetRanged(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -9344,7 +9065,7 @@ function createLogicGuardService() {
   }
   function setEnchantTargetAndAmount(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -9377,12 +9098,12 @@ function createLogicGuardService() {
     return true;
   }
   function setEnchantEffectCount(state, logic) {
-    return state.effects.filter((_, i) => game_default.isEffectMutable(state, i)).length >= logic.value[0];
+    return state.effects.filter((_, i) => GameState.query.isEffectMutable(state, i)).length >= logic.value[0];
   }
   function setValueRanged(state, logic) {
     if (logic.targetType === "proposed") {
       const index = logic.targetCondition - 1;
-      const isMutable2 = game_default.isEffectMutable(state, index);
+      const isMutable2 = GameState.query.isEffectMutable(state, index);
       const isLowerThanMax = state.effects[index].value < logic.value[1];
       return isMutable2 && isLowerThanMax;
     }
@@ -9398,7 +9119,7 @@ function createLogicGuardService() {
     return true;
   }
   function swapValues(state, logic) {
-    return game_default.isEffectMutable(state, logic.value[0]) && game_default.isEffectMutable(state, logic.value[1]);
+    return GameState.query.isEffectMutable(state, logic.value[0]) && GameState.query.isEffectMutable(state, logic.value[1]);
   }
   function swapMinMax(state, logic) {
     return true;
@@ -9408,13 +9129,13 @@ function createLogicGuardService() {
   }
   function increaseMaxAndDecreaseTarget(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
   function increaseMinAndDecreaseTarget(state, logic) {
     if (logic.targetType === "proposed") {
-      return game_default.isEffectMutable(state, logic.targetCondition - 1);
+      return GameState.query.isEffectMutable(state, logic.targetCondition - 1);
     }
     return true;
   }
@@ -9428,7 +9149,7 @@ function createLogicGuardService() {
     return true;
   }
   function decreaseFirstTargetAndSwap(state, logic) {
-    return game_default.isEffectMutable(state, logic.value[0]) && game_default.isEffectMutable(state, logic.value[1]);
+    return GameState.query.isEffectMutable(state, logic.value[0]) && GameState.query.isEffectMutable(state, logic.value[1]);
   }
   const logicGuards = {
     mutateProb,
@@ -9468,79 +9189,12 @@ function createLogicGuardService() {
   };
 }
 
-// src/service/mutation.ts
-function createMutationService() {
-  function queryPickRatios(state) {
-    const mutableCount = [0, 1, 2, 3, 4].filter(
-      (index) => game_default.isEffectMutable(state, index)
-    ).length;
-    const pickRatios = Array.from(
-      { length: 5 },
-      (_, i) => game_default.isEffectMutable(state, i) ? 1 / mutableCount : 0
-    );
-    if (mutableCount === 1) {
-      return pickRatios;
-    }
-    const probMutations = state.mutations.filter(
-      (mutation) => mutation.target === "prob"
-    );
-    for (const mutation of probMutations) {
-      if (!game_default.isEffectMutable(state, mutation.index)) {
-        continue;
-      }
-      const targetProb = pickRatios[mutation.index];
-      const updatedProb = Math.max(Math.min(targetProb + mutation.value, 1), 0);
-      const actualDiff = updatedProb - targetProb;
-      for (let i = 0; i < 5; i += 1) {
-        if (i === mutation.index) {
-          pickRatios[i] = updatedProb;
-        } else {
-          pickRatios[i] = pickRatios[i] * (1 - actualDiff / (1 - targetProb));
-        }
-      }
-    }
-    return pickRatios;
-  }
-  function queryLuckyRatios(state) {
-    const luckyRatios = Array.from({ length: 5 }, () => 0.1);
-    const luckyRatioMutations = state.mutations.filter(
-      (mutation) => mutation.target === "luckyRatio"
-    );
-    for (const mutation of luckyRatioMutations) {
-      luckyRatios[mutation.index] = Math.max(
-        Math.min(luckyRatios[mutation.index] + mutation.value, 1),
-        0
-      );
-    }
-    return luckyRatios;
-  }
-  function queryEnchantEffectCount(state) {
-    return state.mutations.find(
-      (mutation) => mutation.target === "enchantEffectCount"
-    )?.value ?? 1;
-  }
-  function queryEnchantIncreaseAmount(state) {
-    return state.mutations.find(
-      (mutation) => mutation.target === "enchantIncreaseAmount"
-    )?.value ?? 1;
-  }
-  return {
-    queryPickRatios,
-    queryLuckyRatios,
-    queryEnchantEffectCount,
-    queryEnchantIncreaseAmount
-  };
-}
-
 // src/service/rng.ts
 var import_chance = require("chance");
 function createRngService() {
-  let chance2 = new import_chance.Chance();
+  let chance2 = new import_chance.Chance(123);
   function setSeed(seed) {
     chance2 = new import_chance.Chance(seed);
-  }
-  function getSeed() {
-    return chance2.seed;
   }
   function bool(opts) {
     if (opts?.likelihood === 1e4) {
@@ -9568,7 +9222,6 @@ function createRngService() {
   }
   return {
     setSeed,
-    getSeed,
     bool,
     pickone,
     pickset,
@@ -9602,20 +9255,8 @@ function createSageService(councilService2) {
       ]
     };
   }
-  function getDescription(state, sageIndex) {
-    const id = state.sages[sageIndex].councilId;
-    const council = councilService2.getOne(id);
-    if (!council) {
-      throw new Error("Invalid council id");
-    }
-    const effectNames = state.effects.map(
-      (eff) => effect_default.getEffectOptionNameById(eff.optionId)
-    );
-    return council.descriptions[sageIndex].replaceAll("{0}", effectNames[0]).replaceAll("{1}", effectNames[1]).replaceAll("{2}", effectNames[2]).replaceAll("{3}", effectNames[3]).replaceAll("{4}", effectNames[4]);
-  }
   return {
-    updateCouncils,
-    getDescription
+    updateCouncils
   };
 }
 
@@ -9626,7 +9267,7 @@ function createTargetService(chance2) {
   }
   function random(state, ui, logic) {
     const available = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     return chance2.pickset(available, logic.targetCount);
   }
@@ -9635,7 +9276,7 @@ function createTargetService(chance2) {
   }
   function minValue(state, ui, logic) {
     const available = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const minValue2 = Math.min(
       ...available.map((index) => state.effects[index].value)
@@ -9647,7 +9288,7 @@ function createTargetService(chance2) {
   }
   function maxValue(state, ui, logic) {
     const available = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     const maxValue2 = Math.max(
       ...available.map((index) => state.effects[index].value)
@@ -9665,17 +9306,21 @@ function createTargetService(chance2) {
   }
   function lteValue(state, ui, logic) {
     const available = [0, 1, 2, 3, 4].filter(
-      (index) => !game_default.isEffectSealed(state, index)
+      (index) => !GameState.query.isEffectSealed(state, index)
     );
     return available.filter(
       (index) => state.effects[index].value <= logic.targetCondition
     );
   }
   function oneThreeFive(state) {
-    return [0, 2, 4].filter((index) => !game_default.isEffectSealed(state, index));
+    return [0, 2, 4].filter(
+      (index) => !GameState.query.isEffectSealed(state, index)
+    );
   }
   function twoFour(state) {
-    return [1, 3].filter((index) => !game_default.isEffectSealed(state, index));
+    return [1, 3].filter(
+      (index) => !GameState.query.isEffectSealed(state, index)
+    );
   }
   const targetFns = {
     none,
@@ -9699,7 +9344,6 @@ function createTargetService(chance2) {
 // src/api.ts
 var chance = createRngService();
 var logicGuardService = createLogicGuardService();
-var mutationService = createMutationService();
 var effectService = createEffectService(chance);
 var targetService = createTargetService(chance);
 var logicService = createLogicService(chance, effectService);
@@ -9708,18 +9352,21 @@ var sageService = createSageService(councilService);
 var gameService = createGameService(
   chance,
   sageService,
-  councilService,
   logicService,
-  targetService,
-  mutationService
+  targetService
 );
+var query5 = {
+  council: Council.query,
+  effect: Effect.query,
+  game: GameState.query,
+  sage: Sage.query
+};
 var api = {
   game: gameService,
   sage: sageService,
   council: councilService,
   logic: logicService,
   target: targetService,
-  mutation: mutationService,
   effect: effectService,
   rng: chance
 };
@@ -9768,8 +9415,5 @@ function benchmark({
   api,
   benchmark,
   data,
-  effect,
-  game,
-  mutation,
-  sage
+  query
 });

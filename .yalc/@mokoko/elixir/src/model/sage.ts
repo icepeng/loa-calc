@@ -2,7 +2,7 @@ import { MAX_CHAOS, MAX_LAWFUL } from "../data/const";
 
 export type SageType = "none" | "lawful" | "chaos";
 
-export interface SageState {
+export interface Sage {
   index: 0 | 1 | 2;
   type: SageType;
   power: number;
@@ -10,17 +10,19 @@ export interface SageState {
   councilId: string;
 }
 
-// getters
-function isLawfulFull(sage: SageState) {
-  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
+// constructors
+function createInitialState(index: 0 | 1 | 2): Sage {
+  return {
+    index,
+    type: "none",
+    power: 0,
+    isExhausted: false,
+    councilId: "",
+  };
 }
 
-function isChaosFull(sage: SageState) {
-  return sage.type === "chaos" && sage.power === MAX_CHAOS;
-}
-
-// setters
-function updatePower(sage: SageState, selectedIndex: number): SageState {
+// reducers
+function updatePower(sage: Sage, selectedIndex: number): Sage {
   if (sage.type === "none") {
     if (sage.index === selectedIndex) {
       return { ...sage, type: "lawful", power: 1 };
@@ -59,27 +61,30 @@ function updatePower(sage: SageState, selectedIndex: number): SageState {
   throw new Error("Invalid sage type");
 }
 
-function exhaust(sage: SageState): SageState {
+function exhaust(sage: Sage): Sage {
   return {
     ...sage,
     isExhausted: true,
   };
 }
 
-function createInitialState(index: 0 | 1 | 2): SageState {
-  return {
-    index,
-    type: "none",
-    power: 0,
-    isExhausted: false,
-    councilId: "",
-  };
+// queries
+function isLawfulFull(sage: Sage) {
+  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
 }
 
-export default {
+function isChaosFull(sage: Sage) {
+  return sage.type === "chaos" && sage.power === MAX_CHAOS;
+}
+
+const query = {
   isLawfulFull,
   isChaosFull,
+};
+
+export const Sage = {
   updatePower,
   exhaust,
   createInitialState,
+  query,
 };

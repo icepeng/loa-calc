@@ -1,5 +1,5 @@
 import { councils } from "./data/council";
-import { effectLevelTable } from "./data/effect";
+import { effectLevelTable, effectOptions } from "./data/effect";
 import { createCouncilService } from "./service/council";
 import { createEffectService } from "./service/effect";
 import { createGameService } from "./service/game";
@@ -41,4 +41,5 @@ export const api = {
 export const data = {
   councils: councils,
   effectLevelTable: effectLevelTable,
+  effectOptions: effectOptions,
 };

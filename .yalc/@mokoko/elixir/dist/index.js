@@ -22,9 +22,1367 @@ var src_exports = {};
 __export(src_exports, {
   api: () => api,
   benchmark: () => benchmark,
-  data: () => data
+  data: () => data,
+  effect: () => effect_default,
+  game: () => game_default,
+  mutation: () => mutation_default,
+  sage: () => sage_default
 });
 module.exports = __toCommonJS(src_exports);
+
+// src/data/effect.ts
+var effectLevelTable = {
+  0: 0,
+  1: 0,
+  2: 0,
+  3: 1,
+  4: 1,
+  5: 1,
+  6: 2,
+  7: 2,
+  8: 3,
+  9: 4,
+  10: 5
+};
+var effectOptions = [
+  {
+    id: "10000",
+    name: "\uC2A4\uD0EF",
+    optionDescriptions: [
+      "\uC2A4\uD0EF(\uD798/\uBBFC\uCCA9/\uC9C0\uB2A5)",
+      "\uC2A4\uD0EF +720/+864",
+      "\uC2A4\uD0EF +1782",
+      "\uC2A4\uD0EF +2700",
+      "\uC2A4\uD0EF +4050",
+      "\uC2A4\uD0EF +5400"
+    ]
+  },
+  // {
+  //   "id": "10001",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +720",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10002",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10003",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10004",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10005",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10006",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +720",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10007",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10008",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10009",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10010",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10011",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10012",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10013",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10014",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10015",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10016",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +720",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10017",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10018",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "힘",
+  //     "힘 +864",
+  //     "힘 +1782",
+  //     "힘 +2700",
+  //     "힘 +4050",
+  //     "힘 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10019",
+  //   "name": "힘",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10020",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10021",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10022",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10023",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10024",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10025",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10026",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10027",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10028",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10029",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "민첩",
+  //     "민첩 +864",
+  //     "민첩 +1782",
+  //     "민첩 +2700",
+  //     "민첩 +4050",
+  //     "민첩 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10030",
+  //   "name": "민첩",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10031",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  // {
+  //   "id": "10032",
+  //   "name": "지능",
+  //   "optionDescriptions": [
+  //     "지능",
+  //     "지능 +864",
+  //     "지능 +1782",
+  //     "지능 +2700",
+  //     "지능 +4050",
+  //     "지능 +5400"
+  //   ]
+  // },
+  {
+    id: "10100",
+    name: "\uACF5\uACA9\uB825",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +122",
+      "\uACF5\uACA9\uB825 +253",
+      "\uACF5\uACA9\uB825 +383",
+      "\uACF5\uACA9\uB825 +575",
+      "\uACF5\uACA9\uB825 +767"
+    ]
+  },
+  {
+    id: "10101",
+    name: "\uBB34\uAE30 \uACF5\uACA9\uB825",
+    optionDescriptions: [
+      "\uBB34\uAE30 \uACF5\uACA9\uB825",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +236",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +488",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +740",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1110",
+      "\uBB34\uAE30 \uACF5\uACA9\uB825 +1480"
+    ]
+  },
+  {
+    id: "10102",
+    name: "\uD0C8\uCD9C\uC758 \uB2EC\uC778",
+    optionDescriptions: [
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
+      "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
+    ]
+  },
+  {
+    id: "10103",
+    name: "\uD68C\uD53C\uC758 \uB2EC\uC778",
+    optionDescriptions: [
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.38%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +0.79%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.2%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +1.8%",
+      "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C +2.4%"
+    ]
+  },
+  {
+    id: "10104",
+    name: "\uB9C8\uB098",
+    optionDescriptions: [
+      "\uCD5C\uB300 \uB9C8\uB098",
+      "\uCD5C\uB300 \uB9C8\uB098 +15",
+      "\uCD5C\uB300 \uB9C8\uB098 +32",
+      "\uCD5C\uB300 \uB9C8\uB098 +49",
+      "\uCD5C\uB300 \uB9C8\uB098 +73",
+      "\uCD5C\uB300 \uB9C8\uB098 +98"
+    ]
+  },
+  {
+    id: "10105",
+    name: "\uC0DD\uBA85\uC758 \uCD95\uBCF5",
+    optionDescriptions: [
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +6",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +12",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +19",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +29",
+      "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9 +39"
+    ]
+  },
+  {
+    id: "10106",
+    name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
+    optionDescriptions: [
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.46%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +0.95%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.45%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.17%",
+      "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.9%"
+    ]
+  },
+  {
+    id: "10107",
+    name: "\uBC29\uB791\uC790",
+    optionDescriptions: [
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +0.8%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +1.65%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +2.5%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +3.75%",
+      "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00 +5%"
+    ]
+  },
+  {
+    id: "10108",
+    name: "\uBB34\uB825\uD654",
+    optionDescriptions: [
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.38%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +0.79%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.2%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +1.8%",
+      "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9 +2.4%"
+    ]
+  },
+  {
+    id: "10109",
+    name: "\uBB3C\uC57D \uC911\uB3C5",
+    optionDescriptions: [
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +1.13%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +2.34%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +3.55%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +5.32%",
+      "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00 +7.1%"
+    ]
+  },
+  {
+    id: "10110",
+    name: "\uD3ED\uBC1C\uBB3C \uB2EC\uC778",
+    optionDescriptions: [
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +1.6%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +3.3%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +5%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +7.5%",
+      "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00 +10%"
+    ]
+  },
+  {
+    id: "11000",
+    name: "\uD589\uC6B4 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11001",
+    name: "\uD68C\uC2EC (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11002",
+    name: "\uB2EC\uC778 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11003",
+    name: "\uAC15\uB9F9 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11004",
+    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11005",
+    name: "\uC120\uBD09\uB300 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uACF5\uACA9\uB825",
+      "\uACF5\uACA9\uB825 +0.23%",
+      "\uACF5\uACA9\uB825 +0.47%",
+      "\uACF5\uACA9\uB825 +0.72%",
+      "\uACF5\uACA9\uB825 +1.08%",
+      "\uACF5\uACA9\uB825 +1.44%"
+    ]
+  },
+  {
+    id: "11006",
+    name: "\uC120\uAC01\uC790 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "11007",
+    name: "\uC9C4\uAD70 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "11008",
+    name: "\uC2E0\uB150 (\uC9C8\uC11C)",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.64%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.32%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +2%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4%"
+    ]
+  },
+  {
+    id: "12000",
+    name: "\uBCF4\uC2A4 \uD53C\uD574",
+    optionDescriptions: [
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.38%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.79%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.2%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.8%",
+      "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +2.4%"
+    ]
+  },
+  {
+    id: "12001",
+    name: "\uAC01\uC131\uAE30 \uD53C\uD574",
+    optionDescriptions: [
+      "\uAC01\uC131\uAE30 \uD53C\uD574",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +1.2%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +2.47%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +3.75%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +5.62%",
+      "\uAC01\uC131\uAE30 \uD53C\uD574 +7.5%"
+    ]
+  },
+  {
+    id: "12002",
+    name: "\uBCF4\uD638\uB9C9 \uAC15\uD654",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.67%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.38%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +2.1%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +3.15%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC +4.2%"
+    ]
+  },
+  {
+    id: "12003",
+    name: "\uD68C\uBCF5 \uAC15\uD654",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +0.67%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +1.38%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +2.1%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +3.15%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC +4.2%"
+    ]
+  },
+  {
+    id: "13000",
+    name: "\uCD5C\uB300 \uC0DD\uBA85\uB825",
+    optionDescriptions: [
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +2720",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +5610",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +8500",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +12750",
+      "\uCD5C\uB300 \uC0DD\uBA85\uB825 +17000"
+    ]
+  },
+  {
+    id: "13001",
+    name: "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
+    optionDescriptions: [
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +1.6%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +3.3%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +5%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +7.5%",
+      "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C +10%"
+    ]
+  },
+  {
+    id: "13002",
+    name: "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
+    optionDescriptions: [
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +960",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +1980",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +3000",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +4500",
+      "\uBB3C\uB9AC \uBC29\uC5B4\uB825 +6000"
+    ]
+  },
+  {
+    id: "13003",
+    name: "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
+    optionDescriptions: [
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +960",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +1980",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +3000",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +4500",
+      "\uB9C8\uBC95 \uBC29\uC5B4\uB825 +6000"
+    ]
+  },
+  {
+    id: "14000",
+    name: "\uCE58\uBA85\uD0C0 \uD53C\uD574",
+    optionDescriptions: [
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +1.12%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +2.31%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +3.5%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +5.25%",
+      "\uCE58\uBA85\uD0C0 \uD53C\uD574 +7%"
+    ]
+  },
+  {
+    id: "14001",
+    name: "\uCD94\uAC00 \uD53C\uD574",
+    optionDescriptions: [
+      "\uCD94\uAC00 \uD53C\uD574",
+      "\uCD94\uAC00 \uD53C\uD574 +0.49%",
+      "\uCD94\uAC00 \uD53C\uD574 +1.02%",
+      "\uCD94\uAC00 \uD53C\uD574 +1.55%",
+      "\uCD94\uAC00 \uD53C\uD574 +2.32%",
+      "\uCD94\uAC00 \uD53C\uD574 +3.1%"
+    ]
+  },
+  {
+    id: "14002",
+    name: "\uC544\uC774\uB374\uD2F0\uD2F0 \uD68D\uB4DD",
+    optionDescriptions: [
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +0.64%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +1.32%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +2%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +3%",
+      "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9 +4%"
+    ]
+  },
+  {
+    id: "14003",
+    name: "\uC544\uAD70 \uAC15\uD654",
+    optionDescriptions: [
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +0.96%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +1.98%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +3%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +4.5%",
+      "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC +6%"
+    ]
+  },
+  {
+    id: "15000",
+    name: "\uD589\uC6B4 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15001",
+    name: "\uD68C\uC2EC (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15002",
+    name: "\uB2EC\uC778 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15003",
+    name: "\uAC15\uB9F9 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uCD94\uAC00 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15004",
+    name: "\uCE7C\uB0A0 \uBC29\uD328 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15005",
+    name: "\uC120\uBD09\uB300 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.23%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.47%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +0.72%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.08%",
+      "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574 +1.44%"
+    ]
+  },
+  {
+    id: "15006",
+    name: "\uC120\uAC01\uC790 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  },
+  {
+    id: "15007",
+    name: "\uC9C4\uAD70 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  },
+  {
+    id: "15008",
+    name: "\uC2E0\uB150 (\uD63C\uB3C8)",
+    optionDescriptions: [
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.23%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.47%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +0.72%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.08%",
+      "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC +1.44%"
+    ]
+  }
+];
+var effectOptionsRecord = Object.fromEntries(effectOptions.map((item) => [item.id, item]));
+
+// src/model/effect.ts
+function isMutable(effect, maxEnchant) {
+  return effect.isSealed === false && effect.value < maxEnchant;
+}
+function getLevel(effect) {
+  const value = effect.value;
+  if (value < 0 || value > 10) {
+    throw new Error(`Invalid effect value: ${value}`);
+  }
+  return effectLevelTable[value];
+}
+function getEffectOptionById(id) {
+  const option = effectOptionsRecord[id];
+  if (!option) {
+    throw new Error(`Invalid effect option id: ${id}`);
+  }
+  return option;
+}
+function getEffectOptionNameById(id) {
+  return getEffectOptionById(id).name;
+}
+function getEffectOptionDescriptionByIdAndLevel(id, level) {
+  const option = getEffectOptionById(id);
+  return option.optionDescriptions[level];
+}
+function setValue(effect, value) {
+  if (effect.isSealed && effect.value !== value) {
+    throw new Error("Effect is sealed");
+  }
+  if (value < 0) {
+    throw new Error("Effect value must be positive");
+  }
+  return {
+    ...effect,
+    value
+  };
+}
+function setOption(effect, option) {
+  if (effect.isSealed) {
+    throw new Error("Effect is sealed");
+  }
+  return {
+    ...effect,
+    option
+  };
+}
+function seal(effect) {
+  if (effect.isSealed) {
+    throw new Error("Effect is already sealed");
+  }
+  return {
+    ...effect,
+    isSealed: true
+  };
+}
+function unseal(effect) {
+  if (!effect.isSealed) {
+    throw new Error("Effect is already unsealed");
+  }
+  return {
+    ...effect,
+    isSealed: false
+  };
+}
+var effect_default = {
+  isMutable,
+  getLevel,
+  getEffectOptionById,
+  getEffectOptionNameById,
+  getEffectOptionDescriptionByIdAndLevel,
+  setValue,
+  setOption,
+  seal,
+  unseal
+};
+
+// src/model/mutation.ts
+function createProbMutation(index, value, remainTurn) {
+  return {
+    target: "prob",
+    index,
+    value,
+    remainTurn
+  };
+}
+function createLuckyRatioMutation(index, value, remainTurn) {
+  return {
+    target: "luckyRatio",
+    index,
+    value,
+    remainTurn
+  };
+}
+function createEnchantIncreaseAmountMutation(value) {
+  return {
+    target: "enchantIncreaseAmount",
+    index: -1,
+    value,
+    remainTurn: 1
+  };
+}
+function createEnchantEffectCountMutation(value) {
+  return {
+    target: "enchantEffectCount",
+    index: -1,
+    value,
+    remainTurn: 1
+  };
+}
+function passTurn(mutation) {
+  return {
+    ...mutation,
+    remainTurn: mutation.remainTurn - 1
+  };
+}
+var mutation_default = {
+  createProbMutation,
+  createLuckyRatioMutation,
+  createEnchantIncreaseAmountMutation,
+  createEnchantEffectCountMutation,
+  passTurn
+};
+
+// src/data/const.ts
+var MAX_LAWFUL = 3;
+var MAX_CHAOS = 6;
+
+// src/model/sage.ts
+function isLawfulFull(sage) {
+  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
+}
+function isChaosFull(sage) {
+  return sage.type === "chaos" && sage.power === MAX_CHAOS;
+}
+function updatePower(sage, selectedIndex) {
+  if (sage.type === "none") {
+    if (sage.index === selectedIndex) {
+      return { ...sage, type: "lawful", power: 1 };
+    }
+    return { ...sage, type: "chaos", power: 1 };
+  }
+  if (sage.type === "lawful") {
+    if (sage.index === selectedIndex) {
+      return {
+        ...sage,
+        type: "lawful",
+        power: sage.power === MAX_LAWFUL ? 1 : sage.power + 1
+      };
+    }
+    return {
+      ...sage,
+      type: "chaos",
+      power: 1
+    };
+  }
+  if (sage.type === "chaos") {
+    if (sage.index === selectedIndex) {
+      return { ...sage, type: "lawful", power: 1 };
+    }
+    return {
+      ...sage,
+      type: "chaos",
+      power: sage.power === MAX_CHAOS ? 1 : sage.power + 1
+    };
+  }
+  throw new Error("Invalid sage type");
+}
+function exhaust(sage) {
+  return {
+    ...sage,
+    isExhausted: true
+  };
+}
+function createInitialState(index) {
+  return {
+    index,
+    type: "none",
+    power: 0,
+    isExhausted: false,
+    councilId: ""
+  };
+}
+var sage_default = {
+  isLawfulFull,
+  isChaosFull,
+  updatePower,
+  exhaust,
+  createInitialState
+};
+
+// src/util/clamp.ts
+function clamp(value, max) {
+  return Math.min(Math.max(value, 0), max);
+}
+
+// src/util/cycle.ts
+function cycle(n, mod, direction) {
+  if (direction === 0) {
+    return (n + mod - 1) % mod;
+  } else {
+    return (n + 1) % mod;
+  }
+}
+
+// src/model/game.ts
+function isEffectMutable(state, effectIndex) {
+  return effect_default.isMutable(
+    state.effects[effectIndex],
+    state.config.maxEnchant
+  );
+}
+function isEffectSealed(state, effectIndex) {
+  return state.effects[effectIndex].isSealed;
+}
+function getEffectValue(state, effectIndex) {
+  return state.effects[effectIndex].value;
+}
+function checkSealNeeded(state) {
+  const sealedEffectCount = state.effects.filter(
+    (effect) => effect.isSealed
+  ).length;
+  const toSeal = 3 - sealedEffectCount;
+  return state.turnLeft <= toSeal;
+}
+function getCouncilType(state, sageIndex) {
+  const sage = state.sages[sageIndex];
+  const isSealNeeded = checkSealNeeded(state);
+  if (sage.isExhausted) {
+    return "exhausted";
+  }
+  if (sage_default.isLawfulFull(sage)) {
+    if (isSealNeeded) {
+      return "lawfulSeal";
+    }
+    return "lawful";
+  }
+  if (sage_default.isChaosFull(sage)) {
+    if (isSealNeeded) {
+      return "chaosSeal";
+    }
+    return "chaos";
+  }
+  if (isSealNeeded) {
+    return "seal";
+  }
+  return "common";
+}
+function isTurnInRange(state, [min, max]) {
+  if (min === 0) {
+    return true;
+  }
+  const turn = state.config.totalTurn - state.turnLeft + 1;
+  return turn >= min && turn < max;
+}
+function createInitialState2(config) {
+  return {
+    config,
+    phase: "council",
+    turnLeft: config.totalTurn,
+    turnPassed: 0,
+    rerollLeft: 2,
+    effects: [
+      {
+        optionId: "12000",
+        index: 0,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10101",
+        index: 1,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10000",
+        index: 2,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10106",
+        index: 3,
+        value: 0,
+        isSealed: false
+      },
+      {
+        optionId: "10108",
+        index: 4,
+        value: 0,
+        isSealed: false
+      }
+    ],
+    mutations: [],
+    sages: [
+      sage_default.createInitialState(0),
+      sage_default.createInitialState(1),
+      sage_default.createInitialState(2)
+    ]
+  };
+}
+function markAsRestart(state) {
+  return {
+    ...state,
+    phase: "restart"
+  };
+}
+function decreaseTurn(state, amount) {
+  if (state.turnLeft <= 0) {
+    throw new Error("No turn left");
+  }
+  return {
+    ...state,
+    turnLeft: state.turnLeft - amount
+  };
+}
+function passTurn2(state, selectedSageIndex) {
+  if (state.phase !== "enchant") {
+    throw new Error("Invalid phase");
+  }
+  if (state.turnLeft <= 0) {
+    throw new Error("No turn left");
+  }
+  const nextPhase = state.turnLeft === 1 ? "done" : "council";
+  return {
+    ...state,
+    phase: nextPhase,
+    turnLeft: state.turnLeft - 1,
+    turnPassed: state.turnPassed + 1,
+    mutations: state.mutations.map(mutation_default.passTurn).filter((mutation) => mutation.remainTurn > 0),
+    sages: state.sages.map(
+      (sage) => sage_default.updatePower(sage, selectedSageIndex)
+    )
+  };
+}
+function increaseRerollLeft(state, amount) {
+  return {
+    ...state,
+    rerollLeft: state.rerollLeft + amount
+  };
+}
+function decreaseRerollLeft(state) {
+  if (state.rerollLeft <= 0) {
+    throw new Error("No reroll left");
+  }
+  return {
+    ...state,
+    rerollLeft: state.rerollLeft - 1
+  };
+}
+function exhaustSage(state, sageIndex) {
+  return {
+    ...state,
+    sages: state.sages.map(
+      (sage, index) => index === sageIndex ? sage_default.exhaust(sage) : sage
+    )
+  };
+}
+function setEffectValue(state, effectIndex, value) {
+  const clampedValue = clamp(value, state.config.maxEnchant);
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
+    )
+  };
+}
+function setEffectValueAll(state, values) {
+  const clampedValues = values.map(
+    (value) => clamp(value, state.config.maxEnchant)
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => effect_default.setValue(effect, clampedValues[index])
+    )
+  };
+}
+function increaseEffectValue(state, effectIndex, diff) {
+  const clampedValue = clamp(
+    getEffectValue(state, effectIndex) + diff,
+    state.config.maxEnchant
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
+    )
+  };
+}
+function increaseEffectValueAll(state, diffs) {
+  const clampedValues = diffs.map(
+    (diff, index) => clamp(getEffectValue(state, index) + diff, state.config.maxEnchant)
+  );
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => effect_default.setValue(effect, clampedValues[index])
+    )
+  };
+}
+function sealEffect(state, effectIndex) {
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? effect_default.seal(effect) : effect
+    )
+  };
+}
+function unsealEffect(state, effectIndex) {
+  return {
+    ...state,
+    effects: state.effects.map(
+      (effect, index) => index === effectIndex ? effect_default.unseal(effect) : effect
+    )
+  };
+}
+function addMutations(state, mutations) {
+  return {
+    ...state,
+    mutations: [...state.mutations, ...mutations]
+  };
+}
+var game_default = {
+  // getters
+  isEffectMutable,
+  isEffectSealed,
+  getEffectValue,
+  checkSealNeeded,
+  getCouncilType,
+  isTurnInRange,
+  // setters
+  createInitialState: createInitialState2,
+  markAsRestart,
+  decreaseTurn,
+  passTurn: passTurn2,
+  increaseRerollLeft,
+  decreaseRerollLeft,
+  exhaustSage,
+  setEffectValue,
+  setEffectValueAll,
+  increaseEffectValue,
+  increaseEffectValueAll,
+  sealEffect,
+  unsealEffect,
+  addMutations
+};
 
 // src/data/council.ts
 var councils = [
@@ -7468,435 +8826,6 @@ var councilsPerType = {
   seal: councils.filter((data2) => data2.type === "seal")
 };
 
-// src/data/effect.ts
-var effectLevelTable = {
-  0: 0,
-  1: 0,
-  2: 0,
-  3: 1,
-  4: 1,
-  5: 1,
-  6: 2,
-  7: 2,
-  8: 3,
-  9: 4,
-  10: 5
-};
-
-// src/model/mutation.ts
-function createProbMutation(index, value, remainTurn) {
-  return {
-    target: "prob",
-    index,
-    value,
-    remainTurn
-  };
-}
-function createLuckyRatioMutation(index, value, remainTurn) {
-  return {
-    target: "luckyRatio",
-    index,
-    value,
-    remainTurn
-  };
-}
-function createEnchantIncreaseAmountMutation(value) {
-  return {
-    target: "enchantIncreaseAmount",
-    index: -1,
-    value,
-    remainTurn: 1
-  };
-}
-function createEnchantEffectCountMutation(value) {
-  return {
-    target: "enchantEffectCount",
-    index: -1,
-    value,
-    remainTurn: 1
-  };
-}
-function passTurn(mutation) {
-  return {
-    ...mutation,
-    remainTurn: mutation.remainTurn - 1
-  };
-}
-var mutation_default = {
-  createProbMutation,
-  createLuckyRatioMutation,
-  createEnchantIncreaseAmountMutation,
-  createEnchantEffectCountMutation,
-  passTurn
-};
-
-// src/data/const.ts
-var MAX_LAWFUL = 3;
-var MAX_CHAOS = 6;
-
-// src/model/sage.ts
-function isLawfulFull(sage) {
-  return sage.type === "lawful" && sage.power === MAX_LAWFUL;
-}
-function isChaosFull(sage) {
-  return sage.type === "chaos" && sage.power === MAX_CHAOS;
-}
-function updatePower(sage, selectedIndex) {
-  if (sage.type === "none") {
-    if (sage.index === selectedIndex) {
-      return { ...sage, type: "lawful", power: 1 };
-    }
-    return { ...sage, type: "chaos", power: 1 };
-  }
-  if (sage.type === "lawful") {
-    if (sage.index === selectedIndex) {
-      return {
-        ...sage,
-        type: "lawful",
-        power: sage.power === MAX_LAWFUL ? 1 : sage.power + 1
-      };
-    }
-    return {
-      ...sage,
-      type: "chaos",
-      power: 1
-    };
-  }
-  if (sage.type === "chaos") {
-    if (sage.index === selectedIndex) {
-      return { ...sage, type: "lawful", power: 1 };
-    }
-    return {
-      ...sage,
-      type: "chaos",
-      power: sage.power === MAX_CHAOS ? 1 : sage.power + 1
-    };
-  }
-  throw new Error("Invalid sage type");
-}
-function exhaust(sage) {
-  return {
-    ...sage,
-    isExhausted: true
-  };
-}
-function createInitialState(index) {
-  return {
-    index,
-    type: "none",
-    power: 0,
-    isExhausted: false,
-    councilId: ""
-  };
-}
-var sage_default = {
-  isLawfulFull,
-  isChaosFull,
-  updatePower,
-  exhaust,
-  createInitialState
-};
-
-// src/model/effect.ts
-function isMutable(effect, maxEnchant) {
-  return effect.isSealed === false && effect.value < maxEnchant;
-}
-function getLevel(effect) {
-  const value = effect.value;
-  if (value < 0 || value > 10) {
-    throw new Error(`Invalid effect value: ${value}`);
-  }
-  return effectLevelTable[value];
-}
-function setValue(effect, value) {
-  if (effect.isSealed && effect.value !== value) {
-    throw new Error("Effect is sealed");
-  }
-  if (value < 0) {
-    throw new Error("Effect value must be positive");
-  }
-  return {
-    ...effect,
-    value
-  };
-}
-function seal(effect) {
-  if (effect.isSealed) {
-    throw new Error("Effect is already sealed");
-  }
-  return {
-    ...effect,
-    isSealed: true
-  };
-}
-function unseal(effect) {
-  if (!effect.isSealed) {
-    throw new Error("Effect is already unsealed");
-  }
-  return {
-    ...effect,
-    isSealed: false
-  };
-}
-var effect_default = {
-  isMutable,
-  getLevel,
-  setValue,
-  seal,
-  unseal
-};
-
-// src/util/clamp.ts
-function clamp(value, max) {
-  return Math.min(Math.max(value, 0), max);
-}
-
-// src/util/cycle.ts
-function cycle(n, mod, direction) {
-  if (direction === 0) {
-    return (n + mod - 1) % mod;
-  } else {
-    return (n + 1) % mod;
-  }
-}
-
-// src/model/game.ts
-function isEffectMutable(state, effectIndex) {
-  return effect_default.isMutable(
-    state.effects[effectIndex],
-    state.config.maxEnchant
-  );
-}
-function isEffectSealed(state, effectIndex) {
-  return state.effects[effectIndex].isSealed;
-}
-function getEffectValue(state, effectIndex) {
-  return state.effects[effectIndex].value;
-}
-function checkSealNeeded(state) {
-  const sealedEffectCount = state.effects.filter(
-    (effect) => effect.isSealed
-  ).length;
-  const toSeal = 3 - sealedEffectCount;
-  return state.turnLeft <= toSeal;
-}
-function getCouncilType(state, sageIndex) {
-  const sage = state.sages[sageIndex];
-  const isSealNeeded = checkSealNeeded(state);
-  if (sage.isExhausted) {
-    return "exhausted";
-  }
-  if (sage_default.isLawfulFull(sage)) {
-    if (isSealNeeded) {
-      return "lawfulSeal";
-    }
-    return "lawful";
-  }
-  if (sage_default.isChaosFull(sage)) {
-    if (isSealNeeded) {
-      return "chaosSeal";
-    }
-    return "chaos";
-  }
-  if (isSealNeeded) {
-    return "seal";
-  }
-  return "common";
-}
-function isTurnInRange(state, [min, max]) {
-  if (min === 0) {
-    return true;
-  }
-  const turn = state.config.totalTurn - state.turnLeft + 1;
-  return turn >= min && turn < max;
-}
-function createInitialState2(config) {
-  return {
-    config,
-    phase: "council",
-    turnLeft: config.totalTurn,
-    turnPassed: 0,
-    rerollLeft: 2,
-    effects: [
-      {
-        name: "\uBCF4\uC2A4 \uD53C\uD574",
-        value: 0,
-        isSealed: false
-      },
-      {
-        name: "\uBB34\uAE30 \uACF5\uACA9\uB825",
-        value: 0,
-        isSealed: false
-      },
-      {
-        name: "\uBBFC\uCCA9",
-        value: 0,
-        isSealed: false
-      },
-      {
-        name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
-        value: 0,
-        isSealed: false
-      },
-      {
-        name: "\uBB34\uB825\uD654",
-        value: 0,
-        isSealed: false
-      }
-    ],
-    mutations: [],
-    sages: [
-      sage_default.createInitialState(0),
-      sage_default.createInitialState(1),
-      sage_default.createInitialState(2)
-    ]
-  };
-}
-function markAsRestart(state) {
-  return {
-    ...state,
-    phase: "restart"
-  };
-}
-function decreaseTurn(state, amount) {
-  if (state.turnLeft <= 0) {
-    throw new Error("No turn left");
-  }
-  return {
-    ...state,
-    turnLeft: state.turnLeft - amount
-  };
-}
-function passTurn2(state, selectedSageIndex) {
-  if (state.phase !== "enchant") {
-    throw new Error("Invalid phase");
-  }
-  if (state.turnLeft <= 0) {
-    throw new Error("No turn left");
-  }
-  const nextPhase = state.turnLeft === 1 ? "done" : "council";
-  return {
-    ...state,
-    phase: nextPhase,
-    turnLeft: state.turnLeft - 1,
-    turnPassed: state.turnPassed + 1,
-    mutations: state.mutations.map(mutation_default.passTurn).filter((mutation) => mutation.remainTurn > 0),
-    sages: state.sages.map(
-      (sage) => sage_default.updatePower(sage, selectedSageIndex)
-    )
-  };
-}
-function increaseRerollLeft(state, amount) {
-  return {
-    ...state,
-    rerollLeft: state.rerollLeft + amount
-  };
-}
-function decreaseRerollLeft(state) {
-  if (state.rerollLeft <= 0) {
-    throw new Error("No reroll left");
-  }
-  return {
-    ...state,
-    rerollLeft: state.rerollLeft - 1
-  };
-}
-function exhaustSage(state, sageIndex) {
-  return {
-    ...state,
-    sages: state.sages.map(
-      (sage, index) => index === sageIndex ? sage_default.exhaust(sage) : sage
-    )
-  };
-}
-function setEffectValue(state, effectIndex, value) {
-  const clampedValue = clamp(value, state.config.maxEnchant);
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
-    )
-  };
-}
-function setEffectValueAll(state, values) {
-  const clampedValues = values.map(
-    (value) => clamp(value, state.config.maxEnchant)
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => effect_default.setValue(effect, clampedValues[index])
-    )
-  };
-}
-function increaseEffectValue(state, effectIndex, diff) {
-  const clampedValue = clamp(
-    getEffectValue(state, effectIndex) + diff,
-    state.config.maxEnchant
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.setValue(effect, clampedValue) : effect
-    )
-  };
-}
-function increaseEffectValueAll(state, diffs) {
-  const clampedValues = diffs.map(
-    (diff, index) => clamp(getEffectValue(state, index) + diff, state.config.maxEnchant)
-  );
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => effect_default.setValue(effect, clampedValues[index])
-    )
-  };
-}
-function sealEffect(state, effectIndex) {
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.seal(effect) : effect
-    )
-  };
-}
-function unsealEffect(state, effectIndex) {
-  return {
-    ...state,
-    effects: state.effects.map(
-      (effect, index) => index === effectIndex ? effect_default.unseal(effect) : effect
-    )
-  };
-}
-function addMutations(state, mutations) {
-  return {
-    ...state,
-    mutations: [...state.mutations, ...mutations]
-  };
-}
-var game_default = {
-  isEffectMutable,
-  isEffectSealed,
-  getEffectValue,
-  checkSealNeeded,
-  getCouncilType,
-  isTurnInRange,
-  createInitialState: createInitialState2,
-  markAsRestart,
-  decreaseTurn,
-  passTurn: passTurn2,
-  increaseRerollLeft,
-  decreaseRerollLeft,
-  exhaustSage,
-  setEffectValue,
-  setEffectValueAll,
-  increaseEffectValue,
-  increaseEffectValueAll,
-  sealEffect,
-  unsealEffect,
-  addMutations
-};
-
 // src/service/council.ts
 function createCouncilService(chance2, logicGuardService2) {
   function isCouncilAvailable(state, council, sageIndex, pickedCouncils) {
@@ -7974,9 +8903,23 @@ function createEffectService(chance2) {
     const pickedMax = chance2.pickone(maxIndexes);
     return [max, pickedMax];
   }
+  function getUiSelectableEffects(state, index) {
+    const otherSelectedEffectIds = state.effects.filter((eff) => eff.index !== index).map((eff) => eff.optionId);
+    return effectOptions.filter(
+      (eff) => !otherSelectedEffectIds.includes(eff.id)
+    );
+  }
+  function getEffectOptionCurrentDescription(state, index) {
+    const eff = state.effects[index];
+    const option = effect_default.getEffectOptionById(eff.optionId);
+    const level = effect_default.getLevel(eff);
+    return option.optionDescriptions[level];
+  }
   return {
     pickMinValueIndex,
-    pickMaxValueIndex
+    pickMaxValueIndex,
+    getUiSelectableEffects,
+    getEffectOptionCurrentDescription
   };
 }
 
@@ -8665,7 +9608,9 @@ function createSageService(councilService2) {
     if (!council) {
       throw new Error("Invalid council id");
     }
-    const effectNames = state.effects.map((eff) => eff.name);
+    const effectNames = state.effects.map(
+      (eff) => effect_default.getEffectOptionNameById(eff.optionId)
+    );
     return council.descriptions[sageIndex].replaceAll("{0}", effectNames[0]).replaceAll("{1}", effectNames[1]).replaceAll("{2}", effectNames[2]).replaceAll("{3}", effectNames[3]).replaceAll("{4}", effectNames[4]);
   }
   return {
@@ -8780,7 +9725,8 @@ var api = {
 };
 var data = {
   councils,
-  effectLevelTable
+  effectLevelTable,
+  effectOptions
 };
 
 // src/benchmark.ts
@@ -8821,5 +9767,9 @@ function benchmark({
 0 && (module.exports = {
   api,
   benchmark,
-  data
+  data,
+  effect,
+  game,
+  mutation,
+  sage
 });

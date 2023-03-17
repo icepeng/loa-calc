@@ -7,6 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ElixirComponent } from './containers/elixir.component';
 import { ElixirRoutingModule } from './elixir-routing.module';
 import { ElixirEffectComponent } from './components/elixir-effect.component';
@@ -24,6 +25,7 @@ import { ElixirSageComponent } from './components/elixir-sage.component';
     MatFormFieldModule,
     MatIconModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class ElixirModule {}

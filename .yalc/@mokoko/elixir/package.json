@@ -1,6 +1,6 @@
 {
   "name": "@mokoko/elixir",
-  "version": "0.0.1",
+  "version": "0.0.1+0db7df5e",
   "description": "Lostark engraving calcuation utilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

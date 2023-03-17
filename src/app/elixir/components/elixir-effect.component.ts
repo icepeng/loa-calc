@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
+import { api, data, GameState } from '@mokoko/elixir';
 
 @Component({
   selector: 'app-elixir-effect',
@@ -32,5 +32,16 @@ export class ElixirEffectComponent {
 
   get luckyRatio() {
     return this.luckyRatios[this.index];
+  }
+
+  get effectOptions() {
+    return api.effect.getUiSelectableEffects(this.gameState, this.index);
+  }
+
+  get effectOptionDescription() {
+    return api.effect.getEffectOptionCurrentDescription(
+      this.gameState,
+      this.index
+    );
   }
 }

@@ -2,7 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { api } from '../../../../.yalc/@mokoko/elixir';
 import { createScoreCalculator } from '../score';
-import * as JSZip from 'jszip';
+import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
+
+interface FetchInitialDataPayload {
+  action: 'fetch';
+  payload: {
+    adviceCounting: any;
+    curveRankRecord: any;
+    curveProbRecord: any;
+    preIndexedCurveRank: any;
+  };
+}
 
 @Component({
   selector: 'app-elixir',
@@ -10,11 +20,18 @@ import * as JSZip from 'jszip';
   styleUrls: ['./elixir.component.scss'],
 })
 export class ElixirComponent implements OnInit {
-  constructor(private titleService: Title) {
+  constructor(
+    private titleService: Title,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
+  ) {
     this.titleService.setTitle(
       'LoaCalc : 엘릭서 시뮬레이션 - 로스트아크 최적화 계산기'
     );
   }
+
+  worker!: Worker;
+  isLoading = false;
 
   gameState = api.game.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
   selectedSageIndex: number | null = null;
@@ -25,65 +42,53 @@ export class ElixirComponent implements OnInit {
   adviceScores: number[] = [];
   valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
 
+  dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
+
   ngOnInit(): void {
-    fetch('assets/elixir_53_44_any.zip')
-      .then((res) => res.blob())
-      .then(async (compressed) => {
-        const zip = new JSZip();
-        await zip.loadAsync(compressed);
-        const adviceCounting = await zip
-          .file('advice_counting.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveRank12 = await zip
-          .file('curve_rank_12.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveRank13 = await zip
-          .file('curve_rank_13.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveRank14 = await zip
-          .file('curve_rank_14.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveRank15 = await zip
-          .file('curve_rank_15.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveProb12 = await zip
-          .file('curve_prob_12.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveProb13 = await zip
-          .file('curve_prob_13.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveProb14 = await zip
-          .file('curve_prob_14.json')
-          ?.async('string')
-          .then(JSON.parse);
-        const curveProb15 = await zip
-          .file('curve_prob_15.json')
-          ?.async('string')
-          .then(JSON.parse);
-        this.valueCalculator = createScoreCalculator({
-          adviceCounting,
-          curveRankRecord: {
-            12: curveRank12,
-            13: curveRank13,
-            14: curveRank14,
-            15: curveRank15,
-          },
-          curveProbRecord: {
-            12: curveProb12,
-            13: curveProb13,
-            14: curveProb14,
-            15: curveProb15,
-          },
-        });
-        this.updateScores();
-      });
+    this.dialogRef = this.dialog.open(LoadingDialogComponent, {
+      disableClose: true,
+    });
+    if (typeof Worker !== 'undefined') {
+      this.worker = new Worker(new URL('../elixir.worker', import.meta.url));
+      this.fetchInitialData();
+    } else {
+      this.snackbar.open(
+        'Web Worker가 지원되지 않는 브라우저입니다. 최신 브라우저를 사용해주세요.',
+        '닫기'
+      );
+    }
+  }
+
+  private fetchInitialData() {
+    this.isLoading = true;
+
+    const handleFetchIntialData = ({
+      data,
+    }: MessageEvent<FetchInitialDataPayload>) => {
+      if (data.action !== 'fetch') {
+        return;
+      }
+      this.isLoading = false;
+      this.worker.removeEventListener('message', handleFetchIntialData);
+      this.worker.removeEventListener('error', handleFetchIntialDataError);
+
+      this.valueCalculator = createScoreCalculator(data.payload);
+      this.updateScores();
+      this.dialogRef?.close();
+    };
+    const handleFetchIntialDataError = (err: ErrorEvent) => {
+      this.isLoading = false;
+      this.worker.removeEventListener('message', handleFetchIntialData);
+      this.worker.removeEventListener('error', handleFetchIntialDataError);
+
+      this.dialogRef?.close();
+      this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기'); // TODO: 핸들링? 메세지?
+    };
+
+    this.worker.onerror = handleFetchIntialDataError;
+    this.worker.onmessage = handleFetchIntialData;
+
+    this.worker.postMessage({ action: 'fetch' });
   }
 
   get seed() {

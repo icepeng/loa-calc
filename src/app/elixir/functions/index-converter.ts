@@ -33,7 +33,7 @@ export function getConvertedCouncil(
 }
 
 export function councilConverter(
-  focusedIndices: [number, number],
+  [first, second]: [number, number],
   councilId: string
 ): string {
   const council = query.council.getOne(councilId);
@@ -43,26 +43,22 @@ export function councilConverter(
   ) {
     const target1Idx = council.logics[0].targetCondition - 1;
     const target2Idx = council.logics[1].targetCondition - 1;
-    let condition1 = focusedIndices.includes(target1Idx) ? 1 : 3;
-    let condition2 = focusedIndices.includes(target2Idx)
-      ? condition1 === 1
+    let condition1 = target1Idx === first ? 1 : target1Idx === second ? 2 : 3;
+    let condition2 =
+      target2Idx === first
+        ? 1
+        : target2Idx === second
         ? 2
-        : 1
-      : condition1 === 3
-      ? 4
-      : 3;
+        : condition1 === 3
+        ? 4
+        : 3;
 
     return getConvertedCouncil(council, condition1, condition2).id;
   }
   if (council.logics[0]?.targetType === 'proposed') {
     const target1Idx = council.logics[0].targetCondition - 1;
-    let condition1 = focusedIndices.includes(target1Idx) ? 1 : 3;
+    let condition1 = target1Idx === first ? 1 : target1Idx === second ? 2 : 3;
     return getConvertedCouncil(council, condition1, null).id;
-  }
-  if (council.logics[1]?.targetType === 'proposed') {
-    const target2Idx = council.logics[1].targetCondition - 1;
-    let condition2 = focusedIndices.includes(target2Idx) ? 1 : 3;
-    return getConvertedCouncil(council, null, condition2).id;
   }
   return council.id;
 }

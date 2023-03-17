@@ -101,14 +101,19 @@ declare function addMutations(state: GameState, mutations: Mutation[]): GameStat
 declare function isEffectMutable(state: GameState, effectIndex: number): boolean;
 declare function isEffectSealed(state: GameState, effectIndex: number): boolean;
 declare function getEffectValue(state: GameState, effectIndex: number): number;
+declare function getEffectLevel(state: GameState, index: number): number;
 declare function checkSealNeeded(state: GameState): boolean;
 declare function getCouncilType(state: GameState, sageIndex: number): CouncilType;
+declare function isSageExhausted(state: GameState, sageIndex: number): boolean;
 declare function isTurnInRange(state: GameState, [min, max]: [number, number]): boolean;
 declare function getCouncilDescription(state: GameState, sageIndex: number): string;
 declare function getPickRatios(state: GameState): number[];
 declare function getLuckyRatios(state: GameState): number[];
 declare function getEnchantEffectCount(state: GameState): number;
 declare function getEnchantIncreaseAmount(state: GameState): number;
+declare function isEffectSelectionRequired(state: GameState, selectedSageIndex: number): boolean;
+declare function getSelectableSages(state: GameState): number[];
+declare function getSelectableEffects(state: GameState): number[];
 interface GameState {
     config: GameConfiguration;
     phase: "restart" | "council" | "enchant" | "done";
@@ -124,14 +129,19 @@ declare const GameState: {
         isEffectMutable: typeof isEffectMutable;
         isEffectSealed: typeof isEffectSealed;
         getEffectValue: typeof getEffectValue;
+        getEffectLevel: typeof getEffectLevel;
         checkSealNeeded: typeof checkSealNeeded;
         getCouncilType: typeof getCouncilType;
         isTurnInRange: typeof isTurnInRange;
+        isSageExhausted: typeof isSageExhausted;
         getCouncilDescription: typeof getCouncilDescription;
         getPickRatios: typeof getPickRatios;
         getLuckyRatios: typeof getLuckyRatios;
         getEnchantEffectCount: typeof getEnchantEffectCount;
         getEnchantIncreaseAmount: typeof getEnchantIncreaseAmount;
+        isEffectSelectionRequired: typeof isEffectSelectionRequired;
+        getSelectableSages: typeof getSelectableSages;
+        getSelectableEffects: typeof getSelectableEffects;
     };
     createInitialState: typeof createInitialState;
     markAsRestart: typeof markAsRestart;
@@ -200,6 +210,7 @@ declare const query: {
         isCouncilAvailable: (state: GameState, council: Council, sageIndex: number, pickedCouncils: string[]) => boolean;
         getOne: (id: string) => Council;
         getLogics: (id: string) => CouncilLogicData[];
+        isIncludingLogicType: (id: string, type: CouncilLogicType) => boolean;
     };
     effect: {
         isMutable: (effect: Effect, maxEnchant: number) => boolean;
@@ -212,6 +223,7 @@ declare const query: {
         isEffectMutable: (state: GameState, effectIndex: number) => boolean;
         isEffectSealed: (state: GameState, effectIndex: number) => boolean;
         getEffectValue: (state: GameState, effectIndex: number) => number;
+        getEffectLevel: (state: GameState, index: number) => number;
         checkSealNeeded: (state: GameState) => boolean;
         getCouncilType: (state: GameState, sageIndex: number) => CouncilType;
         isTurnInRange: (state: GameState, [min, max]: [number, number]) => boolean;
@@ -220,6 +232,9 @@ declare const query: {
         getLuckyRatios: (state: GameState) => number[];
         getEnchantEffectCount: (state: GameState) => number;
         getEnchantIncreaseAmount: (state: GameState) => number;
+        isEffectSelectionRequired: (state: GameState, selectedSageIndex: number) => boolean;
+        getSelectableSages: (state: GameState) => number[];
+        getSelectableEffects: (state: GameState) => number[];
     };
     sage: {
         isLawfulFull: (sage: Sage) => boolean;
@@ -229,10 +244,6 @@ declare const query: {
 declare const api: {
     game: {
         getInitialGameState: (config: GameConfiguration) => GameState;
-        getEffectLevel: (state: GameState, index: number) => number;
-        getSelectableSages: (state: GameState) => number[];
-        getSelectableEffects: (state: GameState) => number[];
-        isEffectSelectionRequired: (state: GameState, ui: UiState) => boolean;
         applyCouncil: (state: GameState, ui: UiState) => GameState;
         enchant: (state: GameState, ui: UiState) => GameState;
         reroll: (state: GameState) => GameState;
@@ -309,4 +320,4 @@ declare function benchmark({ selectionFn, scoreFn, iteration, config, seed, }: B
     iteration: number;
 };
 
-export { Council, CouncilLogic, CouncilLogicType, CouncilTargetType, CouncilType, Effect, EffectOption, GameConfiguration, GameState, Mutation, Sage, SageType, UiState, api, benchmark, data, query };
+export { Council, CouncilLogic, CouncilLogicData, CouncilLogicType, CouncilTargetType, CouncilType, Effect, EffectOption, GameConfiguration, GameState, Mutation, Sage, SageType, UiState, api, benchmark, data, query };

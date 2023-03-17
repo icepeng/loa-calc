@@ -8376,6 +8376,10 @@ function isEffectSealed(state, effectIndex) {
 function getEffectValue(state, effectIndex) {
   return state.effects[effectIndex].value;
 }
+function getEffectLevel(state, index) {
+  const effect = state.effects[index];
+  return Effect.query.getLevel(effect);
+}
 function checkSealNeeded(state) {
   const sealedEffectCount = state.effects.filter(
     (effect) => effect.isSealed
@@ -8405,6 +8409,9 @@ function getCouncilType(state, sageIndex) {
     return "seal";
   }
   return "common";
+}
+function isSageExhausted(state, sageIndex) {
+  return state.sages[sageIndex].isExhausted;
 }
 function isTurnInRange(state, [min, max]) {
   if (min === 0) {
@@ -8476,18 +8483,37 @@ function getEnchantIncreaseAmount(state) {
     (mutation) => mutation.target === "enchantIncreaseAmount"
   )?.value ?? 1;
 }
+function isEffectSelectionRequired(state, selectedSageIndex) {
+  if (selectedSageIndex === null) {
+    return false;
+  }
+  const sage = state.sages[selectedSageIndex];
+  const logics = Council.query.getLogics(sage.councilId);
+  return logics.some((logic) => logic.targetType === "userSelect");
+}
+function getSelectableSages(state) {
+  return state.sages.map((sage, index) => ({ sage, index })).filter(({ sage }) => !sage.isExhausted).map(({ index }) => index);
+}
+function getSelectableEffects(state) {
+  return state.effects.map((effect, index) => ({ effect, index })).filter(({ effect }) => !effect.isSealed).map(({ index }) => index);
+}
 var query3 = {
   isEffectMutable,
   isEffectSealed,
   getEffectValue,
+  getEffectLevel,
   checkSealNeeded,
   getCouncilType,
   isTurnInRange,
+  isSageExhausted,
   getCouncilDescription,
   getPickRatios,
   getLuckyRatios,
   getEnchantEffectCount,
-  getEnchantIncreaseAmount
+  getEnchantIncreaseAmount,
+  isEffectSelectionRequired,
+  getSelectableSages,
+  getSelectableEffects
 };
 var GameState = {
   query: query3,
@@ -8622,29 +8648,11 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
     const state = GameState.createInitialState(config);
     return sageService2.updateCouncils(state);
   }
-  function isEffectSelectionRequired(state, ui) {
-    if (ui.selectedSageIndex === null) {
-      return false;
-    }
-    const sage = state.sages[ui.selectedSageIndex];
-    const logics = Council.query.getLogics(sage.councilId);
-    return logics.some((logic) => logic.targetType === "userSelect");
-  }
-  function getEffectLevel(state, index) {
-    const effect = state.effects[index];
-    return Effect.query.getLevel(effect);
-  }
-  function getSelectableSages(state) {
-    return state.sages.map((sage, index) => ({ sage, index })).filter(({ sage }) => !sage.isExhausted).map(({ index }) => index);
-  }
-  function getSelectableEffects(state) {
-    return state.effects.map((effect, index) => ({ effect, index })).filter(({ effect }) => !effect.isSealed).map(({ index }) => index);
-  }
   function applyCouncil(state, ui) {
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
-    if (isEffectSelectionRequired(state, ui) && ui.selectedEffectIndex == null) {
+    if (GameState.query.isEffectSelectionRequired(state, ui.selectedSageIndex) && ui.selectedEffectIndex == null) {
       throw new Error("Effect is not selected");
     }
     const sage = state.sages[ui.selectedSageIndex];
@@ -8700,10 +8708,6 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
   }
   return {
     getInitialGameState,
-    getEffectLevel,
-    getSelectableSages,
-    getSelectableEffects,
-    isEffectSelectionRequired,
     applyCouncil,
     enchant,
     reroll

@@ -242,6 +242,11 @@ function getEffectValue(state: GameState, effectIndex: number): number {
   return state.effects[effectIndex].value;
 }
 
+function getEffectLevel(state: GameState, index: number): number {
+  const effect = state.effects[index];
+  return Effect.query.getLevel(effect);
+}
+
 function checkSealNeeded(state: GameState) {
   const sealedEffectCount = state.effects.filter(
     (effect) => effect.isSealed
@@ -281,6 +286,10 @@ function getCouncilType(state: GameState, sageIndex: number): CouncilType {
   }
 
   return "common";
+}
+
+function isSageExhausted(state: GameState, sageIndex: number): boolean {
+  return state.sages[sageIndex].isExhausted;
 }
 
 function isTurnInRange(state: GameState, [min, max]: [number, number]) {
@@ -380,18 +389,52 @@ function getEnchantIncreaseAmount(state: GameState) {
   );
 }
 
+// ui
+function isEffectSelectionRequired(
+  state: GameState,
+  selectedSageIndex: number
+): boolean {
+  if (selectedSageIndex === null) {
+    return false;
+  }
+
+  const sage = state.sages[selectedSageIndex];
+  const logics = Council.query.getLogics(sage.councilId);
+
+  return logics.some((logic) => logic.targetType === "userSelect");
+}
+
+function getSelectableSages(state: GameState): number[] {
+  return state.sages
+    .map((sage, index) => ({ sage, index }))
+    .filter(({ sage }) => !sage.isExhausted)
+    .map(({ index }) => index);
+}
+
+function getSelectableEffects(state: GameState): number[] {
+  return state.effects
+    .map((effect, index) => ({ effect, index }))
+    .filter(({ effect }) => !effect.isSealed)
+    .map(({ index }) => index);
+}
+
 const query = {
   isEffectMutable,
   isEffectSealed,
   getEffectValue,
+  getEffectLevel,
   checkSealNeeded,
   getCouncilType,
   isTurnInRange,
+  isSageExhausted,
   getCouncilDescription,
   getPickRatios,
   getLuckyRatios,
   getEnchantEffectCount,
   getEnchantIncreaseAmount,
+  isEffectSelectionRequired,
+  getSelectableSages,
+  getSelectableEffects,
 };
 
 export const GameState = {

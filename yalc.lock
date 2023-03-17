@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@mokoko/elixir": {
-      "signature": "312067c7c02cf4f657effbf14a96e994",
+      "signature": "b4eef125c456afc81fc7e663c48dcf30",
       "file": true
     }
   }

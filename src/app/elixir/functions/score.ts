@@ -1,4 +1,4 @@
-import { data, GameState } from '../../../../.yalc/@mokoko/elixir';
+import { data, GameState, query } from '../../../../.yalc/@mokoko/elixir';
 import { councilConverter } from './index-converter';
 
 function createIndexTable() {
@@ -82,8 +82,14 @@ export function createScoreCalculator({
         return 0;
       }
 
-      const convertedIndex =
-        indexTable[councilConverter([firstIdx, secondIdx], sage.councilId)];
+      const convertedId = councilConverter(
+        [firstIdx, secondIdx],
+        sage.councilId
+      );
+      const convertedIndex = indexTable[convertedId];
+      console.log(sage.index, sage.councilId);
+      console.log(sage.index, convertedId);
+      console.log(sage.index, query.council.getOne(convertedId));
 
       const a = adviceCounting[firstValue];
       const b = a[secondValue];
@@ -101,13 +107,29 @@ export function createScoreCalculator({
     return adviceScores;
   }
 
+  function getBaselineAdviceScore(gameState: GameState) {
+    const values = gameState.effects.map((effect) =>
+      effect.isSealed ? 0 : effect.value
+    );
+    const [first, second] = getMaxN(values, 2);
+    const a = adviceCounting[first.value];
+    const b = a[second.value];
+    const c = b[gameState.turnLeft - 1];
+    const councilIndex = indexTable['XR286C4T']; // 비용감소
+    return c[councilIndex] / 2;
+  }
+
   function calculateScores(
     gameState: GameState,
     currentCurve: number[],
     targetIndices: [number, number]
   ) {
+    const sortedTargets = [...targetIndices].sort((a, b) => b - a) as [
+      number,
+      number
+    ];
     const curveScores = getCurveScores(gameState, currentCurve);
-    const adviceScores = getAdviceScores(gameState, targetIndices);
+    const adviceScores = getAdviceScores(gameState, sortedTargets);
 
     return {
       curveScores,
@@ -123,6 +145,7 @@ export function createScoreCalculator({
 
   return {
     calculateScores,
+    getBaselineAdviceScore,
   };
 }
 

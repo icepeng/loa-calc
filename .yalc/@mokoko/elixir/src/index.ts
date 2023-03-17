@@ -1,6 +1,7 @@
 export type {
   Council,
   CouncilLogic,
+  CouncilLogicData,
   CouncilLogicType,
   CouncilTargetType,
   CouncilType,

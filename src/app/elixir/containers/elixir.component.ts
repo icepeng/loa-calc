@@ -6,16 +6,8 @@ import { LoadingDialogComponent } from '../../core/components/loading-dialog.com
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GameState } from '@mokoko/elixir';
-
-interface FetchInitialDataPayload {
-  action: 'fetch';
-  payload: {
-    adviceCounting: any;
-    curveRankRecord: any;
-    curveProbRecord: any;
-    preIndexedCurveRank: any;
-  };
-}
+import * as JSZip from 'jszip';
+import { fetchModel } from '../functions/fetch-model';
 
 @Component({
   selector: 'app-elixir',
@@ -46,6 +38,7 @@ export class ElixirComponent implements OnInit {
   curveScores: number[] = [];
   adviceScores: number[] = [];
   totalScores: number[] = [];
+  baselineScore: number = 0;
 
   stateHistory: GameState[] = [this.gameState];
 
@@ -58,7 +51,6 @@ export class ElixirComponent implements OnInit {
       disableClose: true,
     });
     if (typeof Worker !== 'undefined') {
-      this.worker = new Worker(new URL('../elixir.worker', import.meta.url));
       this.fetchInitialData();
     } else {
       this.snackbar.open(
@@ -71,33 +63,17 @@ export class ElixirComponent implements OnInit {
   private fetchInitialData() {
     this.isLoading = true;
 
-    const handleFetchIntialData = ({
-      data,
-    }: MessageEvent<FetchInitialDataPayload>) => {
-      if (data.action !== 'fetch') {
-        return;
-      }
-      this.isLoading = false;
-      this.worker.removeEventListener('message', handleFetchIntialData);
-      this.worker.removeEventListener('error', handleFetchIntialDataError);
+    console.time('initialized');
 
-      this.valueCalculator = createScoreCalculator(data.payload);
+    fetchModel().then((modelData) => {
+      console.time('createScoreCalculator');
+      this.valueCalculator = createScoreCalculator(modelData);
+      console.timeEnd('createScoreCalculator');
+      console.timeEnd('initialized');
       this.updateScores();
-      this.dialogRef?.close();
-    };
-    const handleFetchIntialDataError = (err: ErrorEvent) => {
       this.isLoading = false;
-      this.worker.removeEventListener('message', handleFetchIntialData);
-      this.worker.removeEventListener('error', handleFetchIntialDataError);
-
       this.dialogRef?.close();
-      this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기'); // TODO: 핸들링? 메세지?
-    };
-
-    this.worker.onerror = handleFetchIntialDataError;
-    this.worker.onmessage = handleFetchIntialData;
-
-    this.worker.postMessage({ action: 'fetch' });
+    });
   }
 
   get phase() {
@@ -127,6 +103,9 @@ export class ElixirComponent implements OnInit {
       this.currentCurve,
       this.focusedIndices
     );
+    this.baselineScore = this.valueCalculator.getBaselineAdviceScore(
+      this.gameState
+    );
 
     this.curveScores = scores.curveScores;
     this.adviceScores = scores.adviceScores;
@@ -146,7 +125,10 @@ export class ElixirComponent implements OnInit {
   applyCouncil() {
     if (this.selectedSageIndex === null) return;
     if (
-      api.game.isEffectSelectionRequired(this.gameState, this.uiState) &&
+      query.game.isEffectSelectionRequired(
+        this.gameState,
+        this.selectedSageIndex
+      ) &&
       this.selectedEffectIndex === null
     ) {
       return;

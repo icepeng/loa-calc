@@ -18,42 +18,12 @@ export function createGameService(
     return sageService.updateCouncils(state);
   }
 
-  function isEffectSelectionRequired(state: GameState, ui: UiState): boolean {
-    if (ui.selectedSageIndex === null) {
-      return false;
-    }
-
-    const sage = state.sages[ui.selectedSageIndex];
-    const logics = Council.query.getLogics(sage.councilId);
-
-    return logics.some((logic) => logic.targetType === "userSelect");
-  }
-
-  function getEffectLevel(state: GameState, index: number): number {
-    const effect = state.effects[index];
-    return Effect.query.getLevel(effect);
-  }
-
-  function getSelectableSages(state: GameState): number[] {
-    return state.sages
-      .map((sage, index) => ({ sage, index }))
-      .filter(({ sage }) => !sage.isExhausted)
-      .map(({ index }) => index);
-  }
-
-  function getSelectableEffects(state: GameState): number[] {
-    return state.effects
-      .map((effect, index) => ({ effect, index }))
-      .filter(({ effect }) => !effect.isSealed)
-      .map(({ index }) => index);
-  }
-
   function applyCouncil(state: GameState, ui: UiState): GameState {
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
     if (
-      isEffectSelectionRequired(state, ui) &&
+      GameState.query.isEffectSelectionRequired(state, ui.selectedSageIndex) &&
       ui.selectedEffectIndex == null
     ) {
       throw new Error("Effect is not selected");
@@ -127,10 +97,6 @@ export function createGameService(
   }
   return {
     getInitialGameState,
-    getEffectLevel,
-    getSelectableSages,
-    getSelectableEffects,
-    isEffectSelectionRequired,
     applyCouncil,
     enchant,
     reroll,

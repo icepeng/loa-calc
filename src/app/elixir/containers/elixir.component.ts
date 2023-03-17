@@ -174,6 +174,7 @@ export class ElixirComponent implements OnInit {
   undo() {
     this.gameState = this.stateHistory[this.stateHistory.length - 2];
     this.stateHistory.pop();
+    this.updateScores();
   }
 
   reset() {

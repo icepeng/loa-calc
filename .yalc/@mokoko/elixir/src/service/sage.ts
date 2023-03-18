@@ -31,7 +31,7 @@ export function createSageService(councilService: CouncilService) {
     if (
       state.turnLeft === 1 &&
       [0, 1, 2].every((i) =>
-        ["seal", "exhausted"].includes(query.game.getCouncilType(state, i))
+        ["seal"].includes(query.game.getCouncilType(state, i))
       )
     ) {
       return { ...state };

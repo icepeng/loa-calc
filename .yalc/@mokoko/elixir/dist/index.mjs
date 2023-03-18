@@ -9269,7 +9269,7 @@ function createSageService(councilService2) {
   }
   function rerollCouncils(state) {
     if (state.turnLeft === 1 && [0, 1, 2].every(
-      (i) => ["seal", "exhausted"].includes(query5.game.getCouncilType(state, i))
+      (i) => ["seal"].includes(query5.game.getCouncilType(state, i))
     )) {
       return { ...state };
     }

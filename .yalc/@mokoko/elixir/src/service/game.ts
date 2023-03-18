@@ -98,7 +98,7 @@ export function createGameService(
       throw new Error("No reroll left");
     }
 
-    return sageService.updateCouncils(GameState.decreaseRerollLeft(state));
+    return sageService.rerollCouncils(GameState.decreaseRerollLeft(state));
   }
   return {
     getInitialGameState,

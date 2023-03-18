@@ -8656,7 +8656,11 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
       throw new Error("Effect is not selected");
     }
     const sage = state.sages[ui.selectedSageIndex];
-    const logics = Council.query.getLogics(sage.councilId);
+    const council = Council.query.getOne(sage.councilId);
+    if (council.type === "exhausted") {
+      throw new Error("Cannot select exhausted council");
+    }
+    const logics = council.logics;
     const counciledState = logics.reduce(
       (acc, logic) => logicService2.runLogic(
         acc,
@@ -8704,7 +8708,7 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
     if (state.rerollLeft <= 0) {
       throw new Error("No reroll left");
     }
-    return sageService2.updateCouncils(GameState.decreaseRerollLeft(state));
+    return sageService2.rerollCouncils(GameState.decreaseRerollLeft(state));
   }
   return {
     getInitialGameState,
@@ -9037,7 +9041,12 @@ function createLogicGuardService() {
     return true;
   }
   function decreaseTurnLeft(state, logic) {
-    return state.turnLeft - logic.value[0] > 1;
+    const turnLeftAfterEnchant = state.turnLeft - logic.value[0] - 1;
+    const sealedEffectCount = state.effects.filter(
+      (effect) => effect.isSealed
+    ).length;
+    const toSeal = 3 - sealedEffectCount;
+    return turnLeftAfterEnchant >= toSeal;
   }
   function shuffleAll(state, logic) {
     return true;
@@ -9098,9 +9107,15 @@ function createLogicGuardService() {
     return true;
   }
   function swapValues(state, logic) {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return GameState.query.isEffectMutable(state, logic.value[0]) && GameState.query.isEffectMutable(state, logic.value[1]);
   }
   function swapMinMax(state, logic) {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return true;
   }
   function exhaust2(state, logic) {
@@ -9125,9 +9140,15 @@ function createLogicGuardService() {
     return true;
   }
   function decreaseMaxAndSwapMinMax(state, logic) {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return true;
   }
   function decreaseFirstTargetAndSwap(state, logic) {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return GameState.query.isEffectMutable(state, logic.value[0]) && GameState.query.isEffectMutable(state, logic.value[1]);
   }
   const logicGuards = {
@@ -9234,8 +9255,43 @@ function createSageService(councilService2) {
       ]
     };
   }
+  function rerollCouncils(state) {
+    if (state.turnLeft === 1 && [0, 1, 2].every(
+      (i) => ["seal", "exhausted"].includes(query5.game.getCouncilType(state, i))
+    )) {
+      return { ...state };
+    }
+    const council1 = councilService2.pick(state, 0, [state.sages[0].councilId]);
+    const council2 = councilService2.pick(state, 1, [
+      state.sages[1].councilId,
+      council1
+    ]);
+    const council3 = councilService2.pick(state, 2, [
+      state.sages[2].councilId,
+      council1,
+      council2
+    ]);
+    return {
+      ...state,
+      sages: [
+        {
+          ...state.sages[0],
+          councilId: council1
+        },
+        {
+          ...state.sages[1],
+          councilId: council2
+        },
+        {
+          ...state.sages[2],
+          councilId: council3
+        }
+      ]
+    };
+  }
   return {
-    updateCouncils
+    updateCouncils,
+    rerollCouncils
   };
 }
 
@@ -9391,6 +9447,10 @@ function benchmark({
         continue;
       }
       state = api.game.enchant(state, uiState);
+    }
+    const sealedCount = state.effects.filter((x) => x.isSealed).length;
+    if (sealedCount !== 3) {
+      throw new Error("Effects are not sealed properly, count: " + sealedCount);
     }
     totalScore += scoreFn(state);
   }

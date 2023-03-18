@@ -251,6 +251,7 @@ declare const api: {
     };
     sage: {
         updateCouncils: (state: GameState) => GameState;
+        rerollCouncils: (state: GameState) => GameState;
     };
     council: {
         pick: (state: GameState, sageIndex: number, pickedCouncils: string[]) => string;

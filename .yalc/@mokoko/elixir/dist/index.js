@@ -9148,6 +9148,12 @@ function createLogicGuardService() {
     return true;
   }
   function exhaust2(state, logic) {
+    const exhaustedCount = state.sages.filter(
+      (sage) => sage.isExhausted
+    ).length;
+    if (exhaustedCount > 0) {
+      return false;
+    }
     return true;
   }
   function increaseMaxAndDecreaseTarget(state, logic) {

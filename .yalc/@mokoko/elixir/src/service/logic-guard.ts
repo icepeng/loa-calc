@@ -189,6 +189,13 @@ export function createLogicGuardService() {
 
   // 소진
   function exhaust(state: GameState, logic: CouncilLogicData): boolean {
+    const exhaustedCount = state.sages.filter(
+      (sage) => sage.isExhausted
+    ).length;
+    if (exhaustedCount > 0) {
+      return false;
+    }
+
     return true;
   }
 

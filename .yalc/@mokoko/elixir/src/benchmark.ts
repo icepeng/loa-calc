@@ -54,6 +54,10 @@ export function benchmark({
         selectedEffectIndex: action.effectIndex,
       };
 
+      // console.log(state.sages.map((x) => x.councilId));
+      // console.log(
+      //   query.council.getOne(state.sages[action.sageIndex].councilId)
+      // );
       state = api.game.applyCouncil(state, uiState);
       uiStateHistory.push(uiState);
 
@@ -64,6 +68,12 @@ export function benchmark({
       }
 
       state = api.game.enchant(state, uiState);
+      // console.log(state);
+    }
+
+    const sealedCount = state.effects.filter((x) => x.isSealed).length;
+    if (sealedCount !== 3) {
+      throw new Error("Effects are not sealed properly, count: " + sealedCount);
     }
 
     totalScore += scoreFn(state);

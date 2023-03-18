@@ -51,7 +51,13 @@ export function createLogicGuardService() {
     state: GameState,
     logic: CouncilLogicData
   ): boolean {
-    return state.turnLeft - logic.value[0] > 1;
+    // 봉인이 덜된채로 게임 끝나는 경우가 없어야 함
+    const turnLeftAfterEnchant = state.turnLeft - logic.value[0] - 1;
+    const sealedEffectCount = state.effects.filter(
+      (effect) => effect.isSealed
+    ).length;
+    const toSeal = 3 - sealedEffectCount;
+    return turnLeftAfterEnchant >= toSeal;
   }
 
   // <모든 효과>의 단계를 뒤섞도록 하지. 어떻게 뒤섞일지 보자고.
@@ -162,6 +168,10 @@ export function createLogicGuardService() {
 
   // <{0}> 효과와 <{1}> 효과의 단계를 뒤바꿔줄게.
   function swapValues(state: GameState, logic: CouncilLogicData): boolean {
+    if (state.turnPassed === 0) {
+      return false;
+    }
+
     return (
       GameState.query.isEffectMutable(state, logic.value[0]) &&
       GameState.query.isEffectMutable(state, logic.value[1])
@@ -170,6 +180,10 @@ export function createLogicGuardService() {
 
   // <최고 단계> 효과 <1>개와  <최하 단계> 효과 <1>개의 단계를 뒤바꿔주지.
   function swapMinMax(state: GameState, logic: CouncilLogicData): boolean {
+    if (state.turnPassed === 0) {
+      return false;
+    }
+
     return true;
   }
 
@@ -221,6 +235,9 @@ export function createLogicGuardService() {
     state: GameState,
     logic: CouncilLogicData
   ): boolean {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return true;
   }
 
@@ -229,6 +246,9 @@ export function createLogicGuardService() {
     state: GameState,
     logic: CouncilLogicData
   ): boolean {
+    if (state.turnPassed === 0) {
+      return false;
+    }
     return (
       GameState.query.isEffectMutable(state, logic.value[0]) &&
       GameState.query.isEffectMutable(state, logic.value[1])

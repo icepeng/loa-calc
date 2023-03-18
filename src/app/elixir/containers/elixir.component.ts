@@ -104,7 +104,8 @@ export class ElixirComponent implements OnInit {
       this.focusedIndices
     );
     this.baselineScore = this.valueCalculator.getBaselineAdviceScore(
-      this.gameState
+      this.gameState,
+      this.focusedIndices
     );
 
     this.curveScores = scores.curveScores;

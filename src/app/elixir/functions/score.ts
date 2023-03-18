@@ -107,13 +107,16 @@ export function createScoreCalculator({
     return adviceScores;
   }
 
-  function getBaselineAdviceScore(gameState: GameState) {
+  function getBaselineAdviceScore(
+    gameState: GameState,
+    targetIndices: [number, number]
+  ) {
     const values = gameState.effects.map((effect) =>
       effect.isSealed ? 0 : effect.value
     );
-    const [first, second] = getMaxN(values, 2);
-    const a = adviceCounting[first.value];
-    const b = a[second.value];
+    const [first, second] = targetIndices;
+    const a = adviceCounting[values[first]];
+    const b = a[values[second]];
     const c = b[gameState.turnLeft - 1];
     const councilIndex = indexTable['XR286C4T']; // 비용감소
     return c[councilIndex] / 2;
@@ -146,11 +149,4 @@ export function createScoreCalculator({
     calculateScores,
     getBaselineAdviceScore,
   };
-}
-
-function getMaxN(arr: number[], n: number): { value: number; index: number }[] {
-  return [...arr]
-    .map((value, index) => ({ value, index }))
-    .sort((a, b) => b.value - a.value)
-    .slice(0, n);
 }

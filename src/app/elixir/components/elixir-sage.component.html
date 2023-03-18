@@ -24,7 +24,7 @@
   </div>
   <div>
     최종점수
-    {{ totalScore * 1000000 | number : ".2-2" }}
+    {{ totalScore * 1000 | number : ".2-2" }}
   </div>
   <ng-container *ngIf="sage.isExhausted">
     <div>{{ description }}</div>

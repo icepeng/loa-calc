@@ -134,11 +134,10 @@ export function createScoreCalculator({
     return {
       curveScores,
       adviceScores,
-      totalScores: curveScores.map(
-        (curveScore, index) =>
-          (curveScore + 0.001) *
-          (adviceScores[index] * 100) *
-          (adviceScores[index] * 100)
+      totalScores: curveScores.map((curveScore, index) =>
+        Math.cbrt(
+          (curveScore + 0.001) * adviceScores[index] * adviceScores[index]
+        )
       ),
     };
   }

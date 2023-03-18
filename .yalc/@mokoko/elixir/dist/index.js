@@ -9066,7 +9066,7 @@ function createLogicGuardService() {
     return true;
   }
   function decreaseTurnLeft(state, logic) {
-    return state.turnLeft > 1;
+    return state.turnLeft - logic.value[0] > 1;
   }
   function shuffleAll(state, logic) {
     return true;

@@ -227,6 +227,7 @@ declare const query: {
         checkSealNeeded: (state: GameState) => boolean;
         getCouncilType: (state: GameState, sageIndex: number) => CouncilType;
         isTurnInRange: (state: GameState, [min, max]: [number, number]) => boolean;
+        isSageExhausted: (state: GameState, sageIndex: number) => boolean;
         getCouncilDescription: (state: GameState, sageIndex: number) => string;
         getPickRatios: (state: GameState) => number[];
         getLuckyRatios: (state: GameState) => number[];

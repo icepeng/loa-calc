@@ -46,11 +46,12 @@ export function createLogicGuardService() {
   }
 
   // 대신 기회를 2회 소모하겠군.
+  // 이번 연성은 기회 소모 없이 진행하겠네.
   function decreaseTurnLeft(
     state: GameState,
     logic: CouncilLogicData
   ): boolean {
-    return state.turnLeft > 1;
+    return state.turnLeft - logic.value[0] > 1;
   }
 
   // <모든 효과>의 단계를 뒤섞도록 하지. 어떻게 뒤섞일지 보자고.

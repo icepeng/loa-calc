@@ -76,12 +76,12 @@
               </button>
             </div>
             <div>
-              모든 조언점수가
+              가장 높은 조언점수가
               {{ baselineScore * 10000 | number : ".2" }} 이하일시 리롤 고려
             </div>
             <div>
               <button mat-flat-button (click)="undo()">되돌리기</button>
-              <button mat-flat-button color="warn" (click)="reset()">
+              <button mat-flat-button color="warn" (click)="onResetClick()">
                 초기화
               </button>
             </div>

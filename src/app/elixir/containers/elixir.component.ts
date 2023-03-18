@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { api, query } from '../../../../.yalc/@mokoko/elixir';
-import { createScoreCalculator } from '../functions/score';
-import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { GameState } from '@mokoko/elixir';
-import * as JSZip from 'jszip';
+import { api, query } from '../../../../.yalc/@mokoko/elixir';
+import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
 import { fetchModel } from '../functions/fetch-model';
+import { createScoreCalculator } from '../functions/score';
 
 @Component({
   selector: 'app-elixir',
@@ -139,7 +138,7 @@ export class ElixirComponent implements OnInit {
     this.stateHistory.push(this.gameState);
 
     if (this.gameState.phase === 'restart') {
-      this.reset();
+      this.resetStates();
       return;
     }
   }
@@ -178,10 +177,7 @@ export class ElixirComponent implements OnInit {
     this.updateScores();
   }
 
-  reset() {
-    const isConfirmed = window.confirm('정말 초기화하시겠습니까?');
-    if (!isConfirmed) return;
-
+  resetStates() {
     this.gameState = api.game.getInitialGameState({
       maxEnchant: 10,
       totalTurn: 14,
@@ -191,5 +187,12 @@ export class ElixirComponent implements OnInit {
     this.currentCurve = [];
     this.stateHistory = [this.gameState];
     this.updateScores();
+  }
+
+  onResetClick() {
+    const isConfirmed = window.confirm('정말 초기화하시겠습니까?');
+    if (!isConfirmed) return;
+
+    this.resetStates();
   }
 }

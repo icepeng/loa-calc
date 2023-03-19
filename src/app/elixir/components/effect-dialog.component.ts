@@ -1,11 +1,15 @@
-import { Council, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { getKoreanRegex } from 'ko-fuzzy';
+import {
+  data,
+  EffectOption,
+  GameState,
+} from '../../../../.yalc/@mokoko/elixir';
 
 @Component({
-  selector: 'app-council-dialog',
-  templateUrl: './council-dialog.component.html',
+  selector: 'app-effect-dialog',
+  templateUrl: './effect-dialog.component.html',
   styles: [
     `
       .table {
@@ -25,41 +29,28 @@ import { getKoreanRegex } from 'ko-fuzzy';
     `,
   ],
 })
-export class CouncilDialogComponent implements OnInit {
-  councils = data.councils;
-  dataSource: {
-    description: string;
-    council: Council;
-  }[] = [];
-  filteredDataSource: {
-    description: string;
-    council: Council;
-  }[] = [];
+export class EffectDialogComponent implements OnInit {
+  councils = data.effectOptions;
+  dataSource: readonly EffectOption[] = [];
+  filteredDataSource: readonly EffectOption[] = [];
 
   filterText: string = '';
 
-  selected: Council | null = null;
+  selected: EffectOption | null = null;
 
   constructor(
-    public dialogRef: MatDialogRef<CouncilDialogComponent>,
+    public dialogRef: MatDialogRef<EffectDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public dialogData: { gameState: GameState; index: number }
   ) {}
 
   ngOnInit(): void {
-    this.dataSource = data.councils.map((council) => ({
-      council,
-      description: GameState.query.getCouncilDescriptionFromId(
-        this.dialogData.gameState,
-        council.id,
-        this.dialogData.index
-      ),
-    }));
+    this.dataSource = [...data.effectOptions];
     this.filteredDataSource = [...this.dataSource];
   }
 
-  selectRow(council: Council) {
-    this.selected = council;
+  selectRow(option: EffectOption) {
+    this.selected = option;
   }
 
   filterData(str: string) {
@@ -67,14 +58,14 @@ export class CouncilDialogComponent implements OnInit {
     this.filteredDataSource = this.dataSource.filter((data) => {
       if (this.filterText === '') return true;
       return getKoreanRegex(this.filterText, { consonantMatch: false }).test(
-        data.description
+        data.name
       );
     });
   }
 
   confirm() {
     if (this.selected) {
-      this.dialogRef.close(this.selected.id);
+      this.dialogRef.close(this.selected.name);
     }
   }
 

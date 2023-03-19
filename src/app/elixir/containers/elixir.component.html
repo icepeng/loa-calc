@@ -2,61 +2,61 @@
   <h1 class="mat-h1">엘릭서 도우미</h1>
   <h2>Dev alpha. 합 8레벨 이상 목표.</h2>
   <div>
-    <div>
-      <div class="layout">
-        <mat-card
-          *ngFor="let idx of [0, 1, 2]"
-          class="sage"
-          (click)="launchCouncilDialog(idx)"
-        >
-          <mat-card-content>
-            <app-elixir-sage
-              [gameState]="gameState"
-              [curveScores]="curveScores"
-              [adviceScores]="adviceScores"
-              [totalScores]="totalScores"
-              [index]="idx"
-            ></app-elixir-sage>
-          </mat-card-content>
-        </mat-card>
-        <div class="effect-list">
-          <mat-card
-            *ngFor="let effect of gameState.effects; index as i"
-            [class.is-focused]="focusedIndices.includes(i)"
-          >
-            <mat-card-content>
-              <app-elixir-effect
-                [gameState]="gameState"
-                [pickRatios]="pickRatios"
-                [luckyRatios]="luckyRatios"
-                [index]="i"
-                (focusTarget)="onFocusTarget($event)"
-                (increase)="increaseEffectValue($event)"
-                (decrease)="decreaseEffectValue($event)"
-              ></app-elixir-effect>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-      <div class="layout">
-        <mat-card class="enchant-area">
-          <mat-card-content>
-            <div>남은 연성 {{ gameState.turnLeft }}회</div>
+    <div class="layout">
+      <mat-card class="enchant-area">
+        <mat-card-content>
+          <div class="turn-left">
+            남은 연성 {{ gameState.turnLeft }}회
             <button (click)="increaseTurnLeft()" mat-icon-button>
               <mat-icon>add</mat-icon>
             </button>
             <button (click)="decreaseTurnLeft()" mat-icon-button>
               <mat-icon>remove</mat-icon>
             </button>
-            <div>
-              가장 높은 조언점수가
-              {{ baselineScore * 10000 | number : ".2" }} 이하일시 리롤 고려
-            </div>
-            <div>
-              <button mat-flat-button color="warn" (click)="onResetClick()">
-                초기화
-              </button>
-            </div>
+          </div>
+          <div>
+            가장 높은 조언점수가
+            <span>{{ baselineScore * 10000 | number : ".2" }}</span> 이하일시
+            리롤 고려
+          </div>
+          <div></div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="warn" (click)="onResetClick()">
+            초기화
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="layout">
+      <mat-card *ngFor="let idx of [0, 1, 2]" class="sage">
+        <mat-card-content>
+          <app-elixir-sage
+            [gameState]="gameState"
+            [curveScores]="curveScores"
+            [adviceScores]="adviceScores"
+            [totalScores]="totalScores"
+            [index]="idx"
+            (changeCouncil)="setCouncil(idx, $event)"
+            (changeTypePower)="setTypePower(idx, $event)"
+          ></app-elixir-sage>
+        </mat-card-content>
+      </mat-card>
+      <div class="effect-list">
+        <mat-card
+          *ngFor="let effect of gameState.effects; index as i"
+          [class.is-focused]="focusedIndices.includes(i)"
+        >
+          <mat-card-content>
+            <app-elixir-effect
+              [gameState]="gameState"
+              [pickRatios]="pickRatios"
+              [luckyRatios]="luckyRatios"
+              [index]="i"
+              (focusTarget)="onFocusTarget($event)"
+              (increase)="increaseEffectValue($event)"
+              (decrease)="decreaseEffectValue($event)"
+            ></app-elixir-effect>
           </mat-card-content>
         </mat-card>
       </div>

@@ -1,0 +1,32 @@
+<div class="penguin">
+  <img src="assets/penguin.jpg" />
+</div>
+<ng-container *ngIf="!sage.isExhausted">
+  <div class="power-container" *ngIf="sage.type === 'lawful'">
+    <div
+      *ngFor="let i of [1, 2, 3]"
+      class="lawful-power"
+      [ngClass]="{ 'is-filled': sage.power >= i }"
+    ></div>
+  </div>
+  <div class="power-container" *ngIf="sage.type === 'chaos'">
+    <div
+      *ngFor="let i of [1, 2, 3, 4, 5, 6]"
+      class="chaos-power"
+      [ngClass]="{ 'is-filled': sage.power >= i }"
+    ></div>
+  </div>
+  <div>{{ description }}</div>
+  <div>스택점수 {{ curveScore * 1000 | number : ".2-2" }}</div>
+  <div>
+    조언점수
+    {{ adviceScore * 10000 | number : ".2-2" }}
+  </div>
+  <div>
+    최종점수
+    {{ totalScore * 1000 | number : ".2-2" }}
+  </div>
+  <ng-container *ngIf="sage.isExhausted">
+    <div>{{ description }}</div>
+  </ng-container>
+</ng-container>

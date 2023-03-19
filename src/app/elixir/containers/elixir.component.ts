@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
-import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
+import {
+  api,
+  data,
+  GameState,
+  SageType,
+} from '../../../../.yalc/@mokoko/elixir';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
 import { CouncilDialogComponent } from '../components/council-dialog.component';
 import { EvaluatorService } from '../evaluator.service';
@@ -26,6 +31,8 @@ export class ElixirComponent implements OnInit {
   dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
 
   councils = data.councils;
+
+  isDangerous = false;
 
   constructor(
     private titleService: Title,
@@ -54,18 +61,6 @@ export class ElixirComponent implements OnInit {
 
   get luckyRatios() {
     return GameState.query.getLuckyRatios(this.gameState);
-  }
-
-  launchCouncilDialog(index: number) {
-    const dialogRef = this.dialog.open(CouncilDialogComponent, {
-      disableClose: false,
-      data: { gameState: this.gameState, index },
-    });
-
-    dialogRef.afterClosed().subscribe((councilId) => {
-      if (councilId == null) return;
-      this.setCouncil(index, councilId);
-    });
   }
 
   getCouncilDescription(id: string, index: number) {
@@ -115,6 +110,7 @@ export class ElixirComponent implements OnInit {
         this.gameState.turnLeft + 1
       ),
     };
+    this.isDangerous = false;
     this.updateScores();
   }
 
@@ -123,6 +119,7 @@ export class ElixirComponent implements OnInit {
       ...this.gameState,
       turnLeft: Math.max(0, this.gameState.turnLeft - 1),
     };
+    this.isDangerous = false;
     this.updateScores();
   }
 
@@ -144,6 +141,26 @@ export class ElixirComponent implements OnInit {
           ? {
               ...sage,
               councilId,
+            }
+          : sage
+      ),
+    };
+    this.isDangerous = true;
+    this.updateScores();
+  }
+
+  setTypePower(
+    index: number,
+    { type, power }: { type: SageType; power: number }
+  ) {
+    this.gameState = {
+      ...this.gameState,
+      sages: this.gameState.sages.map((sage, i) =>
+        i === index
+          ? {
+              ...sage,
+              type,
+              power,
             }
           : sage
       ),

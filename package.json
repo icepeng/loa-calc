@@ -26,6 +26,7 @@
     "angulartics2": "^11.0.0",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
+    "ko-fuzzy": "^1.0.0",
     "ng2-adsense": "^10.1.0",
     "p-retry": "^5.1.2",
     "rxjs": "^7.4.0",

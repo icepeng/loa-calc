@@ -11,7 +11,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { CouncilDialogComponent } from './components/council-dialog.component';
+import { EffectDialogComponent } from './components/effect-dialog.component';
 import { ElixirEffectComponent } from './components/elixir-effect.component';
+import { ElixirPracticeSageComponent } from './components/elixir-practice-sage.component';
 import { ElixirSageComponent } from './components/elixir-sage.component';
 import { ElixirPracticeComponent } from './containers/elixir-practice.component';
 import { ElixirComponent } from './containers/elixir.component';
@@ -24,6 +26,8 @@ import { ElixirRoutingModule } from './elixir-routing.module';
     ElixirEffectComponent,
     ElixirSageComponent,
     CouncilDialogComponent,
+    EffectDialogComponent,
+    ElixirPracticeSageComponent,
   ],
   imports: [
     CommonModule,

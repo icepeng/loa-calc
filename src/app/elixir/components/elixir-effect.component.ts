@@ -4,7 +4,7 @@ import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 @Component({
   selector: 'app-elixir-effect',
   templateUrl: './elixir-effect.component.html',
-  styleUrls: ['./elixir-effect.component.scss'],
+  styleUrls: ['./elixir-effect-common.scss', './elixir-effect.component.scss'],
 })
 export class ElixirEffectComponent {
   @Input() gameState!: GameState;

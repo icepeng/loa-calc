@@ -4,7 +4,10 @@ import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 @Component({
   selector: 'app-elixir-practice-effect',
   templateUrl: './elixir-practice-effect.component.html',
-  styleUrls: ['./elixir-practice-effect.component.scss'],
+  styleUrls: [
+    './elixir-effect-common.scss',
+    './elixir-practice-effect.component.scss',
+  ],
 })
 export class ElixirPracticeEffectComponent {
   @Input() gameState!: GameState;

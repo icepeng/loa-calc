@@ -10,7 +10,7 @@ import { createEvaluator } from '../functions/evaluate';
 @Component({
   selector: 'app-elixir',
   templateUrl: './elixir-practice.component.html',
-  styleUrls: ['./elixir-practice.component.scss'],
+  styleUrls: ['./elixir-common.scss', './elixir-practice.component.scss'],
 })
 export class ElixirPracticeComponent implements OnInit {
   isLoading = false;

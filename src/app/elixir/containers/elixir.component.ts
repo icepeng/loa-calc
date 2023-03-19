@@ -3,8 +3,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import {
   api,
+  Council,
   data,
   GameState,
+  Sage,
   SageType,
 } from '../../../../.yalc/@mokoko/elixir';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
@@ -13,7 +15,7 @@ import { EvaluatorService } from '../evaluator.service';
 @Component({
   selector: 'app-elixir',
   templateUrl: './elixir.component.html',
-  styleUrls: ['./elixir.component.scss'],
+  styleUrls: ['./elixir-common.scss', './elixir.component.scss'],
 })
 export class ElixirComponent implements OnInit {
   isLoading = false;
@@ -62,8 +64,50 @@ export class ElixirComponent implements OnInit {
     return GameState.query.getLuckyRatios(this.gameState);
   }
 
-  get recommendReroll() {
+  get recommendRerollBaseline() {
     return this.adviceScores.every((score) => score < this.baselineScore);
+  }
+
+  get recommendRerollLawfulFullSeal() {
+    if (!GameState.query.checkSealNeeded(this.gameState)) {
+      return false;
+    }
+
+    const lawfulFullSage = this.gameState.sages.find((x) =>
+      Sage.query.isLawfulFull(x)
+    )!;
+
+    if (lawfulFullSage && lawfulFullSage.councilId !== 'mYuyjIL/') {
+      return true;
+    }
+
+    return false;
+  }
+
+  get recommendRerollLawfulSeal() {
+    if (!GameState.query.checkSealNeeded(this.gameState)) {
+      return false;
+    }
+
+    const lawfulSage = this.gameState.sages.find((x) => x.type === 'lawful')!;
+    if (!lawfulSage) {
+      return false;
+    }
+
+    const power = lawfulSage.power;
+
+    if (this.gameState.turnLeft > data.constant.MAX_LAWFUL - power) {
+      const council = Council.query.getOne(lawfulSage.councilId);
+      if (
+        council.type === 'seal' &&
+        council.logics[0].type === 'sealTarget' &&
+        this.focusedIndices.includes(council.logics[0].targetCondition - 1)
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   getCouncilDescription(id: string, index: number) {

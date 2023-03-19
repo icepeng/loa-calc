@@ -7,17 +7,24 @@
         <mat-card-content>
           <div class="turn-left">
             남은 연성 {{ gameState.turnLeft }}회
-            <button (click)="increaseTurnLeft()" mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
             <button (click)="decreaseTurnLeft()" mat-icon-button>
               <mat-icon>remove</mat-icon>
             </button>
+            <button (click)="increaseTurnLeft()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
           </div>
-          <div [class.recommend-reroll]="recommendReroll">
+          <div [class.recommend-reroll]="recommendRerollBaseline">
             가장 높은 조언점수가
             <span>{{ baselineScore * 10000 | number : ".2" }}</span> 이하일시
             리롤 추천
+          </div>
+          <div [class.recommend-reroll]="recommendRerollLawfulFullSeal">
+            봉인 페이즈에서 질서3 조언이 기회 소모 없음이 아닐시 리롤 추천
+          </div>
+          <div [class.recommend-reroll]="recommendRerollLawfulSeal">
+            봉인 페이즈에서 질서3을 향하는 조언이 목표 옵션을 봉인할 시 리롤
+            추천
           </div>
           <div></div>
         </mat-card-content>

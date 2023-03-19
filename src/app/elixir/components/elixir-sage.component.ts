@@ -10,7 +10,7 @@ import { CouncilDialogComponent } from './council-dialog.component';
 @Component({
   selector: 'app-elixir-sage',
   templateUrl: './elixir-sage.component.html',
-  styleUrls: ['./elixir-sage.component.scss'],
+  styleUrls: ['./elixir-sage-common.scss', './elixir-sage.component.scss'],
 })
 export class ElixirSageComponent {
   @Input() gameState!: GameState;

@@ -4,7 +4,7 @@ import { EffectOption, GameState } from '../../../../.yalc/@mokoko/elixir';
 @Component({
   selector: 'app-elixir-practice-sage',
   templateUrl: './elixir-practice-sage.component.html',
-  styleUrls: ['./elixir-practice-sage.component.scss'],
+  styleUrls: ['./elixir-sage-common.scss'],
 })
 export class ElixirPracticeSageComponent {
   @Input() gameState!: GameState;

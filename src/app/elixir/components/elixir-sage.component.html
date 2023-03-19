@@ -21,13 +21,13 @@
   <div class="description-container" (click)="launchCouncilDialog(index)">
     {{ description }}
   </div>
-  <div [class.is-highest]="isHighest">
+  <div>
     <div>스택점수 {{ curveScore * 1000 | number : ".2-2" }}</div>
     <div>
       조언점수
       {{ adviceScore * 10000 | number : ".2-2" }}
     </div>
-    <div>
+    <div [class.is-highest]="isHighest">
       최종점수
       {{ totalScore * 1000 | number : ".2-2" }}
     </div>

@@ -1,37 +1,3 @@
-.layout {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.container {
-  margin: 20px;
-  max-width: 1200px;
-}
-
-.sage {
-  width: 240px;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-.effect-list {
-  flex: 1 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.enchant-area {
-  flex: 1 1 auto;
-  min-height: 120px;
-}
-
-.is-focused {
-  border: 1px solid #000;
-}
-
 .mat-card.is-selected {
   background-color: #dddddd;
 }

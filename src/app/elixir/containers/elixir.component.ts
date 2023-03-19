@@ -9,7 +9,7 @@ import {
   Sage,
   SageType,
 } from '../../../../.yalc/@mokoko/elixir';
-import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
+import { DisclaimerDialogComponent } from '../../core/components/disclaimer-dialog.component';
 import { EvaluatorService } from '../evaluator.service';
 
 @Component({
@@ -29,8 +29,6 @@ export class ElixirComponent implements OnInit {
   totalScores: number[] = [];
   baselineScore: number = 0;
 
-  dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
-
   councils = data.councils;
 
   isDangerous = false;
@@ -46,13 +44,12 @@ export class ElixirComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialogRef = this.dialog.open(LoadingDialogComponent, {
+    this.dialog.open(DisclaimerDialogComponent, {
       disableClose: true,
     });
     this.evaluator.fetchInitialData().then(() => {
       this.updateScores();
       this.isLoading = false;
-      this.dialogRef?.close();
     });
   }
 

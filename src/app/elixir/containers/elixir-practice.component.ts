@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { api, GameState } from '../../../../.yalc/@mokoko/elixir';
-import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
 import { EvaluatorService } from '../evaluator.service';
 import { createEvaluator } from '../functions/evaluate';
 
@@ -21,7 +20,6 @@ export class ElixirPracticeComponent implements OnInit {
 
   focusedIndices: [number, number] = [0, 1];
 
-  currentCurve: number[] = [];
   curveScores: number[] = [];
   adviceScores: number[] = [];
   totalScores: number[] = [];
@@ -30,8 +28,6 @@ export class ElixirPracticeComponent implements OnInit {
   stateHistory: GameState[] = [this.gameState];
 
   valueCalculator: ReturnType<typeof createEvaluator> | null = null;
-
-  dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
 
   constructor(
     private titleService: Title,
@@ -45,13 +41,9 @@ export class ElixirPracticeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialogRef = this.dialog.open(LoadingDialogComponent, {
-      disableClose: true,
-    });
     this.evaluator.fetchInitialData().then(() => {
       this.updateScores();
       this.isLoading = false;
-      this.dialogRef?.close();
     });
   }
 
@@ -132,7 +124,6 @@ export class ElixirPracticeComponent implements OnInit {
 
     this.gameState = api.game.enchant(this.gameState, this.uiState);
     this.stateHistory.push(this.gameState);
-    this.currentCurve = [...this.currentCurve, this.selectedSageIndex];
     this.selectedSageIndex = null;
     this.selectedEffectIndex = null;
 
@@ -168,7 +159,6 @@ export class ElixirPracticeComponent implements OnInit {
     });
     this.selectedSageIndex = null;
     this.selectedEffectIndex = null;
-    this.currentCurve = [];
     this.stateHistory = [this.gameState];
     this.updateScores();
   }

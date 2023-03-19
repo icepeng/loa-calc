@@ -63,6 +63,10 @@ export class ElixirComponent implements OnInit {
     return GameState.query.getLuckyRatios(this.gameState);
   }
 
+  get recommendReroll() {
+    return this.adviceScores.every((score) => score < this.baselineScore);
+  }
+
   getCouncilDescription(id: string, index: number) {
     return GameState.query.getCouncilDescriptionFromId(
       this.gameState,

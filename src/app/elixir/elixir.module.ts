@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CouncilDialogComponent } from './components/council-dialog.component';
 import { EffectDialogComponent } from './components/effect-dialog.component';
 import { ElixirEffectComponent } from './components/elixir-effect.component';
+import { ElixirPracticeEffectComponent } from './components/elixir-practice-effect.component';
 import { ElixirPracticeSageComponent } from './components/elixir-practice-sage.component';
 import { ElixirSageComponent } from './components/elixir-sage.component';
 import { ElixirPracticeComponent } from './containers/elixir-practice.component';
@@ -27,6 +28,7 @@ import { ElixirRoutingModule } from './elixir-routing.module';
     ElixirSageComponent,
     CouncilDialogComponent,
     EffectDialogComponent,
+    ElixirPracticeEffectComponent,
     ElixirPracticeSageComponent,
   ],
   imports: [

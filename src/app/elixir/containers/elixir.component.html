@@ -14,7 +14,7 @@
               <mat-icon>remove</mat-icon>
             </button>
           </div>
-          <div>
+          <div [class.recommend-reroll]="recommendReroll">
             가장 높은 조언점수가
             <span>{{ baselineScore * 10000 | number : ".2" }}</span> 이하일시
             리롤 고려

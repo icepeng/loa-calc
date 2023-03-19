@@ -1,4 +1,10 @@
 <div class="effect">
+  <div class="effect-prob">
+    <ng-container *ngIf="!effect.isSealed">
+      {{ pickRatio | percent : ".1" }}
+    </ng-container>
+    <ng-container *ngIf="effect.isSealed"> 봉인 </ng-container>
+  </div>
   <div class="effect-info">
     <mat-form-field>
       <mat-select [(ngModel)]="gameState.effects[index].optionName">
@@ -16,19 +22,14 @@
         <span>{{ level }}</span>
       </div>
     </div>
+    <span class="effect-lucky mat-body"
+      >대성공 {{ luckyRatio | percent : ".0" }}</span
+    >
   </div>
   <div>
     <div>
       <button (click)="onFocusTarget($event)" mat-flat-button color="primary">
         목표로 지정
-      </button>
-    </div>
-    <div>
-      <button (click)="increase.emit(index)" mat-icon-button>
-        <mat-icon>add</mat-icon>
-      </button>
-      <button (click)="decrease.emit(index)" mat-icon-button>
-        <mat-icon>remove</mat-icon>
       </button>
     </div>
   </div>

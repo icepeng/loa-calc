@@ -23,19 +23,19 @@
         <div class="effect-list">
           <mat-card
             *ngFor="let effect of gameState.effects; index as i"
-            [class.mat-elevation-z8]="selectedEffectIndex === i"
+            [class.is-selected]="selectedEffectIndex === i"
             [class.is-focused]="focusedIndices.includes(i)"
             [style.cursor]="'pointer'"
             (click)="selectEffect(i)"
           >
             <mat-card-content>
-              <app-elixir-effect
+              <app-elixir-practice-effect
                 [gameState]="gameState"
                 [pickRatios]="pickRatios"
                 [luckyRatios]="luckyRatios"
                 [index]="i"
                 (focusTarget)="onFocusTarget($event)"
-              ></app-elixir-effect>
+              ></app-elixir-practice-effect>
             </mat-card-content>
           </mat-card>
         </div>

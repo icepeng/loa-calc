@@ -17,7 +17,7 @@
           <div [class.recommend-reroll]="recommendReroll">
             가장 높은 조언점수가
             <span>{{ baselineScore * 10000 | number : ".2" }}</span> 이하일시
-            리롤 고려
+            리롤 추천
           </div>
           <div></div>
         </mat-card-content>
@@ -39,6 +39,7 @@
             [index]="idx"
             (changeCouncil)="setCouncil(idx, $event)"
             (changeTypePower)="setTypePower(idx, $event)"
+            (setExhausted)="setSageExhausted(idx, $event)"
           ></app-elixir-sage>
         </mat-card-content>
       </mat-card>

@@ -150,6 +150,24 @@ export class ElixirComponent implements OnInit {
     this.updateScores();
   }
 
+  setSageExhausted(index: number, isExhausted: boolean) {
+    if (isExhausted) {
+      this.gameState = GameState.exhaustSage(this.gameState, index);
+    } else {
+      this.gameState = {
+        ...this.gameState,
+        sages: this.gameState.sages.map((sage, i) =>
+          i === index
+            ? {
+                ...sage,
+                isExhausted: false,
+              }
+            : sage
+        ),
+      };
+    }
+  }
+
   setCouncil(index: number, councilId: string) {
     this.gameState = {
       ...this.gameState,

@@ -35,5 +35,10 @@
   <ng-container *ngIf="sage.isExhausted">
     <div>{{ description }}</div>
   </ng-container>
-  <mat-checkbox>소진</mat-checkbox>
 </ng-container>
+
+<mat-checkbox
+  [ngModel]="sage.isExhausted"
+  (ngModelChange)="setExhausted.emit($event)"
+  >소진</mat-checkbox
+>

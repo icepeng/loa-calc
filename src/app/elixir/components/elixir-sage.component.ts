@@ -25,6 +25,7 @@ export class ElixirSageComponent {
     type: SageType;
     power: number;
   }>();
+  @Output() setExhausted = new EventEmitter<boolean>();
 
   constructor(private dialog: MatDialog) {}
 

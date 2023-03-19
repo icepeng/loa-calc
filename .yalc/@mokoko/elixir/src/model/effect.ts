@@ -2,13 +2,12 @@ import { effectLevelTable, effectOptionsRecord } from "../data/effect";
 
 export interface Effect {
   index: number;
-  optionId: keyof typeof effectOptionsRecord;
+  optionName: keyof typeof effectOptionsRecord;
   value: number;
   isSealed: boolean;
 }
 
 export interface EffectOption {
-  id: string;
   name: string;
   optionDescriptions: [string, string, string, string, string, string];
 }
@@ -28,14 +27,14 @@ function setValue(effect: Effect, value: number): Effect {
   };
 }
 
-function setOptionId(effect: Effect, optionId: string): Effect {
+function setOptionName(effect: Effect, optionName: string): Effect {
   if (effect.isSealed) {
     throw new Error("Effect is sealed");
   }
 
   return {
     ...effect,
-    optionId,
+    optionName,
   };
 }
 
@@ -75,35 +74,30 @@ function getLevel(effect: Effect) {
   return effectLevelTable[value as keyof typeof effectLevelTable];
 }
 
-function getEffectOptionById(id: string): EffectOption {
-  const option = effectOptionsRecord[id];
+function getEffectOptionByName(name: string): EffectOption {
+  const option = effectOptionsRecord[name];
   if (!option) {
-    throw new Error(`Invalid effect option id: ${id}`);
+    throw new Error(`Invalid effect option id: ${name}`);
   }
 
   return option;
 }
 
-function getEffectOptionNameById(id: string) {
-  return getEffectOptionById(id).name;
-}
-
-function getEffectOptionDescriptionByIdAndLevel(id: string, level: number) {
-  const option = getEffectOptionById(id);
+function getEffectOptionDescriptionByNameAndLevel(name: string, level: number) {
+  const option = getEffectOptionByName(name);
   return option.optionDescriptions[level];
 }
 
 const query = {
   isMutable,
   getLevel,
-  getEffectOptionById,
-  getEffectOptionNameById,
-  getEffectOptionDescriptionByIdAndLevel,
+  getEffectOptionByName,
+  getEffectOptionDescriptionByNameAndLevel,
 };
 
 export const Effect = {
   setValue,
-  setOptionId,
+  setOptionName,
   seal,
   unseal,
   query,

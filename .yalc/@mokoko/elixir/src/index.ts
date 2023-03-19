@@ -1,16 +1,19 @@
+export { api, data } from "./api";
+
+export { Council } from "./model/council";
+export { Effect } from "./model/effect";
+export { GameState } from "./model/game";
+export { Mutation } from "./model/mutation";
+export { Sage } from "./model/sage";
+
 export type {
-  Council,
   CouncilLogic,
   CouncilLogicData,
   CouncilLogicType,
   CouncilTargetType,
   CouncilType,
 } from "./model/council";
-export type { Effect, EffectOption } from "./model/effect";
-export type { GameConfiguration, GameState } from "./model/game";
-export type { Mutation } from "./model/mutation";
-export type { Sage, SageType } from "./model/sage";
+export type { EffectOption } from "./model/effect";
+export type { GameConfiguration } from "./model/game";
+export type { SageType } from "./model/sage";
 export type { UiState } from "./model/ui";
-
-export { api, query, data } from "./api";
-export { benchmark } from "./benchmark";

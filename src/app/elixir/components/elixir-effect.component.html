@@ -7,8 +7,8 @@
   </div>
   <div class="effect-info">
     <mat-form-field>
-      <mat-select [(ngModel)]="gameState.effects[index].optionId">
-        <mat-option *ngFor="let option of effectOptions" [value]="option.id">
+      <mat-select [(ngModel)]="gameState.effects[index].optionName">
+        <mat-option *ngFor="let option of effectOptions" [value]="option.name">
           {{ option.name }}
         </mat-option>
       </mat-select>
@@ -27,8 +27,18 @@
     >
   </div>
   <div>
-    <button (click)="onFocusTarget($event)" mat-flat-button color="primary">
-      목표로 지정
-    </button>
+    <div>
+      <button (click)="onFocusTarget($event)" mat-flat-button color="primary">
+        목표로 지정
+      </button>
+    </div>
+    <div>
+      <button (click)="increase.emit(index)" mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+      <button (click)="decrease.emit(index)" mat-icon-button>
+        <mat-icon>remove</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

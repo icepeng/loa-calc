@@ -1,9 +1,6 @@
+import * as constant from "./data/const";
 import { councils } from "./data/council";
 import { effectLevelTable, effectOptions } from "./data/effect";
-import { Council } from "./model/council";
-import { Effect } from "./model/effect";
-import { GameState } from "./model/game";
-import { Sage } from "./model/sage";
 import { createCouncilService } from "./service/council";
 import { createEffectService } from "./service/effect";
 import { createGameService } from "./service/game";
@@ -27,13 +24,6 @@ const gameService = createGameService(
   targetService
 );
 
-export const query = {
-  council: Council.query,
-  effect: Effect.query,
-  game: GameState.query,
-  sage: Sage.query,
-};
-
 export const api = {
   game: gameService,
   sage: sageService,
@@ -45,6 +35,7 @@ export const api = {
 };
 
 export const data = {
+  constant: constant,
   councils: councils,
   effectLevelTable: effectLevelTable,
   effectOptions: effectOptions,

@@ -1,3 +1,4 @@
+import { query } from "../api";
 import { CouncilLogicData, CouncilLogicType } from "../model/council";
 import { GameState } from "../model/game";
 
@@ -53,10 +54,7 @@ export function createLogicGuardService() {
   ): boolean {
     // 봉인이 덜된채로 게임 끝나는 경우가 없어야 함
     const turnLeftAfterEnchant = state.turnLeft - logic.value[0] - 1;
-    const sealedEffectCount = state.effects.filter(
-      (effect) => effect.isSealed
-    ).length;
-    const toSeal = 3 - sealedEffectCount;
+    const toSeal = GameState.query.getEffectCountToSeal(state);
     return turnLeftAfterEnchant >= toSeal;
   }
 

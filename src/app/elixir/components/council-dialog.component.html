@@ -1,0 +1,27 @@
+<h1 mat-dialog-title></h1>
+<div mat-dialog-content>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>조언</mat-label>
+      <input
+        (ngModelChange)="filterData($event)"
+        [ngModel]="filterText"
+        matInput
+      />
+    </mat-form-field>
+  </div>
+  <div class="table">
+    <div
+      (click)="selectRow(data.council)"
+      class="row"
+      [class.selected]="data.council.id === selected?.id"
+      *ngFor="let data of filteredDataSource"
+    >
+      {{ data.description }}
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button (click)="confirm()" color="primary" mat-flat-button>확인</button>
+  <button (click)="cancel()" mat-flat-button>취소</button>
+</div>

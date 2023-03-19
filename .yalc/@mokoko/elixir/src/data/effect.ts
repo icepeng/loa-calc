@@ -16,7 +16,6 @@ export const effectLevelTable = {
 
 export const effectOptions: readonly EffectOption[] = [
   {
-    id: "10001",
     name: "힘",
     optionDescriptions: [
       "힘",
@@ -28,7 +27,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10008",
     name: "지능",
     optionDescriptions: [
       "지능",
@@ -40,7 +38,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10020",
     name: "민첩",
     optionDescriptions: [
       "민첩",
@@ -52,7 +49,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10100",
     name: "공격력",
     optionDescriptions: [
       "공격력",
@@ -64,7 +60,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10101",
     name: "무기 공격력",
     optionDescriptions: [
       "무기 공격력",
@@ -76,7 +71,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10102",
     name: "탈출의 달인",
     optionDescriptions: [
       "기상기 재사용 대기시간 감소",
@@ -88,7 +82,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10103",
     name: "회피의 달인",
     optionDescriptions: [
       "이동기 재사용 대기시간 감소",
@@ -100,7 +93,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10104",
     name: "마나",
     optionDescriptions: [
       "최대 마나",
@@ -112,7 +104,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10105",
     name: "생명의 축복",
     optionDescriptions: [
       "전투 중 생명력 회복량",
@@ -124,7 +115,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10106",
     name: "자원의 축복",
     optionDescriptions: [
       "전투 자원 자연 회복량 증가",
@@ -136,7 +126,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10107",
     name: "방랑자",
     optionDescriptions: [
       "파티 및 공격대가 아닐 경우 피해 증가",
@@ -148,7 +137,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10108",
     name: "무력화",
     optionDescriptions: [
       "무력화 피해량",
@@ -160,7 +148,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10109",
     name: "물약 중독",
     optionDescriptions: [
       "회복형 배틀 아이템의 회복량 증가",
@@ -172,7 +159,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "10110",
     name: "폭발물 달인",
     optionDescriptions: [
       "배틀 아이템의 피해량 증가",
@@ -184,7 +170,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11000",
     name: "행운 (질서)",
     optionDescriptions: [
       "공격력",
@@ -196,7 +181,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11001",
     name: "회심 (질서)",
     optionDescriptions: [
       "공격력",
@@ -208,7 +192,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11002",
     name: "달인 (질서)",
     optionDescriptions: [
       "공격력",
@@ -220,7 +203,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11003",
     name: "강맹 (질서)",
     optionDescriptions: [
       "공격력",
@@ -232,7 +214,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11004",
     name: "칼날 방패 (질서)",
     optionDescriptions: [
       "공격력",
@@ -244,7 +225,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11005",
     name: "선봉대 (질서)",
     optionDescriptions: [
       "공격력",
@@ -256,7 +236,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11006",
     name: "선각자 (질서)",
     optionDescriptions: [
       "파티원에게 주는 회복 및 보호막 효과",
@@ -268,7 +247,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11007",
     name: "진군 (질서)",
     optionDescriptions: [
       "자신의 공격력에 기반한 파티 공격력 버프 효과",
@@ -280,7 +258,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "11008",
     name: "신념 (질서)",
     optionDescriptions: [
       "자신의 공격력에 기반한 파티 공격력 버프 효과",
@@ -292,7 +269,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "12000",
     name: "보스 피해",
     optionDescriptions: [
       "보스 등급 이상 몬스터에게 주는 피해",
@@ -304,7 +280,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "12001",
     name: "각성기 피해",
     optionDescriptions: [
       "각성기 피해",
@@ -316,7 +291,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "12002",
     name: "보호막 강화",
     optionDescriptions: [
       "파티원에게 주는 보호막 효과",
@@ -328,7 +302,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "12003",
     name: "회복 강화",
     optionDescriptions: [
       "파티원에게 주는 회복 효과",
@@ -340,7 +313,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "13000",
     name: "최대 생명력",
     optionDescriptions: [
       "최대 생명력",
@@ -352,7 +324,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "13001",
     name: "받는 피해 감소",
     optionDescriptions: [
       "받는 피해 감소",
@@ -364,7 +335,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "13002",
     name: "물리 방어력",
     optionDescriptions: [
       "물리 방어력",
@@ -376,7 +346,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "13003",
     name: "마법 방어력",
     optionDescriptions: [
       "마법 방어력",
@@ -388,7 +357,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "14000",
     name: "치명타 피해",
     optionDescriptions: [
       "치명타 피해",
@@ -400,7 +368,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "14001",
     name: "추가 피해",
     optionDescriptions: [
       "추가 피해",
@@ -412,7 +379,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "14002",
     name: "아이덴티티 획득",
     optionDescriptions: [
       "공격 적중 시 아이덴티티 게이지 획득량",
@@ -424,7 +390,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "14003",
     name: "아군 강화",
     optionDescriptions: [
       "자신의 공격력에 기반한 파티 공격력 버프 효과",
@@ -436,7 +401,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15000",
     name: "행운 (혼돈)",
     optionDescriptions: [
       "적에게 주는 피해",
@@ -448,7 +412,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15001",
     name: "회심 (혼돈)",
     optionDescriptions: [
       "적에게 주는 피해",
@@ -460,7 +423,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15002",
     name: "달인 (혼돈)",
     optionDescriptions: [
       "적에게 주는 피해",
@@ -472,7 +434,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15003",
     name: "강맹 (혼돈)",
     optionDescriptions: [
       "추가 피해",
@@ -484,7 +445,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15004",
     name: "칼날 방패 (혼돈)",
     optionDescriptions: [
       "적에게 주는 피해",
@@ -496,7 +456,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15005",
     name: "선봉대 (혼돈)",
     optionDescriptions: [
       "적에게 주는 피해",
@@ -508,7 +467,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15006",
     name: "선각자 (혼돈)",
     optionDescriptions: [
       "파티원에게 주는 회복 및 보호막 효과",
@@ -520,7 +478,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15007",
     name: "진군 (혼돈)",
     optionDescriptions: [
       "파티원에게 주는 회복 및 보호막 효과",
@@ -532,7 +489,6 @@ export const effectOptions: readonly EffectOption[] = [
     ],
   },
   {
-    id: "15008",
     name: "신념 (혼돈)",
     optionDescriptions: [
       "파티원에게 주는 회복 및 보호막 효과",
@@ -546,4 +502,4 @@ export const effectOptions: readonly EffectOption[] = [
 ];
 
 export const effectOptionsRecord: Record<string, EffectOption> =
-  Object.fromEntries(effectOptions.map((item) => [item.id, item]));
+  Object.fromEntries(effectOptions.map((item) => [item.name, item]));

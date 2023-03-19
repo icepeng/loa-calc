@@ -1,4 +1,4 @@
-import { Council, data, query } from '../../../../.yalc/@mokoko/elixir';
+import { Council, data } from '../../../../.yalc/@mokoko/elixir';
 
 const indexedTable = data.councils.reduce((acc, council) => {
   const key = JSON.stringify(council.logics);
@@ -36,7 +36,54 @@ export function councilConverter(
   [first, second]: [number, number],
   councilId: string
 ): string {
-  const council = query.council.getOne(councilId);
+  const council = Council.query.getOne(councilId);
+
+  if (council.logics[0].type === 'swapValues') {
+    const target1Idx = council.logics[0].value[0];
+    const target2Idx = council.logics[0].value[1];
+    const matchCount = [target1Idx, target2Idx].filter(
+      (idx) => idx === first || idx === second
+    ).length;
+    const value = {
+      0: [2, 3],
+      1: [0, 2],
+      2: [0, 1],
+    }[matchCount];
+
+    return indexedTable[
+      JSON.stringify([
+        {
+          ...council.logics[0],
+          value,
+        },
+      ])
+    ].id;
+  }
+
+  if (council.logics[0].type === 'decreaseFirstTargetAndSwap') {
+    const target1Idx = council.logics[0].value[0];
+    const target2Idx = council.logics[0].value[1];
+    const isTarget1Included = [first, second].includes(target1Idx);
+    const isTarget2Included = [first, second].includes(target2Idx);
+    const value =
+      isTarget1Included && isTarget2Included
+        ? [0, 1]
+        : isTarget1Included
+        ? [0, 2]
+        : isTarget2Included
+        ? [2, 0]
+        : [2, 3];
+
+    return indexedTable[
+      JSON.stringify([
+        {
+          ...council.logics[0],
+          value,
+        },
+      ])
+    ].id;
+  }
+
   if (
     council.logics[0]?.targetType === 'proposed' &&
     council.logics[1]?.targetType === 'proposed'

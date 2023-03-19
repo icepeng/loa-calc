@@ -1,4 +1,3 @@
-import { query } from "../api";
 import { GameState } from "../model/game";
 import { CouncilService } from "./council";
 
@@ -9,6 +8,7 @@ export function createSageService(councilService: CouncilService) {
     const council3 = councilService.pick(state, 2, [council1, council2]);
     return {
       ...state,
+      phase: "council",
       sages: [
         {
           ...state.sages[0],
@@ -31,7 +31,7 @@ export function createSageService(councilService: CouncilService) {
     if (
       state.turnLeft === 1 &&
       [0, 1, 2].every((i) =>
-        ["seal"].includes(query.game.getCouncilType(state, i))
+        ["seal"].includes(GameState.query.getCouncilType(state, i))
       )
     ) {
       return { ...state };

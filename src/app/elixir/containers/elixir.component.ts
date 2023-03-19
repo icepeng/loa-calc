@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
-import { GameState } from '@mokoko/elixir';
-import { api, query } from '../../../../.yalc/@mokoko/elixir';
+import { api, data, GameState } from '../../../../.yalc/@mokoko/elixir';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
-import { fetchModel } from '../functions/fetch-model';
-import { createScoreCalculator } from '../functions/score';
+import { CouncilDialogComponent } from '../components/council-dialog.component';
+import { EvaluatorService } from '../evaluator.service';
 
 @Component({
   selector: 'app-elixir',
@@ -14,95 +12,76 @@ import { createScoreCalculator } from '../functions/score';
   styleUrls: ['./elixir.component.scss'],
 })
 export class ElixirComponent implements OnInit {
+  isLoading = false;
+
+  gameState = api.game.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
+
+  focusedIndices: [number, number] = [0, 1];
+
+  curveScores: number[] = [];
+  adviceScores: number[] = [];
+  totalScores: number[] = [];
+  baselineScore: number = 0;
+
+  dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
+
+  councils = data.councils;
+
   constructor(
     private titleService: Title,
-    private snackbar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private evaluator: EvaluatorService
   ) {
     this.titleService.setTitle(
       'LoaCalc : 엘릭서 시뮬레이션 - 로스트아크 최적화 계산기'
     );
   }
 
-  worker!: Worker;
-  isLoading = false;
-
-  gameState = api.game.getInitialGameState({ maxEnchant: 10, totalTurn: 14 });
-  selectedSageIndex: number | null = null;
-  selectedEffectIndex: number | null = null;
-
-  focusedIndices: [number, number] = [0, 1];
-
-  currentCurve: number[] = [];
-  curveScores: number[] = [];
-  adviceScores: number[] = [];
-  totalScores: number[] = [];
-  baselineScore: number = 0;
-
-  stateHistory: GameState[] = [this.gameState];
-
-  valueCalculator: ReturnType<typeof createScoreCalculator> | null = null;
-
-  dialogRef: MatDialogRef<LoadingDialogComponent> | null = null;
-
   ngOnInit(): void {
     this.dialogRef = this.dialog.open(LoadingDialogComponent, {
       disableClose: true,
     });
-    if (typeof Worker !== 'undefined') {
-      this.fetchInitialData();
-    } else {
-      this.snackbar.open(
-        'Web Worker가 지원되지 않는 브라우저입니다. 최신 브라우저를 사용해주세요.',
-        '닫기'
-      );
-    }
-  }
-
-  private fetchInitialData() {
-    this.isLoading = true;
-
-    console.time('initialized');
-
-    fetchModel().then((modelData) => {
-      console.time('createScoreCalculator');
-      this.valueCalculator = createScoreCalculator(modelData);
-      console.timeEnd('createScoreCalculator');
-      console.timeEnd('initialized');
+    this.evaluator.fetchInitialData().then(() => {
       this.updateScores();
       this.isLoading = false;
       this.dialogRef?.close();
     });
   }
 
-  get phase() {
-    return this.gameState.phase;
-  }
-
-  get uiState() {
-    return {
-      selectedSageIndex: this.selectedSageIndex,
-      selectedEffectIndex: this.selectedEffectIndex,
-    };
-  }
-
   get pickRatios() {
-    return query.game.getPickRatios(this.gameState);
+    return GameState.query.getPickRatios(this.gameState);
   }
 
   get luckyRatios() {
-    return query.game.getLuckyRatios(this.gameState);
+    return GameState.query.getLuckyRatios(this.gameState);
+  }
+
+  launchCouncilDialog(index: number) {
+    const dialogRef = this.dialog.open(CouncilDialogComponent, {
+      disableClose: false,
+      data: { gameState: this.gameState, index },
+    });
+
+    dialogRef.afterClosed().subscribe((councilId) => {
+      if (councilId == null) return;
+      this.setCouncil(index, councilId);
+    });
+  }
+
+  getCouncilDescription(id: string, index: number) {
+    return GameState.query.getCouncilDescriptionFromId(
+      this.gameState,
+      id,
+      index
+    );
   }
 
   updateScores() {
-    if (this.valueCalculator === null) return;
-
-    const scores = this.valueCalculator.calculateScores(
+    const scores = this.evaluator.evaluateScores(
       this.gameState,
-      this.currentCurve,
       this.focusedIndices
     );
-    this.baselineScore = this.valueCalculator.getBaselineAdviceScore(
+    this.baselineScore = this.evaluator.evaluateBaselineAdviceScore(
       this.gameState,
       this.focusedIndices
     );
@@ -110,57 +89,6 @@ export class ElixirComponent implements OnInit {
     this.curveScores = scores.curveScores;
     this.adviceScores = scores.adviceScores;
     this.totalScores = scores.totalScores;
-  }
-
-  selectSage(index: number) {
-    if (this.gameState.sages[index].isExhausted) return;
-
-    this.selectedSageIndex = index;
-  }
-
-  selectEffect(index: number) {
-    this.selectedEffectIndex = index;
-  }
-
-  applyCouncil() {
-    if (this.selectedSageIndex === null) return;
-    if (
-      query.game.isEffectSelectionRequired(
-        this.gameState,
-        this.selectedSageIndex
-      ) &&
-      this.selectedEffectIndex === null
-    ) {
-      return;
-    }
-
-    this.gameState = api.game.applyCouncil(this.gameState, this.uiState);
-    this.stateHistory.push(this.gameState);
-
-    if (this.gameState.phase === 'restart') {
-      this.resetStates();
-      return;
-    }
-  }
-
-  enchant() {
-    if (this.selectedSageIndex === null) return;
-
-    this.gameState = api.game.enchant(this.gameState, this.uiState);
-    this.stateHistory.push(this.gameState);
-    this.currentCurve = [...this.currentCurve, this.selectedSageIndex];
-    this.selectedSageIndex = null;
-    this.selectedEffectIndex = null;
-
-    if (this.gameState.phase !== 'done') {
-      this.updateScores();
-    }
-  }
-
-  reroll() {
-    this.gameState = api.game.reroll(this.gameState);
-    this.stateHistory.push(this.gameState);
-    this.updateScores();
   }
 
   onFocusTarget(index: number) {
@@ -171,21 +99,55 @@ export class ElixirComponent implements OnInit {
     this.updateScores();
   }
 
-  undo() {
-    this.gameState = this.stateHistory[this.stateHistory.length - 2];
-    this.stateHistory.pop();
-    this.updateScores();
-  }
-
   resetStates() {
     this.gameState = api.game.getInitialGameState({
       maxEnchant: 10,
       totalTurn: 14,
     });
-    this.selectedSageIndex = null;
-    this.selectedEffectIndex = null;
-    this.currentCurve = [];
-    this.stateHistory = [this.gameState];
+    this.updateScores();
+  }
+
+  increaseTurnLeft() {
+    this.gameState = {
+      ...this.gameState,
+      turnLeft: Math.min(
+        this.gameState.config.totalTurn,
+        this.gameState.turnLeft + 1
+      ),
+    };
+    this.updateScores();
+  }
+
+  decreaseTurnLeft() {
+    this.gameState = {
+      ...this.gameState,
+      turnLeft: Math.max(0, this.gameState.turnLeft - 1),
+    };
+    this.updateScores();
+  }
+
+  increaseEffectValue(index: number) {
+    this.gameState = GameState.increaseEffectValue(this.gameState, index, 1);
+    this.updateScores();
+  }
+
+  decreaseEffectValue(index: number) {
+    this.gameState = GameState.increaseEffectValue(this.gameState, index, -1);
+    this.updateScores();
+  }
+
+  setCouncil(index: number, councilId: string) {
+    this.gameState = {
+      ...this.gameState,
+      sages: this.gameState.sages.map((sage, i) =>
+        i === index
+          ? {
+              ...sage,
+              councilId,
+            }
+          : sage
+      ),
+    };
     this.updateScores();
   }
 

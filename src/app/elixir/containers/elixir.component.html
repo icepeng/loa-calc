@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="mat-h1">엘릭서</h1>
+  <h1 class="mat-h1">엘릭서 도우미</h1>
   <h2>Dev alpha. 합 8레벨 이상 목표.</h2>
   <div>
     <div>
@@ -7,8 +7,7 @@
         <mat-card
           *ngFor="let idx of [0, 1, 2]"
           class="sage"
-          [class.mat-elevation-z8]="selectedSageIndex === idx"
-          (click)="selectSage(idx)"
+          (click)="launchCouncilDialog(idx)"
         >
           <mat-card-content>
             <app-elixir-sage
@@ -23,9 +22,7 @@
         <div class="effect-list">
           <mat-card
             *ngFor="let effect of gameState.effects; index as i"
-            [class.mat-elevation-z8]="selectedEffectIndex === i"
             [class.is-focused]="focusedIndices.includes(i)"
-            (click)="selectEffect(i)"
           >
             <mat-card-content>
               <app-elixir-effect
@@ -34,6 +31,8 @@
                 [luckyRatios]="luckyRatios"
                 [index]="i"
                 (focusTarget)="onFocusTarget($event)"
+                (increase)="increaseEffectValue($event)"
+                (decrease)="decreaseEffectValue($event)"
               ></app-elixir-effect>
             </mat-card-content>
           </mat-card>
@@ -43,44 +42,17 @@
         <mat-card class="enchant-area">
           <mat-card-content>
             <div>남은 연성 {{ gameState.turnLeft }}회</div>
-            <mat-card-actions>
-              <button
-                [disabled]="phase !== 'council'"
-                (click)="applyCouncil()"
-                mat-flat-button
-                color="primary"
-              >
-                조언 적용
-              </button>
-              <button
-                [disabled]="phase !== 'enchant'"
-                (click)="enchant()"
-                mat-flat-button
-                color="primary"
-              >
-                연성
-              </button>
-            </mat-card-actions>
-          </mat-card-content>
-        </mat-card>
-        <mat-card>
-          <mat-card-content>
-            <div>
-              <button
-                (click)="reroll()"
-                mat-flat-button
-                color="primary"
-                [disabled]="phase !== 'council' || gameState.rerollLeft === 0"
-              >
-                다른 조언 보기 ({{ gameState.rerollLeft }}회 남음)
-              </button>
-            </div>
+            <button (click)="increaseTurnLeft()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+            <button (click)="decreaseTurnLeft()" mat-icon-button>
+              <mat-icon>remove</mat-icon>
+            </button>
             <div>
               가장 높은 조언점수가
               {{ baselineScore * 10000 | number : ".2" }} 이하일시 리롤 고려
             </div>
             <div>
-              <button mat-flat-button (click)="undo()">되돌리기</button>
               <button mat-flat-button color="warn" (click)="onResetClick()">
                 초기화
               </button>
@@ -88,11 +60,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-    </div>
-    <div>
-      <mat-card>
-        <mat-card-content> </mat-card-content>
-      </mat-card>
     </div>
   </div>
 </div>

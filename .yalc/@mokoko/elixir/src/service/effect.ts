@@ -35,16 +35,16 @@ export function createEffectService(chance: RngService) {
   function getUiSelectableEffects(state: GameState, index: number) {
     const otherSelectedEffectIds = state.effects
       .filter((eff) => eff.index !== index)
-      .map((eff) => eff.optionId);
+      .map((eff) => eff.optionName);
 
     return effectOptions.filter(
-      (eff) => !otherSelectedEffectIds.includes(eff.id)
+      (eff) => !otherSelectedEffectIds.includes(eff.name)
     );
   }
 
   function getEffectOptionCurrentDescription(state: GameState, index: number) {
     const eff = state.effects[index];
-    const option = Effect.query.getEffectOptionById(eff.optionId);
+    const option = Effect.query.getEffectOptionByName(eff.optionName);
     const level = Effect.query.getLevel(eff);
     return option.optionDescriptions[level];
   }

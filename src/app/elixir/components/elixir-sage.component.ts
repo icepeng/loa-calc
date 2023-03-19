@@ -1,10 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {
-  api,
-  query,
-  EffectOption,
-  GameState,
-} from '../../../../.yalc/@mokoko/elixir';
+import { EffectOption, GameState } from '../../../../.yalc/@mokoko/elixir';
 
 @Component({
   selector: 'app-elixir-sage',
@@ -26,7 +21,7 @@ export class ElixirSageComponent {
   }
 
   get description() {
-    return query.game.getCouncilDescription(this.gameState, this.index);
+    return GameState.query.getCouncilDescription(this.gameState, this.index);
   }
 
   get curveScore() {
@@ -39,11 +34,5 @@ export class ElixirSageComponent {
 
   get totalScore() {
     return this.totalScores[this.index];
-  }
-
-  effectName(index: number) {
-    return query.effect.getEffectOptionNameById(
-      this.gameState.effects[index].optionId
-    );
   }
 }

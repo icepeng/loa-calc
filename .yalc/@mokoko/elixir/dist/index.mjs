@@ -1,3 +1,18 @@
+var __defProp = Object.defineProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+
+// src/data/const.ts
+var const_exports = {};
+__export(const_exports, {
+  MAX_CHAOS: () => MAX_CHAOS,
+  MAX_LAWFUL: () => MAX_LAWFUL
+});
+var MAX_LAWFUL = 3;
+var MAX_CHAOS = 6;
+
 // src/data/council.ts
 var councils = [
   {
@@ -7456,7 +7471,6 @@ var effectLevelTable = {
 };
 var effectOptions = [
   {
-    id: "10001",
     name: "\uD798",
     optionDescriptions: [
       "\uD798",
@@ -7468,7 +7482,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10008",
     name: "\uC9C0\uB2A5",
     optionDescriptions: [
       "\uC9C0\uB2A5",
@@ -7480,7 +7493,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10020",
     name: "\uBBFC\uCCA9",
     optionDescriptions: [
       "\uBBFC\uCCA9",
@@ -7492,7 +7504,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10100",
     name: "\uACF5\uACA9\uB825",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7504,7 +7515,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10101",
     name: "\uBB34\uAE30 \uACF5\uACA9\uB825",
     optionDescriptions: [
       "\uBB34\uAE30 \uACF5\uACA9\uB825",
@@ -7516,7 +7526,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10102",
     name: "\uD0C8\uCD9C\uC758 \uB2EC\uC778",
     optionDescriptions: [
       "\uAE30\uC0C1\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
@@ -7528,7 +7537,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10103",
     name: "\uD68C\uD53C\uC758 \uB2EC\uC778",
     optionDescriptions: [
       "\uC774\uB3D9\uAE30 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04 \uAC10\uC18C",
@@ -7540,7 +7548,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10104",
     name: "\uB9C8\uB098",
     optionDescriptions: [
       "\uCD5C\uB300 \uB9C8\uB098",
@@ -7552,7 +7559,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10105",
     name: "\uC0DD\uBA85\uC758 \uCD95\uBCF5",
     optionDescriptions: [
       "\uC804\uD22C \uC911 \uC0DD\uBA85\uB825 \uD68C\uBCF5\uB7C9",
@@ -7564,7 +7570,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10106",
     name: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
     optionDescriptions: [
       "\uC804\uD22C \uC790\uC6D0 \uC790\uC5F0 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
@@ -7576,7 +7581,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10107",
     name: "\uBC29\uB791\uC790",
     optionDescriptions: [
       "\uD30C\uD2F0 \uBC0F \uACF5\uACA9\uB300\uAC00 \uC544\uB2D0 \uACBD\uC6B0 \uD53C\uD574 \uC99D\uAC00",
@@ -7588,7 +7592,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10108",
     name: "\uBB34\uB825\uD654",
     optionDescriptions: [
       "\uBB34\uB825\uD654 \uD53C\uD574\uB7C9",
@@ -7600,7 +7603,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10109",
     name: "\uBB3C\uC57D \uC911\uB3C5",
     optionDescriptions: [
       "\uD68C\uBCF5\uD615 \uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD68C\uBCF5\uB7C9 \uC99D\uAC00",
@@ -7612,7 +7614,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "10110",
     name: "\uD3ED\uBC1C\uBB3C \uB2EC\uC778",
     optionDescriptions: [
       "\uBC30\uD2C0 \uC544\uC774\uD15C\uC758 \uD53C\uD574\uB7C9 \uC99D\uAC00",
@@ -7624,7 +7625,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11000",
     name: "\uD589\uC6B4 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7636,7 +7636,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11001",
     name: "\uD68C\uC2EC (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7648,7 +7647,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11002",
     name: "\uB2EC\uC778 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7660,7 +7658,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11003",
     name: "\uAC15\uB9F9 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7672,7 +7669,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11004",
     name: "\uCE7C\uB0A0 \uBC29\uD328 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7684,7 +7680,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11005",
     name: "\uC120\uBD09\uB300 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uACF5\uACA9\uB825",
@@ -7696,7 +7691,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11006",
     name: "\uC120\uAC01\uC790 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
@@ -7708,7 +7702,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11007",
     name: "\uC9C4\uAD70 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
@@ -7720,7 +7713,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "11008",
     name: "\uC2E0\uB150 (\uC9C8\uC11C)",
     optionDescriptions: [
       "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
@@ -7732,7 +7724,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "12000",
     name: "\uBCF4\uC2A4 \uD53C\uD574",
     optionDescriptions: [
       "\uBCF4\uC2A4 \uB4F1\uAE09 \uC774\uC0C1 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7744,7 +7735,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "12001",
     name: "\uAC01\uC131\uAE30 \uD53C\uD574",
     optionDescriptions: [
       "\uAC01\uC131\uAE30 \uD53C\uD574",
@@ -7756,7 +7746,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "12002",
     name: "\uBCF4\uD638\uB9C9 \uAC15\uD654",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
@@ -7768,7 +7757,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "12003",
     name: "\uD68C\uBCF5 \uAC15\uD654",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uD6A8\uACFC",
@@ -7780,7 +7768,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "13000",
     name: "\uCD5C\uB300 \uC0DD\uBA85\uB825",
     optionDescriptions: [
       "\uCD5C\uB300 \uC0DD\uBA85\uB825",
@@ -7792,7 +7779,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "13001",
     name: "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
     optionDescriptions: [
       "\uBC1B\uB294 \uD53C\uD574 \uAC10\uC18C",
@@ -7804,7 +7790,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "13002",
     name: "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
     optionDescriptions: [
       "\uBB3C\uB9AC \uBC29\uC5B4\uB825",
@@ -7816,7 +7801,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "13003",
     name: "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
     optionDescriptions: [
       "\uB9C8\uBC95 \uBC29\uC5B4\uB825",
@@ -7828,7 +7812,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "14000",
     name: "\uCE58\uBA85\uD0C0 \uD53C\uD574",
     optionDescriptions: [
       "\uCE58\uBA85\uD0C0 \uD53C\uD574",
@@ -7840,7 +7823,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "14001",
     name: "\uCD94\uAC00 \uD53C\uD574",
     optionDescriptions: [
       "\uCD94\uAC00 \uD53C\uD574",
@@ -7852,7 +7834,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "14002",
     name: "\uC544\uC774\uB374\uD2F0\uD2F0 \uD68D\uB4DD",
     optionDescriptions: [
       "\uACF5\uACA9 \uC801\uC911 \uC2DC \uC544\uC774\uB374\uD2F0\uD2F0 \uAC8C\uC774\uC9C0 \uD68D\uB4DD\uB7C9",
@@ -7864,7 +7845,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "14003",
     name: "\uC544\uAD70 \uAC15\uD654",
     optionDescriptions: [
       "\uC790\uC2E0\uC758 \uACF5\uACA9\uB825\uC5D0 \uAE30\uBC18\uD55C \uD30C\uD2F0 \uACF5\uACA9\uB825 \uBC84\uD504 \uD6A8\uACFC",
@@ -7876,7 +7856,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15000",
     name: "\uD589\uC6B4 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7888,7 +7867,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15001",
     name: "\uD68C\uC2EC (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7900,7 +7878,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15002",
     name: "\uB2EC\uC778 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7912,7 +7889,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15003",
     name: "\uAC15\uB9F9 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uCD94\uAC00 \uD53C\uD574",
@@ -7924,7 +7900,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15004",
     name: "\uCE7C\uB0A0 \uBC29\uD328 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7936,7 +7911,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15005",
     name: "\uC120\uBD09\uB300 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uC801\uC5D0\uAC8C \uC8FC\uB294 \uD53C\uD574",
@@ -7948,7 +7922,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15006",
     name: "\uC120\uAC01\uC790 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
@@ -7960,7 +7933,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15007",
     name: "\uC9C4\uAD70 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
@@ -7972,7 +7944,6 @@ var effectOptions = [
     ]
   },
   {
-    id: "15008",
     name: "\uC2E0\uB150 (\uD63C\uB3C8)",
     optionDescriptions: [
       "\uD30C\uD2F0\uC6D0\uC5D0\uAC8C \uC8FC\uB294 \uD68C\uBCF5 \uBC0F \uBCF4\uD638\uB9C9 \uD6A8\uACFC",
@@ -7984,7 +7955,7 @@ var effectOptions = [
     ]
   }
 ];
-var effectOptionsRecord = Object.fromEntries(effectOptions.map((item) => [item.id, item]));
+var effectOptionsRecord = Object.fromEntries(effectOptions.map((item) => [item.name, item]));
 
 // src/model/mutation.ts
 function createProbMutation(index, value, remainTurn) {
@@ -8032,10 +8003,6 @@ var Mutation = {
   createEnchantEffectCountMutation,
   passTurn
 };
-
-// src/data/const.ts
-var MAX_LAWFUL = 3;
-var MAX_CHAOS = 6;
 
 // src/model/sage.ts
 function createInitialState(index) {
@@ -8116,13 +8083,13 @@ function setValue(effect, value) {
     value
   };
 }
-function setOptionId(effect, optionId) {
+function setOptionName(effect, optionName) {
   if (effect.isSealed) {
     throw new Error("Effect is sealed");
   }
   return {
     ...effect,
-    optionId
+    optionName
   };
 }
 function seal(effect) {
@@ -8153,30 +8120,26 @@ function getLevel(effect) {
   }
   return effectLevelTable[value];
 }
-function getEffectOptionById(id) {
-  const option = effectOptionsRecord[id];
+function getEffectOptionByName(name) {
+  const option = effectOptionsRecord[name];
   if (!option) {
-    throw new Error(`Invalid effect option id: ${id}`);
+    throw new Error(`Invalid effect option id: ${name}`);
   }
   return option;
 }
-function getEffectOptionNameById(id) {
-  return getEffectOptionById(id).name;
-}
-function getEffectOptionDescriptionByIdAndLevel(id, level) {
-  const option = getEffectOptionById(id);
+function getEffectOptionDescriptionByNameAndLevel(name, level) {
+  const option = getEffectOptionByName(name);
   return option.optionDescriptions[level];
 }
 var query2 = {
   isMutable,
   getLevel,
-  getEffectOptionById,
-  getEffectOptionNameById,
-  getEffectOptionDescriptionByIdAndLevel
+  getEffectOptionByName,
+  getEffectOptionDescriptionByNameAndLevel
 };
 var Effect = {
   setValue,
-  setOptionId,
+  setOptionName,
   seal,
   unseal,
   query: query2
@@ -8200,37 +8163,37 @@ function cycle(n, mod, direction) {
 function createInitialState2(config) {
   return {
     config,
-    phase: "council",
+    phase: "pickup",
     turnLeft: config.totalTurn,
     turnPassed: 0,
     rerollLeft: 2,
     effects: [
       {
-        optionId: "12000",
+        optionName: "\uBCF4\uC2A4 \uD53C\uD574",
         index: 0,
         value: 0,
         isSealed: false
       },
       {
-        optionId: "10101",
+        optionName: "\uBB34\uAE30 \uACF5\uACA9\uB825",
         index: 1,
         value: 0,
         isSealed: false
       },
       {
-        optionId: "10001",
+        optionName: "\uBBFC\uCCA9",
         index: 2,
         value: 0,
         isSealed: false
       },
       {
-        optionId: "10106",
+        optionName: "\uC790\uC6D0\uC758 \uCD95\uBCF5",
         index: 3,
         value: 0,
         isSealed: false
       },
       {
-        optionId: "10108",
+        optionName: "\uBB34\uB825\uD654",
         index: 4,
         value: 0,
         isSealed: false
@@ -8266,7 +8229,7 @@ function passTurn2(state, selectedSageIndex) {
   if (state.turnLeft <= 0) {
     throw new Error("No turn left");
   }
-  const nextPhase = state.turnLeft === 1 ? "done" : "council";
+  const nextPhase = state.turnLeft === 1 ? "done" : "pickup";
   return {
     ...state,
     phase: nextPhase,
@@ -8380,11 +8343,14 @@ function getEffectLevel(state, index) {
   const effect = state.effects[index];
   return Effect.query.getLevel(effect);
 }
-function checkSealNeeded(state) {
+function getEffectCountToSeal(state) {
   const sealedEffectCount = state.effects.filter(
     (effect) => effect.isSealed
   ).length;
-  const toSeal = 3 - sealedEffectCount;
+  return 3 - sealedEffectCount;
+}
+function checkSealNeeded(state) {
+  const toSeal = getEffectCountToSeal(state);
   return state.turnLeft <= toSeal;
 }
 function getCouncilType(state, sageIndex) {
@@ -8420,16 +8386,17 @@ function isTurnInRange(state, [min, max]) {
   const turn = state.config.totalTurn - state.turnLeft + 1;
   return turn >= min && turn < max;
 }
-function getCouncilDescription(state, sageIndex) {
-  const id = state.sages[sageIndex].councilId;
+function getCouncilDescriptionFromId(state, id, sageIndex) {
   const council = Council.query.getOne(id);
   if (!council) {
     throw new Error("Invalid council id");
   }
-  const effectNames = state.effects.map(
-    (eff) => Effect.query.getEffectOptionNameById(eff.optionId)
-  );
+  const effectNames = state.effects.map((eff) => eff.optionName);
   return council.descriptions[sageIndex].replaceAll("{0}", effectNames[0]).replaceAll("{1}", effectNames[1]).replaceAll("{2}", effectNames[2]).replaceAll("{3}", effectNames[3]).replaceAll("{4}", effectNames[4]);
+}
+function getCouncilDescription(state, sageIndex) {
+  const id = state.sages[sageIndex].councilId;
+  return getCouncilDescriptionFromId(state, id, sageIndex);
 }
 function getPickRatios(state) {
   const mutableCount = [0, 1, 2, 3, 4].filter(
@@ -8502,10 +8469,12 @@ var query3 = {
   isEffectSealed,
   getEffectValue,
   getEffectLevel,
+  getEffectCountToSeal,
   checkSealNeeded,
   getCouncilType,
   isTurnInRange,
   isSageExhausted,
+  getCouncilDescriptionFromId,
   getCouncilDescription,
   getPickRatios,
   getLuckyRatios,
@@ -8623,14 +8592,14 @@ function createEffectService(chance2) {
     return [max, pickedMax];
   }
   function getUiSelectableEffects(state, index) {
-    const otherSelectedEffectIds = state.effects.filter((eff) => eff.index !== index).map((eff) => eff.optionId);
+    const otherSelectedEffectIds = state.effects.filter((eff) => eff.index !== index).map((eff) => eff.optionName);
     return effectOptions.filter(
-      (eff) => !otherSelectedEffectIds.includes(eff.id)
+      (eff) => !otherSelectedEffectIds.includes(eff.name)
     );
   }
   function getEffectOptionCurrentDescription(state, index) {
     const eff = state.effects[index];
-    const option = Effect.query.getEffectOptionById(eff.optionId);
+    const option = Effect.query.getEffectOptionByName(eff.optionName);
     const level = Effect.query.getLevel(eff);
     return option.optionDescriptions[level];
   }
@@ -8649,6 +8618,9 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
     return sageService2.updateCouncils(state);
   }
   function applyCouncil(state, ui) {
+    if (state.phase !== "council") {
+      throw new Error("Invalid phase in council: " + state.phase);
+    }
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
@@ -8676,6 +8648,9 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
     };
   }
   function enchant(state, ui) {
+    if (state.phase !== "enchant") {
+      throw new Error("Invalid phase in enchant: " + state.phase);
+    }
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
@@ -8705,16 +8680,27 @@ function createGameService(chance2, sageService2, logicService2, targetService2)
     return sageService2.updateCouncils(nextState);
   }
   function reroll(state) {
+    if (state.phase !== "council") {
+      throw new Error("Invalid phase in reroll: " + state.phase);
+    }
     if (state.rerollLeft <= 0) {
       throw new Error("No reroll left");
     }
     return sageService2.rerollCouncils(GameState.decreaseRerollLeft(state));
   }
+  function step(state, ui) {
+    const counciled = applyCouncil(state, ui);
+    if (counciled.phase === "restart") {
+      return getInitialGameState(counciled.config);
+    }
+    return sageService2.updateCouncils(enchant(counciled, ui));
+  }
   return {
     getInitialGameState,
     applyCouncil,
     enchant,
-    reroll
+    reroll,
+    step
   };
 }
 
@@ -9042,10 +9028,7 @@ function createLogicGuardService() {
   }
   function decreaseTurnLeft(state, logic) {
     const turnLeftAfterEnchant = state.turnLeft - logic.value[0] - 1;
-    const sealedEffectCount = state.effects.filter(
-      (effect) => effect.isSealed
-    ).length;
-    const toSeal = 3 - sealedEffectCount;
+    const toSeal = GameState.query.getEffectCountToSeal(state);
     return turnLeftAfterEnchant >= toSeal;
   }
   function shuffleAll(state, logic) {
@@ -9251,6 +9234,7 @@ function createSageService(councilService2) {
     const council3 = councilService2.pick(state, 2, [council1, council2]);
     return {
       ...state,
+      phase: "council",
       sages: [
         {
           ...state.sages[0],
@@ -9269,7 +9253,7 @@ function createSageService(councilService2) {
   }
   function rerollCouncils(state) {
     if (state.turnLeft === 1 && [0, 1, 2].every(
-      (i) => ["seal"].includes(query5.game.getCouncilType(state, i))
+      (i) => ["seal"].includes(GameState.query.getCouncilType(state, i))
     )) {
       return { ...state };
     }
@@ -9402,12 +9386,6 @@ var gameService = createGameService(
   logicService,
   targetService
 );
-var query5 = {
-  council: Council.query,
-  effect: Effect.query,
-  game: GameState.query,
-  sage: Sage.query
-};
 var api = {
   game: gameService,
   sage: sageService,
@@ -9418,62 +9396,17 @@ var api = {
   rng: chance
 };
 var data = {
+  constant: const_exports,
   councils,
   effectLevelTable,
   effectOptions
 };
-
-// src/benchmark.ts
-function benchmark({
-  selectionFn,
-  scoreFn,
-  iteration,
-  config,
-  seed
-}) {
-  api.rng.setSeed(seed);
-  let totalScore = 0;
-  for (let i = 0; i < iteration; i++) {
-    if (i % 1e3 === 0) {
-      console.log(
-        `Iteration: ${i} Score: ${totalScore} Ratio: ${totalScore / i}`
-      );
-    }
-    let state = api.game.getInitialGameState(config);
-    let uiStateHistory = [];
-    while (state.phase !== "done") {
-      const action = selectionFn(state, uiStateHistory);
-      if (action.type === "reroll") {
-        state = api.game.reroll(state);
-        continue;
-      }
-      const uiState = {
-        selectedSageIndex: action.sageIndex,
-        selectedEffectIndex: action.effectIndex
-      };
-      state = api.game.applyCouncil(state, uiState);
-      uiStateHistory.push(uiState);
-      if (state.phase === "restart") {
-        state = api.game.getInitialGameState(config);
-        uiStateHistory = [];
-        continue;
-      }
-      state = api.game.enchant(state, uiState);
-    }
-    const sealedCount = state.effects.filter((x) => x.isSealed).length;
-    if (sealedCount !== 3) {
-      throw new Error("Effects are not sealed properly, count: " + sealedCount);
-    }
-    totalScore += scoreFn(state);
-  }
-  return {
-    totalScore,
-    iteration
-  };
-}
 export {
+  Council,
+  Effect,
+  GameState,
+  Mutation,
+  Sage,
   api,
-  benchmark,
-  data,
-  query5 as query
+  data
 };

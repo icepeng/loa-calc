@@ -1,5 +1,4 @@
 import { Council } from "../model/council";
-import { Effect } from "../model/effect";
 import { GameConfiguration, GameState } from "../model/game";
 import { UiState } from "../model/ui";
 import { LogicService } from "./logic";
@@ -19,6 +18,9 @@ export function createGameService(
   }
 
   function applyCouncil(state: GameState, ui: UiState): GameState {
+    if (state.phase !== "council") {
+      throw new Error("Invalid phase in council: " + state.phase);
+    }
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
@@ -57,6 +59,9 @@ export function createGameService(
   }
 
   function enchant(state: GameState, ui: UiState): GameState {
+    if (state.phase !== "enchant") {
+      throw new Error("Invalid phase in enchant: " + state.phase);
+    }
     if (ui.selectedSageIndex === null) {
       throw new Error("Sage is not selected");
     }
@@ -94,16 +99,31 @@ export function createGameService(
   }
 
   function reroll(state: GameState): GameState {
+    if (state.phase !== "council") {
+      throw new Error("Invalid phase in reroll: " + state.phase);
+    }
     if (state.rerollLeft <= 0) {
       throw new Error("No reroll left");
     }
 
     return sageService.rerollCouncils(GameState.decreaseRerollLeft(state));
   }
+
+  function step(state: GameState, ui: UiState): GameState {
+    const counciled = applyCouncil(state, ui);
+
+    if (counciled.phase === "restart") {
+      return getInitialGameState(counciled.config);
+    }
+
+    return sageService.updateCouncils(enchant(counciled, ui));
+  }
+
   return {
     getInitialGameState,
     applyCouncil,
     enchant,
     reroll,
+    step,
   };
 }

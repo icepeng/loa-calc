@@ -11,7 +11,7 @@ export interface GameConfiguration {
 
 export interface GameState {
   config: GameConfiguration;
-  phase: "restart" | "council" | "enchant" | "done";
+  phase: "restart" | "pickup" | "council" | "enchant" | "done";
   turnLeft: number;
   turnPassed: number;
   rerollLeft: number;
@@ -24,37 +24,37 @@ export interface GameState {
 function createInitialState(config: GameConfiguration): GameState {
   return {
     config,
-    phase: "council",
+    phase: "pickup",
     turnLeft: config.totalTurn,
     turnPassed: 0,
     rerollLeft: 2,
     effects: [
       {
-        optionId: "12000",
+        optionName: "보스 피해",
         index: 0,
         value: 0,
         isSealed: false,
       },
       {
-        optionId: "10101",
+        optionName: "무기 공격력",
         index: 1,
         value: 0,
         isSealed: false,
       },
       {
-        optionId: "10001",
+        optionName: "민첩",
         index: 2,
         value: 0,
         isSealed: false,
       },
       {
-        optionId: "10106",
+        optionName: "자원의 축복",
         index: 3,
         value: 0,
         isSealed: false,
       },
       {
-        optionId: "10108",
+        optionName: "무력화",
         index: 4,
         value: 0,
         isSealed: false,
@@ -97,7 +97,7 @@ function passTurn(state: GameState, selectedSageIndex: number): GameState {
     throw new Error("No turn left");
   }
 
-  const nextPhase = state.turnLeft === 1 ? "done" : "council";
+  const nextPhase = state.turnLeft === 1 ? "done" : "pickup";
 
   return {
     ...state,
@@ -247,11 +247,15 @@ function getEffectLevel(state: GameState, index: number): number {
   return Effect.query.getLevel(effect);
 }
 
-function checkSealNeeded(state: GameState) {
+function getEffectCountToSeal(state: GameState): number {
   const sealedEffectCount = state.effects.filter(
     (effect) => effect.isSealed
   ).length;
-  const toSeal = 3 - sealedEffectCount;
+  return 3 - sealedEffectCount;
+}
+
+function checkSealNeeded(state: GameState) {
+  const toSeal = getEffectCountToSeal(state);
 
   return state.turnLeft <= toSeal;
 }
@@ -301,15 +305,16 @@ function isTurnInRange(state: GameState, [min, max]: [number, number]) {
   return turn >= min && turn < max;
 }
 
-function getCouncilDescription(state: GameState, sageIndex: number) {
-  const id = state.sages[sageIndex].councilId;
+function getCouncilDescriptionFromId(
+  state: GameState,
+  id: string,
+  sageIndex: number
+) {
   const council = Council.query.getOne(id);
   if (!council) {
     throw new Error("Invalid council id");
   }
-  const effectNames = state.effects.map((eff) =>
-    Effect.query.getEffectOptionNameById(eff.optionId)
-  );
+  const effectNames = state.effects.map((eff) => eff.optionName);
 
   return council.descriptions[sageIndex]
     .replaceAll("{0}", effectNames[0])
@@ -317,6 +322,11 @@ function getCouncilDescription(state: GameState, sageIndex: number) {
     .replaceAll("{2}", effectNames[2])
     .replaceAll("{3}", effectNames[3])
     .replaceAll("{4}", effectNames[4]);
+}
+
+function getCouncilDescription(state: GameState, sageIndex: number) {
+  const id = state.sages[sageIndex].councilId;
+  return getCouncilDescriptionFromId(state, id, sageIndex);
 }
 
 // mutation
@@ -423,10 +433,12 @@ const query = {
   isEffectSealed,
   getEffectValue,
   getEffectLevel,
+  getEffectCountToSeal,
   checkSealNeeded,
   getCouncilType,
   isTurnInRange,
   isSageExhausted,
+  getCouncilDescriptionFromId,
   getCouncilDescription,
   getPickRatios,
   getLuckyRatios,

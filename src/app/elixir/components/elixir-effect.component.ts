@@ -12,6 +12,8 @@ export class ElixirEffectComponent {
   @Input() luckyRatios!: number[];
   @Input() index!: number;
   @Output() focusTarget = new EventEmitter<number>();
+  @Output() increase = new EventEmitter<number>();
+  @Output() decrease = new EventEmitter<number>();
 
   constructor() {}
 

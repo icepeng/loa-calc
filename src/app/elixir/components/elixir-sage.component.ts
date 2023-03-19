@@ -54,7 +54,7 @@ export class ElixirSageComponent {
 
   launchCouncilDialog(index: number) {
     const dialogRef = this.dialog.open(CouncilDialogComponent, {
-      disableClose: false,
+      disableClose: true,
       data: { gameState: this.gameState, index },
     });
 

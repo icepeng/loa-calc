@@ -17,6 +17,7 @@ import { getKoreanRegex } from 'ko-fuzzy';
       .row {
         border-bottom: 1px solid #ccc;
         padding: 12px 8px;
+        cursor: pointer;
       }
 
       .row.selected {
@@ -66,9 +67,10 @@ export class CouncilDialogComponent implements OnInit {
     this.filterText = str;
     this.filteredDataSource = this.dataSource.filter((data) => {
       if (this.filterText === '') return true;
-      return getKoreanRegex(this.filterText, { consonantMatch: false }).test(
-        data.description
-      );
+      return getKoreanRegex(this.filterText, {
+        consonantMatch: true,
+        fuzzy: true,
+      }).test(data.description);
     });
   }
 

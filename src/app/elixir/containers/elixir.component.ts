@@ -8,7 +8,6 @@ import {
   SageType,
 } from '../../../../.yalc/@mokoko/elixir';
 import { LoadingDialogComponent } from '../../core/components/loading-dialog.component';
-import { CouncilDialogComponent } from '../components/council-dialog.component';
 import { EvaluatorService } from '../evaluator.service';
 
 @Component({

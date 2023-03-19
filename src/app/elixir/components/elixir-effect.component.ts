@@ -14,6 +14,8 @@ export class ElixirEffectComponent {
   @Output() focusTarget = new EventEmitter<number>();
   @Output() increase = new EventEmitter<number>();
   @Output() decrease = new EventEmitter<number>();
+  @Output() setValue = new EventEmitter<number>();
+  @Output() setSealed = new EventEmitter<boolean>();
 
   constructor() {}
 

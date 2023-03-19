@@ -12,6 +12,7 @@
         class="effect-value-square"
         *ngFor="let level of valueSquares; index as idx"
         [ngClass]="{ 'is-filled': effect.value > idx }"
+        (click)="setValue.emit(idx + 1)"
       >
         <span>{{ level }}</span>
       </div>
@@ -31,5 +32,12 @@
         <mat-icon>remove</mat-icon>
       </button>
     </div>
+  </div>
+  <div>
+    <mat-checkbox
+      [ngModel]="gameState.effects[index].isSealed"
+      (ngModelChange)="setSealed.emit($event)"
+      >봉인</mat-checkbox
+    >
   </div>
 </div>

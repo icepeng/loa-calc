@@ -137,6 +137,20 @@ export class ElixirComponent implements OnInit {
     this.updateScores();
   }
 
+  setEffectValue(index: number, value: number) {
+    this.gameState = GameState.setEffectValue(this.gameState, index, value);
+    this.updateScores();
+  }
+
+  setEffectSealed(index: number, isSealed: boolean) {
+    if (isSealed) {
+      this.gameState = GameState.sealEffect(this.gameState, index);
+    } else {
+      this.gameState = GameState.unsealEffect(this.gameState, index);
+    }
+    this.updateScores();
+  }
+
   setCouncil(index: number, councilId: string) {
     this.gameState = {
       ...this.gameState,

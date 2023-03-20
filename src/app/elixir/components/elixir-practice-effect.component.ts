@@ -14,6 +14,7 @@ export class ElixirPracticeEffectComponent {
   @Input() pickRatios!: number[];
   @Input() luckyRatios!: number[];
   @Input() index!: number;
+  @Input() isFocused!: boolean;
   @Output() focusTarget = new EventEmitter<number>();
 
   constructor() {}

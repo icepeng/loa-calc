@@ -34,6 +34,7 @@
                 [pickRatios]="pickRatios"
                 [luckyRatios]="luckyRatios"
                 [index]="i"
+                [isFocused]="focusedIndices.includes(i)"
                 (focusTarget)="onFocusTarget($event)"
               ></app-elixir-practice-effect>
             </mat-card-content>

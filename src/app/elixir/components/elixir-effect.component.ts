@@ -10,6 +10,7 @@ export class ElixirEffectComponent {
   @Input() gameState!: GameState;
   @Input() pickRatios!: number[];
   @Input() luckyRatios!: number[];
+  @Input() isFocused!: boolean;
   @Input() index!: number;
   @Output() focusTarget = new EventEmitter<number>();
   @Output() increase = new EventEmitter<number>();

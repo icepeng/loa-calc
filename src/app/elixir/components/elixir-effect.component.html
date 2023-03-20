@@ -20,8 +20,14 @@
   </div>
   <div>
     <div>
-      <button (click)="onFocusTarget($event)" mat-flat-button color="primary">
-        목표로 지정
+      <button
+        [disabled]="isFocused"
+        (click)="onFocusTarget($event)"
+        mat-flat-button
+        color="primary"
+      >
+        <span *ngIf="!isFocused">목표로 지정</span>
+        <span *ngIf="isFocused">지정된 목표</span>
       </button>
     </div>
     <div>

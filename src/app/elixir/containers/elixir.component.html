@@ -61,6 +61,7 @@
               [pickRatios]="pickRatios"
               [luckyRatios]="luckyRatios"
               [index]="i"
+              [isFocused]="focusedIndices.includes(i)"
               (focusTarget)="onFocusTarget($event)"
               (increase)="increaseEffectValue($event)"
               (decrease)="decreaseEffectValue($event)"

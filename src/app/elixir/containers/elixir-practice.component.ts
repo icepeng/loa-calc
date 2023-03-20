@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { api, GameState } from '../../../../.yalc/@mokoko/elixir';
@@ -32,7 +31,6 @@ export class ElixirPracticeComponent implements OnInit {
   constructor(
     private titleService: Title,
     private snackbar: MatSnackBar,
-    private dialog: MatDialog,
     private evaluator: EvaluatorService
   ) {
     this.titleService.setTitle(

@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  marketPriceUrl:
-    'https://pub-230a05675f8f4c8cb5a3f28ed44c27dd.r2.dev/refine_v2.json',
+  marketPriceUrl: 'https://market-cron.icepeng.workers.dev',
 };
 
 /*

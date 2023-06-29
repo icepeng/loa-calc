@@ -44,7 +44,6 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
     하급오레하: new FormControl(true),
     중급오레하: new FormControl(true),
     상급오레하: new FormControl(true),
-    명돌: new FormControl(true),
     위명돌: new FormControl(true),
     경명돌: new FormControl(true),
     찬명돌: new FormControl(true),
@@ -100,9 +99,6 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
           if (name === '위명돌') {
             return ['찬명돌', amount / 25];
           }
-          if (name === '명돌') {
-            return ['찬명돌', amount / 125];
-          }
         }
         if (itemTier === 't3_1390') {
           if (name === '수결') {
@@ -113,14 +109,6 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
           }
           if (name === '위명돌') {
             return ['경명돌', amount / 5];
-          }
-          if (name === '명돌') {
-            return ['경명돌', amount / 25];
-          }
-        }
-        if (itemTier === 't3_1340') {
-          if (name === '명돌') {
-            return ['위명돌', amount / 5];
           }
         }
         return [name, amount];

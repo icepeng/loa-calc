@@ -27,7 +27,7 @@ export class RaidBoxComponent implements OnInit {
     혼돈의돌: new FormControl(500),
   });
 
-  tierControl = new FormControl('t3_1302');
+  tierControl = new FormControl('t3_1250');
   raidControl = new FormControl('');
   raidList = Object.keys(raidGroup);
 

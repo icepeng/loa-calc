@@ -33,8 +33,7 @@ export class MarketPriceService {
         getPrice('명예의 파편 주머니(중)') / 1000,
         getPrice('명예의 파편 주머니(대)') / 1500
       ),
-      하급오레하: getPrice('하급 오레하 융화 재료'),
-      중급오레하: getPrice('중급 오레하 융화 재료'),
+      중급오레하: getPrice('오레하 융화 재료'),
       상급오레하: getPrice('상급 오레하 융화 재료'),
       최상급오레하: getPrice('최상급 오레하 융화 재료'),
       명돌: getPrice('명예의 돌파석'),

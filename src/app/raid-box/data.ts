@@ -68,7 +68,7 @@ export const rewardData = {
     rewards: {
       파결: 48,
       수결: 96,
-      명돌: 4,
+      위명돌: 4,
     },
   },
   '오레하 프라바사(노말)': {
@@ -76,7 +76,7 @@ export const rewardData = {
     rewards: {
       파결: 60,
       수결: 120,
-      명돌: 4,
+      위명돌: 4,
       파편: 600,
     },
   },

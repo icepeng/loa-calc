@@ -17,6 +17,11 @@ const breathTable: Record<number, Record<string, [number, number]>> = {
     축복: [6, 0.0333],
     가호: [2, 0.1],
   },
+  0.5: {
+    은총: [12, 0.0105],
+    축복: [6, 0.0279],
+    가호: [2, 0.0837],
+  },
   0.45: {
     은총: [12, 0.0125],
     축복: [6, 0.025],
@@ -74,262 +79,114 @@ export const refineData: Record<
   Record<string, Record<number, RefineTableData>>
 > = {
   armor: {
-    t3_1302: {
-      7: {
-        baseProb: 0.6,
+    t3_1250: {
+      3: {
+        baseProb: 0.5,
         amount: {
-          수결: 156,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 42,
-          골드: 220,
+          수결: 190,
+          위명돌: 7,
+          파편: 120,
         },
         breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.6],
+          ...breathTable[0.5],
         },
       },
-      8: {
-        baseProb: 0.45,
+      4: {
+        baseProb: 0.5,
         amount: {
-          수결: 156,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 42,
-          골드: 220,
+          수결: 230,
+          위명돌: 7,
+          파편: 120,
         },
         breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.45],
+          ...breathTable[0.5],
         },
       },
-      9: {
+      5: {
         baseProb: 0.3,
         amount: {
-          수결: 156,
-          명돌: 4,
-          하급오레하: 2,
-          파편: 42,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      10: {
-        baseProb: 0.3,
-        amount: {
-          수결: 192,
-          명돌: 6,
-          하급오레하: 4,
-          파편: 50,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      11: {
-        baseProb: 0.3,
-        amount: {
-          수결: 192,
-          명돌: 6,
-          하급오레하: 4,
-          파편: 50,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      12: {
-        baseProb: 0.15,
-        amount: {
-          수결: 192,
-          명돌: 6,
-          하급오레하: 4,
-          파편: 50,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      13: {
-        baseProb: 0.15,
-        amount: {
-          수결: 228,
-          명돌: 6,
-          하급오레하: 4,
-          파편: 60,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      14: {
-        baseProb: 0.15,
-        amount: {
-          수결: 228,
-          명돌: 8,
-          하급오레하: 4,
-          파편: 60,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      15: {
-        baseProb: 0.1,
-        amount: {
-          수결: 228,
-          명돌: 8,
-          하급오레하: 4,
-          파편: 60,
-          골드: 220,
-        },
-        breath: {
-          재봉술기본: [1, 0.1],
-          ...breathTable[0.1],
-        },
-      },
-    },
-    t3_1340: {
-      7: {
-        baseProb: 0.6,
-        amount: {
-          수결: 404,
+          수결: 230,
           위명돌: 8,
-          중급오레하: 6,
-          파편: 108,
-          골드: 330,
+          중급오레하: 3,
+          파편: 150,
+          골드: 70,
         },
         breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.6],
+          재봉술기본: [1, 0.1],
+          ...breathTable[0.3],
+        },
+      },
+      6: {
+        baseProb: 0.3,
+        amount: {
+          수결: 230,
+          위명돌: 8,
+          중급오레하: 3,
+          파편: 150,
+          골드: 90,
+        },
+        breath: {
+          재봉술기본: [1, 0.1],
+          ...breathTable[0.3],
+        },
+      },
+      7: {
+        baseProb: 0.2,
+        amount: {
+          수결: 280,
+          위명돌: 9,
+          중급오레하: 4,
+          파편: 150,
+          골드: 110,
+        },
+        breath: {
+          재봉술기본: [1, 0.1],
+          ...breathTable[0.2],
         },
       },
       8: {
-        baseProb: 0.45,
+        baseProb: 0.2,
         amount: {
-          수결: 404,
-          위명돌: 10,
-          중급오레하: 6,
-          파편: 108,
-          골드: 330,
+          수결: 330,
+          위명돌: 9,
+          중급오레하: 4,
+          파편: 180,
+          골드: 130,
         },
         breath: {
           재봉술응용: [1, 0.1],
-          ...breathTable[0.45],
+          ...breathTable[0.2],
         },
       },
       9: {
-        baseProb: 0.3,
+        baseProb: 0.15,
         amount: {
-          수결: 404,
+          수결: 400,
           위명돌: 10,
-          중급오레하: 6,
-          파편: 108,
-          골드: 330,
+          중급오레하: 5,
+          파편: 180,
+          골드: 130,
         },
         breath: {
           재봉술응용: [1, 0.1],
-          ...breathTable[0.3],
+          ...breathTable[0.15],
         },
       },
       10: {
-        baseProb: 0.3,
+        baseProb: 0.15,
         amount: {
-          수결: 498,
-          위명돌: 10,
-          중급오레하: 8,
-          파편: 132,
-          골드: 330,
+          수결: 470,
+          위명돌: 11,
+          중급오레하: 6,
+          파편: 180,
+          골드: 180,
         },
         breath: {
           재봉술응용: [1, 0.1],
-          ...breathTable[0.3],
+          ...breathTable[0.15],
         },
       },
       11: {
-        baseProb: 0.3,
-        amount: {
-          수결: 498,
-          위명돌: 10,
-          중급오레하: 8,
-          파편: 132,
-          골드: 330,
-        },
-        breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      12: {
-        baseProb: 0.15,
-        amount: {
-          수결: 498,
-          위명돌: 12,
-          중급오레하: 8,
-          파편: 132,
-          골드: 330,
-        },
-        breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      13: {
-        baseProb: 0.15,
-        amount: {
-          수결: 592,
-          위명돌: 12,
-          중급오레하: 8,
-          파편: 158,
-          골드: 330,
-        },
-        breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      14: {
-        baseProb: 0.15,
-        amount: {
-          수결: 592,
-          위명돌: 12,
-          중급오레하: 8,
-          파편: 158,
-          골드: 330,
-        },
-        breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      15: {
-        baseProb: 0.1,
-        amount: {
-          수결: 592,
-          위명돌: 12,
-          중급오레하: 8,
-          파편: 158,
-          골드: 350,
-        },
-        breath: {
-          재봉술응용: [1, 0.1],
-          ...breathTable[0.1],
-        },
-      },
-      16: {
         baseProb: 0.1,
         amount: {
           수결: 686,
@@ -343,7 +200,7 @@ export const refineData: Record<
           ...breathTable[0.1],
         },
       },
-      17: {
+      12: {
         baseProb: 0.1,
         amount: {
           수결: 686,
@@ -357,7 +214,7 @@ export const refineData: Record<
           ...breathTable[0.1],
         },
       },
-      18: {
+      13: {
         baseProb: 0.05,
         amount: {
           수결: 686,
@@ -371,7 +228,7 @@ export const refineData: Record<
           ...breathTable[0.05],
         },
       },
-      19: {
+      14: {
         baseProb: 0.05,
         amount: {
           수결: 780,
@@ -385,7 +242,7 @@ export const refineData: Record<
           ...breathTable[0.05],
         },
       },
-      20: {
+      15: {
         baseProb: 0.03,
         amount: {
           수결: 780,
@@ -397,71 +254,6 @@ export const refineData: Record<
         breath: {
           재봉술심화: [1, 0.03],
           ...breathTable[0.03],
-        },
-      },
-      21: {
-        baseProb: 0.03,
-        amount: {
-          수결: 780,
-          위명돌: 22,
-          중급오레하: 16,
-          파편: 988,
-          골드: 360,
-        },
-        breath: {
-          ...breathTable[0.03],
-        },
-      },
-      22: {
-        baseProb: 0.01,
-        amount: {
-          수결: 874,
-          위명돌: 24,
-          중급오레하: 18,
-          파편: 1340,
-          골드: 380,
-        },
-        breath: {
-          ...breathTable[0.01],
-        },
-      },
-      23: {
-        baseProb: 0.01,
-        amount: {
-          수결: 874,
-          위명돌: 26,
-          중급오레하: 20,
-          파편: 1818,
-          골드: 390,
-        },
-        breath: {
-          ...breathTable[0.01],
-        },
-      },
-      24: {
-        baseProb: 0.005,
-        amount: {
-          수결: 874,
-          위명돌: 28,
-          중급오레하: 22,
-          파편: 2466,
-          골드: 400,
-        },
-        breath: {
-          ...breathTable[0.005],
-        },
-      },
-      25: {
-        baseProb: 0.005,
-        amount: {
-          수결: 968,
-          위명돌: 30,
-          중급오레하: 24,
-          파편: 3346,
-          골드: 420,
-        },
-        breath: {
-          ...breathTable[0.005],
         },
       },
     },
@@ -868,262 +660,114 @@ export const refineData: Record<
     },
   },
   weapon: {
-    t3_1302: {
-      7: {
-        baseProb: 0.6,
+    t3_1250: {
+      3: {
+        baseProb: 0.5,
         amount: {
-          파결: 258,
-          명돌: 4,
-          하급오레하: 4,
-          파편: 60,
-          골드: 400,
+          파결: 310,
+          위명돌: 11,
+          파편: 200,
         },
         breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.6],
+          ...breathTable[0.5],
         },
       },
-      8: {
-        baseProb: 0.45,
-        amount: {
-          파결: 258,
-          명돌: 8,
-          하급오레하: 4,
-          파편: 60,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.45],
-        },
-      },
-      9: {
-        baseProb: 0.3,
-        amount: {
-          파결: 258,
-          명돌: 8,
-          하급오레하: 4,
-          파편: 60,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      10: {
-        baseProb: 0.3,
-        amount: {
-          파결: 320,
-          명돌: 10,
-          하급오레하: 4,
-          파편: 74,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      11: {
-        baseProb: 0.3,
-        amount: {
-          파결: 320,
-          명돌: 10,
-          하급오레하: 4,
-          파편: 74,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      12: {
-        baseProb: 0.15,
-        amount: {
-          파결: 320,
-          명돌: 10,
-          하급오레하: 4,
-          파편: 74,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      13: {
-        baseProb: 0.15,
+      4: {
+        baseProb: 0.5,
         amount: {
           파결: 380,
-          명돌: 10,
-          하급오레하: 6,
-          파편: 88,
-          골드: 400,
+          위명돌: 11,
+          파편: 200,
         },
         breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.15],
+          ...breathTable[0.5],
         },
       },
-      14: {
-        baseProb: 0.15,
+      5: {
+        baseProb: 0.3,
         amount: {
           파결: 380,
-          명돌: 12,
-          하급오레하: 6,
-          파편: 88,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      15: {
-        baseProb: 0.1,
-        amount: {
-          파결: 380,
-          명돌: 12,
-          하급오레하: 6,
-          파편: 88,
-          골드: 400,
-        },
-        breath: {
-          야금술기본: [1, 0.1],
-          ...breathTable[0.1],
-        },
-      },
-    },
-    t3_1340: {
-      7: {
-        baseProb: 0.6,
-        amount: {
-          파결: 672,
           위명돌: 12,
-          중급오레하: 6,
-          파편: 156,
-          골드: 640,
+          중급오레하: 4,
+          파편: 200,
+          골드: 120,
         },
         breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.6],
+          ...breathTable[0.3],
+          야금술기본: [1, 0.1],
+        },
+      },
+      6: {
+        baseProb: 0.3,
+        amount: {
+          파결: 380,
+          위명돌: 13,
+          중급오레하: 4,
+          파편: 250,
+          골드: 150,
+        },
+        breath: {
+          ...breathTable[0.3],
+          야금술기본: [1, 0.1],
+        },
+      },
+      7: {
+        baseProb: 0.2,
+        amount: {
+          파결: 460,
+          위명돌: 14,
+          중급오레하: 5,
+          파편: 250,
+          골드: 180,
+        },
+        breath: {
+          ...breathTable[0.2],
+          야금술기본: [1, 0.1],
         },
       },
       8: {
-        baseProb: 0.45,
+        baseProb: 0.2,
         amount: {
-          파결: 672,
-          위명돌: 14,
+          파결: 540,
+          위명돌: 15,
           중급오레하: 6,
-          파편: 156,
-          골드: 640,
+          파편: 300,
+          골드: 210,
         },
         breath: {
+          ...breathTable[0.2],
           야금술응용: [1, 0.1],
-          ...breathTable[0.45],
         },
       },
       9: {
-        baseProb: 0.3,
+        baseProb: 0.15,
         amount: {
-          파결: 672,
-          위명돌: 14,
-          중급오레하: 8,
-          파편: 156,
-          골드: 640,
+          파결: 660,
+          위명돌: 16,
+          중급오레하: 7,
+          파편: 300,
+          골드: 250,
         },
         breath: {
+          ...breathTable[0.15],
           야금술응용: [1, 0.1],
-          ...breathTable[0.3],
         },
       },
       10: {
-        baseProb: 0.3,
+        baseProb: 0.15,
         amount: {
-          파결: 830,
-          위명돌: 16,
+          파결: 780,
+          위명돌: 17,
           중급오레하: 8,
-          파편: 192,
-          골드: 640,
+          파편: 300,
+          골드: 300,
         },
         breath: {
+          ...breathTable[0.15],
           야금술응용: [1, 0.1],
-          ...breathTable[0.3],
         },
       },
       11: {
-        baseProb: 0.3,
-        amount: {
-          파결: 830,
-          위명돌: 16,
-          중급오레하: 8,
-          파편: 192,
-          골드: 660,
-        },
-        breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.3],
-        },
-      },
-      12: {
-        baseProb: 0.15,
-        amount: {
-          파결: 830,
-          위명돌: 18,
-          중급오레하: 8,
-          파편: 192,
-          골드: 660,
-        },
-        breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      13: {
-        baseProb: 0.15,
-        amount: {
-          파결: 986,
-          위명돌: 18,
-          중급오레하: 10,
-          파편: 228,
-          골드: 660,
-        },
-        breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      14: {
-        baseProb: 0.15,
-        amount: {
-          파결: 986,
-          위명돌: 20,
-          중급오레하: 10,
-          파편: 228,
-          골드: 660,
-        },
-        breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.15],
-        },
-      },
-      15: {
-        baseProb: 0.1,
-        amount: {
-          파결: 986,
-          위명돌: 20,
-          중급오레하: 10,
-          파편: 228,
-          골드: 660,
-        },
-        breath: {
-          야금술응용: [1, 0.1],
-          ...breathTable[0.1],
-        },
-      },
-      16: {
         baseProb: 0.1,
         amount: {
           파결: 1144,
@@ -1133,11 +777,11 @@ export const refineData: Record<
           골드: 680,
         },
         breath: {
-          야금술심화: [1, 0.1],
           ...breathTable[0.1],
+          야금술심화: [1, 0.1],
         },
       },
-      17: {
+      12: {
         baseProb: 0.1,
         amount: {
           파결: 1144,
@@ -1147,11 +791,11 @@ export const refineData: Record<
           골드: 680,
         },
         breath: {
-          야금술심화: [1, 0.1],
           ...breathTable[0.1],
+          야금술심화: [1, 0.1],
         },
       },
-      18: {
+      13: {
         baseProb: 0.05,
         amount: {
           파결: 1144,
@@ -1161,11 +805,11 @@ export const refineData: Record<
           골드: 680,
         },
         breath: {
-          야금술심화: [1, 0.05],
           ...breathTable[0.05],
+          야금술심화: [1, 0.05],
         },
       },
-      19: {
+      14: {
         baseProb: 0.05,
         amount: {
           파결: 1300,
@@ -1175,11 +819,11 @@ export const refineData: Record<
           골드: 710,
         },
         breath: {
-          야금술심화: [1, 0.05],
           ...breathTable[0.05],
+          야금술심화: [1, 0.05],
         },
       },
-      20: {
+      15: {
         baseProb: 0.03,
         amount: {
           파결: 1300,
@@ -1189,73 +833,8 @@ export const refineData: Record<
           골드: 730,
         },
         breath: {
+          ...breathTable[0.03],
           야금술심화: [1, 0.03],
-          ...breathTable[0.03],
-        },
-      },
-      21: {
-        baseProb: 0.03,
-        amount: {
-          파결: 1300,
-          위명돌: 34,
-          중급오레하: 22,
-          파편: 1432,
-          골드: 750,
-        },
-        breath: {
-          ...breathTable[0.03],
-        },
-      },
-      22: {
-        baseProb: 0.01,
-        amount: {
-          파결: 1458,
-          위명돌: 38,
-          중급오레하: 26,
-          파편: 1944,
-          골드: 780,
-        },
-        breath: {
-          ...breathTable[0.01],
-        },
-      },
-      23: {
-        baseProb: 0.01,
-        amount: {
-          파결: 1458,
-          위명돌: 42,
-          중급오레하: 28,
-          파편: 2640,
-          골드: 810,
-        },
-        breath: {
-          ...breathTable[0.01],
-        },
-      },
-      24: {
-        baseProb: 0.005,
-        amount: {
-          파결: 1458,
-          위명돌: 44,
-          중급오레하: 32,
-          파편: 3586,
-          골드: 840,
-        },
-        breath: {
-          ...breathTable[0.005],
-        },
-      },
-      25: {
-        baseProb: 0.005,
-        amount: {
-          파결: 1615,
-          위명돌: 48,
-          중급오레하: 36,
-          파편: 4868,
-          골드: 870,
-        },
-        breath: {
-          ...breathTable[0.005],
         },
       },
     },
@@ -1687,36 +1266,34 @@ export function getRefineTable(
   let additionalProb = 0;
   let costReduction = 0;
   let goldReduction = 0;
-  if (itemGrade === 't3_1302' && refineTarget <= 15) {
-    additionalProb = 0.2;
-    costReduction = 0.5;
+  if (itemGrade === 't3_1250' && refineTarget <= 12) {
+    additionalProb = 0.1;
+    costReduction = 0.4;
     goldReduction = 1;
   }
-  if (itemGrade === 't3_1340' && refineTarget <= 15) {
-    additionalProb = 0.2;
-    costReduction = 0.6;
+  if (itemGrade === 't3_1250' && refineTarget >= 13 && refineTarget <= 14) {
+    additionalProb = 0.05;
+    costReduction = 0.4;
     goldReduction = 1;
   }
-  if (itemGrade === 't3_1340' && refineTarget >= 16 && refineTarget <= 17) {
-    additionalProb += 0.1;
-    costReduction = 0.3;
+  if (itemGrade === 't3_1250' && refineTarget === 15) {
+    additionalProb = 0.03;
+    costReduction = 0.4;
     goldReduction = 1;
   }
-  if (itemGrade === 't3_1340' && refineTarget === 18) {
-    additionalProb += 0.05;
-    costReduction = 0.3;
-    goldReduction = 1;
+  if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 20) {
+    goldReduction = 0.4;
   }
 
   if (applyResearch) {
-    if (itemGrade === 't3_1302' && refineTarget <= 15) {
+    if (itemGrade === 't3_1250' && refineTarget >= 1 && refineTarget <= 10) {
       additionalProb += 0.1;
     }
-    if (itemGrade === 't3_1340' && refineTarget <= 15) {
-      additionalProb += 0.1;
-    }
-    if (itemGrade === 't3_1340' && refineTarget >= 16 && refineTarget <= 18) {
+    if (itemGrade === 't3_1250' && refineTarget >= 11 && refineTarget <= 13) {
       additionalProb += 0.05;
+    }
+    if (itemGrade === 't3_1250' && refineTarget >= 14 && refineTarget <= 15) {
+      additionalProb += 0.02;
     }
   }
 

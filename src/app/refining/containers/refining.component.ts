@@ -16,7 +16,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
   subscription$!: Subscription;
   priceForm = new FormGroup({
     파편: new FormControl(0.4384),
-    하급오레하: new FormControl(13.6),
     중급오레하: new FormControl(14.3),
     상급오레하: new FormControl(29.9),
     최상급오레하: new FormControl(72),

@@ -256,6 +256,19 @@ export const refineData: Record<
           ...breathTable[0.03],
         },
       },
+      16: {
+        baseProb: 0.03,
+        amount: {
+          수결: 780,
+          위명돌: 22,
+          중급오레하: 16,
+          파편: 988,
+          골드: 360,
+        },
+        breath: {
+          ...breathTable[0.03],
+        },
+      },
     },
     t3_1390: {
       12: {
@@ -835,6 +848,19 @@ export const refineData: Record<
         breath: {
           ...breathTable[0.03],
           야금술심화: [1, 0.03],
+        },
+      },
+      16: {
+        baseProb: 0.03,
+        amount: {
+          파결: 1300,
+          위명돌: 34,
+          중급오레하: 22,
+          파편: 1432,
+          골드: 750,
+        },
+        breath: {
+          ...breathTable[0.03],
         },
       },
     },

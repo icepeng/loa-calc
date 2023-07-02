@@ -84,6 +84,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     totalProb: new FormControl({ value: null, disabled: true }),
     jangin: new FormControl(0),
     applyResearch: new FormControl(false),
+    applyHyperExpress: new FormControl(false),
   });
   reduceBindedMaterials = false;
   reduceBindedBooks = false;
@@ -135,7 +136,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
         itemForm.type,
         itemForm.grade,
         itemForm.target,
-        itemForm.applyResearch
+        itemForm.applyResearch,
+        itemForm.applyHyperExpress
       );
 
       if (!table) {
@@ -165,7 +167,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
         itemForm.type,
         itemForm.grade,
         itemForm.target,
-        itemForm.applyResearch
+        itemForm.applyResearch,
+        itemForm.applyHyperExpress
       );
 
       if (!table) {
@@ -205,7 +208,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
       itemInfo.type,
       itemInfo.grade,
       itemInfo.target,
-      itemInfo.applyResearch
+      itemInfo.applyResearch,
+      itemInfo.applyHyperExpress
     );
     if (!table) {
       return;

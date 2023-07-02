@@ -1282,7 +1282,8 @@ export function getRefineTable(
   itemType: string | undefined,
   itemGrade: string | undefined,
   refineTarget: number | undefined,
-  applyResearch: boolean
+  applyResearch: boolean,
+  applyHyperExpress: boolean
 ): RefineTable | undefined {
   if (!itemType || !itemGrade || !refineTarget) {
     return undefined;
@@ -1320,6 +1321,19 @@ export function getRefineTable(
     }
     if (itemGrade === 't3_1250' && refineTarget >= 14 && refineTarget <= 15) {
       additionalProb += 0.02;
+    }
+  }
+
+  if (applyHyperExpress) {
+    if (itemGrade === 't3_1390' && refineTarget === 13) {
+      additionalProb += 0.1;
+    }
+    if (itemGrade === 't3_1390' && refineTarget >= 14 && refineTarget <= 15) {
+      additionalProb += 0.05;
+    }
+    if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 15) {
+      costReduction += 0.2;
+      goldReduction += 0.6;
     }
   }
 

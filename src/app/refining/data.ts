@@ -1333,7 +1333,7 @@ export function getRefineTable(
     }
     if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 15) {
       costReduction += 0.2;
-      goldReduction += 0.6;
+      goldReduction += 0.2;
     }
   }
 
@@ -1345,7 +1345,7 @@ export function getRefineTable(
       Object.entries(data.amount).map(([name, value]) => [
         name,
         name === '골드'
-          ? Math.round(value * (1 - goldReduction))
+          ? Math.ceil((value * (1 - goldReduction)) / 10) * 10
           : Math.round(value * (1 - costReduction)),
       ])
     ),

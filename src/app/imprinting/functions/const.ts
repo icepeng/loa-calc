@@ -12,6 +12,7 @@ export const imprintOptions = [
   '광전사의 비기',
   '구슬동자',
   '굳은 의지',
+  '그믐의 경계',
   '극의: 체술',
   '급소 타격',
   '기습의 대가',
@@ -24,6 +25,7 @@ export const imprintOptions = [
   '마나 효율 증가',
   '마나의 흐름',
   '만개',
+  '만월의 집행자',
   '멈출 수 없는 충동',
   '바리케이드',
   '버스트',
@@ -275,6 +277,8 @@ export const imprintOptionMap = {
   이슬비: 308,
   포식자: 309,
   처단자: 310,
+  '만월의 집행자': 311,
+  '그믐의 경계': 312,
 };
 
 export const initialAccMap: Record<string, AccMap> = {

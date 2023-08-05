@@ -128,7 +128,10 @@ export class ImprintingComponent implements OnInit {
     } else {
       this.snackbar.open(
         'Web Worker가 지원되지 않는 브라우저입니다. 최신 브라우저를 사용해주세요.',
-        '닫기'
+        '닫기',
+        {
+          verticalPosition: 'top',
+        }
       );
     }
     const savedForm = localStorage.getItem(imprintingFormToken);
@@ -203,7 +206,9 @@ export class ImprintingComponent implements OnInit {
   setApiClient() {
     const apiKey = this.apiKeyControl.value;
     if (!apiKey) {
-      this.snackbar.open('API 키를 입력해주세요.', '닫기');
+      this.snackbar.open('API 키를 입력해주세요.', '닫기', {
+        verticalPosition: 'top',
+      });
       return;
     }
 
@@ -256,7 +261,8 @@ export class ImprintingComponent implements OnInit {
       try {
         this.snackbar.open(
           'API 검색은 1분에 100회까지 가능합니다. 검색이 잠시 멈추더라도 기다려주세요.',
-          '닫기'
+          '닫기',
+          { verticalPosition: 'top' }
         );
 
         const data = await this.searchClient!.getSearchResult(
@@ -271,7 +277,13 @@ export class ImprintingComponent implements OnInit {
         this.searchResult = data;
         this.applySearchResult();
       } catch {
-        this.snackbar.open('API 검색에 실패했습니다. API 키를 확인해주세요.');
+        this.snackbar.open(
+          'API 검색에 실패했습니다. API 키를 확인해주세요.',
+          undefined,
+          {
+            verticalPosition: 'top',
+          }
+        );
       }
     } else {
       const searchScript = getSearchScript(
@@ -298,7 +310,9 @@ export class ImprintingComponent implements OnInit {
         }
         this.filter.exclude = new Set();
       } else {
-        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기', {
+          verticalPosition: 'top',
+        });
       }
     }
   }
@@ -358,7 +372,9 @@ export class ImprintingComponent implements OnInit {
           this.applySearchResult();
         }
       } else {
-        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기');
+        this.snackbar.open('검색 코드 복사에 실패했습니다.', '닫기', {
+          verticalPosition: 'top',
+        });
       }
     }
   }
@@ -369,11 +385,15 @@ export class ImprintingComponent implements OnInit {
     stoneBooks: StoneBook[]
   ): Candidate[] | undefined {
     if (this.validTarget.length === 0) {
-      this.snackbar.open('목표 각인 수치가 입력되지 않았습니다.', '닫기');
+      this.snackbar.open('목표 각인 수치가 입력되지 않았습니다.', '닫기', {
+        verticalPosition: 'top',
+      });
       return;
     }
     if (target.find((x) => x[0] && !imprintOptions.includes(x[0]))) {
-      this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기');
+      this.snackbar.open('올바르지 않은 목표 각인명이 있습니다.', '닫기', {
+        verticalPosition: 'top',
+      });
       return;
     }
     if (
@@ -383,7 +403,9 @@ export class ImprintingComponent implements OnInit {
           (x.category === '목걸이' ? !x.dealOption2![0] : false)
       )
     ) {
-      this.snackbar.open('입력되지 않은 전투 특성이 있습니다.', '닫기');
+      this.snackbar.open('입력되지 않은 전투 특성이 있습니다.', '닫기', {
+        verticalPosition: 'top',
+      });
       return;
     }
 
@@ -421,7 +443,10 @@ export class ImprintingComponent implements OnInit {
     if (impossibleIndex !== -1) {
       this.snackbar.open(
         `불가능한 목표 각인입니다: #${impossibleIndex + 1}`,
-        '닫기'
+        '닫기',
+        {
+          verticalPosition: 'top',
+        }
       );
       return;
     }
@@ -441,7 +466,10 @@ export class ImprintingComponent implements OnInit {
     if (Object.keys(this.searchResult).length === 0) {
       this.snackbar.open(
         '검색된 매물이 없습니다. 검색을 먼저 진행해주세요.',
-        '닫기'
+        '닫기',
+        {
+          verticalPosition: 'top',
+        }
       );
       return;
     }
@@ -454,12 +482,17 @@ export class ImprintingComponent implements OnInit {
       if (data.done) {
         this.composeResults = data.result;
         if (this.composeResults.length === 0) {
-          this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기');
+          this.snackbar.open('조건에 맞는 매물이 없습니다.', '닫기', {
+            verticalPosition: 'top',
+          });
         } else if (data.effFilteredRate > 0.9) {
           this.snackbar.open(
             '특성 필터가 검색한 품질에 비해 지나치게 높아 최저가가 보장되지 않습니다.\n품질을 높여서 다시 검색하는 것을 추천합니다.',
             '닫기',
-            { duration: 10000 }
+            {
+              verticalPosition: 'top',
+              duration: 10000,
+            }
           );
         }
         this.isLoading = false;
@@ -468,7 +501,13 @@ export class ImprintingComponent implements OnInit {
       }
     };
     this.worker.onerror = (err) => {
-      this.snackbar.open('오류가 발생했습니다. 설명서를 확인해주세요.', '닫기');
+      this.snackbar.open(
+        '오류가 발생했습니다. 설명서를 확인해주세요.',
+        '닫기',
+        {
+          verticalPosition: 'top',
+        }
+      );
       this.isLoading = false;
     };
 

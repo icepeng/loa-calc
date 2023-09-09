@@ -1,6 +1,6 @@
 import { RefineTable } from './data';
 
-const JANGIN_ACCUMULATE_DIVIDER = 2.15;
+const JANGIN_ACCUMULATE_DIVIDER = 2.15 / 2;
 
 export type Step = {
   baseProb: number;

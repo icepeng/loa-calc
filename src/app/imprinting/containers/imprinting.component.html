@@ -2,33 +2,35 @@
   <div class="heading">
     <div class="heading-container">
       <h1 class="mat-h1">각인 최적화</h1>
-      <a
-        href="https://icepeng.com/11"
-        target="_blank"
-        class="heading-button"
-        mat-flat-button
-        color="primary"
-        >설명서</a
-      >
-      <button
-        color="accent"
-        class="heading-button"
-        mat-flat-button
-        [matMenuTriggerFor]="menu"
-      >
-        프리셋
-      </button>
-      <mat-menu #menu="matMenu">
-        <button (click)="launchPresetLoadDialog()" mat-menu-item>
-          불러오기
+      <div class="heading-actions">
+        <a
+          href="https://icepeng.com/11"
+          target="_blank"
+          class="heading-button"
+          mat-flat-button
+          color="primary"
+          >설명서</a
+        >
+        <button
+          color="accent"
+          class="heading-button"
+          mat-flat-button
+          [matMenuTriggerFor]="menu"
+        >
+          프리셋
         </button>
-        <button (click)="launchPresetSaveDialog()" mat-menu-item>
-          저장하기
+        <mat-menu #menu="matMenu">
+          <button (click)="launchPresetLoadDialog()" mat-menu-item>
+            불러오기
+          </button>
+          <button (click)="launchPresetSaveDialog()" mat-menu-item>
+            저장하기
+          </button>
+        </mat-menu>
+        <button class="heading-button" (click)="reset()" mat-stroked-button>
+          초기화
         </button>
-      </mat-menu>
-      <button class="heading-button" (click)="reset()" mat-stroked-button>
-        초기화
-      </button>
+      </div>
     </div>
     <div class="heading-container api-container">
       <mat-form-field class="grow">

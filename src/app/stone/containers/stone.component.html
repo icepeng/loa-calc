@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="mat-h1">어빌리티 스톤</h1>
   <div class="layout">
-    <mat-card class="handwork">
+    <mat-card class="layout-card">
       <div class="flex-baseline">
         <mat-form-field class="w-72">
           <mat-select [ngModel]="na" (ngModelChange)="naChange($event)">
@@ -14,136 +14,142 @@
         <button mat-stroked-button (click)="undo()">취소</button>
         <button mat-stroked-button (click)="reset()">초기화</button>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th colspan="4">세공 확률 {{ attemptProb | percent: ".0-0" }}</th>
-            <th *ngFor="let prob of probList; index as i">목표 #{{ i + 1 }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>증가능력1</td>
-            <td>
-              <ng-container *ngFor="let sym of symbols.ability1">
-                <app-stone-symbol
-                  type="ability"
-                  [symbol]="sym"
-                ></app-stone-symbol>
-              </ng-container>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('ability1', true)"
-              >
-                성공
-              </button>
-              <button
-                *ngIf="mode === 'simulate'"
-                mat-stroked-button
-                (click)="simulateAttempt('ability1')"
-              >
-                세공
-              </button>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('ability1', false)"
-              >
-                실패
-              </button>
-            </td>
-            <td class="percent-cell" *ngFor="let prob of probList">
-              {{ prob.ability1Str }}
-              <span *ngIf="prob.ability1 === prob.max">★</span>
-            </td>
-          </tr>
-          <tr>
-            <td>증가능력2</td>
-            <td>
-              <ng-container *ngFor="let sym of symbols.ability2">
-                <app-stone-symbol
-                  type="ability"
-                  [symbol]="sym"
-                ></app-stone-symbol>
-              </ng-container>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('ability2', true)"
-              >
-                성공
-              </button>
-              <button
-                *ngIf="mode === 'simulate'"
-                mat-stroked-button
-                (click)="simulateAttempt('ability2')"
-              >
-                세공
-              </button>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('ability2', false)"
-              >
-                실패
-              </button>
-            </td>
-            <td class="percent-cell" *ngFor="let prob of probList">
-              {{ prob.ability2Str }}
-              <span *ngIf="prob.ability2 === prob.max">★</span>
-            </td>
-          </tr>
-          <tr>
-            <td>감소능력1</td>
-            <td>
-              <ng-container *ngFor="let sym of symbols.penalty">
-                <app-stone-symbol
-                  type="penalty"
-                  [symbol]="sym"
-                ></app-stone-symbol>
-              </ng-container>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('penalty', true)"
-              >
-                성공
-              </button>
-              <button
-                *ngIf="mode === 'simulate'"
-                mat-stroked-button
-                (click)="simulateAttempt('penalty')"
-              >
-                세공
-              </button>
-            </td>
-            <td>
-              <button
-                *ngIf="mode === 'select'"
-                mat-stroked-button
-                (click)="doAttempt('penalty', false)"
-              >
-                실패
-              </button>
-            </td>
-            <td class="percent-cell" *ngFor="let prob of probList">
-              {{ prob.penaltyStr }}
-              <span *ngIf="prob.penalty === prob.max">★</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="stone-table-wrapper">
+        <table class="stone-table">
+          <thead>
+            <tr>
+              <th colspan="4">
+                세공 확률 {{ attemptProb | percent : ".0-0" }}
+              </th>
+              <th *ngFor="let prob of probList; index as i">
+                목표 #{{ i + 1 }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>증가능력1</td>
+              <td>
+                <ng-container *ngFor="let sym of symbols.ability1">
+                  <app-stone-symbol
+                    type="ability"
+                    [symbol]="sym"
+                  ></app-stone-symbol>
+                </ng-container>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('ability1', true)"
+                >
+                  성공
+                </button>
+                <button
+                  *ngIf="mode === 'simulate'"
+                  mat-stroked-button
+                  (click)="simulateAttempt('ability1')"
+                >
+                  세공
+                </button>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('ability1', false)"
+                >
+                  실패
+                </button>
+              </td>
+              <td class="percent-cell" *ngFor="let prob of probList">
+                {{ prob.ability1Str }}
+                <span *ngIf="prob.ability1 === prob.max">★</span>
+              </td>
+            </tr>
+            <tr>
+              <td>증가능력2</td>
+              <td>
+                <ng-container *ngFor="let sym of symbols.ability2">
+                  <app-stone-symbol
+                    type="ability"
+                    [symbol]="sym"
+                  ></app-stone-symbol>
+                </ng-container>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('ability2', true)"
+                >
+                  성공
+                </button>
+                <button
+                  *ngIf="mode === 'simulate'"
+                  mat-stroked-button
+                  (click)="simulateAttempt('ability2')"
+                >
+                  세공
+                </button>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('ability2', false)"
+                >
+                  실패
+                </button>
+              </td>
+              <td class="percent-cell" *ngFor="let prob of probList">
+                {{ prob.ability2Str }}
+                <span *ngIf="prob.ability2 === prob.max">★</span>
+              </td>
+            </tr>
+            <tr>
+              <td>감소능력1</td>
+              <td>
+                <ng-container *ngFor="let sym of symbols.penalty">
+                  <app-stone-symbol
+                    type="penalty"
+                    [symbol]="sym"
+                  ></app-stone-symbol>
+                </ng-container>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('penalty', true)"
+                >
+                  성공
+                </button>
+                <button
+                  *ngIf="mode === 'simulate'"
+                  mat-stroked-button
+                  (click)="simulateAttempt('penalty')"
+                >
+                  세공
+                </button>
+              </td>
+              <td>
+                <button
+                  *ngIf="mode === 'select'"
+                  mat-stroked-button
+                  (click)="doAttempt('penalty', false)"
+                >
+                  실패
+                </button>
+              </td>
+              <td class="percent-cell" *ngFor="let prob of probList">
+                {{ prob.penaltyStr }}
+                <span *ngIf="prob.penalty === prob.max">★</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </mat-card>
   </div>
   <div class="goals">
@@ -162,7 +168,7 @@
     </button>
   </div>
   <div class="layout">
-    <mat-card>
+    <mat-card class="layout-card">
       <mat-card-title>Settings</mat-card-title>
       <mat-card-content>
         <div>
@@ -179,7 +185,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card class="about">
+    <mat-card class="layout-card about">
       <mat-card-title>About</mat-card-title>
       <mat-card-content>
         <div>

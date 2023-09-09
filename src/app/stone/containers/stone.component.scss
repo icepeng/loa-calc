@@ -13,11 +13,20 @@
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 }
 
 .percent-cell {
   width: 120px;
   text-align: center;
+}
+
+.layout-card {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .about {
@@ -27,4 +36,12 @@
 
 .container {
   margin: 20px;
+}
+
+.stone-table-wrapper {
+  overflow-x: auto;
+}
+
+.stone-table {
+  min-width: 780px;
 }

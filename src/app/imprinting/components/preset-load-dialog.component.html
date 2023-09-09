@@ -13,7 +13,21 @@
   </mat-selection-list>
 </div>
 <div mat-dialog-actions>
-  <button color="primary" mat-flat-button (click)="onSubmit()">적용</button>
-  <button color="warn" mat-flat-button (click)="onDelete()">삭제</button>
+  <button
+    [disabled]="!selectedPreset"
+    color="primary"
+    mat-flat-button
+    (click)="onSubmit()"
+  >
+    적용
+  </button>
+  <button
+    [disabled]="!selectedPreset"
+    color="warn"
+    mat-flat-button
+    (click)="onDelete()"
+  >
+    삭제
+  </button>
   <button mat-stroked-button (click)="onCancel()">취소</button>
 </div>

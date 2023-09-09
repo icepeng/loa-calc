@@ -219,7 +219,8 @@ export class ImprintingComponent implements OnInit {
   launchPresetLoadDialog() {
     this.dialog
       .open(PresetLoadDialogComponent, {
-        minWidth: '400px',
+        width: 'calc(100vw - 28px)',
+        maxWidth: '400px',
       })
       .afterClosed()
       .pipe(take(1))

@@ -21,10 +21,12 @@
         </button>
         <mat-menu #menu="matMenu">
           <button (click)="launchPresetLoadDialog()" mat-menu-item>
-            불러오기
+            <mat-icon>file_open</mat-icon>
+            <span>불러오기</span>
           </button>
           <button (click)="launchPresetSaveDialog()" mat-menu-item>
-            저장하기
+            <mat-icon>save</mat-icon>
+            <span>저장하기</span>
           </button>
         </mat-menu>
         <button class="heading-button" (click)="reset()" mat-stroked-button>

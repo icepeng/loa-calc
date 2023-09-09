@@ -330,4 +330,5 @@ export const initialAccMap: Record<string, AccMap> = {
   },
 };
 
-export const imprintingFormToken = 'imprintingForm_v4';
+export const imprintingFormToken = 'imprintingForm_v5';
+export const imprintingPresetToken = 'imprintingPreset_v1';

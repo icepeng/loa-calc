@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>프리셋</h1>
+<div mat-dialog-content>
+  <div class="preset-empty" *ngIf="presets.length === 0">
+    저장된 프리셋이 없습니다.
+  </div>
+  <mat-selection-list
+    (selectionChange)="onSelectionChange($event)"
+    [multiple]="false"
+  >
+    <mat-list-option *ngFor="let preset of presets" [value]="preset">
+      {{ preset.name }}
+    </mat-list-option>
+  </mat-selection-list>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onSubmit()">적용</button>
+  <button color="warn" mat-flat-button (click)="onDelete()">삭제</button>
+  <button mat-stroked-button (click)="onCancel()">취소</button>
+</div>

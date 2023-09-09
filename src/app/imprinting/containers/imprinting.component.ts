@@ -8,6 +8,7 @@ import { lastValueFrom, take } from 'rxjs';
 import { ImprintingSearchDialogComponent } from '../components/imprinting-search-dialog.component';
 import {
   imprintingFormToken,
+  imprintingPresetToken,
   imprintOptions,
   initialAccMap,
   penaltyOptions,
@@ -21,6 +22,7 @@ import {
   ComposeFilter,
   ComposeResult,
   Item,
+  Preset,
   SearchGrade,
   StoneBook,
 } from '../functions/type';
@@ -31,6 +33,8 @@ import {
   getFixedItem,
 } from '../functions/util';
 import { AccFormDialogComponent } from './acc-form-dialog.component';
+import { PresetLoadDialogComponent } from '../components/preset-load-dialog.component';
+import { PresetSaveDialogComponent } from '../components/preset-save-dialog.component';
 
 @Component({
   selector: 'app-imprinting',
@@ -174,6 +178,28 @@ export class ImprintingComponent implements OnInit {
       },
     ];
     this.accMap = JSON.parse(JSON.stringify(initialAccMap));
+    this.prevAccMap = null;
+    this.candidates = [];
+    this.searchResult = {};
+    this.composeResults = [];
+    this.filter = {
+      effects: {
+        치명: 0,
+        특화: 0,
+        신속: 0,
+        제압: 0,
+        인내: 0,
+        숙련: 0,
+      },
+      hasBuyPrice: true,
+      allowedPenalties: [],
+      tradeLeft: 0,
+      ancientCountMin: 0,
+      exclude: new Set<string>(),
+      ignoredSlots: [],
+      fixedImprintings: [],
+    };
+    this.additionalItems = [];
   }
 
   addItemDialog() {
@@ -183,9 +209,48 @@ export class ImprintingComponent implements OnInit {
       })
       .afterClosed()
       .pipe(take(1))
-      .subscribe((data: { acc: AccMap; price: number }) => {
+      .subscribe((data?: { acc: AccMap; price: number }) => {
         if (data) {
           this.additionalItems.push(data);
+        }
+      });
+  }
+
+  launchPresetLoadDialog() {
+    this.dialog
+      .open(PresetLoadDialogComponent, {
+        minWidth: '400px',
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((data?: Preset) => {
+        if (data) {
+          this.reset();
+          const { target, stoneBooks, accMap } = data;
+          this.target = target;
+          this.stoneBooks = stoneBooks;
+          this.accMap = accMap;
+        }
+      });
+  }
+
+  launchPresetSaveDialog() {
+    this.dialog
+      .open(PresetSaveDialogComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((data?: { name: string }) => {
+        if (data) {
+          const presets = JSON.parse(
+            localStorage.getItem(imprintingPresetToken) || '[]'
+          );
+          presets.push({
+            name: data.name,
+            target: this.target,
+            stoneBooks: this.stoneBooks,
+            accMap: this.accMap,
+          });
+          localStorage.setItem(imprintingPresetToken, JSON.stringify(presets));
         }
       });
   }

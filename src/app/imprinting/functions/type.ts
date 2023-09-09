@@ -57,3 +57,10 @@ export interface ComposeFilter {
   ignoredSlots: string[];
   fixedImprintings: string[];
 }
+
+export interface Preset {
+  name: string;
+  target: [string, number][];
+  stoneBooks: StoneBook[];
+  accMap: Record<string, AccMap>;
+}

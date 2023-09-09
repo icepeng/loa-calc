@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>프리셋</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>프리셋 이름</mat-label>
+    <input matInput [formControl]="presetNameControl" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-flat-button (click)="onSubmit()">저장</button>
+  <button mat-stroked-button (click)="onCancel()">취소</button>
+</div>

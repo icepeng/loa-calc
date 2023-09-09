@@ -10,6 +10,22 @@
         color="primary"
         >설명서</a
       >
+      <button
+        color="accent"
+        class="heading-button"
+        mat-flat-button
+        [matMenuTriggerFor]="menu"
+      >
+        프리셋
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="launchPresetLoadDialog()" mat-menu-item>
+          불러오기
+        </button>
+        <button (click)="launchPresetSaveDialog()" mat-menu-item>
+          저장하기
+        </button>
+      </mat-menu>
       <button class="heading-button" (click)="reset()" mat-stroked-button>
         초기화
       </button>

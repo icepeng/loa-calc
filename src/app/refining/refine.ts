@@ -1,6 +1,6 @@
 import { RefineTable } from './data';
 
-const JANGIN_ACCUMULATE_DIVIDER = 2.15 / 2;
+const JANGIN_ACCUMULATE_DIVIDER = 2.15;
 
 export type Step = {
   baseProb: number;
@@ -106,7 +106,8 @@ export function optimize(
   priceMap: Record<string, number>,
   bindedMap: Record<string, number>,
   probFromFailure: number,
-  startJangin: number
+  startJangin: number,
+  janginMultiplier: number
 ) {
   const baseProb = table.baseProb;
   const additionalProb = table.additionalProb;
@@ -164,7 +165,7 @@ export function optimize(
         ) / 10000;
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-        jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+        jangin + (prob * janginMultiplier) / JANGIN_ACCUMULATE_DIVIDER,
         globalProb * (1 - prob),
         i,
         subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
@@ -204,6 +205,7 @@ export function fixed(
   bindedMap: Record<string, number>,
   probFromFailure: number,
   startJangin: number,
+  janginMultiplier: number,
   breathCount: number
 ) {
   const baseProb = table.baseProb;
@@ -262,7 +264,7 @@ export function fixed(
       ) / 10000;
     const { price: failPrice, path: failPath } = rec(
       Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-      jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+      jangin + (prob * janginMultiplier) / JANGIN_ACCUMULATE_DIVIDER,
       globalProb * (1 - prob),
       subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
     );

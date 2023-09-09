@@ -85,6 +85,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     probFromFailure: new FormControl(0),
     totalProb: new FormControl({ value: null, disabled: true }),
     jangin: new FormControl(0),
+    doubleJangin: new FormControl(false),
     applyResearch: new FormControl(false),
     applyHyperExpress: new FormControl(false),
   });
@@ -241,12 +242,15 @@ export class RefiningComponent implements OnInit, OnDestroy {
         : []),
     ]);
 
+    const janginMultiplier = itemInfo.doubleJangin ? 2 : 1;
+
     const optimal = optimize(
       table,
       this.priceForm.value,
       bindedMap,
       itemInfo.probFromFailure / 100,
-      itemInfo.jangin / 100
+      itemInfo.jangin / 100,
+      janginMultiplier
     );
 
     this.optimalPrice = optimal.price;
@@ -258,6 +262,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
       bindedMap,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,
+      janginMultiplier,
       0
     );
 
@@ -270,6 +275,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
       bindedMap,
       itemInfo.probFromFailure / 100,
       itemInfo.jangin / 100,
+      janginMultiplier,
       Object.keys(table.breath).length
     );
 

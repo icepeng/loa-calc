@@ -20,7 +20,7 @@ export class AccFormDialogComponent {
 
   accMap: AccMap = {
     category: '',
-    name: '',
+    isFixed: true,
     quality: 0,
     dealOption1: ['', 0],
     dealOption2: ['', 0],
@@ -52,7 +52,6 @@ export class AccFormDialogComponent {
       !this.accMap.imprintOption1[0] ||
       !this.accMap.imprintOption2[0] ||
       !this.accMap.imprintPenalty[0] ||
-      !this.accMap.name ||
       !this.accMap.category
     ) {
       this.snackbar.open('입력되지 않은 값이 있습니다.', '닫기');

@@ -55,7 +55,7 @@ export function getUniqueId() {
 export function getFixedItem(acc: AccMap, price?: number): Item {
   return {
     isFixed: true,
-    name: acc.name.trim(),
+    name: '[보유한 아이템]',
     id: getUniqueId(),
     grade: null,
     tradeLeft: null,
@@ -85,8 +85,8 @@ export function addItemsToSearchResult(
     const splitted = key.split('_');
     return {
       key,
-      imprintOption1: [splitted[0], parseInt(splitted[1], 10)],
-      imprintOption2: [splitted[2], parseInt(splitted[3], 10)],
+      imprintOption1: [splitted[0], parseInt(splitted[1], 10)] as const,
+      imprintOption2: [splitted[2], parseInt(splitted[3], 10)] as const,
       category: splitted[4],
     };
   });

@@ -229,7 +229,7 @@ export class ImprintingComponent implements OnInit {
 
   getAccTypes(accMap: Record<string, AccMap>): string[] {
     return Object.entries(accMap)
-      .filter(([name, acc]) => !acc.name)
+      .filter(([name, acc]) => !acc.isFixed)
       .map((x) => x[0]);
   }
 
@@ -417,7 +417,7 @@ export class ImprintingComponent implements OnInit {
           ...stoneBook.stone,
           ...stoneBook.book,
           ...Object.values(accMap)
-            .filter((acc) => acc.name)
+            .filter((acc) => acc.isFixed)
             .flatMap((acc) => [acc.imprintOption1, acc.imprintOption2]),
         ].reduce((obj, [name, amount]) => {
           obj[name] -= amount;
@@ -457,7 +457,7 @@ export class ImprintingComponent implements OnInit {
   getFixedItems(): Record<string, Item> {
     return Object.fromEntries(
       Object.entries(this.accMap)
-        .filter(([name, acc]) => acc.name)
+        .filter(([name, acc]) => acc.isFixed)
         .map(([name, acc]) => [name, getFixedItem(acc)])
     );
   }

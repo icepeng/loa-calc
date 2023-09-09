@@ -11,7 +11,6 @@
 </mat-menu>
 <div [ngClass]="'grade-' + item.grade">{{ item.name }}</div>
 <div>품질: {{ item.quality }}</div>
-<div *ngIf="item.price === 0">[보유한 아이템]</div>
 <ng-container *ngIf="item.price > 0">
   <div *ngIf="!item.isFixed">구매 시 거래 {{ item.tradeLeft }}회 가능</div>
   <div *ngIf="item.buyPrice">

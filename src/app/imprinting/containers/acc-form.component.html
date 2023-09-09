@@ -5,7 +5,7 @@
       <th class="mat-header-cell">품질</th>
       <th class="mat-header-cell">전투특성1</th>
       <th class="mat-header-cell">전투특성2</th>
-      <th class="mat-header-cell">아이템명</th>
+      <th class="mat-header-cell"></th>
       <th class="mat-header-cell">각인1</th>
       <th class="mat-header-cell">각인2</th>
       <th class="mat-header-cell">감소각인</th>
@@ -68,29 +68,11 @@
         ></ng-container>
       </td>
       <td class="mat-cell">
-        <mat-form-field class="w-240" floatLabel="never">
-          <mat-label>보유한 아이템 사용시 입력</mat-label>
-          <input
-            [(ngModel)]="accMap[accType].name"
-            type="text"
-            matInput
-            appSelectOnFocus
-            [matAutocomplete]="auto3"
-          />
-          <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
-            <mat-option
-              *ngFor="
-                let option of filterItemName(
-                  accMap[accType].name,
-                  accMap[accType].category
-                )
-              "
-              [value]="option"
-            >
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+        <mat-slide-toggle
+          [(ngModel)]="accMap[accType].isFixed"
+          (ngModelChange)="resetImprintOptions(accType)"
+          >보유한 아이템 사용</mat-slide-toggle
+        >
       </td>
       <td class="mat-cell">
         <mat-form-field class="w-120" floatLabel="never">
@@ -99,6 +81,7 @@
             type="text"
             matInput
             [(ngModel)]="accMap[accType].imprintOption1[0]"
+            [disabled]="!accMap[accType].isFixed"
             [matAutocomplete]="auto"
             appSelectOnFocus
           />
@@ -117,6 +100,7 @@
           <mat-label>수치</mat-label>
           <input
             [(ngModel)]="accMap[accType].imprintOption1[1]"
+            [disabled]="!accMap[accType].isFixed"
             matInput
             type="number"
             appSelectOnFocus
@@ -130,6 +114,7 @@
             type="text"
             matInput
             [(ngModel)]="accMap[accType].imprintOption2[0]"
+            [disabled]="!accMap[accType].isFixed"
             [matAutocomplete]="auto2"
             appSelectOnFocus
           />
@@ -148,6 +133,7 @@
           <mat-label>수치</mat-label>
           <input
             [(ngModel)]="accMap[accType].imprintOption2[1]"
+            [disabled]="!accMap[accType].isFixed"
             matInput
             type="number"
             appSelectOnFocus
@@ -157,7 +143,10 @@
       <td class="mat-cell">
         <mat-form-field class="w-120" floatLabel="never">
           <mat-label>선택</mat-label>
-          <mat-select [(ngModel)]="accMap[accType].imprintPenalty[0]">
+          <mat-select
+            [(ngModel)]="accMap[accType].imprintPenalty[0]"
+            [disabled]="!accMap[accType].isFixed"
+          >
             <mat-option [value]="''">없음</mat-option>
             <mat-option *ngFor="let option of penaltyOptions" [value]="option">
               {{ option }}
@@ -168,6 +157,7 @@
           <mat-label>수치</mat-label>
           <input
             [(ngModel)]="accMap[accType].imprintPenalty[1]"
+            [disabled]="!accMap[accType].isFixed"
             matInput
             type="number"
             appSelectOnFocus

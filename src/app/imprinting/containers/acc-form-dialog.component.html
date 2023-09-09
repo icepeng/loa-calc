@@ -13,27 +13,6 @@
 
   <div>
     <mat-form-field class="w-240">
-      <mat-label>아이템명</mat-label>
-      <input
-        [(ngModel)]="accMap.name"
-        type="text"
-        matInput
-        appSelectOnFocus
-        [matAutocomplete]="auto3"
-      />
-      <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
-        <mat-option
-          *ngFor="let option of filterItemName(accMap.name)"
-          [value]="option"
-        >
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <mat-form-field class="w-240">
       <mat-label>품질</mat-label>
       <input
         [(ngModel)]="accMap.quality"

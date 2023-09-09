@@ -16,7 +16,7 @@ export interface AccMap {
   quality: number;
   dealOption1: [string, number];
   dealOption2?: [string, number];
-  name: string;
+  isFixed: boolean;
   imprintOption1: [string, number];
   imprintOption2: [string, number];
   imprintPenalty: [string, number];

@@ -28,4 +28,13 @@ export class AccFormComponent {
   filterItemName(name: string, category: string) {
     return itemNames.filter((x) => x.includes(name) && x.endsWith(category));
   }
+
+  resetImprintOptions(category: string) {
+    this.accMap[category] = {
+      ...this.accMap[category],
+      imprintOption1: ['', 0],
+      imprintOption2: ['', 0],
+      imprintPenalty: ['', 0],
+    };
+  }
 }

@@ -1,40 +1,43 @@
 <div class="container">
-  <div class="flex-center">
-    <h1 class="mat-h1">각인 최적화</h1>
-    <a
-      href="https://icepeng.com/11"
-      target="_blank"
-      class="heading-button"
-      mat-flat-button
-      color="primary"
-      >설명서</a
-    >
-    <button class="heading-button" (click)="reset()" mat-stroked-button>
-      초기화
-    </button>
-    <div class="filler"></div>
-    <mat-form-field class="w-240">
-      <mat-label>API 키</mat-label>
-      <input matInput [formControl]="apiKeyControl" />
-    </mat-form-field>
-    <button
-      class="heading-button"
-      color="primary"
-      *ngIf="!isApiMode"
-      mat-flat-button
-      (click)="setApiClient()"
-    >
-      API 모드 (Beta) 켜기
-    </button>
-    <button
-      class="heading-button"
-      color="primary"
-      *ngIf="isApiMode"
-      mat-flat-button
-      (click)="removeApiClient()"
-    >
-      API 모드 (Beta) 끄기
-    </button>
+  <div class="heading">
+    <div class="heading-container">
+      <h1 class="mat-h1">각인 최적화</h1>
+      <a
+        href="https://icepeng.com/11"
+        target="_blank"
+        class="heading-button"
+        mat-flat-button
+        color="primary"
+        >설명서</a
+      >
+      <button class="heading-button" (click)="reset()" mat-stroked-button>
+        초기화
+      </button>
+    </div>
+    <div class="heading-container api-container">
+      <mat-form-field class="grow">
+        <mat-label>API 키</mat-label>
+        <input matInput [formControl]="apiKeyControl" />
+      </mat-form-field>
+      <button
+        class="heading-button"
+        color="primary"
+        *ngIf="!isApiMode"
+        mat-flat-button
+        (click)="setApiClient()"
+      >
+        API 모드 켜기
+      </button>
+      <button
+        class="heading-button"
+        color="primary"
+        *ngIf="isApiMode"
+        mat-flat-button
+        (click)="removeApiClient()"
+      >
+        API 모드 끄기
+      </button>
+    </div>
   </div>
   <div class="layout">
     <app-imprinting-form
@@ -43,10 +46,10 @@
     ></app-imprinting-form>
   </div>
   <div class="layout">
-    <app-acc-form [accMap]="accMap"></app-acc-form>
+    <app-acc-form class="mat-elevation-z1" [accMap]="accMap"></app-acc-form>
   </div>
   <div class="layout">
-    <mat-card>
+    <mat-card class="layout-card">
       <mat-card-subtitle>경매장 검색</mat-card-subtitle>
       <mat-card-content>
         <mat-radio-group [(ngModel)]="searchGrade">
@@ -212,7 +215,7 @@
         </button>
       </mat-card-content>
     </mat-card>
-    <mat-card class="grow">
+    <mat-card class="layout-card grow">
       <mat-card-subtitle>추천 조합</mat-card-subtitle>
       <mat-card-content>
         <app-compose-table

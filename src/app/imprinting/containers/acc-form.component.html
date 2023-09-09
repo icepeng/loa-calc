@@ -1,11 +1,11 @@
-<table class="mat-table mat-elevation-z1">
+<table class="mat-table">
   <thead>
     <tr class="mat-header-row">
       <th class="mat-header-cell">부위</th>
       <th class="mat-header-cell">품질</th>
       <th class="mat-header-cell">전투특성1</th>
       <th class="mat-header-cell">전투특성2</th>
-      <th class="mat-header-cell"></th>
+      <th class="mat-header-cell">보유한 아이템 사용</th>
       <th class="mat-header-cell">각인1</th>
       <th class="mat-header-cell">각인2</th>
       <th class="mat-header-cell">감소각인</th>
@@ -71,7 +71,7 @@
         <mat-slide-toggle
           [(ngModel)]="accMap[accType].isFixed"
           (ngModelChange)="resetImprintOptions(accType)"
-          >보유한 아이템 사용</mat-slide-toggle
+          >보유중</mat-slide-toggle
         >
       </td>
       <td class="mat-cell">

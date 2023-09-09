@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { MarketPriceService } from '../../market-price.service';
-import { getRefineTable, RefineTable } from '../data';
-import { breathNames, fixed, optimize, Path } from '../refine';
+import { RefineCautionDialogComponent } from '../components/refine-caution-dialog.component';
+import { RefineTable, getRefineTable } from '../data';
+import { Path, breathNames, fixed, optimize } from '../refine';
 
 @Component({
   selector: 'app-refining',
@@ -107,7 +109,8 @@ export class RefiningComponent implements OnInit, OnDestroy {
   constructor(
     private titleService: Title,
     private marketPriceService: MarketPriceService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.titleService.setTitle(
       'LoaCalc : 재련 최적화 - 로스트아크 최적화 계산기'
@@ -181,6 +184,12 @@ export class RefiningComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription$.unsubscribe();
+  }
+
+  onCautionLaunch() {
+    this.dialog.open(RefineCautionDialogComponent, {
+      maxWidth: '480px',
+    });
   }
 
   setMaterials(refineTable: RefineTable, priceForm: Record<string, number>) {

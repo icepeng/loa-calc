@@ -1,4 +1,13 @@
 <mat-toolbar class="navbar mat-elevation-z6" color="primary">
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="drawer.toggle()"
+    *ngIf="isHandset$ | async"
+  >
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
   <a
     routerLink="/"
     routerLinkActive="nav-selected"
@@ -7,18 +16,20 @@
     class="title"
     >Lostark Calculator</a
   >
-  <a routerLink="refining" routerLinkActive="nav-selected" mat-button
-    >재련 최적화</a
-  >
-  <a routerLink="imprinting" routerLinkActive="nav-selected" mat-button
-    >각인 최적화</a
-  >
-  <a routerLink="stone" routerLinkActive="nav-selected" mat-button
-    >어빌리티 스톤</a
-  >
-  <a routerLink="raid-box" routerLinkActive="nav-selected" mat-button
-    >더보기 손익</a
-  >
+  <ng-container *ngIf="(isHandset$ | async) === false">
+    <a routerLink="refining" routerLinkActive="nav-selected" mat-button
+      >재련 최적화</a
+    >
+    <a routerLink="imprinting" routerLinkActive="nav-selected" mat-button
+      >각인 최적화</a
+    >
+    <a routerLink="stone" routerLinkActive="nav-selected" mat-button
+      >어빌리티 스톤</a
+    >
+    <a routerLink="raid-box" routerLinkActive="nav-selected" mat-button
+      >더보기 손익</a
+    >
+  </ng-container>
   <div class="filler"></div>
   <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>format_color_fill</mat-icon>
@@ -30,6 +41,31 @@
   <a target="_blank" href="https://discord.gg/uCCp75c2aM" mat-button>Discord</a>
 </mat-toolbar>
 <mat-sidenav-container>
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+  >
+    <mat-nav-list>
+      <a routerLink="refining" routerLinkActive="nav-selected" mat-list-item>
+        <mat-icon mat-list-icon>trending_up</mat-icon>
+        <span mat-line>재련 최적화</span>
+      </a>
+      <a routerLink="imprinting" routerLinkActive="nav-selected" mat-list-item>
+        <mat-icon mat-list-icon>shopping_cart</mat-icon>
+        <span mat-line>각인 최적화</span>
+      </a>
+      <a routerLink="stone" routerLinkActive="nav-selected" mat-list-item>
+        <mat-icon mat-list-icon>diamond</mat-icon>
+        <span mat-line>어빌리티 스톤</span>
+      </a>
+      <a routerLink="raid-box" routerLinkActive="nav-selected" mat-list-item>
+        <mat-icon mat-list-icon>add</mat-icon>
+        <span mat-line>더보기 손익</span>
+      </a>
+    </mat-nav-list></mat-sidenav
+  >
   <mat-sidenav-content>
     <router-outlet></router-outlet>
     <mat-toolbar color="primary">

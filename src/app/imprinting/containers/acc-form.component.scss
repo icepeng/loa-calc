@@ -1,12 +1,15 @@
 :host {
   display: flex;
-  flex: 1 0 900px;
+  flex-grow: 1;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
+  min-width: 960px;
 }
 
 .mat-cell {
-  padding: 0
+  padding: 0;
 }

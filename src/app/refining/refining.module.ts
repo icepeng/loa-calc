@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -19,6 +20,7 @@ import { RefiningItemComponent } from './containers/refining-item.component';
 import { RefiningPriceComponent } from './containers/refining-price.component';
 import { RefiningComponent } from './containers/refining.component';
 import { RefiningRoutingModule } from './refining-routing.module';
+import { RefineCautionDialogComponent } from './components/refine-caution-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { RefiningRoutingModule } from './refining-routing.module';
     RefiningItemComponent,
     RefiningPriceComponent,
     RefiningBindedComponent,
+    RefineCautionDialogComponent,
   ],
   exports: [RefiningComponent],
   imports: [
@@ -44,6 +47,7 @@ import { RefiningRoutingModule } from './refining-routing.module';
     MatTabsModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatDialogModule,
     ClipboardModule,
     AdsenseModule,
   ],

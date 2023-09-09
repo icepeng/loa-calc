@@ -1,6 +1,13 @@
 <div class="container">
   <div class="flex-center">
     <h1 class="mat-h1">재련 최적화</h1>
+    <button
+      class="heading-button"
+      (click)="onCautionLaunch()"
+      mat-stroked-button
+    >
+      주의사항
+    </button>
   </div>
   <div class="layout">
     <mat-tab-group class="mat-elevation-z1 tab-group-card">
@@ -19,34 +26,6 @@
       <mat-card-subtitle> 장비 정보 </mat-card-subtitle>
       <mat-card-content>
         <app-refining-item [itemForm]="itemForm"></app-refining-item>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="notice" *ngIf="materials.length === 0">
-      <mat-card-title> 주의사항 </mat-card-title>
-      <mat-card-content>
-        <h3>가격 정보는 전일 평균 거래가를 서버로부터 자동으로 가져옵니다.</h3>
-        <p>
-          모든 재료 가격은 1개당 골드로 입력되니, 수호석 결정과 같이 10개 단위로
-          거래되는 재료들의 수치 입력에 주의해주세요.
-        </p>
-        <h3>숨결은 0개 혹은 최대치로만 투입합니다.</h3>
-        <p>
-          숨결을 일부만 투입하는 경우까지 고려하면 연산량이 지나치게 많아집니다.
-          걸립니다. 따라서 각 재료별로 0개 혹은 최대치 투입 2가지 경우의 수만
-          고려하고 있습니다. 이로 인해 귀속 숨결을 0골드로 계산할 시 약간의
-          오차가 발생할 수 있습니다.
-        </p>
-        <h3>22단계 이상의 재련에서 렉이 걸릴 수 있습니다.</h3>
-        <p>
-          재련 확률이 낮은 경우에는 트라이 횟수가 많아지는 만큼 경우의 수가 크게
-          늘어나 렉을 유발할 수 있습니다. "귀속 재료를 0골드로 계산" 옵션을
-          활성화할 시 귀속 재료의 양에 따라 최대 10배까지 느려질 수 있습니다.
-        </p>
-        <h3>평균 비용을 줄이는 재료 투입을 제시할 뿐입니다.</h3>
-        <p>
-          운이 좋고 나쁜것은 어쩔 수 없습니다. 장기백을 봤다고 절 욕하시면
-          곤란합니다.
-        </p>
       </mat-card-content>
     </mat-card>
     <mat-card *ngIf="materials.length > 0" class="materials">

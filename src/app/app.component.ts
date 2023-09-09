@@ -1,8 +1,10 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2';
-import { filter, map, pairwise, startWith } from 'rxjs';
+import { Observable, filter, map, pairwise, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +12,15 @@ import { filter, map, pairwise, startWith } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map((result) => result.matches));
+
+  @ViewChild('drawer') sidenav!: MatSidenav;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
+    private breakpointObserver: BreakpointObserver,
     router: Router,
     angulartics2GoogleAnalytics: Angulartics2GoogleGlobalSiteTag
   ) {
@@ -30,6 +39,7 @@ export class AppComponent implements OnInit {
         pairwise()
       )
       .subscribe(([fromUrl, toUrl]) => {
+        this.sidenav.close();
         if (fromUrl !== toUrl) {
           resetScrollPosition();
         }

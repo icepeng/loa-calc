@@ -164,7 +164,7 @@ export function optimize(
         ) / 10000;
       const { price: failPrice, path } = rec(
         Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-        jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+        jangin + (prob / JANGIN_ACCUMULATE_DIVIDER) * table.janginMultiplier,
         globalProb * (1 - prob),
         i,
         subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
@@ -262,7 +262,7 @@ export function fixed(
       ) / 10000;
     const { price: failPrice, path: failPath } = rec(
       Math.min(currentProb + baseProb * 0.1, baseProb * 2),
-      jangin + prob / JANGIN_ACCUMULATE_DIVIDER,
+      jangin + (prob / JANGIN_ACCUMULATE_DIVIDER) * table.janginMultiplier,
       globalProb * (1 - prob),
       subtractAmount(subtractAmount(bindedLeft, table.amount), breathes)
     );

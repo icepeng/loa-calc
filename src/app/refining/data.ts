@@ -7,6 +7,7 @@ export interface RefineTableData {
 export interface RefineTable {
   baseProb: number;
   additionalProb: number;
+  janginMultiplier: number;
   amount: Record<string, number>;
   breath: Record<string, [number, number]>;
 }
@@ -1283,7 +1284,8 @@ export function getRefineTable(
   itemGrade: string | undefined,
   refineTarget: number | undefined,
   applyResearch: boolean,
-  applyHyperExpress: boolean
+  applyHyperExpress: boolean,
+  applyKamenRoad: boolean
 ): RefineTable | undefined {
   if (!itemType || !itemGrade || !refineTarget) {
     return undefined;
@@ -1293,6 +1295,7 @@ export function getRefineTable(
   let additionalProb = 0;
   let costReduction = 0;
   let goldReduction = 0;
+  let janginMultiplier = 1;
   if (itemGrade === 't3_1250' && refineTarget <= 12) {
     additionalProb = 0.1;
     costReduction = 0.4;
@@ -1337,15 +1340,29 @@ export function getRefineTable(
     }
   }
 
-  additionalProb = Math.round(additionalProb * 100) / 100;
+  if (applyKamenRoad) {
+    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 17) {
+      additionalProb += 0.02;
+    }
+    if (itemGrade === 't3_1390' && refineTarget >= 18 && refineTarget <= 19) {
+      additionalProb += 0.015;
+    }
+    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 19) {
+      goldReduction = 0.5;
+      janginMultiplier = 2;
+    }
+  }
+
+  additionalProb = Math.round(additionalProb * 1000) / 1000;
 
   return {
     additionalProb,
+    janginMultiplier,
     amount: Object.fromEntries(
       Object.entries(data.amount).map(([name, value]) => [
         name,
         name === '골드'
-          ? Math.ceil((value * (1 - goldReduction)) / 10) * 10
+          ? Math.ceil(value * (1 - goldReduction))
           : Math.round(value * (1 - costReduction)),
       ])
     ),

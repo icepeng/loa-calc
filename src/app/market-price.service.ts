@@ -54,11 +54,14 @@ export class MarketPriceService {
       재봉술심화: getPrice('재봉술 : 수선 심화'),
       재봉술숙련: getPrice('재봉술 : 수선 숙련'),
       재봉술특화: getPrice('재봉술 : 수선 특화'),
+      재봉술전문: getPrice('재봉술 : 수선 전문'),
       야금술기본: getPrice('야금술 : 단조 기본'),
       야금술응용: getPrice('야금술 : 단조 응용'),
       야금술심화: getPrice('야금술 : 단조 심화'),
       야금술숙련: getPrice('야금술 : 단조 숙련'),
       야금술특화: getPrice('야금술 : 단조 특화'),
+      야금술전문: getPrice('야금술 : 단조 전문'),
+      야금술복합: getPrice('야금술 : 단조 복합'),
     };
 
     return Object.fromEntries(

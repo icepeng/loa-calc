@@ -513,6 +513,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.1],
+          재봉술전문: [1, 0.1],
         },
       },
       14: {
@@ -526,6 +527,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.05],
+          재봉술전문: [1, 0.05],
         },
       },
       15: {
@@ -539,6 +541,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.05],
+          재봉술전문: [1, 0.05],
         },
       },
       16: {
@@ -1107,6 +1110,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.1],
+          야금술전문: [1, 0.1],
         },
       },
       14: {
@@ -1120,6 +1124,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.05],
+          야금술전문: [1, 0.05],
         },
       },
       15: {
@@ -1133,6 +1138,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.05],
+          야금술전문: [1, 0.05],
         },
       },
       16: {
@@ -1146,6 +1152,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.04],
+          야금술복합: [1, 0.04],
         },
       },
       17: {
@@ -1159,6 +1166,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.04],
+          야금술복합: [1, 0.04],
         },
       },
       18: {
@@ -1172,6 +1180,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.03],
+          야금술복합: [1, 0.03],
         },
       },
       19: {
@@ -1185,6 +1194,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.03],
+          야금술복합: [1, 0.03],
         },
       },
       20: {

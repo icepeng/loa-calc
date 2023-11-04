@@ -3,9 +3,22 @@
   <mat-form-field>
     <mat-label>프리셋 이름</mat-label>
     <input matInput [formControl]="presetNameControl" />
+    <mat-error *ngIf="presetNameControl.hasError('required')">
+      이름을 입력해주세요.
+    </mat-error>
+    <mat-error *ngIf="presetNameControl.hasError('duplicate')">
+      이미 존재하는 이름입니다.
+    </mat-error>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button color="primary" mat-flat-button (click)="onSubmit()">저장</button>
+  <button
+    color="primary"
+    mat-flat-button
+    [disabled]="presetNameControl.invalid"
+    (click)="onSubmit()"
+  >
+    저장
+  </button>
   <button mat-stroked-button (click)="onCancel()">취소</button>
 </div>

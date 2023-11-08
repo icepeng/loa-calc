@@ -555,6 +555,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.04],
+          재봉술복합: [1, 0.04],
         },
       },
       17: {
@@ -568,6 +569,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.04],
+          재봉술복합: [1, 0.04],
         },
       },
       18: {
@@ -581,6 +583,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.03],
+          재봉술복합: [1, 0.03],
         },
       },
       19: {
@@ -594,6 +597,7 @@ export const refineData: Record<
         },
         breath: {
           ...breathTable[0.03],
+          재봉술복합: [1, 0.03],
         },
       },
       20: {

@@ -1328,7 +1328,7 @@ export function getRefineTable(
   }
   if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 20) {
     goldReduction = 0.4;
-    goldCeilUnit = 1;
+    goldCeilUnit = 10;
   }
 
   if (applyResearch) {

@@ -1309,6 +1309,7 @@ export function getRefineTable(
   let additionalProb = 0;
   let costReduction = 0;
   let goldReduction = 0;
+  let goldCeilUnit = 1;
   let janginMultiplier = 1;
   if (itemGrade === 't3_1250' && refineTarget <= 12) {
     additionalProb = 0.1;
@@ -1327,6 +1328,7 @@ export function getRefineTable(
   }
   if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 20) {
     goldReduction = 0.4;
+    goldCeilUnit = 1;
   }
 
   if (applyResearch) {
@@ -1341,19 +1343,27 @@ export function getRefineTable(
     }
   }
 
-  if (applyHyperExpress) {
+  if (applyHyperExpress) { // 2023 Winter, Super Mococo Express
     if (itemGrade === 't3_1390' && refineTarget === 13) {
       additionalProb += 0.1;
     }
     if (itemGrade === 't3_1390' && refineTarget >= 14 && refineTarget <= 15) {
       additionalProb += 0.05;
     }
-    if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 15) {
-      costReduction += 0.2;
-      goldReduction += 0.2;
+    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 17) {
+      additionalProb += 0.04;
+    }
+    if (itemGrade === 't3_1390' && refineTarget >= 18 && refineTarget <= 19) {
+      additionalProb += 0.03;
+    }
+
+    if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 19) {
+      goldReduction += 0.25;
+      costReduction += 0.6;
+      goldCeilUnit = 1;
     }
   }
-
+/*
   if (applyKamenRoad) {
     if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 17) {
       additionalProb += 0.02;
@@ -1366,7 +1376,7 @@ export function getRefineTable(
       janginMultiplier = 2;
     }
   }
-
+*/
   additionalProb = Math.round(additionalProb * 1000) / 1000;
 
   return {
@@ -1376,7 +1386,7 @@ export function getRefineTable(
       Object.entries(data.amount).map(([name, value]) => [
         name,
         name === '골드'
-          ? Math.ceil(value * (1 - goldReduction))
+          ? Math.ceil(value * (1 - goldReduction) / goldCeilUnit) * goldCeilUnit
           : Math.round(value * (1 - costReduction)),
       ])
     ),

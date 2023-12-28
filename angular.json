@@ -5,6 +5,12 @@
   "projects": {
     "loa-calc": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "ko",
+        "locales": {
+          "en-US": "src/locale/messages.en.xlf"
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
@@ -22,6 +28,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["en-US"],
             "outputPath": "dist/loa-calc",
             "index": "src/index.html",
             "main": "src/main.ts",

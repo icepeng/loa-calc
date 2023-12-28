@@ -26,8 +26,8 @@
         mat-flat-button
         color="primary"
       >
-        <span *ngIf="!isFocused">목표로 지정</span>
-        <span *ngIf="isFocused">지정된 목표</span>
+        <span *ngIf="!isFocused" i18n>목표로 지정</span>
+        <span *ngIf="isFocused" i18n>지정된 목표</span>
       </button>
     </div>
     <div>
@@ -43,6 +43,7 @@
     <mat-checkbox
       [ngModel]="gameState.effects[index].isSealed"
       (ngModelChange)="setSealed.emit($event)"
+      i18n
       >봉인</mat-checkbox
     >
   </div>

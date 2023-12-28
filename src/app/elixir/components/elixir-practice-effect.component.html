@@ -3,7 +3,7 @@
     <ng-container *ngIf="!effect.isSealed">
       {{ pickRatio | percent : ".1" }}
     </ng-container>
-    <ng-container *ngIf="effect.isSealed"> 봉인 </ng-container>
+    <ng-container *ngIf="effect.isSealed" i18n> 봉인 </ng-container>
   </div>
   <div class="effect-info">
     <mat-form-field>
@@ -22,7 +22,7 @@
         <span>{{ level }}</span>
       </div>
     </div>
-    <span class="effect-lucky mat-body"
+    <span class="effect-lucky mat-body" i18n
       >대성공 {{ luckyRatio | percent : ".0" }}</span
     >
   </div>
@@ -34,8 +34,8 @@
         mat-flat-button
         color="primary"
       >
-        <span *ngIf="!isFocused">목표로 지정</span>
-        <span *ngIf="isFocused">지정된 목표</span>
+        <span *ngIf="!isFocused" i18n>목표로 지정</span>
+        <span *ngIf="isFocused" i18n>지정된 목표</span>
       </button>
     </div>
   </div>

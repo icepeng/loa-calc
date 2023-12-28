@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="ko" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="7987198871427441911" datatype="html">
+        <source>조언</source>
+        <target>Effets</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="613185460136121069" datatype="html">
+        <source>확인</source>
+        <target>Continue</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2676933467546142131" datatype="html">
+        <source>취소</source>
+        <target>Cancel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6991847238292472168" datatype="html">
+        <source>Target</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-effect.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-effect.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5388196458241450877" datatype="html">
+        <source>Main</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-effect.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-effect.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7251412623313557459" datatype="html">
+        <source>Seal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-effect.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3769793489545454409" datatype="html">
+        <source> Seal </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-effect.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2764279540698848044" datatype="html">
+        <source>Great success <x id="INTERPOLATION" equiv-text="{{ luckyRatio | percent : &quot;.0&quot; }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-effect.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8867504431574171580" datatype="html">
+        <source>Stack Score <x id="INTERPOLATION" equiv-text="{{ curveScore * 1000 | number : &quot;.2-2&quot; }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-sage.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2148489888981604536" datatype="html">
+        <source> Advice Score <x id="INTERPOLATION" equiv-text="{{ adviceScore * 10000 | number : &quot;.2-2&quot; }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-sage.component.html</context>
+          <context context-type="linenumber">21,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
+          <context context-type="linenumber">26,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1601682587522736863" datatype="html">
+        <source> Final Score <x id="INTERPOLATION" equiv-text="{{ totalScore * 1000 | number : &quot;.2-2&quot; }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-practice-sage.component.html</context>
+          <context context-type="linenumber">25,28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
+          <context context-type="linenumber">30,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="187187500641108332" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ description }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7700246210441425373" datatype="html">
+        <source>Exhaust</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="45521661622806337" datatype="html">
+        <source>Elixir Assistant (Beta)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2080549445220571508" datatype="html">
+        <source>The goal is to reach level 8 or higher??????</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

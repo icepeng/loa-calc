@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import {
@@ -34,13 +34,12 @@ export class ElixirComponent implements OnInit {
   isDangerous = false;
 
   constructor(
+    @Inject(LOCALE_ID) public locale: string,
     private titleService: Title,
     private dialog: MatDialog,
     private evaluator: EvaluatorService
   ) {
-    this.titleService.setTitle(
-      'LoaCalc : 엘릭서 시뮬레이션 - 로스트아크 최적화 계산기'
-    );
+    this.titleService.setTitle(locale == "en-US" ? "Elixir Simulation - Lost Ark Optimization Calculator": 'LoaCalc : 엘릭서 시뮬레이션 - 로스트아크 최적화 계산기');
   }
 
   ngOnInit(): void {

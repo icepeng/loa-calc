@@ -1,19 +1,11 @@
 <div class="container">
-  <h1 class="mat-h1" i18n>엘릭서 도우미 (베타)</h1>
-  <h2 i18n>합 8레벨 이상 목표.</h2>
+  <div class="layout">
+    <h1 class="mat-h1" i18n>엘릭서 도우미 (베타)</h1>  <h2 i18n>합 8레벨 이상 목표.</h2>
+  </div>
   <div>
     <div class="layout">
       <mat-card class="enchant-area">
         <mat-card-content>
-          <div class="turn-left" i18n>
-            남은 연성 {{ gameState.turnLeft }}회
-            <button (click)="decreaseTurnLeft()" mat-icon-button>
-              <mat-icon>remove</mat-icon>
-            </button>
-            <button (click)="increaseTurnLeft()" mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
           <div [class.recommend-reroll]="recommendRerollBaseline" i18n>
             가장 높은 조언점수가
             <span>{{ baselineScore * 10000 | number : ".2" }}</span> 이하일시
@@ -28,11 +20,25 @@
           </div>
           <div></div>
         </mat-card-content>
-        <mat-card-actions>
+      </mat-card>
+      <mat-card class="enchant-area">
+        <mat-card-content>
+          <div class="turn-center" i18n>
+            남은 연성 회
+          </div>
+          <div class="turn-center">
+            <button (click)="decreaseTurnLeft()" mat-icon-button>
+              <mat-icon>remove</mat-icon>
+            </button>
+            <h1 class="m-0">{{ gameState.turnLeft }}</h1>
+            <button (click)="increaseTurnLeft()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
           <button mat-flat-button color="warn" (click)="onResetClick()" i18n>
             초기화
           </button>
-        </mat-card-actions>
+        </mat-card-content>
       </mat-card>
     </div>
     <div class="layout">

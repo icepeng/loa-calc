@@ -2,24 +2,68 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="ko" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="8978931479759346965" datatype="html">
+        <source>주의사항</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/disclaimer-dialog.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1240442487217314578" datatype="html">
+        <source>엘릭서 도우미는 일정 횟수의 시도 안에 원하는 결과를 보장하지 않습니다.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/disclaimer-dialog.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8355792320510169790" datatype="html">
+        <source> 제공되는 점수는 유저의 판단을 돕기 위한 지표일 뿐이며, 최종적인 판단은 유저가 직접 해야 합니다. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/disclaimer-dialog.component.html</context>
+          <context context-type="linenumber">4,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6571340292554139951" datatype="html">
+        <source> &quot;최고 단계 효과 1개의 단계를 전부 다른 효과에 나눈다&quot;, &quot;최소 단계 효과 1개의 단계를 2 올린다&quot;와 같은 최대/최소 관련 조언의 점수가 부정확할 수 있습니다. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/disclaimer-dialog.component.html</context>
+          <context context-type="linenumber">8,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="613185460136121069" datatype="html">
+        <source>확인</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/disclaimer-dialog.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/effect-dialog.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7987198871427441911" datatype="html">
         <source>조언</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="613185460136121069" datatype="html">
-        <source>확인</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="sourcefile">src/app/elixir/components/effect-dialog.component.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2676933467546142131" datatype="html">
         <source>취소</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/elixir/components/council-dialog.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/components/effect-dialog.component.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
@@ -99,18 +143,11 @@
           <context context-type="linenumber">30,33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="187187500641108332" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ description }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="7700246210441425373" datatype="html">
         <source>소진</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/elixir/components/elixir-sage.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="45521661622806337" datatype="html">
@@ -125,6 +162,41 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
           <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4191451795534516046" datatype="html">
+        <source> 남은 연성 <x id="INTERPOLATION" equiv-text="{{ gameState.turnLeft }}"/>회 <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button (click)=&quot;decreaseTurnLeft()&quot; mat-icon-button&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>remove<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="START_TAG_BUTTON_1" ctype="x-button_1" equiv-text="&lt;button (click)=&quot;increaseTurnLeft()&quot; mat-icon-button&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">8,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7676097550713026853" datatype="html">
+        <source> 가장 높은 조언점수가 <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="INTERPOLATION" equiv-text="{{ baselineScore * 10000 | number : &quot;.2&quot; }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> 이하일시 리롤 추천 </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">17,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6654642694180587564" datatype="html">
+        <source> 봉인 페이즈에서 질서3 조언이 기회 소모 없음이 아닐시 리롤 추천 </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5828944030473837995" datatype="html">
+        <source> 봉인 페이즈에서 질서3을 향하는 조언이 목표 옵션을 봉인할 시 리롤 추천 </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">25,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3831630743150038690" datatype="html">
+        <source> 초기화 </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/elixir/containers/elixir.component.html</context>
+          <context context-type="linenumber">32,34</context>
         </context-group>
       </trans-unit>
     </body>

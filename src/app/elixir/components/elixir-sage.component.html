@@ -33,13 +33,12 @@
     </div>
   </div>
   <ng-container *ngIf="sage.isExhausted">
-    <div i18n>{{ description }}</div>
+    <div>{{ description }}</div>
   </ng-container>
 </ng-container>
 
 <mat-checkbox
   [ngModel]="sage.isExhausted"
   (ngModelChange)="setExhausted.emit($event)"
-  i18n
-  >소진</mat-checkbox
+  i18n>소진</mat-checkbox
 >

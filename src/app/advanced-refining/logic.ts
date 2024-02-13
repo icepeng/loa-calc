@@ -137,7 +137,9 @@ export function getReport(
 
           return {
             name: x.name,
-            amount: normalAmount * (1 - BONUS_RATE) + bonusAmount * BONUS_RATE,
+            amount:
+              (normalAmount * (1 - BONUS_RATE) + bonusAmount * BONUS_RATE) *
+              expectedTryCount,
           };
         }),
       ];

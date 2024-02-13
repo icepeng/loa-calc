@@ -129,11 +129,14 @@ export function getReport(
       const expectedMaterials = [
         ...Object.entries(refineTable.amount).map(([name, amount]) => ({
           name,
-          amount: amount * expectedTryCount,
+          amount:
+            amount *
+            expectedTryCount *
+            ((1 - BONUS_RATE) * (1 - FREE_RATE) + BONUS_RATE),
         })),
         ...sortedBreath.map((x, index) => {
-          const normalAmount = index <= normalBreath ? x.amount : 0;
-          const bonusAmount = index <= bonusBreath ? x.amount : 0;
+          const normalAmount = index < normalBreath ? x.amount : 0;
+          const bonusAmount = index < bonusBreath ? x.amount : 0;
 
           return {
             name: x.name,

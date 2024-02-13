@@ -10,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Angulartics2Module } from 'angulartics2';
 import { AdsenseModule } from 'ng2-adsense';
+import { AdvancedRefiningModule } from './advanced-refining/advanced-refining.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -32,6 +33,7 @@ import { StoneModule } from './stone/stone.module';
     ImprintingModule,
     StoneModule,
     RaidBoxModule,
+    AdvancedRefiningModule,
     DpsModule,
     DonateModule,
     MatToolbarModule,

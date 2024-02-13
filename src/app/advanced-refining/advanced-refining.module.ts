@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -13,27 +12,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AdsenseModule } from 'ng2-adsense';
-import { RefineCautionDialogComponent } from './components/refine-caution-dialog.component';
-import { RefineTableComponent } from './components/refine-table.component';
-import { RefiningBindedComponent } from './containers/refining-binded.component';
-import { RefiningItemComponent } from './containers/refining-item.component';
-import { RefiningPriceComponent } from './containers/refining-price.component';
-import { RefiningComponent } from './containers/refining.component';
-import { RefiningRoutingModule } from './refining-routing.module';
+import { AdvancedRefiningRoutingModule } from './advanced-refining-routing.module';
+import { AdvancedRefiningItemComponent } from './containers/advanced-refining-item.component';
+import { AdvancedRefiningPriceComponent } from './containers/advanced-refining-price.component';
+import { AdvancedRefiningComponent } from './containers/advanced-refining.component';
 
 @NgModule({
   declarations: [
-    RefiningComponent,
-    RefineTableComponent,
-    RefiningItemComponent,
-    RefiningPriceComponent,
-    RefiningBindedComponent,
-    RefineCautionDialogComponent,
+    AdvancedRefiningComponent,
+    AdvancedRefiningItemComponent,
+    AdvancedRefiningPriceComponent,
   ],
-  exports: [RefiningComponent],
+  exports: [AdvancedRefiningComponent],
   imports: [
     CommonModule,
-    RefiningRoutingModule,
+    AdvancedRefiningRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,
@@ -46,8 +39,7 @@ import { RefiningRoutingModule } from './refining-routing.module';
     MatTabsModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatDialogModule,
     AdsenseModule,
   ],
 })
-export class RefiningModule {}
+export class AdvancedRefiningModule {}

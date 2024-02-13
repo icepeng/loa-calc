@@ -1,0 +1,20 @@
+<form [formGroup]="itemForm">
+  <div>
+    <mat-form-field>
+      <mat-label>장비 종류</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="weapon">무기</mat-option>
+        <mat-option value="armor">방어구</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>목표 단계</mat-label>
+      <mat-select formControlName="target">
+        <mat-option [value]="0">1~10단계</mat-option>
+        <mat-option [value]="1">11~20단계</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

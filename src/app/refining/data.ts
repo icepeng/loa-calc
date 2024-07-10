@@ -1327,7 +1327,9 @@ export function getRefineTable(
     goldReduction = 1;
   }
   if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 20) {
-    goldReduction = 0.4;
+    additionalProb = data.baseProb;
+    goldReduction = 0.5;
+    costReduction = 0.5;
     goldCeilUnit = 10;
   }
 
@@ -1343,7 +1345,8 @@ export function getRefineTable(
     }
   }
 
-  if (applyHyperExpress) { // 2023 Winter, Super Mococo Express
+  if (applyHyperExpress) {
+    // 2023 Winter, Super Mococo Express
     if (itemGrade === 't3_1390' && refineTarget === 13) {
       additionalProb += 0.1;
     }
@@ -1363,20 +1366,7 @@ export function getRefineTable(
       goldCeilUnit = 1;
     }
   }
-/*
-  if (applyKamenRoad) {
-    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 17) {
-      additionalProb += 0.02;
-    }
-    if (itemGrade === 't3_1390' && refineTarget >= 18 && refineTarget <= 19) {
-      additionalProb += 0.015;
-    }
-    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 19) {
-      goldReduction = 0.5;
-      janginMultiplier = 2;
-    }
-  }
-*/
+
   additionalProb = Math.round(additionalProb * 1000) / 1000;
 
   return {
@@ -1386,7 +1376,8 @@ export function getRefineTable(
       Object.entries(data.amount).map(([name, value]) => [
         name,
         name === '골드'
-          ? Math.ceil(value * (1 - goldReduction) / goldCeilUnit) * goldCeilUnit
+          ? Math.ceil((value * (1 - goldReduction)) / goldCeilUnit) *
+            goldCeilUnit
           : Math.round(value * (1 - costReduction)),
       ])
     ),

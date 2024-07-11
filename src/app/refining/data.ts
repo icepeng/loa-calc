@@ -1365,6 +1365,13 @@ export function getRefineTable(
       costReduction += 0.6;
       goldCeilUnit = 1;
     }
+
+    if (itemGrade === 't3_1525' && refineTarget >= 13 && refineTarget <= 15) {
+      additionalProb += data.baseProb / 2;
+      goldReduction += 0.4;
+      costReduction += 0.4;
+      goldCeilUnit = 1;
+    }
   }
 
   additionalProb = Math.round(additionalProb * 1000) / 1000;

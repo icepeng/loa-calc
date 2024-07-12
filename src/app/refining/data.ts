@@ -1346,30 +1346,18 @@ export function getRefineTable(
   }
 
   if (applyHyperExpress) {
-    // 2023 Winter, Super Mococo Express
-    if (itemGrade === 't3_1390' && refineTarget === 13) {
-      additionalProb += 0.1;
-    }
-    if (itemGrade === 't3_1390' && refineTarget >= 14 && refineTarget <= 15) {
-      additionalProb += 0.05;
-    }
-    if (itemGrade === 't3_1390' && refineTarget >= 16 && refineTarget <= 17) {
-      additionalProb += 0.04;
-    }
-    if (itemGrade === 't3_1390' && refineTarget >= 18 && refineTarget <= 19) {
-      additionalProb += 0.03;
-    }
-
+    // 2024 Summer, Super Mococo Express
     if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 19) {
-      goldReduction += 0.25;
-      costReduction += 0.6;
+      additionalProb = data.baseProb;
+      goldReduction = 0.7;
+      costReduction = 0.7;
       goldCeilUnit = 1;
     }
 
     if (itemGrade === 't3_1525' && refineTarget >= 13 && refineTarget <= 15) {
       additionalProb += data.baseProb / 2;
-      goldReduction += 0.4;
-      costReduction += 0.4;
+      goldReduction = 0.4;
+      costReduction = 0.4;
       goldCeilUnit = 1;
     }
   }

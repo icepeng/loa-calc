@@ -1531,7 +1531,7 @@ export const refineData: Record<
           운돌: 45,
           아비도스: 35,
           운명파편: 16000,
-          골드: 90000,
+          골드: 3830,
         },
         breath: {
           ...t4WeaponBreathTable[0.015],

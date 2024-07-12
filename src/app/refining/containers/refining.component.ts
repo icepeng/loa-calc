@@ -18,22 +18,29 @@ export class RefiningComponent implements OnInit, OnDestroy {
   subscription$!: Subscription;
   priceForm = new FormGroup({
     파편: new FormControl(0),
+    운명파편: new FormControl(0),
     중급오레하: new FormControl(0),
     상급오레하: new FormControl(0),
     최상급오레하: new FormControl(0),
+    아비도스: new FormControl(0),
     명돌: new FormControl(0),
     위명돌: new FormControl(0),
     경명돌: new FormControl(0),
     찬명돌: new FormControl(0),
+    운돌: new FormControl(0),
     수결: new FormControl(0),
     파결: new FormControl(0),
     수호강석: new FormControl(0),
     파괴강석: new FormControl(0),
     정제된수호강석: new FormControl(0),
     정제된파괴강석: new FormControl(0),
+    운명의수호석: new FormControl(0),
+    운명의파괴석: new FormControl(0),
     은총: new FormControl(0),
     축복: new FormControl(0),
     가호: new FormControl(0),
+    빙하: new FormControl(0),
+    용암: new FormControl(0),
     재봉술기본: new FormControl(0),
     재봉술응용: new FormControl(0),
     재봉술심화: new FormControl(0),
@@ -52,23 +59,29 @@ export class RefiningComponent implements OnInit, OnDestroy {
   });
   bindedForm = new FormGroup({
     파편: new FormControl(0),
-    하급오레하: new FormControl(0),
+    운명파편: new FormControl(0),
     중급오레하: new FormControl(0),
     상급오레하: new FormControl(0),
     최상급오레하: new FormControl(0),
+    아비도스: new FormControl(0),
     명돌: new FormControl(0),
     위명돌: new FormControl(0),
     경명돌: new FormControl(0),
     찬명돌: new FormControl(0),
+    운돌: new FormControl(0),
     수결: new FormControl(0),
     파결: new FormControl(0),
     수호강석: new FormControl(0),
     파괴강석: new FormControl(0),
     정제된수호강석: new FormControl(0),
     정제된파괴강석: new FormControl(0),
+    운명의수호석: new FormControl(0),
+    운명의파괴석: new FormControl(0),
     은총: new FormControl(0),
     축복: new FormControl(0),
     가호: new FormControl(0),
+    빙하: new FormControl(0),
+    용암: new FormControl(0),
     재봉술기본: new FormControl(0),
     재봉술응용: new FormControl(0),
     재봉술심화: new FormControl(0),
@@ -95,7 +108,6 @@ export class RefiningComponent implements OnInit, OnDestroy {
     jangin: new FormControl(0),
     applyResearch: new FormControl(false),
     applyHyperExpress: new FormControl(false),
-    applyKamenRoad: new FormControl(false),
   });
   reduceBindedMaterials = false;
   reduceBindedBooks = false;
@@ -149,8 +161,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
         itemForm.grade,
         itemForm.target,
         itemForm.applyResearch,
-        itemForm.applyHyperExpress,
-        itemForm.applyKamenRoad
+        itemForm.applyHyperExpress
       );
 
       if (!table) {
@@ -181,8 +192,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
         itemForm.grade,
         itemForm.target,
         itemForm.applyResearch,
-        itemForm.applyHyperExpress,
-        itemForm.applyKamenRoad
+        itemForm.applyHyperExpress
       );
 
       if (!table) {
@@ -229,8 +239,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
       itemInfo.grade,
       itemInfo.target,
       itemInfo.applyResearch,
-      itemInfo.applyHyperExpress,
-      itemInfo.applyKamenRoad
+      itemInfo.applyHyperExpress
     );
     if (!table) {
       return;

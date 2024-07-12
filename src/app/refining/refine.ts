@@ -13,7 +13,7 @@ export type Step = {
 
 export type Path = Step[];
 
-export const breathNames = ['은총', '축복', '가호'];
+export const breathNames = ['은총', '축복', '가호', '용암', '빙하'];
 
 function getPrice(
   priceMap: Record<string, number>,

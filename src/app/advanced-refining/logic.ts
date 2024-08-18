@@ -104,15 +104,27 @@ function getExpectedPricePerTry(
   return normalPrice * (1 - BONUS_RATE) + bonusPrice * BONUS_RATE;
 }
 
+function getMaxBreathCount(
+  tier: number
+) {
+  switch (tier) {
+    case 3: return 3;
+    case 4: return 1;
+  }
+  return 0;
+}
+
 export function getReport(
   refineTable: AdvancedRefineTable,
-  priceTable: Record<string, number>
+  priceTable: Record<string, number>,
+  tier: number
 ): AdvancedRefineReport[] {
   const result = [];
   const sortedBreath = getSortedBreathByPrice(refineTable, priceTable);
+  const maxBreathCount = getMaxBreathCount(tier);
 
-  for (let normalBreath = 0; normalBreath <= 3; normalBreath++) {
-    for (let bonusBreath = 0; bonusBreath <= 3; bonusBreath++) {
+  for (let normalBreath = 0; normalBreath <= maxBreathCount; normalBreath++) {
+    for (let bonusBreath = 0; bonusBreath <= maxBreathCount; bonusBreath++) {
       const expectedTryCount = getExpectedTryCount({
         normal: normalBreath,
         bonus: bonusBreath,

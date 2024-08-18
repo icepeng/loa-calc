@@ -15,24 +15,38 @@ import { AdvancedRefineReport, getReport } from '../logic';
 export class AdvancedRefiningComponent implements OnInit, OnDestroy {
   priceForm = new FormGroup({
     파편: new FormControl(0),
+    운명파편: new FormControl(0),
     최상급오레하: new FormControl(0),
+    아비도스: new FormControl(0),
     찬명돌: new FormControl(0),
+    운돌: new FormControl(0),
     정제된수호강석: new FormControl(0),
+    운명의수호석: new FormControl(0),
     정제된파괴강석: new FormControl(0),
+    운명의파괴석: new FormControl(0),
     은총: new FormControl(0),
     축복: new FormControl(0),
     가호: new FormControl(0),
+    빙하: new FormControl(0),
+    용암: new FormControl(0),
     골드: new FormControl(1),
   });
   bindedForm = new FormGroup({
     파편: new FormControl(true),
+    운명파편: new FormControl(true),
     최상급오레하: new FormControl(true),
+    아비도스: new FormControl(true),
     찬명돌: new FormControl(true),
+    운돌: new FormControl(true),
     정제된수호강석: new FormControl(true),
+    운명의수호석: new FormControl(true),
     정제된파괴강석: new FormControl(true),
+    운명의파괴석: new FormControl(true),
     골드: new FormControl({ value: true, disabled: true }),
     은총: new FormControl(true),
     축복: new FormControl(true),
+    빙하: new FormControl(true),
+    용암: new FormControl(true),
     가호: new FormControl(true),
   });
   itemForm = new FormGroup({
@@ -47,6 +61,7 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
   reports: AdvancedRefineReport[] = [];
 
   unsubscribe$ = new Subject<boolean>();
+  tier: number = 3;
 
   constructor(
     private titleService: Title,
@@ -85,6 +100,10 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
         }
 
         this.setMaterials(table, this.priceForm.value, this.bindedForm.value);
+
+        if ( [2, 3].includes(itemForm.target) ) {
+          this.tier = 4;
+        }
       });
 
     combineLatest([
@@ -146,7 +165,8 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
             price * (name === '골드' || this.bindedForm.value[name] ? 1 : 0),
           ]
         )
-      )
+      ),
+      this.tier
     );
   }
 

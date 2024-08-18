@@ -12,12 +12,18 @@ export interface AdvancedRefineReport {
   expectedMaterials: { name: string; amount: number }[];
 }
 
-// success rates per breath
-const successTable = {
+// success rates per breath - T3
+const successTableMax3 = {
   0: [0.8, 0.15, 0.05],
   1: [0.7, 0.2, 0.1],
   2: [0.6, 0.25, 0.15],
   3: [0.5, 0.3, 0.2],
+};
+
+// success rates per breath - T4
+const successTableMax1 = {
+  0: [0.8, 0.15, 0.05],
+  1: [0.5, 0.3, 0.2],
 };
 
 const bonusTable = {
@@ -27,14 +33,17 @@ const bonusTable = {
   테메르: 0.35,
 };
 
-function getAverageNormalExp(breathCount: number) {
-  const [성공, 대성공, 대성공2] = successTable[breathCount];
+function getAverageNormalExp(breathCount: number, maxBreathCount: 3 | 1) {
+  const [성공, 대성공, 대성공2] =
+    maxBreathCount === 3
+      ? successTableMax3[breathCount]
+      : successTableMax1[breathCount];
 
   return 성공 * 10 + 대성공 * 20 + 대성공2 * 40;
 }
 
-function getAverageBonusExp(breathCount: number) {
-  const base = getAverageNormalExp(breathCount);
+function getAverageBonusExp(breathCount: number, maxBreathCount: 3 | 1) {
+  const base = getAverageNormalExp(breathCount, maxBreathCount);
 
   const 갈라투르 = base * 5;
   const 겔라르 = base * 3;
@@ -71,10 +80,14 @@ function getSortedBreathByPrice(
     .sort((a, b) => a.price - b.price);
 }
 
-function getExpectedTryCount(breathCounts: { normal: number; bonus: number }) {
+function getExpectedTryCount(
+  breathCounts: { normal: number; bonus: number },
+  maxBreathCount: 3 | 1
+) {
   const exp =
-    getAverageNormalExp(breathCounts.normal) * (1 - BONUS_RATE) +
-    getAverageBonusExp(breathCounts.bonus) * BONUS_RATE;
+    getAverageNormalExp(breathCounts.normal, maxBreathCount) *
+      (1 - BONUS_RATE) +
+    getAverageBonusExp(breathCounts.bonus, maxBreathCount) * BONUS_RATE;
 
   return TOTAL_EXP / exp;
 }
@@ -104,31 +117,23 @@ function getExpectedPricePerTry(
   return normalPrice * (1 - BONUS_RATE) + bonusPrice * BONUS_RATE;
 }
 
-function getMaxBreathCount(
-  tier: number
-) {
-  switch (tier) {
-    case 3: return 3;
-    case 4: return 1;
-  }
-  return 0;
-}
-
 export function getReport(
   refineTable: AdvancedRefineTable,
-  priceTable: Record<string, number>,
-  tier: number
+  priceTable: Record<string, number>
 ): AdvancedRefineReport[] {
   const result = [];
   const sortedBreath = getSortedBreathByPrice(refineTable, priceTable);
-  const maxBreathCount = getMaxBreathCount(tier);
+  const maxBreathCount = Object.keys(refineTable.breath).length as 3 | 1;
 
   for (let normalBreath = 0; normalBreath <= maxBreathCount; normalBreath++) {
     for (let bonusBreath = 0; bonusBreath <= maxBreathCount; bonusBreath++) {
-      const expectedTryCount = getExpectedTryCount({
-        normal: normalBreath,
-        bonus: bonusBreath,
-      });
+      const expectedTryCount = getExpectedTryCount(
+        {
+          normal: normalBreath,
+          bonus: bonusBreath,
+        },
+        maxBreathCount
+      );
       const expectedPricePerTry = getExpectedPricePerTry(
         refineTable,
         priceTable,

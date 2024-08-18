@@ -3,12 +3,14 @@ export interface AdvancedRefineTable {
   breath: Record<string, number>;
 }
 
+export type AdvancedRefineTarget = 't3_0' | 't3_1' | 't4_0' | 't4_1';
+
 export const advancedRefineTable: Record<
-  string,
-  Record<number, AdvancedRefineTable>
+  'armor' | 'weapon',
+  Record<AdvancedRefineTarget, AdvancedRefineTable>
 > = {
   armor: {
-    0: {
+    t3_0: {
       amount: {
         정제된수호강석: 950,
         찬명돌: 22,
@@ -22,7 +24,7 @@ export const advancedRefineTable: Record<
         가호: 4,
       },
     },
-    1: {
+    t3_1: {
       amount: {
         정제된수호강석: 1300,
         찬명돌: 28,
@@ -36,7 +38,7 @@ export const advancedRefineTable: Record<
         가호: 6,
       },
     },
-    2: {
+    t4_0: {
       amount: {
         운명의수호석: 500,
         운돌: 12,
@@ -48,7 +50,7 @@ export const advancedRefineTable: Record<
         빙하: 12,
       },
     },
-    3: {
+    t4_1: {
       amount: {
         운명의수호석: 900,
         운돌: 16,
@@ -62,7 +64,7 @@ export const advancedRefineTable: Record<
     },
   },
   weapon: {
-    0: {
+    t3_0: {
       amount: {
         정제된파괴강석: 1000,
         찬명돌: 28,
@@ -76,7 +78,7 @@ export const advancedRefineTable: Record<
         가호: 4,
       },
     },
-    1: {
+    t3_1: {
       amount: {
         정제된파괴강석: 1600,
         찬명돌: 36,
@@ -90,7 +92,7 @@ export const advancedRefineTable: Record<
         가호: 6,
       },
     },
-    2: {
+    t4_0: {
       amount: {
         운명의파괴석: 600,
         운돌: 16,
@@ -102,7 +104,7 @@ export const advancedRefineTable: Record<
         용암: 12,
       },
     },
-    3: {
+    t4_1: {
       amount: {
         운명의파괴석: 1100,
         운돌: 22,
@@ -118,8 +120,8 @@ export const advancedRefineTable: Record<
 };
 
 export function getAdvancedRefineTable(
-  type: string,
-  target: number
-): AdvancedRefineTable | undefined {
-  return advancedRefineTable[type]?.[target];
+  type: 'armor' | 'weapon',
+  target: AdvancedRefineTarget
+): AdvancedRefineTable {
+  return advancedRefineTable[type][target];
 }

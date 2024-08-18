@@ -61,7 +61,6 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
   reports: AdvancedRefineReport[] = [];
 
   unsubscribe$ = new Subject<boolean>();
-  tier: number = 3;
 
   constructor(
     private titleService: Title,
@@ -100,10 +99,6 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
         }
 
         this.setMaterials(table, this.priceForm.value, this.bindedForm.value);
-
-        if ( [2, 3].includes(itemForm.target) ) {
-          this.tier = 4;
-        }
       });
 
     combineLatest([
@@ -165,8 +160,7 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
             price * (name === '골드' || this.bindedForm.value[name] ? 1 : 0),
           ]
         )
-      ),
-      this.tier
+      )
     );
   }
 

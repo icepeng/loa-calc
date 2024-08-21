@@ -14,16 +14,20 @@ import { Raid, raidGroup } from '../data';
 export class RaidBoxComponent implements OnInit {
   priceForm = new FormGroup({
     파편: new FormControl(0.4384),
+    운명파편: new FormControl(0.338),
     명돌: new FormControl(17.4),
     위명돌: new FormControl(18.7),
     경명돌: new FormControl(38.9),
     찬명돌: new FormControl(58.4),
+    운돌: new FormControl(42),
     수결: new FormControl(0.1),
     파결: new FormControl(0.36),
     수호강석: new FormControl(0.1),
     파괴강석: new FormControl(1.87),
     정제된수호강석: new FormControl(0.25),
     정제된파괴강석: new FormControl(9.69),
+    운명의수호석: new FormControl(1.29),
+    운명의파괴석: new FormControl(2.62),
     혼돈의돌: new FormControl(500),
   });
 

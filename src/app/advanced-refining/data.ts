@@ -109,7 +109,7 @@ export const advancedRefineTable: Record<
         운명의파괴석: 1100,
         운돌: 22,
         아비도스: 27,
-        파편: 10000,
+        운명파편: 10000,
         골드: 2500,
       },
       breath: {

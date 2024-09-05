@@ -95,7 +95,7 @@ const t4ArmorBreathTable: Record<number, Record<string, [number, number]>> = {
     빙하: [25, 0.0004],
   },
   0.005: {
-    빙하: [50, 0.0001],
+    빙하: [50, 0.0002],
   },
 };
 
@@ -119,7 +119,7 @@ const t4WeaponBreathTable: Record<number, Record<string, [number, number]>> = {
     용암: [25, 0.0004],
   },
   0.005: {
-    용암: [50, 0.0001],
+    용암: [50, 0.0002],
   },
 };
 
@@ -923,7 +923,6 @@ export const refineData: Record<
           ...t4ArmorBreathTable[0.005],
         },
       },
-      
     },
   },
   weapon: {

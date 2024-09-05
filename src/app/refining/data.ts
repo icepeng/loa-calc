@@ -91,6 +91,12 @@ const t4ArmorBreathTable: Record<number, Record<string, [number, number]>> = {
   0.015: {
     빙하: [25, 0.0006],
   },
+  0.01: {
+    빙하: [25, 0.0004],
+  },
+  0.005: {
+    빙하: [25, 0.0002],
+  },
 };
 
 const t4WeaponBreathTable: Record<number, Record<string, [number, number]>> = {
@@ -108,6 +114,12 @@ const t4WeaponBreathTable: Record<number, Record<string, [number, number]>> = {
   },
   0.015: {
     용암: [25, 0.0006],
+  },
+  0.01: {
+    용암: [25, 0.0004],
+  },
+  0.005: {
+    용암: [25, 0.0002],
   },
 };
 
@@ -846,6 +858,72 @@ export const refineData: Record<
           ...t4ArmorBreathTable[0.015],
         },
       },
+      21: {
+        baseProb: 0.015,
+        amount: {
+          운명의수호석: 1920,
+          운돌: 29,
+          아비도스: 21,
+          운명파편: 10260,
+          골드: 2500,
+        },
+        breath: {
+          ...t4ArmorBreathTable[0.015],
+        },
+      },
+      22: {
+        baseProb: 0.01,
+        amount: {
+          운명의수호석: 2220,
+          운돌: 31,
+          아비도스: 21,
+          운명파편: 10920,
+          골드: 2710,
+        },
+        breath: {
+          ...t4ArmorBreathTable[0.01],
+        },
+      },
+      23: {
+        baseProb: 0.01,
+        amount: {
+          운명의수호석: 2400,
+          운돌: 34,
+          아비도스: 21,
+          운명파편: 11520,
+          골드: 2920,
+        },
+        breath: {
+          ...t4ArmorBreathTable[0.01],
+        },
+      },
+      24: {
+        baseProb: 0.005,
+        amount: {
+          운명의수호석: 2520,
+          운돌: 36,
+          아비도스: 30,
+          운명파편: 12240,
+          골드: 3150,
+        },
+        breath: {
+          ...t4ArmorBreathTable[0.005],
+        },
+      },
+      25: {
+        baseProb: 0.005,
+        amount: {
+          운명의수호석: 2700,
+          운돌: 40,
+          아비도스: 30,
+          운명파편: 12900,
+          골드: 3390,
+        },
+        breath: {
+          ...t4ArmorBreathTable[0.005],
+        },
+      },
+      
     },
   },
   weapon: {
@@ -1577,6 +1655,66 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.015],
+        },
+      21: {
+        baseProb: 0.015,
+        amount: {
+          운명의파괴석: 3200,
+          운돌: 48,
+          아비도스: 35,
+          운명파편: 17100,
+          골드: 4160,
+        },
+        breath: {
+          ...t4WeaponBreathTable[0.015],
+        },
+      22: {
+        baseProb: 0.01,
+        amount: {
+          운명의파괴석: 3700,
+          운돌: 52,
+          아비도스: 35,
+          운명파편: 18200,
+          골드: 4510,
+        },
+        breath: {
+          ...t4WeaponBreathTable[0.01],
+        },
+      23: {
+        baseProb: 0.01,
+        amount: {
+          운명의파괴석: 4000,
+          운돌: 56,
+          아비도스: 35,
+          운명파편: 19200,
+          골드: 4870,
+        },
+        breath: {
+          ...t4WeaponBreathTable[0.01],
+        },
+      24: {
+        baseProb: 0.005,
+        amount: {
+          운명의파괴석: 4200,
+          운돌: 60,
+          아비도스: 50,
+          운명파편: 20400,
+          골드: 5250,
+        },
+        breath: {
+          ...t4WeaponBreathTable[0.005],
+        },
+      25: {
+        baseProb: 0.005,
+        amount: {
+          운명의파괴석: 4500,
+          운돌: 65,
+          아비도스: 50,
+          운명파편: 21500,
+          골드: 5650,
+        },
+        breath: {
+          ...t4WeaponBreathTable[0.005],
         },
       },
     },

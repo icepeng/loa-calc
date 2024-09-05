@@ -1656,6 +1656,7 @@ export const refineData: Record<
         breath: {
           ...t4WeaponBreathTable[0.015],
         },
+      },
       21: {
         baseProb: 0.015,
         amount: {
@@ -1668,6 +1669,7 @@ export const refineData: Record<
         breath: {
           ...t4WeaponBreathTable[0.015],
         },
+      },
       22: {
         baseProb: 0.01,
         amount: {
@@ -1680,6 +1682,7 @@ export const refineData: Record<
         breath: {
           ...t4WeaponBreathTable[0.01],
         },
+      },
       23: {
         baseProb: 0.01,
         amount: {
@@ -1692,6 +1695,7 @@ export const refineData: Record<
         breath: {
           ...t4WeaponBreathTable[0.01],
         },
+      },
       24: {
         baseProb: 0.005,
         amount: {
@@ -1704,6 +1708,7 @@ export const refineData: Record<
         breath: {
           ...t4WeaponBreathTable[0.005],
         },
+      },
       25: {
         baseProb: 0.005,
         amount: {

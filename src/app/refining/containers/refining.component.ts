@@ -48,6 +48,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     재봉술특화: new FormControl(0),
     재봉술전문: new FormControl(0),
     재봉술복합: new FormControl(0),
+    재봉술업화: new FormControl(0),
     야금술기본: new FormControl(0),
     야금술응용: new FormControl(0),
     야금술심화: new FormControl(0),
@@ -55,6 +56,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     야금술특화: new FormControl(0),
     야금술전문: new FormControl(0),
     야금술복합: new FormControl(0),
+    야금술업화: new FormControl(0),
     골드: new FormControl(1),
   });
   bindedForm = new FormGroup({
@@ -89,6 +91,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     재봉술특화: new FormControl(0),
     재봉술전문: new FormControl(0),
     재봉술복합: new FormControl(0),
+    재봉술업화: new FormControl(0),
     야금술기본: new FormControl(0),
     야금술응용: new FormControl(0),
     야금술심화: new FormControl(0),
@@ -96,6 +99,7 @@ export class RefiningComponent implements OnInit, OnDestroy {
     야금술특화: new FormControl(0),
     야금술전문: new FormControl(0),
     야금술복합: new FormControl(0),
+    야금술업화: new FormControl(0),
   });
   itemForm = new FormGroup({
     type: new FormControl(),

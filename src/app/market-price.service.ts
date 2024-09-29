@@ -63,6 +63,7 @@ export class MarketPriceService {
       재봉술특화: getPrice('재봉술 : 몽환 [16-19]'),
       재봉술전문: getPrice('재봉술 : 쇠락 [13-15]'),
       재봉술복합: getPrice('재봉술 : 쇠락 [16-19]'),
+      재봉술업화: getPrice('재봉술 : 업화 [11-14]'),
       야금술기본: getPrice('야금술 : 비늘 [5-7]'),
       야금술응용: getPrice('야금술 : 선혈 [8-10]'),
       야금술심화: getPrice('야금술 : 마수 [11-15]'),
@@ -70,6 +71,7 @@ export class MarketPriceService {
       야금술특화: getPrice('야금술 : 몽환 [16-19]'),
       야금술전문: getPrice('야금술 : 쇠락 [13-15]'),
       야금술복합: getPrice('야금술 : 쇠락 [16-19]'),
+      야금술업화: getPrice('야금술 : 업화 [11-14]'),
     };
 
     return Object.fromEntries(

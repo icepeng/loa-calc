@@ -403,7 +403,7 @@ export const rewardData = {
     },
   },
   '혼돈의 상아탑 1관문(하드)': {
-    price: 1200,
+    price: 650,
     rewards: {
       정제된파괴강석: 210,
       정제된수호강석: 420,
@@ -412,7 +412,7 @@ export const rewardData = {
     },
   },
   '혼돈의 상아탑 2관문(하드)': {
-    price: 1450,
+    price: 1000,
     rewards: {
       정제된파괴강석: 210,
       정제된수호강석: 420,
@@ -421,7 +421,7 @@ export const rewardData = {
     },
   },
   '혼돈의 상아탑 3관문(하드)': {
-    price: 2000,
+    price: 1800,
     rewards: {
       정제된파괴강석: 420,
       정제된수호강석: 840,
@@ -430,7 +430,7 @@ export const rewardData = {
     },
   },
   '카멘 1관문(노말)': {
-    price: 1500,
+    price: 800,
     rewards: {
       정제된파괴강석: 380,
       정제된수호강석: 760,
@@ -439,7 +439,7 @@ export const rewardData = {
     },
   },
   '카멘 2관문(노말)': {
-    price: 1800,
+    price: 1000,
     rewards: {
       정제된파괴강석: 450,
       정제된수호강석: 900,
@@ -448,7 +448,7 @@ export const rewardData = {
     },
   },
   '카멘 3관문(노말)': {
-    price: 2500,
+    price: 1500,
     rewards: {
       정제된파괴강석: 600,
       정제된수호강석: 1200,
@@ -457,7 +457,7 @@ export const rewardData = {
     },
   },
   '카멘 1관문(하드)': {
-    price: 2000,
+    price: 1100,
     rewards: {
       정제된파괴강석: 500,
       정제된수호강석: 1000,
@@ -466,7 +466,7 @@ export const rewardData = {
     },
   },
   '카멘 2관문(하드)': {
-    price: 2400,
+    price: 1500,
     rewards: {
       정제된파괴강석: 600,
       정제된수호강석: 1200,
@@ -475,7 +475,7 @@ export const rewardData = {
     },
   },
   '카멘 3관문(하드)': {
-    price: 2800,
+    price: 2400,
     rewards: {
       정제된파괴강석: 700,
       정제된수호강석: 1400,
@@ -484,7 +484,7 @@ export const rewardData = {
     },
   },
   '카멘 4관문(하드)': {
-    price: 3600,
+    price: 2400,
     rewards: {
       정제된파괴강석: 850,
       정제된수호강석: 1700,
@@ -529,7 +529,7 @@ export const rewardData = {
     },
   },
   '베히모스 1관문(노말)': {
-    price: 3100,
+    price: 2200,
     rewards: {
       운명파편: 4000,
       운명의파괴석: 600,
@@ -537,7 +537,7 @@ export const rewardData = {
     },
   },
   '베히모스 2관문(노말)': {
-    price: 4900,
+    price: 4100,
     rewards: {
       운명파편: 6000,
       운명의파괴석: 900,

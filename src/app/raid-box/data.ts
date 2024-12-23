@@ -511,7 +511,7 @@ export const rewardData = {
     },
   },
   '에키드나 1관문(하드)': {
-    price: 2800,
+    price: 2200,
     rewards: {
       운명의파괴석: 550,
       운명의수호석: 1100,

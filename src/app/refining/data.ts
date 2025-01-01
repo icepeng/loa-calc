@@ -1775,10 +1775,22 @@ export function getRefineTable(
     costReduction = 0.4;
     goldReduction = 1;
   }
-  if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 20) {
+  if (itemGrade === 't3_1390' && refineTarget >= 1 && refineTarget <= 19) {
+    additionalProb = data.baseProb;
+    goldReduction = 1;
+    costReduction = 0.6;
+    goldCeilUnit = 10;
+  }
+  if (itemGrade === 't3_1390' && refineTarget === 20) {
     additionalProb = data.baseProb;
     goldReduction = 0.5;
     costReduction = 0.5;
+    goldCeilUnit = 10;
+  }
+  if (itemGrade === 't3_1525' && refineTarget >= 1 && refineTarget <= 15) {
+    additionalProb = data.baseProb;
+    goldReduction = 0.2;
+    costReduction = 0.2;
     goldCeilUnit = 10;
   }
 
@@ -1796,15 +1808,8 @@ export function getRefineTable(
 
   if (applyHyperExpress) {
     // 2024 Summer, Super Mococo Express
-    if (itemGrade === 't3_1390' && refineTarget >= 13 && refineTarget <= 19) {
+    if (itemGrade === 't3_1525' && refineTarget >= 13 && refineTarget <= 19) {
       additionalProb = data.baseProb;
-      goldReduction = 0.7;
-      costReduction = 0.7;
-      goldCeilUnit = 1;
-    }
-
-    if (itemGrade === 't3_1525' && refineTarget >= 13 && refineTarget <= 15) {
-      additionalProb += data.baseProb / 2;
       goldReduction = 0.4;
       costReduction = 0.4;
       goldCeilUnit = 1;

@@ -3,7 +3,7 @@ export interface AdvancedRefineTable {
   breath: Record<string, number>;
 }
 
-export type AdvancedRefineTarget = 't3_0' | 't3_1' | 't4_0' | 't4_1';
+export type AdvancedRefineTarget = 't3_0' | 't3_1' | 't4_0' | 't4_1' | 't4_2' | 't4_3';
 
 export const advancedRefineTable: Record<
   'armor' | 'weapon',
@@ -62,6 +62,30 @@ export const advancedRefineTable: Record<
         빙하: 18,
       },
     },
+    t4_2: {
+      amount: {
+        운명의수호석: 1000,
+        운돌: 18,
+        아비도스: 17,
+        운명파편: 7000,
+        골드: 2000,
+      },
+      breath: {
+        빙하: 20,
+      },
+    },
+    t4_3: {
+      amount: {
+        운명의수호석: 1200,
+        운돌: 23,
+        아비도스: 19,
+        운명파편: 8000,
+        골드: 2400,
+      },
+      breath: {
+        빙하: 24,
+      },
+    },
   },
   weapon: {
     t3_0: {
@@ -114,6 +138,30 @@ export const advancedRefineTable: Record<
       },
       breath: {
         용암: 18,
+      },
+    },
+    t4_2: {
+      amount: {
+        운명의파괴석: 1200,
+        운돌: 25,
+        아비도스: 28,
+        운명파편: 11500,
+        골드: 3000,
+      },
+      breath: {
+        용암: 20,
+      },
+    },
+    t4_3: {
+      amount: {
+        운명의파괴석: 1400,
+        운돌: 32,
+        아비도스: 30,
+        운명파편: 13000,
+        골드: 4000,
+      },
+      breath: {
+        용암: 24,
       },
     },
   },

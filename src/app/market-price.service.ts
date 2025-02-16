@@ -10,7 +10,7 @@ export class MarketPriceService {
     items: any[];
   };
 
-  constructor() {}
+  constructor() { }
 
   async updateData() {
     this.data = await fetch(environment.marketPriceUrl).then((res) =>
@@ -72,6 +72,10 @@ export class MarketPriceService {
       야금술전문: getPrice('야금술 : 쇠락 [13-15]'),
       야금술복합: getPrice('야금술 : 쇠락 [16-19]'),
       야금술업화: getPrice('야금술 : 업화 [11-14]'),
+      장인의재봉술1단계: getPrice('장인의 재봉술 : 1단계'),
+      장인의재봉술2단계: getPrice('장인의 재봉술 : 2단계'),
+      장인의야금술1단계: getPrice('장인의 야금술 : 1단계'),
+      장인의야금술2단계: getPrice('장인의 야금술 : 2단계'),
     };
 
     return Object.fromEntries(

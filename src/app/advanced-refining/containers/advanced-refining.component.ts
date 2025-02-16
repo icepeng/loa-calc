@@ -29,6 +29,10 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     가호: new FormControl(0),
     빙하: new FormControl(0),
     용암: new FormControl(0),
+    장인의야금술1단계: new FormControl(0),
+    장인의야금술2단계: new FormControl(0),
+    장인의재봉술1단계: new FormControl(0),
+    장인의재봉술2단계: new FormControl(0),
     골드: new FormControl(1),
   });
   bindedForm = new FormGroup({
@@ -42,12 +46,16 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     운명의수호석: new FormControl(true),
     정제된파괴강석: new FormControl(true),
     운명의파괴석: new FormControl(true),
-    골드: new FormControl({ value: true, disabled: true }),
     은총: new FormControl(true),
     축복: new FormControl(true),
+    가호: new FormControl(true),
     빙하: new FormControl(true),
     용암: new FormControl(true),
-    가호: new FormControl(true),
+    장인의야금술1단계: new FormControl(true),
+    장인의야금술2단계: new FormControl(true),
+    장인의재봉술1단계: new FormControl(true),
+    장인의재봉술2단계: new FormControl(true),
+    골드: new FormControl({ value: true, disabled: true }),
   });
   itemForm = new FormGroup({
     type: new FormControl(),
@@ -137,11 +145,11 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
         (name === '골드' || bindedForm[name] ? 1 : 0),
     }));
     this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
-    this.breathes = Object.entries(table.breath).map(([name, amount]) => ({
+    this.breathes = [...Object.entries(table.breath).map(([name, amount]) => ({
       name,
       amount,
       price: priceForm[name] * (bindedForm[name] ? 1 : 0),
-    }));
+    })), ...table.book ? [{ name: table.book, amount: 1, price: priceForm[table.book] }] : []];
   }
 
   calculate() {
@@ -166,5 +174,9 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
 
   trackByIndex(index: number) {
     return index;
+  }
+
+  trackByMaterial(index: number, material: { name: string }) {
+    return material.name;
   }
 }

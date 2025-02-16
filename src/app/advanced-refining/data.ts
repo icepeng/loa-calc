@@ -48,7 +48,6 @@ export const advancedRefineTable: Record<
       },
       breath: {
         빙하: 12,
-        장인의재봉술1단계: 1,
       },
     },
     t4_1: {
@@ -61,7 +60,6 @@ export const advancedRefineTable: Record<
       },
       breath: {
         빙하: 18,
-        장인의재봉술2단계: 1,
       },
     },
     t4_2: {
@@ -128,7 +126,6 @@ export const advancedRefineTable: Record<
       },
       breath: {
         용암: 12,
-        장인의야금술1단계: 1,
       },
     },
     t4_1: {
@@ -141,7 +138,6 @@ export const advancedRefineTable: Record<
       },
       breath: {
         용암: 18,
-        장인의야금술2단계: 1,
       },
     },
     t4_2: {
@@ -175,5 +171,5 @@ export function getAdvancedRefineTable(
   type: 'armor' | 'weapon',
   target: AdvancedRefineTarget
 ): AdvancedRefineTable {
-  return advancedRefineTable[type]?.[target];
+  return advancedRefineTable[type][target];
 }

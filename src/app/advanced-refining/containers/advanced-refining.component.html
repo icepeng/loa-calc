@@ -6,27 +6,32 @@
     <mat-tab-group class="mat-elevation-z1 tab-group-card">
       <mat-tab label="가격 정보">
         <div class="p-16">
-          <app-advanced-refining-price [priceForm]="priceForm"></app-advanced-refining-price>
+          <app-advanced-refining-price
+            [priceForm]="priceForm"
+          ></app-advanced-refining-price>
         </div>
       </mat-tab>
     </mat-tab-group>
     <mat-card>
       <mat-card-subtitle>장비 정보</mat-card-subtitle>
       <mat-card-content>
-        <app-advanced-refining-item [itemForm]="itemForm"></app-advanced-refining-item>
+        <app-advanced-refining-item
+          [itemForm]="itemForm"
+        ></app-advanced-refining-item>
       </mat-card-content>
     </mat-card>
     <mat-card *ngIf="materials.length > 0" class="materials">
       <form [formGroup]="bindedForm">
         <mat-card-subtitle>필수 재료</mat-card-subtitle>
         <mat-card-content>
-          <div class="py-4" *ngFor="let material of materials; trackBy: trackByMaterial">
+          <div class="py-4" *ngFor="let material of materials">
             <mat-checkbox formControlName="{{ material.name }}">
               <div class="material-info">
                 <img [attr.src]="'assets/' + material.name + '.png'" />
                 <span>
                   x {{ material.amount | number : ".0-0" }} =
-                  {{ material.price | number : ".2-2" }}골드</span>
+                  {{ material.price | number : ".2-2" }}골드</span
+                >
               </div>
             </mat-checkbox>
           </div>
@@ -34,13 +39,14 @@
         </mat-card-content>
         <mat-card-subtitle>추가 재료</mat-card-subtitle>
         <mat-card-content>
-          <div class="py-4" *ngFor="let breath of breathes; trackBy: trackByMaterial">
+          <div class="py-4" *ngFor="let breath of breathes">
             <mat-checkbox formControlName="{{ breath.name }}">
               <div class="material-info">
                 <img [attr.src]="'assets/' + breath.name + '.png'" />
                 <span>
                   x{{ breath.amount | number : ".0-0" }} =
-                  {{ breath.price * breath.amount | number : ".2-2" }}골드</span>
+                  {{ breath.price * breath.amount | number : ".2-2" }}골드</span
+                >
               </div>
             </mat-checkbox>
           </div>
@@ -53,7 +59,10 @@
         </mat-card-content>
       </form>
     </mat-card>
-    <mat-tab-group animationDuration="0ms" class="mat-elevation-z1 tab-group-card refine-table">
+    <mat-tab-group
+      animationDuration="0ms"
+      class="mat-elevation-z1 tab-group-card refine-table"
+    >
       <mat-tab label="계산 결과">
         <div class="p-16">
           <div *ngIf="!!reports[0]">
@@ -67,20 +76,30 @@
               {{ reports[0].expectedPrice | number : ".0-0" }}골드
             </div>
             <div class="flex">
-              <div class="result-material-info"
-                *ngFor="let material of reports[0].expectedMaterials; trackBy: trackByMaterial">
+              <div
+                class="result-material-info"
+                *ngFor="let material of reports[0].expectedMaterials"
+              >
                 <img [attr.src]="'assets/' + material.name + '.png'" />
                 <span> x {{ material.amount | number : ".0-0" }}</span>
               </div>
             </div>
           </div>
-          <table class="optimize-table" mat-table [dataSource]="reports" [trackBy]="trackByIndex">
+          <table
+            class="optimize-table"
+            mat-table
+            [dataSource]="reports"
+            [trackBy]="trackByIndex"
+          >
             <ng-container matColumnDef="normalBreathNames">
               <th mat-header-cell *matHeaderCellDef>일반턴 숨결</th>
               <td mat-cell *matCellDef="let element" class="w-120">
                 <div style="line-height: 0">
-                  <img class="w-32" *ngFor="let breath of element.normalBreathNames; trackByMaterial"
-                    [attr.src]="'assets/' + breath + '.png'" />
+                  <img
+                    class="w-32"
+                    *ngFor="let breath of element.normalBreathNames"
+                    [attr.src]="'assets/' + breath + '.png'"
+                  />
                 </div>
               </td>
             </ng-container>
@@ -89,8 +108,11 @@
               <th mat-header-cell *matHeaderCellDef>선조턴 숨결</th>
               <td mat-cell *matCellDef="let element" class="w-120">
                 <div style="line-height: 0">
-                  <img class="w-32" *ngFor="let breath of element.bonusBreathNames; trackByMaterial"
-                    [attr.src]="'assets/' + breath + '.png'" />
+                  <img
+                    class="w-32"
+                    *ngFor="let breath of element.bonusBreathNames"
+                    [attr.src]="'assets/' + breath + '.png'"
+                  />
                 </div>
               </td>
             </ng-container>
@@ -109,13 +131,18 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="[
+            <tr
+              mat-header-row
+              *matHeaderRowDef="[
                 'normalBreathNames',
                 'bonusBreathNames',
                 'expectedTryCount',
                 'expectedPrice'
-              ]"></tr>
-            <tr mat-row *matRowDef="
+              ]"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="
                 let row;
                 columns: [
                   'normalBreathNames',
@@ -123,12 +150,17 @@
                   'expectedTryCount',
                   'expectedPrice'
                 ]
-              "></tr>
+              "
+            ></tr>
           </table>
         </div>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
-<ng-adsense [className]="'banner-slot'" [adSlot]="3498062236" [fullWidthResponsive]="true"
-  [adFormat]="'horizontal'"></ng-adsense>
+<ng-adsense
+  [className]="'banner-slot'"
+  [adSlot]="3498062236"
+  [fullWidthResponsive]="true"
+  [adFormat]="'horizontal'"
+></ng-adsense>

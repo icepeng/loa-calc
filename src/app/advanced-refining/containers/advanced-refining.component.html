@@ -101,17 +101,71 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="pricePerNormalTry">
-              <th mat-header-cell *matHeaderCellDef>일반턴 비용</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.pricePerNormalTry | number : ".0-0" }}골드
+            <ng-container matColumnDef="enhancedBonusBreathNames">
+              <th mat-header-cell *matHeaderCellDef>강화선조턴 숨결</th>
+              <td mat-cell *matCellDef="let element" class="w-120">
+                <div style="line-height: 0">
+                  <img class="w-32" *ngFor="
+                      let breath of element.enhancedBonusBreathNames;
+                      trackByMaterial
+                    " [attr.src]="'assets/' + breath + '.png'" />
+                </div>
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="pricePerBonusTry">
+            <ng-container matColumnDef="paidNormalPrice">
+              <th mat-header-cell *matHeaderCellDef>일반턴 비용</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.paidNormalPrice | number : ".0-0" }}골드
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="freeNormalPrice">
+              <th mat-header-cell *matHeaderCellDef>무료일반턴 비용</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.freeNormalPrice | number : ".0-0" }}골드
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonusPrice">
               <th mat-header-cell *matHeaderCellDef>선조턴 비용</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.pricePerBonusTry | number : ".0-0" }}골드
+                {{ element.bonusPrice | number : ".0-0" }}골드
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="enhancedBonusPrice">
+              <th mat-header-cell *matHeaderCellDef>강화선조턴 비용</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.enhancedBonusPrice | number : ".0-0" }}골드
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="paidNormalTry">
+              <th mat-header-cell *matHeaderCellDef>평균 일반트라이</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.paidNormalTry | number : ".1-1" }}회
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="freeNormalTry">
+              <th mat-header-cell *matHeaderCellDef>평균 무료일반트라이</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.freeNormalTry | number : ".1-1" }}회
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bonusTry">
+              <th mat-header-cell *matHeaderCellDef>평균 선조트라이</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.bonusTry | number : ".1-1" }}회
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="enhancedBonusTry">
+              <th mat-header-cell *matHeaderCellDef>평균 강화선조트라이</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.enhancedBonusTry | number : ".1-1" }}회
               </td>
             </ng-container>
 
@@ -129,24 +183,10 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="[
-                'normalBreathNames',
-                'bonusBreathNames',
-                'pricePerNormalTry',
-                'pricePerBonusTry',
-                'expectedTryCount',
-                'expectedPrice'
-              ]"></tr>
+            <tr mat-header-row *matHeaderRowDef="tableRows"></tr>
             <tr mat-row *matRowDef="
                 let row;
-                columns: [
-                  'normalBreathNames',
-                  'bonusBreathNames',
-                  'pricePerNormalTry',
-                  'pricePerBonusTry',
-                  'expectedTryCount',
-                  'expectedPrice'
-                ]
+                columns: tableRows
               "></tr>
           </table>
         </div>

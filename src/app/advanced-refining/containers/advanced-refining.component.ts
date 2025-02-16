@@ -67,6 +67,15 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
   breathes: { name: string; amount: number; price: number }[] = [];
 
   reports: AdvancedRefineReport[] = [];
+  tableRows: string[] = [
+    'normalBreathNames',
+    'bonusBreathNames',
+    'paidNormalPrice',
+    'freeNormalPrice',
+    'bonusPrice',
+    'expectedTryCount',
+    'expectedPrice',
+  ];
 
   unsubscribe$ = new Subject<boolean>();
 
@@ -145,11 +154,16 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
         (name === '골드' || bindedForm[name] ? 1 : 0),
     }));
     this.materialPrice = this.materials.reduce((sum, x) => sum + x.price, 0);
-    this.breathes = [...Object.entries(table.breath).map(([name, amount]) => ({
-      name,
-      amount,
-      price: priceForm[name] * (bindedForm[name] ? 1 : 0),
-    })), ...table.book ? [{ name: table.book, amount: 1, price: priceForm[table.book] }] : []];
+    this.breathes = [
+      ...Object.entries(table.breath).map(([name, amount]) => ({
+        name,
+        amount,
+        price: priceForm[name] * (bindedForm[name] ? 1 : 0),
+      })),
+      ...(table.book
+        ? [{ name: table.book, amount: 1, price: priceForm[table.book] }]
+        : []),
+    ];
   }
 
   calculate() {
@@ -170,6 +184,34 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
         )
       )
     );
+    this.tableRows = this.reports[0].hasEnhancedBonus
+      ? [
+          'normalBreathNames',
+          'bonusBreathNames',
+          'enhancedBonusBreathNames',
+          'paidNormalPrice',
+          // 'paidNormalTry',
+          'freeNormalPrice',
+          // 'freeNormalTry',
+          'bonusPrice',
+          // 'bonusTry',
+          'enhancedBonusPrice',
+          // 'enhancedBonusTry',
+          'expectedTryCount',
+          'expectedPrice',
+        ]
+      : [
+          'normalBreathNames',
+          'bonusBreathNames',
+          'paidNormalPrice',
+          // 'paidNormalTry',
+          'freeNormalPrice',
+          // 'freeNormalTry',
+          'bonusPrice',
+          // 'bonusTry',
+          'expectedTryCount',
+          'expectedPrice',
+        ];
   }
 
   trackByIndex(index: number) {

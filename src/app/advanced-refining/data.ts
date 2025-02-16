@@ -1,28 +1,37 @@
+import { t3_01, t4_01, t4_23 } from './simulated';
+
 export interface AdvancedRefineTable {
-  successTable: Record<number, number[]>;
+  data: Array<{
+    parameters: {
+      normalK: number;
+      bonusK: number;
+      enhancedBonusK: number;
+    };
+    result: {
+      freeNormalTry: number;
+      paidNormalTry: number;
+      bonusTry: number;
+      enhancedBonusTry: number;
+    };
+  }>;
+  hasEnhancedBonus: boolean;
   amount: Record<string, number>;
   breath: Record<string, number>;
-  book?: "장인의야금술1단계" | "장인의야금술2단계" | "장인의재봉술1단계" | "장인의재봉술2단계" | undefined;
+  book?:
+    | '장인의야금술1단계'
+    | '장인의야금술2단계'
+    | '장인의재봉술1단계'
+    | '장인의재봉술2단계'
+    | undefined;
 }
 
-export type AdvancedRefineTarget = 't3_0' | 't3_1' | 't4_0' | 't4_1' | 't4_2' | 't4_3';
-
-// success rates per breath - T3
-const successTableT3 = {
-  0: [0.8, 0.15, 0.05],
-  1: [0.7, 0.2, 0.1],
-  2: [0.6, 0.25, 0.15],
-  3: [0.5, 0.3, 0.2],
-};
-
-// success rates per breath - T4
-// book is treated as +2 breaths
-const successTableT4 = {
-  0: [0.8, 0.15, 0.05],
-  1: [0.5, 0.3, 0.2],
-  2: [0.3, 0.45, 0.25],
-  3: [0, 0.6, 0.4],
-};
+export type AdvancedRefineTarget =
+  | 't3_0'
+  | 't3_1'
+  | 't4_0'
+  | 't4_1'
+  | 't4_2'
+  | 't4_3';
 
 export const advancedRefineTable: Record<
   'armor' | 'weapon',
@@ -30,7 +39,8 @@ export const advancedRefineTable: Record<
 > = {
   armor: {
     t3_0: {
-      successTable: successTableT3,
+      data: t3_01,
+      hasEnhancedBonus: false,
       amount: {
         정제된수호강석: 950,
         찬명돌: 22,
@@ -45,7 +55,8 @@ export const advancedRefineTable: Record<
       },
     },
     t3_1: {
-      successTable: successTableT3,
+      data: t3_01,
+      hasEnhancedBonus: false,
       amount: {
         정제된수호강석: 1300,
         찬명돌: 28,
@@ -60,7 +71,8 @@ export const advancedRefineTable: Record<
       },
     },
     t4_0: {
-      successTable: successTableT4,
+      data: t4_01,
+      hasEnhancedBonus: false,
       amount: {
         운명의수호석: 500,
         운돌: 12,
@@ -71,10 +83,11 @@ export const advancedRefineTable: Record<
       breath: {
         빙하: 12,
       },
-      book: "장인의재봉술1단계",
+      book: '장인의재봉술1단계',
     },
     t4_1: {
-      successTable: successTableT4,
+      data: t4_01,
+      hasEnhancedBonus: false,
       amount: {
         운명의수호석: 900,
         운돌: 16,
@@ -85,10 +98,11 @@ export const advancedRefineTable: Record<
       breath: {
         빙하: 18,
       },
-      book: "장인의재봉술2단계",
+      book: '장인의재봉술2단계',
     },
     t4_2: {
-      successTable: successTableT4,
+      data: t4_23,
+      hasEnhancedBonus: true,
       amount: {
         운명의수호석: 1000,
         운돌: 18,
@@ -101,7 +115,8 @@ export const advancedRefineTable: Record<
       },
     },
     t4_3: {
-      successTable: successTableT4,
+      data: t4_23,
+      hasEnhancedBonus: true,
       amount: {
         운명의수호석: 1200,
         운돌: 23,
@@ -116,7 +131,8 @@ export const advancedRefineTable: Record<
   },
   weapon: {
     t3_0: {
-      successTable: successTableT3,
+      data: t3_01,
+      hasEnhancedBonus: false,
       amount: {
         정제된파괴강석: 1000,
         찬명돌: 28,
@@ -131,7 +147,8 @@ export const advancedRefineTable: Record<
       },
     },
     t3_1: {
-      successTable: successTableT3,
+      data: t3_01,
+      hasEnhancedBonus: false,
       amount: {
         정제된파괴강석: 1600,
         찬명돌: 36,
@@ -146,7 +163,8 @@ export const advancedRefineTable: Record<
       },
     },
     t4_0: {
-      successTable: successTableT4,
+      data: t4_01,
+      hasEnhancedBonus: false,
       amount: {
         운명의파괴석: 600,
         운돌: 16,
@@ -157,10 +175,11 @@ export const advancedRefineTable: Record<
       breath: {
         용암: 12,
       },
-      book: "장인의야금술1단계"
+      book: '장인의야금술1단계',
     },
     t4_1: {
-      successTable: successTableT4,
+      data: t4_01,
+      hasEnhancedBonus: false,
       amount: {
         운명의파괴석: 1100,
         운돌: 22,
@@ -171,10 +190,11 @@ export const advancedRefineTable: Record<
       breath: {
         용암: 18,
       },
-      book: "장인의야금술2단계"
+      book: '장인의야금술2단계',
     },
     t4_2: {
-      successTable: successTableT4,
+      data: t4_23,
+      hasEnhancedBonus: true,
       amount: {
         운명의파괴석: 1200,
         운돌: 25,
@@ -187,7 +207,8 @@ export const advancedRefineTable: Record<
       },
     },
     t4_3: {
-      successTable: successTableT4,
+      data: t4_23,
+      hasEnhancedBonus: true,
       amount: {
         운명의파괴석: 1400,
         운돌: 32,

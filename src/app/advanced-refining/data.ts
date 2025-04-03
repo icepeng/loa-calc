@@ -53,6 +53,7 @@ export const advancedRefineTable: Record<
         축복: 6,
         가호: 2,
       },
+      book: '장인의재봉술1단계',
     },
     t3_1: {
       data: t3_01,
@@ -69,6 +70,7 @@ export const advancedRefineTable: Record<
         축복: 9,
         가호: 3,
       },
+      book: '장인의재봉술2단계',
     },
     t4_0: {
       data: t4_01,
@@ -145,6 +147,7 @@ export const advancedRefineTable: Record<
         축복: 6,
         가호: 2,
       },
+      book: '장인의야금술1단계',
     },
     t3_1: {
       data: t3_01,
@@ -161,6 +164,7 @@ export const advancedRefineTable: Record<
         축복: 9,
         가호: 3,
       },
+      book: '장인의야금술2단계',
     },
     t4_0: {
       data: t4_01,

@@ -3,210 +3,834 @@ export const t3_01 = [
     parameters: {
       normalK: 0,
       bonusK: 0,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 3.2014789,
-      paidNormalTry: 47.1759325,
-      bonusTry: 9.368845,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 3.201408,
+      paidNormalTry: 47.178614,
+      bonusTry: 9.36896,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 0,
       bonusK: 1,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 3.0720435,
-      paidNormalTry: 45.3703412,
-      bonusTry: 9.0069351,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 3.0727375,
+      paidNormalTry: 45.3730875,
+      bonusTry: 9.0078088,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 0,
       bonusK: 2,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.9526546,
-      paidNormalTry: 43.7013753,
-      bonusTry: 8.6727989,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.9521718,
+      paidNormalTry: 43.7009804,
+      bonusTry: 8.6722763,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 0,
       bonusK: 3,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.8400579,
-      paidNormalTry: 42.1457952,
-      bonusTry: 8.3617985,
-      enhancedBonusTry: 0,
+      freeNormalTry: 2.8406272,
+      paidNormalTry: 42.1450929,
+      bonusTry: 8.3619058,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 0,
+      bonusK: 4,
+      enhancedBonusK: 0
     },
+    result: {
+      freeNormalTry: 2.6868804,
+      paidNormalTry: 39.9982419,
+      bonusTry: 7.9316661,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 0,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.5922116,
+      paidNormalTry: 38.6931889,
+      bonusTry: 7.6704018,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 0,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.5052182,
+      paidNormalTry: 37.4740192,
+      bonusTry: 7.4260293,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 0,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.423618,
+      paidNormalTry: 36.3280288,
+      bonusTry: 7.1962939,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 1,
       bonusK: 0,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.8990556,
-      paidNormalTry: 43.0445575,
-      bonusTry: 8.4839465,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.8991855,
+      paidNormalTry: 43.0455025,
+      bonusTry: 8.4834853,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 1,
       bonusK: 1,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.7910795,
-      paidNormalTry: 41.5480731,
-      bonusTry: 8.1859268,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.7915759,
+      paidNormalTry: 41.547561,
+      bonusTry: 8.1866937,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 1,
       bonusK: 2,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.6921197,
-      paidNormalTry: 40.1536067,
-      bonusTry: 7.9090342,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.6919211,
+      paidNormalTry: 40.1515358,
+      bonusTry: 7.9089204,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 1,
       bonusK: 3,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.5985415,
-      paidNormalTry: 38.848385,
-      bonusTry: 7.6496016,
-      enhancedBonusTry: 0,
+      freeNormalTry: 2.5985958,
+      paidNormalTry: 38.8473643,
+      bonusTry: 7.6494248,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 1,
+      bonusK: 4,
+      enhancedBonusK: 0
     },
+    result: {
+      freeNormalTry: 2.46787,
+      paidNormalTry: 37.029564,
+      bonusTry: 7.2875029,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 1,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.3877333,
+      paidNormalTry: 35.9167108,
+      bonusTry: 7.0662849,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 1,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.3137177,
+      paidNormalTry: 34.8706283,
+      bonusTry: 6.8582609,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 1,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.2433727,
+      paidNormalTry: 33.8841406,
+      bonusTry: 6.6628751,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 2,
       bonusK: 0,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.6450554,
-      paidNormalTry: 39.580416,
-      bonusTry: 7.7414626,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.6443848,
+      paidNormalTry: 39.5812532,
+      bonusTry: 7.7410542,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 2,
       bonusK: 1,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.5553231,
-      paidNormalTry: 38.3232068,
-      bonusTry: 7.4931332,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.5547687,
+      paidNormalTry: 38.3215486,
+      bonusTry: 7.4930601,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 2,
       bonusK: 2,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.4704888,
-      paidNormalTry: 37.1412368,
-      bonusTry: 7.2600814,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.4701495,
+      paidNormalTry: 37.1394288,
+      bonusTry: 7.2601273,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 2,
       bonusK: 3,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.3908385,
-      paidNormalTry: 36.0311824,
-      bonusTry: 7.0417014,
-      enhancedBonusTry: 0,
+      freeNormalTry: 2.3910187,
+      paidNormalTry: 36.0313351,
+      bonusTry: 7.0412633,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 2,
+      bonusK: 4,
+      enhancedBonusK: 0
     },
+    result: {
+      freeNormalTry: 2.2798209,
+      paidNormalTry: 34.4707725,
+      bonusTry: 6.7332389,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 2,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.2119602,
+      paidNormalTry: 33.5146145,
+      bonusTry: 6.544119,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 2,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.146417,
+      paidNormalTry: 32.609634,
+      bonusTry: 6.3653735,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 2,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0848746,
+      paidNormalTry: 31.7509785,
+      bonusTry: 6.1966987,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 3,
       bonusK: 0,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.4284583,
-      paidNormalTry: 36.6338954,
-      bonusTry: 7.1101417,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.4292168,
+      paidNormalTry: 36.6365641,
+      bonusTry: 7.1099368,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 3,
       bonusK: 1,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.3519007,
-      paidNormalTry: 35.5628352,
-      bonusTry: 6.8998554,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.3528039,
+      paidNormalTry: 35.5637858,
+      bonusTry: 6.9002747,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 3,
       bonusK: 2,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.2802737,
-      paidNormalTry: 34.5506497,
-      bonusTry: 6.7023963,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.2805983,
+      paidNormalTry: 34.550652,
+      bonusTry: 6.7026598,
+      enhancedBonusTry: 0
+    }
   },
   {
     parameters: {
       normalK: 3,
       bonusK: 3,
-      enhancedBonusK: 0,
+      enhancedBonusK: 0
     },
     result: {
-      freeNormalTry: 2.2120445,
-      paidNormalTry: 33.5955068,
-      bonusTry: 6.5155136,
-      enhancedBonusTry: 0,
-    },
+      freeNormalTry: 2.2121526,
+      paidNormalTry: 33.5949176,
+      bonusTry: 6.5152711,
+      enhancedBonusTry: 0
+    }
   },
+  {
+    parameters: {
+      normalK: 3,
+      bonusK: 4,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.1164379,
+      paidNormalTry: 32.2468046,
+      bonusTry: 6.2515624,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 3,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0568195,
+      paidNormalTry: 31.415478,
+      bonusTry: 6.088847,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 3,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0001169,
+      paidNormalTry: 30.6239838,
+      bonusTry: 5.9327295,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 3,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.9461068,
+      paidNormalTry: 29.8712613,
+      bonusTry: 5.7857259,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 0,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.158598,
+      paidNormalTry: 32.9557398,
+      bonusTry: 6.3206099,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 1,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0975753,
+      paidNormalTry: 32.0975019,
+      bonusTry: 6.154731,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 2,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0399076,
+      paidNormalTry: 31.2784112,
+      bonusTry: 5.9964717,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 3,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.9851593,
+      paidNormalTry: 30.5020756,
+      bonusTry: 5.8470232,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 4,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.9064117,
+      paidNormalTry: 29.3992414,
+      bonusTry: 5.6334507,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.8578024,
+      paidNormalTry: 28.7123206,
+      bonusTry: 5.5012042,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.8108388,
+      paidNormalTry: 28.0582842,
+      bonusTry: 5.3748647,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 4,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7664408,
+      paidNormalTry: 27.4335175,
+      bonusTry: 5.2530192,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 0,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 2.0079827,
+      paidNormalTry: 30.891097,
+      bonusTry: 5.8771026,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 1,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.9547566,
+      paidNormalTry: 30.1403177,
+      bonusTry: 5.7349424,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 2,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.9044537,
+      paidNormalTry: 29.4239862,
+      bonusTry: 5.5991835,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 3,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.8565514,
+      paidNormalTry: 28.7413789,
+      bonusTry: 5.4690827,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 4,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7858319,
+      paidNormalTry: 27.7693003,
+      bonusTry: 5.2818279,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7428238,
+      paidNormalTry: 27.1635028,
+      bonusTry: 5.1640759,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.701885,
+      paidNormalTry: 26.5821017,
+      bonusTry: 5.0518663,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 5,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6620254,
+      paidNormalTry: 26.0251303,
+      bonusTry: 4.9434117,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 0,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.8767982,
+      paidNormalTry: 29.0569191,
+      bonusTry: 5.5008649,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 1,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.8295189,
+      paidNormalTry: 28.4022901,
+      bonusTry: 5.3719195,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 2,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7828504,
+      paidNormalTry: 27.7779943,
+      bonusTry: 5.2488758,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 3,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7392868,
+      paidNormalTry: 27.1799322,
+      bonusTry: 5.1312813,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 4,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6776967,
+      paidNormalTry: 26.3170311,
+      bonusTry: 4.962682,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6392444,
+      paidNormalTry: 25.7768799,
+      bonusTry: 4.8583003,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6036857,
+      paidNormalTry: 25.2537285,
+      bonusTry: 4.7597145,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 6,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.568326,
+      paidNormalTry: 24.7489869,
+      bonusTry: 4.6649075,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 0,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7481698,
+      paidNormalTry: 27.4792052,
+      bonusTry: 5.1369859,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 1,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.7078473,
+      paidNormalTry: 26.8975883,
+      bonusTry: 5.0236351,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 2,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6702962,
+      paidNormalTry: 26.3339335,
+      bonusTry: 4.9171679,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 3,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.6341441,
+      paidNormalTry: 25.7926634,
+      bonusTry: 4.8166531,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 4,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.5833758,
+      paidNormalTry: 25.0064166,
+      bonusTry: 4.6743755,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 5,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.5497057,
+      paidNormalTry: 24.510305,
+      bonusTry: 4.5871446,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 6,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.5178272,
+      paidNormalTry: 24.0369143,
+      bonusTry: 4.5019664,
+      enhancedBonusTry: 0
+    }
+  },
+  {
+    parameters: {
+      normalK: 7,
+      bonusK: 7,
+      enhancedBonusK: 0
+    },
+    result: {
+      freeNormalTry: 1.4868115,
+      paidNormalTry: 23.5831678,
+      bonusTry: 4.4199862,
+      enhancedBonusTry: 0
+    }
+  }
 ];
 
 export const t4_01 = [

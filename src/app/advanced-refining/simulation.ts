@@ -1,15 +1,19 @@
 const successTableT3 = {
-  0: [0.8, 0.15, 0.05],
-  1: [0.7, 0.2, 0.1],
-  2: [0.6, 0.25, 0.15],
-  3: [0.5, 0.3, 0.2],
+  0: [0.8, 0.15, 0.05], // 기본 효과
+  1: [0.7, 0.2, 0.1], // 숨결 1개 추가 (대성공 0.05, 대성공x2 0.05 증가)
+  2: [0.6, 0.25, 0.15], // 숨결 2개 추가 (대성공 0.1, 대성공x2 0.1 증가)
+  3: [0.5, 0.3, 0.2], // 숨결 3개 추가 (대성공 0.15, 대성공x2 0.15 증가)
+  4: [0.3, 0.45, 0.25], // 재봉 or 야금 추가 (대성공 0.3, 대성공x2 0.2 증가)
+  5: [0.2, 0.5, 0.3], // 숨결 1개 + 재봉 or 야금
+  6: [0.1, 0.55, 0.35], // 숨결 2개 + 재봉 or 야금
+  7: [0, 0.6, 0.4], // 숨결 3종류 + 재봉 or 야금
 };
 
 const successTableT4 = {
-  0: [0.8, 0.15, 0.05],
-  1: [0.5, 0.3, 0.2],
-  2: [0.3, 0.45, 0.25],
-  3: [0, 0.6, 0.4],
+  0: [0.8, 0.15, 0.05], // 기본 효과
+  1: [0.5, 0.3, 0.2], // 숨결 추가 효과 (대성공 0.15, 대성공x2 0.15 증가)
+  2: [0.3, 0.45, 0.25], // 재봉,야금 추가 효과 (대성공 0.3, 대성공x2 0.2 증가)
+  3: [0, 0.6, 0.4], // 숨결 + 재봉, 야금 추가 효과 (대성공 0.45, 대성공x2 0.35 증가)
 };
 
 const bonusTable01 = {
@@ -194,13 +198,13 @@ function run({
 }
 
 const ITERATION = 10000000;
-const SUCCESS_TABLE = successTableT4;
-const BONUS_TABLE = bonusTable23;
-const HAS_ENHANCED_BONUS = true;
+const SUCCESS_TABLE = successTableT3;
+const BONUS_TABLE = bonusTable01;
+const HAS_ENHANCED_BONUS = false;
 
 const report = [];
-for (let normalK = 0; normalK < 4; normalK++) {
-  for (let bonusK = 0; bonusK < 4; bonusK++) {
+for (let normalK = 0; normalK < 8; normalK++) {
+  for (let bonusK = 0; bonusK < 8; bonusK++) {
     for (
       let enhancedBonusK = 0;
       enhancedBonusK < (HAS_ENHANCED_BONUS ? 4 : 1);

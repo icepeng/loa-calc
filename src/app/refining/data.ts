@@ -739,7 +739,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.1],
-          재봉술업화: [1, 0.1],
+          재봉술업화A: [1, 0.1],
         },
       },
       12: {
@@ -753,7 +753,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.1],
-          재봉술업화: [1, 0.1],
+          재봉술업화A: [1, 0.1],
         },
       },
       13: {
@@ -767,7 +767,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.05],
-          재봉술업화: [1, 0.05],
+          재봉술업화A: [1, 0.05],
         },
       },
       14: {
@@ -781,7 +781,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.05],
-          재봉술업화: [1, 0.05],
+          재봉술업화A: [1, 0.05],
         },
       },
       15: {
@@ -795,6 +795,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.04],
+          재봉술업화B: [1, 0.04],
         },
       },
       16: {
@@ -808,6 +809,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.04],
+          재봉술업화B: [1, 0.04],
         },
       },
       17: {
@@ -821,6 +823,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.03],
+          재봉술업화B: [1, 0.03],
         },
       },
       18: {
@@ -834,6 +837,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4ArmorBreathTable[0.03],
+          재봉술업화B: [1, 0.03],
         },
       },
       19: {
@@ -1541,7 +1545,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.1],
-          야금술업화: [1, 0.1],
+          야금술업화A: [1, 0.1],
         },
       },
       12: {
@@ -1555,7 +1559,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.1],
-          야금술업화: [1, 0.1],
+          야금술업화A: [1, 0.1],
         },
       },
       13: {
@@ -1569,7 +1573,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.05],
-          야금술업화: [1, 0.05],
+          야금술업화A: [1, 0.05],
         },
       },
       14: {
@@ -1583,7 +1587,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.05],
-          야금술업화: [1, 0.05],
+          야금술업화A: [1, 0.05],
         },
       },
       15: {
@@ -1597,6 +1601,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.04],
+          야금술업화B: [1, 0.04],
         },
       },
       16: {
@@ -1610,6 +1615,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.04],
+          야금술업화B: [1, 0.04],
         },
       },
       17: {
@@ -1623,6 +1629,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.03],
+          야금술업화B: [1, 0.03],
         },
       },
       18: {
@@ -1636,6 +1643,7 @@ export const refineData: Record<
         },
         breath: {
           ...t4WeaponBreathTable[0.03],
+          야금술업화B: [1, 0.03],
         },
       },
       19: {

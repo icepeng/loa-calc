@@ -1797,9 +1797,9 @@ export function getRefineTable(
   }
   if (itemGrade === 't3_1525' && refineTarget >= 1 && refineTarget <= 19) {
     additionalProb = data.baseProb;
-    goldReduction = 0.2;
+    goldReduction = 0.4;
     costReduction = 0.2;
-    goldCeilUnit = 10;
+    goldCeilUnit = 1;
   }
 
   if (applyResearch) {
@@ -1834,7 +1834,7 @@ export function getRefineTable(
         name,
         name === '골드'
           ? Math.ceil((value * (1 - goldReduction)) / goldCeilUnit) *
-          goldCeilUnit
+            goldCeilUnit
           : Math.round(value * (1 - costReduction)),
       ])
     ),

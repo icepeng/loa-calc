@@ -1835,7 +1835,7 @@ export function getRefineTable(
         name === '골드'
           ? Math.ceil((value * (1 - goldReduction)) / goldCeilUnit) *
             goldCeilUnit
-          : Math.round(value * (1 - costReduction)),
+          : Math.ceil(value * (1 - costReduction)),
       ])
     ),
     baseProb: data.baseProb,

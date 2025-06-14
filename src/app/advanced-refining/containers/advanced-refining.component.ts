@@ -102,7 +102,7 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     }
     if (this.marketPriceService.data) {
       this.priceForm.patchValue(
-        this.marketPriceService.getPriceObj('YDayAvgPrice')
+        this.marketPriceService.getPriceObj('RecentPrice')
       );
     }
 

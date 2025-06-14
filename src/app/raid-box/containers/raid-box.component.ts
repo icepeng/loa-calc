@@ -60,7 +60,7 @@ export class RaidBoxComponent implements OnInit {
     }
     if (this.marketPriceService.data) {
       this.priceForm.patchValue(
-        this.marketPriceService.getPriceObj('YDayAvgPrice')
+        this.marketPriceService.getPriceObj('RecentPrice')
       );
     }
 

@@ -99,8 +99,8 @@ export function getReport(
             bonusBook <= (book ? 1 : 0);
             bonusBook++
           ) {
-            const normalK = normalBreath + normalBook * 2;
-            const bonusK = bonusBreath + bonusBook * 2;
+            const normalK = normalBreath + normalBook * (maxBreathCount === 1 ? 2 : 4);
+            const bonusK = bonusBreath + bonusBook * (maxBreathCount === 1 ? 2 : 4);
             const enhancedBonusK = enhancedBonusBreath;
 
             const paidNormalPrice =

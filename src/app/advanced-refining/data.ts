@@ -231,5 +231,34 @@ export function getAdvancedRefineTable(
   type: 'armor' | 'weapon',
   target: AdvancedRefineTarget
 ): AdvancedRefineTable {
-  return advancedRefineTable[type]?.[target];
+  let costReduction = 0;
+  let fragmentReduction = 0;
+  let goldReduction = 0;
+
+  if (
+    target === 't3_0' ||
+    target === 't3_1' ||
+    target === 't4_0' ||
+    target === 't4_1'
+  ) {
+    costReduction = 0.7;
+    fragmentReduction = 0.9;
+    goldReduction = 0.5;
+  }
+
+  const data = advancedRefineTable[type]?.[target];
+
+  return {
+    ...data,
+    amount: Object.fromEntries(
+      Object.entries(data.amount).map(([name, value]) => [
+        name,
+        name === '골드'
+          ? Math.ceil(value * (1 - goldReduction))
+          : name.endsWith('파편')
+          ? Math.ceil(value * (1 - fragmentReduction))
+          : Math.ceil(value * (1 - costReduction)),
+      ])
+    ),
+  };
 }

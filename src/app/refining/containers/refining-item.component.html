@@ -23,9 +23,7 @@
     <mat-form-field>
       <mat-label> 목표 단계 </mat-label>
       <mat-select formControlName="target">
-        <mat-option *ngFor="let target of targetList$ | async" [value]="target"
-          >{{ target }}단계</mat-option
-        >
+        <mat-option *ngFor="let target of targetList$ | async" [value]="target">{{ target }}단계</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -67,11 +65,11 @@
   <div>
     <mat-checkbox formControlName="applyResearch">영지 연구 적용</mat-checkbox>
   </div>
-  <div>
+  <!-- <div>
     <mat-checkbox formControlName="applyHyperExpress"
       >슈모익 성장지원 적용</mat-checkbox
     >
-  </div>
+  </div> -->
   <!-- <div>
     <mat-checkbox formControlName="applyKamenRoad"
       >카멘로드 성장지원 적용</mat-checkbox

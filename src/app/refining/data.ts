@@ -1769,6 +1769,7 @@ export function getRefineTable(
 
   let additionalProb = 0;
   let costReduction = 0;
+  let fragmentReduction: number | undefined = undefined; // if undefined, use costReduction
   let goldReduction = 0;
   let goldCeilUnit = 1;
   let janginMultiplier = 1;
@@ -1821,6 +1822,24 @@ export function getRefineTable(
     }
   }
 
+  if (applyHyperExpress) {
+    // 2025 Winter, Mokoko Challange Express
+    if (itemGrade === 't4_1590' && refineTarget >= 11 && refineTarget <= 14) {
+      additionalProb = data.baseProb;
+      goldReduction = 0.6;
+      fragmentReduction = 0.4;
+      costReduction = 0.2;
+      goldCeilUnit = 1;
+    }
+    if (itemGrade === 't4_1590' && refineTarget >= 15 && refineTarget <= 18) {
+      additionalProb = data.baseProb;
+      goldReduction = 0.4;
+      fragmentReduction = 0.4;
+      costReduction = 0.2;
+      goldCeilUnit = 1;
+    }
+  }
+
   additionalProb = Math.round(additionalProb * 1000) / 1000;
 
   return {
@@ -1832,6 +1851,8 @@ export function getRefineTable(
         name === '골드'
           ? Math.ceil((value * (1 - goldReduction)) / goldCeilUnit) *
             goldCeilUnit
+          : name.endsWith('파편')
+          ? Math.ceil(value * (1 - (fragmentReduction ?? costReduction)))
           : Math.ceil(value * (1 - costReduction)),
       ])
     ),

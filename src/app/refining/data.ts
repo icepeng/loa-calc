@@ -88,6 +88,9 @@ const t4ArmorBreathTable: Record<number, Record<string, [number, number]>> = {
   0.03: {
     빙하: [20, 0.0015],
   },
+  0.0225: {
+    빙하: [25, 0.0012],
+  },
   0.015: {
     빙하: [25, 0.0006],
   },
@@ -111,6 +114,9 @@ const t4WeaponBreathTable: Record<number, Record<string, [number, number]>> = {
   },
   0.03: {
     용암: [20, 0.0015],
+  },
+  0.0225: {
+    용암: [25, 0.0012],
   },
   0.015: {
     용암: [25, 0.0006],

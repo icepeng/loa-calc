@@ -78,8 +78,12 @@ export class MarketPriceService {
       야금술업화C: getPrice('야금술 : 업화 [19-20]'),
       장인의재봉술1단계: getPrice('장인의 재봉술 : 1단계'),
       장인의재봉술2단계: getPrice('장인의 재봉술 : 2단계'),
+      장인의재봉술3단계: getPrice('장인의 재봉술 : 3단계'),
+      장인의재봉술4단계: getPrice('장인의 재봉술 : 4단계'),
       장인의야금술1단계: getPrice('장인의 야금술 : 1단계'),
       장인의야금술2단계: getPrice('장인의 야금술 : 2단계'),
+      장인의야금술3단계: getPrice('장인의 야금술 : 3단계'),
+      장인의야금술4단계: getPrice('장인의 야금술 : 4단계'),
     };
 
     return Object.fromEntries(

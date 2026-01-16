@@ -31,8 +31,12 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     용암: new FormControl(0),
     장인의야금술1단계: new FormControl(0),
     장인의야금술2단계: new FormControl(0),
+    장인의야금술3단계: new FormControl(0),
+    장인의야금술4단계: new FormControl(0),
     장인의재봉술1단계: new FormControl(0),
     장인의재봉술2단계: new FormControl(0),
+    장인의재봉술3단계: new FormControl(0),
+    장인의재봉술4단계: new FormControl(0),
     골드: new FormControl(1),
   });
   bindedForm = new FormGroup({
@@ -53,8 +57,12 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     용암: new FormControl(true),
     장인의야금술1단계: new FormControl(true),
     장인의야금술2단계: new FormControl(true),
+    장인의야금술3단계: new FormControl(true),
+    장인의야금술4단계: new FormControl(true),
     장인의재봉술1단계: new FormControl(true),
     장인의재봉술2단계: new FormControl(true),
+    장인의재봉술3단계: new FormControl(true),
+    장인의재봉술4단계: new FormControl(true),
     골드: new FormControl({ value: true, disabled: true }),
   });
   itemForm = new FormGroup({

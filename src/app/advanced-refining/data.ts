@@ -20,8 +20,12 @@ export interface AdvancedRefineTable {
   book?:
     | '장인의야금술1단계'
     | '장인의야금술2단계'
+    | '장인의야금술3단계'
+    | '장인의야금술4단계'
     | '장인의재봉술1단계'
     | '장인의재봉술2단계'
+    | '장인의재봉술3단계'
+    | '장인의재봉술4단계'
     | undefined;
 }
 
@@ -115,6 +119,7 @@ export const advancedRefineTable: Record<
       breath: {
         빙하: 20,
       },
+      book: '장인의재봉술3단계',
     },
     t4_3: {
       data: t4_23,
@@ -129,6 +134,7 @@ export const advancedRefineTable: Record<
       breath: {
         빙하: 24,
       },
+      book: '장인의재봉술4단계',
     },
   },
   weapon: {
@@ -209,6 +215,7 @@ export const advancedRefineTable: Record<
       breath: {
         용암: 20,
       },
+      book: '장인의야금술3단계',
     },
     t4_3: {
       data: t4_23,
@@ -223,6 +230,7 @@ export const advancedRefineTable: Record<
       breath: {
         용암: 24,
       },
+      book: '장인의야금술4단계',
     },
   },
 };

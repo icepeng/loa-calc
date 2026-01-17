@@ -955,7 +955,7 @@ export const refineData: Record<
         },
       },
       12: {
-        baseProb: 0.5,
+        baseProb: 0.05,
         amount: {
           운명의수호석결정: 930,
           위운돌: 11,

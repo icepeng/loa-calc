@@ -99,113 +99,120 @@ export function getReport(
             bonusBook <= (book ? 1 : 0);
             bonusBook++
           ) {
-            const normalK = normalBreath + normalBook * (maxBreathCount === 1 ? 2 : 4);
-            const bonusK = bonusBreath + bonusBook * (maxBreathCount === 1 ? 2 : 4);
-            const enhancedBonusK = enhancedBonusBreath;
+            for (
+              let enhancedBonusBook = 0 as 0 | 1;
+              enhancedBonusBook <= (book ? 1 : 0);
+              enhancedBonusBook++
+            ) {
+              const normalK = normalBreath + normalBook * (maxBreathCount === 1 ? 2 : 4);
+              const bonusK = bonusBreath + bonusBook * (maxBreathCount === 1 ? 2 : 4);
+              const enhancedBonusK = enhancedBonusBreath + enhancedBonusBook * (maxBreathCount === 1 ? 2 : 4);
 
-            const paidNormalPrice =
-              basePrice +
-              getAdditionalPrice(
+              const paidNormalPrice =
+                basePrice +
+                getAdditionalPrice(
+                  refineTable,
+                  priceTable,
+                  normalBreath,
+                  normalBook
+                );
+              const freeNormalPrice = getAdditionalPrice(
                 refineTable,
                 priceTable,
                 normalBreath,
                 normalBook
               );
-            const freeNormalPrice = getAdditionalPrice(
-              refineTable,
-              priceTable,
-              normalBreath,
-              normalBook
-            );
-            const bonusPrice =
-              basePrice +
-              getAdditionalPrice(
-                refineTable,
-                priceTable,
-                bonusBreath,
-                bonusBook
-              );
-            const enhancedBonusPrice =
-              basePrice +
-              getAdditionalPrice(
-                refineTable,
-                priceTable,
-                enhancedBonusBreath,
-                0
-              );
+              const bonusPrice =
+                basePrice +
+                getAdditionalPrice(
+                  refineTable,
+                  priceTable,
+                  bonusBreath,
+                  bonusBook
+                );
+              const enhancedBonusPrice =
+                basePrice +
+                getAdditionalPrice(
+                  refineTable,
+                  priceTable,
+                  enhancedBonusBreath,
+                  enhancedBonusBook
+                );
 
-            const data = refineTable.data.find(
-              (x) =>
-                x.parameters.normalK === normalK &&
-                x.parameters.bonusK === bonusK &&
-                x.parameters.enhancedBonusK === enhancedBonusK
-            )?.result;
+              const data = refineTable.data.find(
+                (x) =>
+                  x.parameters.normalK === normalK &&
+                  x.parameters.bonusK === bonusK &&
+                  x.parameters.enhancedBonusK === enhancedBonusK
+              )?.result;
 
-            if (!data) {
-              throw new Error(
-                `Data not found: ${normalK}, ${bonusK}, ${enhancedBonusK}`
-              );
+              if (!data) {
+                throw new Error(
+                  `Data not found: ${normalK}, ${bonusK}, ${enhancedBonusK}`
+                );
+              }
+
+              const expectedTryCount =
+                data.paidNormalTry +
+                data.freeNormalTry +
+                data.bonusTry +
+                data.enhancedBonusTry;
+
+              const expectedMaterials = [
+                ...Object.entries(refineTable.amount).map(([name, amount]) => ({
+                  name,
+                  amount: amount * expectedTryCount,
+                })),
+                ...sortedBreath.map((x, index) => {
+                  const normalAmount = index < normalBreath ? x.amount : 0;
+                  const bonusAmount = index < bonusBreath ? x.amount : 0;
+                  const enhancedBonusAmount =
+                    index < enhancedBonusBreath ? x.amount : 0;
+
+                  return {
+                    name: x.name,
+                    amount:
+                      normalAmount * (data.freeNormalTry + data.paidNormalTry) +
+                      bonusAmount * data.bonusTry +
+                      enhancedBonusAmount * data.enhancedBonusTry,
+                  };
+                }),
+              ];
+
+              const expectedPrice =
+                paidNormalPrice * data.paidNormalTry +
+                freeNormalPrice * data.freeNormalTry +
+                bonusPrice * data.bonusTry +
+                enhancedBonusPrice * data.enhancedBonusTry;
+
+              result.push({
+                hasEnhancedBonus: refineTable.hasEnhancedBonus,
+
+                normalBreathNames: [
+                  ...sortedBreath.slice(0, normalBreath).map((x) => x.name),
+                  ...(normalBook ? [book!.name] : []),
+                ],
+                bonusBreathNames: [
+                  ...sortedBreath.slice(0, bonusBreath).map((x) => x.name),
+                  ...(bonusBook ? [book!.name] : []),
+                ],
+                enhancedBonusBreathNames: [
+                  ...sortedBreath.slice(0, enhancedBonusBreath).map((x) => x.name),
+                  ...(enhancedBonusBook ? [book!.name] : [])
+                ],
+
+                ...data,
+
+                paidNormalPrice,
+                freeNormalPrice,
+                bonusPrice,
+                enhancedBonusPrice,
+
+                expectedTryCount,
+                expectedPrice,
+                expectedMaterials,
+              });
             }
-
-            const expectedTryCount =
-              data.paidNormalTry +
-              data.freeNormalTry +
-              data.bonusTry +
-              data.enhancedBonusTry;
-
-            const expectedMaterials = [
-              ...Object.entries(refineTable.amount).map(([name, amount]) => ({
-                name,
-                amount: amount * expectedTryCount,
-              })),
-              ...sortedBreath.map((x, index) => {
-                const normalAmount = index < normalBreath ? x.amount : 0;
-                const bonusAmount = index < bonusBreath ? x.amount : 0;
-                const enhancedBonusAmount =
-                  index < enhancedBonusBreath ? x.amount : 0;
-
-                return {
-                  name: x.name,
-                  amount:
-                    normalAmount * (data.freeNormalTry + data.paidNormalTry) +
-                    bonusAmount * data.bonusTry +
-                    enhancedBonusAmount * data.enhancedBonusTry,
-                };
-              }),
-            ];
-
-            const expectedPrice =
-              paidNormalPrice * data.paidNormalTry +
-              freeNormalPrice * data.freeNormalTry +
-              bonusPrice * data.bonusTry +
-              enhancedBonusPrice * data.enhancedBonusTry;
-
-            result.push({
-              hasEnhancedBonus: refineTable.hasEnhancedBonus,
-
-              normalBreathNames: [
-                ...sortedBreath.slice(0, normalBreath).map((x) => x.name),
-                ...(normalBook ? [book!.name] : []),
-              ],
-              bonusBreathNames: [
-                ...sortedBreath.slice(0, bonusBreath).map((x) => x.name),
-                ...(bonusBook ? [book!.name] : []),
-              ],
-              enhancedBonusBreathNames: sortedBreath
-                .slice(0, enhancedBonusBreath)
-                .map((x) => x.name),
-
-              ...data,
-
-              paidNormalPrice,
-              freeNormalPrice,
-              bonusPrice,
-              enhancedBonusPrice,
-
-              expectedTryCount,
-              expectedPrice,
-              expectedMaterials,
-            });
           }
         }
       }

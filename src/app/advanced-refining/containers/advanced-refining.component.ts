@@ -117,6 +117,10 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
     this.itemForm.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((itemForm) => {
+        if (!itemForm.type || !itemForm.target) {
+          return;
+        }
+
         const table = getAdvancedRefineTable(itemForm.type, itemForm.target);
 
         if (!table) {
@@ -133,6 +137,11 @@ export class AdvancedRefiningComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(([priceForm, bindedForm]) => {
         const itemForm = this.itemForm.value;
+
+        if (!itemForm.type || !itemForm.target) {
+          return;
+        }
+
         const table = getAdvancedRefineTable(itemForm.type, itemForm.target);
 
         if (!table) {

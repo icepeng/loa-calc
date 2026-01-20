@@ -101,7 +101,7 @@ export function getReport(
           ) {
             for (
               let enhancedBonusBook = 0 as 0 | 1;
-              enhancedBonusBook <= (book ? 1 : 0);
+              enhancedBonusBook <= (refineTable.hasEnhancedBonus && book ? 1 : 0);
               enhancedBonusBook++
             ) {
               const normalK = normalBreath + normalBook * (maxBreathCount === 1 ? 2 : 4);

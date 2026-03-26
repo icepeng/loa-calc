@@ -20,6 +20,7 @@ export class RaidBoxComponent implements OnInit {
     경명돌: new FormControl(38.9),
     찬명돌: new FormControl(58.4),
     운돌: new FormControl(42),
+    위운돌: new FormControl(200),
     수결: new FormControl(0.1),
     파결: new FormControl(0.36),
     수호강석: new FormControl(0.1),
@@ -27,7 +28,9 @@ export class RaidBoxComponent implements OnInit {
     정제된수호강석: new FormControl(0.25),
     정제된파괴강석: new FormControl(9.69),
     운명의수호석: new FormControl(1.29),
+    운명의수호석결정: new FormControl(5),
     운명의파괴석: new FormControl(2.62),
+    운명의파괴석결정: new FormControl(10),
     혼돈의돌: new FormControl(500),
   });
 

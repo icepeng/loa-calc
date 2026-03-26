@@ -50,6 +50,7 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
     경명돌: new FormControl(true),
     찬명돌: new FormControl(true),
     운돌: new FormControl(true),
+    위운돌: new FormControl(true),
     수결: new FormControl(true),
     파결: new FormControl(true),
     수호강석: new FormControl(true),
@@ -57,7 +58,9 @@ export class RaidBoxCardComponent implements OnInit, OnChanges, OnDestroy {
     정제된수호강석: new FormControl(true),
     정제된파괴강석: new FormControl(true),
     운명의수호석: new FormControl(true),
+    운명의수호석결정: new FormControl(true),
     운명의파괴석: new FormControl(true),
+    운명의파괴석결정: new FormControl(true),
     혼돈의돌: new FormControl(true),
   });
 
